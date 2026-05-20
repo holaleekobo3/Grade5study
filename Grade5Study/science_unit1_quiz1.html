@@ -5,139 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>單元一 測驗 1：探索星空的奧祕</title>
     <link rel="stylesheet" href="style.css">
+    <script>
+        // 在 DOM 渲染前立即同步暗色模式，防止「白光閃爍」
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
 </head>
 <body>
 
-<div class="theme-toggle">
-    <button id="themeBtn" onclick="toggleTheme()"><span>🌙</span> 暗色模式</button>
-</div>
+    <!-- 測驗引擎將會自動在此處動態生成所有 UI 結構 -->
+    <div id="quiz-app"></div>
 
-<div class="container">
-    <p><a href="science.html" style="text-decoration: none;">⬅ 返回目錄</a></p>
-    <h1>🌠 單元一 測驗 1：探索星空的奧祕</h1>
-    <form id="quizForm">
-        <div id="questionsContainer"></div>
-        <button id="submitBtn" type="button" onclick="calculateScore()">提交答案查看結果</button>
-    </form>
-
-    <div id="result">
-        <h2>測試結果</h2>
-        <p id="scoreText" style="font-size: 1.5em;"></p>
-        <div id="wrongAnswers"></div>
-    </div>
-
-    <div class="history-section">
-        <h3>📊 測驗紀錄回顧 (教師專用)</h3>
-        <div id="historyList">尚無測驗紀錄</div>
-        <button onclick="clearHistory()" style="margin-top: 20px; background: var(--wrong-color); color: white; border: none; padding: 8px; border-radius: 5px; cursor: pointer; font-size: 12px;">清除所有紀錄</button>
-    </div>
-</div>
-
-<script>
-    // Unique storage key for this specific quiz
-    const STORAGE_KEY = 'science_unit1_quiz1_results';
-
-    function toggleTheme() {
-        const html = document.documentElement;
-        const btn = document.getElementById('themeBtn');
-        const currentTheme = html.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        html.setAttribute('data-theme', newTheme);
-        btn.textContent = newTheme === 'dark' ? '☀️ 亮色模式' : '🌙 暗色模式';
-        localStorage.setItem('theme', newTheme);
-    }
-
-    const quizData = [
-        { q: "在晴朗的夜晚，我們看到的星星大多是什麼星？", a: ["行星", "恆星", "衛星", "流星"], correct: 1 },
-        { q: "星星的顏色不同，主要是因為什麼原因？", a: ["距離遠近", "大小不同", "表面溫度不同", "亮暗程度"], correct: 2 },
-        { q: "古代人將相鄰的星星想像成各種圖形，稱稱為？", a: ["星雲", "星系", "星座", "星團"], correct: 2 },
-        { q: "使用星座盤觀測時，應該將星座盤如何放置？", a: ["平放在桌上", "垂直掛在牆上", "高舉過頭頂，盤面朝下", "貼在胸前"], correct: 2 },
-        { q: "使用星座盤時，要先對準哪兩個資訊？", a: ["農曆日期與時間", "國曆日期與時間", "氣溫與濕度", "經度與緯度"], correct: 1 },
-        { q: "在台灣，哪一顆星的位置幾乎固定不動，可用來辨認方位？", a: ["織女星", "天狼星", "北極星", "牛郎星"], correct: 2 },
-        { q: "春天夜晚常見的大三角是由哪三顆星組成？", a: ["大角星、角宿一、五帝座一", "織女星、牛郎星、天津四", "參宿四、天狼星、南河三", "北極星、北斗七星、開陽星"], correct: 0 },
-        { q: "北斗七星在天空中的形狀像什麼？", a: ["獵人", "長柄杓子", "英文字母 W", "獅子尾巴"], correct: 1 },
-        { q: "利用北斗七星尋找北極星，要將勺口前兩顆星連線延長幾倍？", a: ["3倍", "4倍", "5倍", "6倍"], correct: 2 },
-        { q: "仙后座的形狀像什麼英文字母？", a: ["S", "M 或 W", "L", "O"], correct: 1 },
-        { q: "獵戶座是哪一個季節最具代表性的星座？", a: ["春天", "夏天", "秋天", "冬天"], correct: 3 },
-        { q: "星星在天空中的方位通常是由哪裡轉向哪裡？", a: ["西向東", "東向西", "南向北", "北向南"], correct: 1 },
-        { q: "造成星星東升西落現象的主要原因是？", a: ["地球公轉", "地球自轉", "星星在動", "月球繞地球"], correct: 1 },
-        { q: "在同一個晚上，隨著時間變化，北極星的位置會如何？", a: ["由東向西移", "由西向東移", "幾乎不動", "繞著月亮轉"], correct: 2 },
-        { q: "不同季節看到的主要星座不同，主要是因為？", a: ["地球自轉", "地球公轉", "星星跑掉了", "月球遮擋"], correct: 1 },
-        { q: "天空中星星的亮度等級稱為「星等」，請問幾等星最亮？", a: ["-1等星", "1等星", "3等星", "6等星"], correct: 0 },
-        { q: "觀測星星時，應選擇什麼樣的地點？", a: ["市中心大樓屋頂", "燈光昏暗、視野開闊處", "森林茂密處", "百貨公司門口"], correct: 1 },
-        { q: "星座盤上的透明橢圓形視窗代表什麼？", a: ["全天空的所有星星", "當時當地能看到的星空範圍", "銀河系", "太陽系"], correct: 1 },
-        { q: "下列哪一個星座位於夏季大三角中？", a: ["天鵝座", "獵戶座", "仙后座", "金牛座"], correct: 0 },
-        { q: "若在台北觀測北極星，仰角大約是多少度？", a: ["15度", "25度", "45度", "90度"], correct: 1 }
-    ];
-
-    const container = document.getElementById('questionsContainer');
-    quizData.forEach((data, index) => {
-        let html = `<div class="question"><p><strong>${index + 1}. ${data.q}</strong></p><ul class="options">`;
-        data.a.forEach((opt, i) => {
-            html += `<li><label><input type="radio" name="q${index}" value="${i}"> ${opt}</label></li>`;
-        });
-        html += `</ul></div>`;
-        container.innerHTML += html;
-    });
-
-    function displayHistory() {
-        const history = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-        const listContainer = document.getElementById('historyList');
-        if (history.length === 0) { listContainer.innerHTML = "尚無測驗紀錄"; return; }
-        listContainer.innerHTML = history.slice().reverse().map((item, idx) => `
-            <div class="history-item">
-                <strong>第 ${history.length - idx} 次測驗 - ${item.date}</strong><br>
-                得分：<span class="correct">${item.score} / ${item.total}</span>
-                <details><summary>查看錯題細節</summary>
-                    <div style="margin-top: 10px;">
-                        ${item.mistakes.length > 0 ? item.mistakes.map(m => `
-                            <p style="border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-bottom: 5px;">
-                                <strong>問：</strong>${m.question}<br>
-                                <span class="wrong">答：${m.userAnswer}</span> | <span class="correct">正：${m.correctAnswer}</span>
-                            </p>`).join('') : "全部正確！"}
-                    </div>
-                </details>
-            </div>`).join('');
-    }
-
-    function calculateScore() {
-        let score = 0;
-        let mistakes = [];
-        quizData.forEach((data, index) => {
-            const selected = document.querySelector(`input[name="q${index}"]:checked`);
-            if (selected && parseInt(selected.value) === data.correct) {
-                score++;
-            } else {
-                mistakes.push({
-                    question: data.q,
-                    userAnswer: selected ? data.a[selected.value] : "未作答",
-                    correctAnswer: data.a[data.correct]
-                });
-            }
-        });
-
-        const history = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-        history.push({ 
-            date: new Date().toLocaleString(), 
-            score: score, 
-            total: quizData.length, 
-            mistakes: mistakes 
-        });
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
-
-        document.getElementById('result').style.display = 'block';
-        document.getElementById('scoreText').innerHTML = `得分：<strong>${score}</strong> / ${quizData.length}`;
-        displayHistory();
-        window.scrollTo({ top: document.getElementById('result').offsetTop, behavior: 'smooth' });
-    }
-
-    function clearHistory() { if(confirm("確定要清除本測驗的所有歷史紀錄嗎？")) { localStorage.removeItem(STORAGE_KEY); displayHistory(); } }
-
-    window.addEventListener('DOMContentLoaded', () => {
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        displayHistory();
-    });
-</script>
+    <script>
+        const QUIZ_CONFIG = {
+            id: 'science_unit1_quiz1',
+            title: '🌠 單元一 測驗 1：探索星空的奧祕',
+            backUrl: 'science.html',
+            questions: [
+                { q: "在晴朗的夜晚，我們看到的星星大多是什麼星？", a: ["行星", "恆星", "衛星", "流星"], correct: 1 },
+                { q: "星星的顏色不同，主要是因為什麼原因？", a: ["距離遠近", "大小不同", "表面溫度不同", "亮暗程度"], correct: 2 },
+                { q: "古代人將相鄰的星星想像成各種圖形，稱稱為？", a: ["星雲", "星系", "星座", "星團"], correct: 2 },
+                { q: "使用星座盤觀測時，應該將星座盤如何放置？", a: ["平放在桌上", "垂直掛在牆上", "高舉過頭頂，盤面朝下", "貼在胸前"], correct: 2 },
+                { q: "使用星座盤時，要先對準哪兩個資訊？", a: ["農曆日期與時間", "國曆日期與時間", "氣溫與濕度", "經度與緯度"], correct: 1 },
+                { q: "在台灣，哪一顆星的位置幾乎固定不動，可用來辨認方位？", a: ["織女星", "天狼星", "北極星", "牛郎星"], correct: 2 },
+                { q: "春天夜晚常見的大三角是由哪三顆星組成？", a: ["大角星、角宿一、五帝座一", "織女星、牛郎星、天津四", "參宿四、天狼星、南河三", "北極星、北斗七星、開陽星"], correct: 0 },
+                { q: "北斗七星在天空中的形狀像什麼？", a: ["獵人", "長柄杓子", "英文字印 W", "獅子尾巴"], correct: 1 },
+                { q: "利用北斗七星尋找北極星，要將勺口前兩顆星連線延長幾倍？", a: ["3倍", "4倍", "5倍", "6倍"], correct: 2 },
+                { q: "仙后座的形狀像什麼英文字母？", a: ["S", "M 或 W", "L", "O"], correct: 1 },
+                { q: "獵戶座是哪一個季節最具代表性的星座？", a: ["春天", "夏天", "秋天", "冬天"], correct: 3 },
+                { q: "星星在天空中的方位通常是由哪裡轉向哪裡？", a: ["西向東", "東向西", "南向北", "北向南"], correct: 1 },
+                { q: "造成星星東升西落現象的主要原因是？", a: ["地球公轉", "地球自轉", "星星在動", "月球繞地球"], correct: 1 },
+                { q: "在同一個晚上，隨著時間變化，北極星的位置會如何？", a: ["由東向西移", "由西向東移", "幾乎不動", "繞著月亮轉"], correct: 2 },
+                { q: "不同季節看到的主要星座不同，主要是因為？", a: ["地球自轉", "地球公轉", "星星跑掉了", "月球遮擋"], correct: 1 },
+                { q: "天空中星星的亮度等級稱為「星等」，請問幾等星最亮？", a: ["-1等星", "1等星", "3等星", "6等星"], correct: 0 },
+                { q: "觀測星星時，應選擇什麼樣的地點？", a: ["市中心大樓屋頂", "燈光昏暗、視野開闊處", "森林茂密處", "百貨公司門口"], correct: 1 },
+                { q: "星座盤上的透明橢圓形視窗代表什麼？", a: ["全天空的所有星星", "當時當地能看到的星空範圍", "銀河系", "太陽系"], correct: 1 },
+                { q: "下列哪一個星座位於夏季大三角中？", a: ["天鵝座", "獵戶座", "仙后座", "金牛座"], correct: 0 },
+                { q: "若在台北觀測北極星，仰角大約是多少度？", a: ["15度", "25度", "45度", "90度"], correct: 1 }
+            ]
+        };
+    </script>
+    <script src="quiz-engine.js"></script>
 </body>
 </html>

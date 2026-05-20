@@ -5,192 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>G5 English Unit 7 Grammar Quiz 3</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        .input-box {
-            width: 100%;
-            padding: 12px 16px;
-            font-size: 1.15rem;
-            border: 2px solid var(--border-color);
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            border-radius: 12px;
-            margin-top: 10px;
-            font-family: 'Inter', sans-serif;
-            transition: all 0.3s ease;
-        }
-        .input-box:focus {
-            outline: none;
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
-        }
-    </style>
+    <script>
+        // 在 DOM 渲染前立即同步暗色模式，防止「白光閃爍」
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
 </head>
 <body>
 
-<div class="theme-toggle">
-    <button id="themeBtn" onclick="toggleTheme()"><span>🌙</span> 暗色模式</button>
-</div>
+    <!-- 測驗引擎將會自動在此處動態生成所有 UI 結構 -->
+    <div id="quiz-app"></div>
 
-<div class="container">
-    <p><a href="english.html" style="text-decoration: none; font-weight: bold; color: var(--accent-primary);">⬅ 返回目錄</a></p>
-    <h1>🌍 Unit 7 Grammar Quiz 3: Will/Won't</h1>
-    
-    <div style="margin-bottom: 2rem; padding: 20px; background: var(--bg-secondary); border-radius: 16px; border: 1px solid var(--border-color);">
-        <p><strong>Name:</strong> ________________ &nbsp;&nbsp;&nbsp; <strong>Number:</strong> _______ &nbsp;&nbsp;&nbsp; <strong>Grade:</strong> 5</p>
-    </div>
-
-    <form id="quizForm">
-        <div id="questionsContainer"></div>
-        <button id="submitBtn" type="button" onclick="calculateScore()">提交答案查看結果</button>
-    </form>
-
-    <div id="result" style="display: none;">
-        <h2>測試結果</h2>
-        <p id="scoreText" style="font-size: 1.5em;"></p>
-        <div id="wrongAnswers"></div>
-    </div>
-
-    <div class="history-section">
-        <h3>📊 測驗紀錄回顧</h3>
-        <div id="historyList">尚無測驗紀錄</div>
-        <button onclick="clearHistory()" style="margin-top: 20px; background: var(--accent-danger); color: white; border: none; padding: 12px; border-radius: 12px; cursor: pointer; font-weight: 600;">清除所有紀錄</button>
-    </div>
-</div>
-
-<script>
-    const STORAGE_KEY = 'english_unit7_quiz3_results';
-
-    function toggleTheme() {
-        const html = document.documentElement;
-        const btn = document.getElementById('themeBtn');
-        const currentTheme = html.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        html.setAttribute('data-theme', newTheme);
-        btn.innerHTML = newTheme === 'dark' ? '<span>☀️</span> 亮色模式' : '<span>🌙</span> 暗色模式';
-        localStorage.setItem('theme', newTheme);
-    }
-
-    const quizSections = [
-        {
-            title: "A. Sentence Transformation (Will/Won't)",
-            questions: [
-                { q: "I eat an apple every day. (Change to a Future Prediction using \"will\")", correct: ["I will eat an apple every day.", "I will eat an apple every day"] },
-                { q: "He will visit his grandma. (Change to Negative using a short form)", correct: ["He won't visit his grandma.", "He won't visit his grandma"] },
-                { q: "They will win the game. (Change to a Question)", correct: ["Will they win the game?", "Will they win the game"] },
-                { q: "She will be angry. (Change to Negative using a short form)", correct: ["She won't be angry.", "She won't be angry"] }
+    <script>
+        const QUIZ_CONFIG = {
+            id: 'english_unit7_quiz3',
+            title: '🌍 Unit 7 Grammar Quiz 3: Will/Won\'t',
+            backUrl: 'english.html',
+            infoBlock: `
+                <div style="margin-bottom: 2rem; padding: 20px; background: var(--bg-secondary); border-radius: 16px; border: 1px solid var(--border-color);">
+                    <p><strong>Name:</strong> ________________ &nbsp;&nbsp;&nbsp; <strong>Number:</strong> _______ &nbsp;&nbsp;&nbsp; <strong>Grade:</strong> 5</p>
+                </div>
+            `,
+            sections: [
+                {
+                    title: "A. Sentence Transformation (Will/Won't)",
+                    questions: [
+                        { q: "I eat an apple every day. (Change to a Future Prediction using \"will\")", correct: ["I will eat an apple every day.", "I will eat an apple every day"] },
+                        { q: "He will visit his grandma. (Change to Negative using a short form)", correct: ["He won't visit his grandma.", "He won't visit his grandma"] },
+                        { q: "They will win the game. (Change to a Question)", correct: ["Will they win the game?", "Will they win the game"] },
+                        { q: "She will be angry. (Change to Negative using a short form)", correct: ["She won't be angry.", "She won't be angry"] }
+                    ]
+                },
+                {
+                    title: "B. Error Correction",
+                    instructions: "Each sentence has ONE mistake. Type the CORRECT word in the box.",
+                    questions: [
+                        { q: "They will going to the park.", correct: ["go"] },
+                        { q: "He will not likes the food.", correct: ["like"] },
+                        { q: "Will she be a teacher? Yes, she is.", correct: ["will"] },
+                        { q: "There won't are any flying cars.", correct: ["be"] }
+                    ]
+                },
+                {
+                    title: "C. Sentence Unscrambling",
+                    questions: [
+                        { q: "be / sunny / tomorrow / will / it / .", correct: ["It will be sunny tomorrow.", "It will be sunny tomorrow"] },
+                        { q: "people / won't / paper / use / .", correct: ["People won't use paper.", "People won't use paper"] },
+                        { q: "will / robots / food / cook / ?", correct: ["Will robots cook food?", "Will robots cook food"] },
+                        { q: "new / build / they / schools / will / .", correct: ["They will build new schools.", "They will build new schools"] }
+                    ]
+                }
             ]
-        },
-        {
-            title: "B. Error Correction",
-            instructions: "Each sentence has ONE mistake. Type the CORRECT word in the box.",
-            questions: [
-                { q: "They will going to the park.", correct: ["go"] },
-                { q: "He will not likes the food.", correct: ["like"] },
-                { q: "Will she be a teacher? Yes, she is.", correct: ["will"] },
-                { q: "There won't are any flying cars.", correct: ["be"] }
-            ]
-        },
-        {
-            title: "C. Sentence Unscrambling",
-            questions: [
-                { q: "be / sunny / tomorrow / will / it / .", correct: ["It will be sunny tomorrow.", "It will be sunny tomorrow"] },
-                { q: "people / won't / paper / use / .", correct: ["People won't use paper.", "People won't use paper"] },
-                { q: "will / robots / food / cook / ?", correct: ["Will robots cook food?", "Will robots cook food"] },
-                { q: "new / build / they / schools / will / .", correct: ["They will build new schools.", "They will build new schools"] }
-            ]
-        }
-    ];
-
-    const container = document.getElementById('questionsContainer');
-    let qGlobalIndex = 0;
-
-    quizSections.forEach((section) => {
-        let sectionHtml = `<h2 style="margin-top: 2rem; border-left: 5px solid var(--accent-primary); padding-left: 15px;">${section.title}</h2>`;
-        if (section.instructions) {
-            sectionHtml += `<p style="color: var(--text-secondary); margin-bottom: 1rem;">${section.instructions}</p>`;
-        }
-        
-        section.questions.forEach((data, index) => {
-            let html = `<div class="question" data-idx="${qGlobalIndex}"><p><strong>${index + 1}. ${data.q}</strong></p>
-                <input type="text" class="input-box" name="q${qGlobalIndex}" placeholder="請在此輸入答案...">
-            </div>`;
-            sectionHtml += html;
-            qGlobalIndex++;
-        });
-        container.innerHTML += sectionHtml;
-    });
-
-    const flatQuizData = quizSections.reduce((acc, section) => acc.concat(section.questions), []);
-
-    function displayHistory() {
-        const history = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-        const listContainer = document.getElementById('historyList');
-        if (history.length === 0) { listContainer.innerHTML = "尚無測驗紀錄"; return; }
-        listContainer.innerHTML = history.slice().reverse().map((item, idx) => `
-            <div class="history-item">
-                <strong>第 ${history.length - idx} 次測驗 - ${item.date}</strong><br>
-                得分：<span style="color: var(--accent-success); font-weight: bold;">${item.score} / ${item.total}</span>
-                <details style="margin-top: 10px;"><summary style="cursor: pointer; color: var(--accent-primary); font-weight: 600;">查看錯題細節</summary>
-                    <div style="margin-top: 10px;">
-                        ${item.mistakes.length > 0 ? item.mistakes.map(m => `
-                            <div style="border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 10px;">
-                                <p><strong>問：</strong>${m.question}</p>
-                                <p><span style="color: var(--accent-danger); font-weight: 600;">答：${m.userAnswer}</span> | <span style="color: var(--accent-success); font-weight: 600;">正：${m.correctAnswer}</span></p>
-                            </div>`).join('') : "全部正確！"}
-                    </div>
-                </details>
-            </div>`).join('');
-    }
-
-    function calculateScore() {
-        let score = 0;
-        let mistakes = [];
-        flatQuizData.forEach((data, index) => {
-            const inputField = document.querySelector(`input[name="q${index}"]`);
-            const userInput = inputField.value.trim().toLowerCase().replace(/[.?!]$/, '');
-            
-            const isCorrect = data.correct.some(ans => {
-                const normalizedAns = ans.trim().toLowerCase().replace(/[.?!]$/, '');
-                return userInput === normalizedAns;
-            });
-
-            if (isCorrect) {
-                score++;
-                inputField.style.borderColor = "var(--accent-success)";
-            } else {
-                mistakes.push({
-                    question: data.q,
-                    userAnswer: inputField.value || "未填寫",
-                    correctAnswer: data.correct[0]
-                });
-                inputField.style.borderColor = "var(--accent-danger)";
-            }
-        });
-
-        const history = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-        history.push({ 
-            date: new Date().toLocaleString(), 
-            score: score, 
-            total: flatQuizData.length, 
-            mistakes: mistakes 
-        });
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
-
-        document.getElementById('result').style.display = 'block';
-        document.getElementById('scoreText').innerHTML = `得分：<strong>${score}</strong> / ${flatQuizData.length}`;
-        displayHistory();
-        window.scrollTo({ top: document.getElementById('result').offsetTop, behavior: 'smooth' });
-    }
-
-    function clearHistory() { if(confirm("確定要清除本測驗的所有歷史紀錄嗎？")) { localStorage.removeItem(STORAGE_KEY); displayHistory(); } }
-
-    window.addEventListener('DOMContentLoaded', () => {
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        const btn = document.getElementById('themeBtn');
-        if (savedTheme === 'dark') btn.innerHTML = '<span>☀️</span> 亮色模式';
-        displayHistory();
-    });
-</script>
+        };
+    </script>
+    <script src="quiz-engine.js"></script>
 </body>
 </html>
