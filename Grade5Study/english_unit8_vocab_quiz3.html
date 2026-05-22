@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 5 Spelling & Vocabulary Quiz</title>
+    <style>
+        :root {
+            --primary: #4a90e2;
+            --primary-dark: #357abd;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+            --background: #f5f7fa;
+            --card-bg: #ffffff;
+            --text: #2c3e50;
+            --text-light: #7f8c8d;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        h1 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+
+        .quiz-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-weight: 600;
+            color: var(--text-light);
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        .question-item {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .question-item:last-child {
+            border-bottom: none;
+        }
+
+        .sentence {
+            font-size: 1.15rem;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .blank-space {
+            border-bottom: 2px dashed var(--primary);
+            padding: 0 10px;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .input-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .hint-badge {
+            background-color: #edf2f7;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            color: var(--text-light);
+            border: 1px solid var(--border);
+        }
+
+        input[type="text"] {
+            padding: 8px 12px;
+            font-size: 1rem;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            width: 200px;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Results & Review Styles */
+        .results-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .score-display {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 10px 0;
+        }
+
+        .result-row {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 5px solid transparent;
+            background: #f8fafc;
+        }
+
+        .result-row.correct {
+            border-left-color: var(--success);
+            background-color: #f0fff4;
+        }
+
+        .result-row.incorrect {
+            border-left-color: var(--danger);
+            background-color: #fff5f5;
+        }
+
+        .result-meta {
+            margin-top: 8px;
+            font-size: 0.95rem;
+        }
+
+        .explanation {
+            margin-top: 8px;
+            padding: 8px 12px;
+            background: rgba(0,0,0,0.03);
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+
+        /* Dashboard Styles */
+        .dashboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .dashboard-table th, .dashboard-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .dashboard-table th {
+            background-color: #edf2f7;
+            color: var(--text);
+        }
+
+        @media (max-width: 600px) {
+            input[type="text"] {
+                width: 100%;
+            }
+            .quiz-info {
+                flex-direction: column;
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>English Spelling & Vocabulary Quiz</h1>
+        <p>Grade 5 Practice Assessment</p>
+    </header>
+
+    <!-- QUIZ VIEW -->
+    <div id="quiz-view" class="card">
+        <div class="quiz-info">
+            <span id="question-count">Total Questions: 36</span>
+            <span>Target: Fill in the Blanks</span>
+        </div>
+        <form id="quiz-form">
+            <div id="questions-container"></div>
+            <button type="button" id="submit-btn" onclick="checkResults()">Check Results</button>
+        </form>
+    </div>
+
+    <!-- RESULTS VIEW -->
+    <div id="results-view" class="card hidden">
+        <div class="results-header">
+            <h2>Quiz Summary</h2>
+            <div class="score-display" id="score-text">0 / 0</div>
+            <p id="percentage-text">0%</p>
+        </div>
+
+        <div id="review-container"></div>
+        
+        <button type="button" style="margin-top: 20px;" onclick="restartQuiz()">Restart / Try Again</button>
+    </div>
+
+    <!-- HISTORY DASHBOARD -->
+    <div class="card">
+        <h3>History Dashboard</h3>
+        <div id="history-empty" style="color: var(--text-light); margin-top: 10px;">No previous attempts found.</div>
+        <table class="dashboard-table hidden" id="history-table">
+            <thead>
+                <tr>
+                    <th>Date & Time</th>
+                    <th>Score</th>
+                    <th>Percentage</th>
+                </tr>
+            </thead>
+            <tbody id="history-rows"></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Complete vocabulary data with sentence contexts and educational grammar focus
+    const quizData = [
+        { word: "blanket", sentence: "It was a cold night, so Mom put a warm ______ on my bed.", explanation: "Noun. A large piece of warm cloth used as a bed covering to keep warm." },
+        { word: "pay", sentence: "Don't forget to ______ for the apples before leaving the supermarket.", explanation: "Verb. To give money to someone for goods or services rendered." },
+        { word: "dollar", sentence: "The ice cream costs one ______, so I handed the cashier a coin.", explanation: "Noun. The basic unit of money in countries like the USA, Canada, and Australia." },
+        { word: "price", sentence: "The ______ tag on the toy showed that it cost ten dollars.", explanation: "Noun. The amount of money expected, required, or given in payment for something." },
+        { word: "try on", sentence: "You should ______ the shoes before buying them to ensure they fit.", explanation: "Phrasal Verb. To put on a garment to see if it fits or looks good." },
+        { word: "cotton", sentence: "This soft T-shirt is made of 100% ______, which is perfect for summer.", explanation: "Noun/Material. A soft white fibrous substance that surrounds the seeds of a tropical plant, used as textile." },
+        { word: "cheap", sentence: "The book was very ______; it only cost fifty cents!", explanation: "Adjective. Low in price, costing little money." },
+        { word: "size", sentence: "What ______ shirt do you wear? Medium or large?", explanation: "Noun. The relative extent or dimensions of something; how big or small it is." },
+        { word: "medium", sentence: "The small shirt is too tight, and the large is too big, so I need a ______.", explanation: "Noun/Adjective. A middle state or condition between two extremes; average size." },
+        { word: "large", sentence: "An elephant is a very ______ animal compared to a mouse.", explanation: "Adjective. Of considerable or relatively great size, extent, or capacity." },
+        { word: "material", sentence: "Wood is the primary ______ used to build this rustic cabin.", explanation: "Noun. The matter from which a thing is or can be made." },
+        { word: "would", sentence: "If it rains tomorrow, we ______ stay inside and watch a film.", explanation: "Modal Verb. Used to talk about a possible situation, a preference, or a future intention from the past." },
+        { word: "ticket", sentence: "You need to show your train ______ to the conductor inside the station.", explanation: "Noun. A piece of paper that shows you have paid for a journey or an event." },
+        { word: "reply", sentence: "Please write a quick ______ to your friend's letter tonight.", explanation: "Noun/Verb. An answer or response given to a communication." },
+        { word: "office", sentence: "Dad works at his computer all day in a downtown ______ building.", explanation: "Noun. A room or building used as a place of business or clerical work." },
+        { word: "ice rink", sentence: "We tied our skates tightly before gliding onto the slippery ______.", explanation: "Noun phrase. An enclosed area of ice for skating, ice hockey, or curling." },
+        { word: "wedding", sentence: "The beautiful bride wore a lovely white dress at her ______ yesterday.", explanation: "Noun. A marriage ceremony, especially considered as including the associated celebrations." },
+        { word: "daughter", sentence: "Mr. Smith has one son and one ______, so he has two children.", explanation: "Noun. A female child in relation to her parents." },
+        { word: "invitation", sentence: "I received a formal party ______ to celebrate Kevin's eleventh birthday.", explanation: "Noun. A written or verbal request inviting someone to go somewhere or to do something." },
+        { word: "greeting", sentence: "A friendly 'hello' is a common morning ______ around the school.", explanation: "Noun. A polite word or sign of welcome or recognition." },
+        { word: "healthy", sentence: "Eating fresh fruits and vegetables helps you maintain a ______ body.", explanation: "Adjective. Indicating or promoting good health and physical well‑being." },
+        { word: "hide", sentence: "During the game, I decided to ______ behind the thick living room curtains.", explanation: "Verb. To put or keep something out of sight; conceal oneself." },
+        { word: "smile", sentence: "A bright ______ crossed her face when she won the science race.", explanation: "Noun/Verb. An expression of the face indicating pleasure, affection, or amusement." },
+        { word: "tickle", sentence: "If you ______ the bottom of my feet, I cannot stop laughing.", explanation: "Verb. To touch a body part lightly so as to excite the nerves and cause laughter." },
+        { word: "joke", sentence: "The comedian told a hilarious ______ that made everyone in the room roar.", explanation: "Noun. A thing that someone says to cause amusement or laughter." },
+        { word: "laugh", sentence: "The funny cartoon made the whole classroom ______ out loud.", explanation: "Verb. To make spontaneous sounds and movements of the face and body that express amusement." },
+        { word: "feet", sentence: "Wipe your dirty ______ on the mat before entering the clean house.", explanation: "Noun (Plural). The plural form of foot; the lower extremities of the legs." },
+        { word: "could", sentence: "When he was only four years old, he ______ already swim across the pool.", explanation: "Modal Verb. Used to indicate past ability or a polite request." },
+        { word: "offer", sentence: "The kind store manager decided to ______ us a free cup of water.", explanation: "Verb/Noun. To present or proffer something for someone to accept or reject." },
+        { word: "cart", sentence: "We put all our groceries inside the metal shopping ______.", explanation: "Noun. A strong open vehicle with two or four wheels, used for carrying loads." },
+        { word: "account", sentence: "He put money into his bank ______ to save up for a new bicycle.", explanation: "Noun. An arrangement with a bank where money is kept, tracked, and withdrawn." },
+        { word: "take place", sentence: "The school sports meet will ______ on the sports field next Friday.", explanation: "Idiomatic Verb Phrase. To happen, occur, or be conducted." },
+        { word: "prince", sentence: "The brave ______ lived in a grand castle alongside the king and queen.", explanation: "Noun. A son or close male relative of a king or queen." },
+        { word: "click", sentence: "Use your computer mouse to ______ on the blue button.", explanation: "Verb/Noun. To press a button on a computer mouse or device; a short, sharp sound." },
+        { word: "voice", sentence: "She spoke in a very quiet ______ because the baby was sleeping soundly.", explanation: "Noun. The sound produced in a person's larynx and uttered through the mouth." },
+        { word: "request", sentence: "The teacher granted my ______ to borrow an extra reading book.", explanation: "Noun/Verb. An act of asking politely or formally for something." }
+    ];
+
+    // Function to dynamically generate spelling hints matching requirements
+    function generateHint(word) {
+        return word.split('').map((char, index, arr) => {
+            if (char === ' ') return ' ';
+            const isFirst = index === 0 || arr[index - 1] === ' ';
+            const isLast = index === arr.length - 1 || arr[index + 1] === ' ';
+            if (isFirst || isLast) {
+                return char;
+            }
+            return '_';
+        }).join('');
+    }
+
+    // Initialize Quiz UI
+    function initQuiz() {
+        const container = document.getElementById('questions-container');
+        container.innerHTML = '';
+        quizData.forEach((item, index) => {
+            const hint = generateHint(item.word);
+            const formattedSentence = item.sentence.replace('______', `<span class="blank-space">${hint}</span>`);
+            const questionHtml = `
+                <div class="question-item" data-index="${index}">
+                    <div class="sentence">${index + 1}. ${formattedSentence}</div>
+                    <div class="input-container">
+                        <span class="hint-badge">Hint: ${hint}</span>
+                        <input type="text" id="input-${index}" placeholder="Type your answer here..." autocomplete="off">
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', questionHtml);
+        });
+        updateDashboard();
+    }
+
+    // Process results and toggle view states
+    function checkResults() {
+        let score = 0;
+        const reviewContainer = document.getElementById('review-container');
+        reviewContainer.innerHTML = '<h3>Detailed Question Review</h3>';
+        quizData.forEach((item, index) => {
+            const userInput = document.getElementById(`input-${index}`).value.trim();
+            const isCorrect = userInput.toLowerCase() === item.word.toLowerCase();
+            if (isCorrect) score++;
+            const hint = generateHint(item.word);
+            const statusClass = isCorrect ? 'correct' : 'incorrect';
+            const statusText = isCorrect ? '✅ Correct' : '❌ Incorrect';
+            const reviewRow = `
+                <div class="result-row ${statusClass}">
+                    <strong>Question ${index + 1}: ${statusText}</strong>
+                    <p style="margin: 5px 0;"><strong>Sentence:</strong> ${item.sentence.replace('______', '<u>' + item.word + '</u>')}</p>
+                    <div class="result-meta">
+                        <span><strong>Your Answer:</strong> <code style="color: ${isCorrect ? 'green' : 'red'};">${userInput || '[Blank]'}</code></span> | 
+                        <span><strong>Correct Spelling:</strong> <code>${item.word}</code></span> |
+                        <span><strong>Provided Hint:</strong> <code style="letter-spacing:1px;">${hint}</code></span>
+                    </div>
+                    <div class="explanation">
+                        <strong>Grammar & Usage Note:</strong> ${item.explanation}
+                    </div>
+                </div>
+            `;
+            reviewContainer.insertAdjacentHTML('beforeend', reviewRow);
+        });
+        const total = quizData.length;
+        const percentage = Math.round((score / total) * 100);
+        document.getElementById('score-text').innerText = `${score} / ${total}`;
+        document.getElementById('percentage-text').innerText = `${percentage}%`;
+        saveAttempt(score, total, percentage);
+        document.getElementById('quiz-view').classList.add('hidden');
+        document.getElementById('results-view').classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Persistent storage tracking
+    function saveAttempt(score, total, percentage) {
+        const history = JSON.parse(localStorage.getItem('spelling_quiz_history')) || [];
+        const timestamp = new Date().toLocaleString();
+        history.unshift({ timestamp, score, total, percentage });
+        localStorage.setItem('spelling_quiz_history', JSON.stringify(history));
+        updateDashboard();
+    }
+
+    function updateDashboard() {
+        const history = JSON.parse(localStorage.getItem('spelling_quiz_history')) || [];
+        const emptyMsg = document.getElementById('history-empty');
+        const table = document.getElementById('history-table');
+        const tbody = document.getElementById('history-rows');
+        tbody.innerHTML = '';
+        if (history.length === 0) {
+            emptyMsg.classList.remove('hidden');
+            table.classList.add('hidden');
+            return;
+        }
+        emptyMsg.classList.add('hidden');
+        table.classList.remove('hidden');
+        history.forEach(attempt => {
+            const row = `
+                <tr>
+                    <td>${attempt.timestamp}</td>
+                    <td>${attempt.score} / ${attempt.total}</td>
+                    <td style="font-weight: bold; color: var(--primary);">${attempt.percentage}%</td>
+                </tr>
+            `;
+            tbody.insertAdjacentHTML('beforeend', row);
+        });
+    }
+
+    function restartQuiz() {
+        document.getElementById('quiz-form').reset();
+        document.getElementById('quiz-view').classList.remove('hidden');
+        document.getElementById('results-view').classList.add('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Run setup script
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>
