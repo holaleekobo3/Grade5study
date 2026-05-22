@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 8: Save Our World - Grade 5 Grammar Quiz</title>
+    <style>
+        :root {
+            --primary-color: #2e7d32;
+            --primary-light: #e8f5e9;
+            --secondary-color: #0277bd;
+            --secondary-light: #e1f5fe;
+            --text-color: #333333;
+            --bg-color: #f9f9f9;
+            --card-bg: #ffffff;
+            --error-color: #c62828;
+            --success-color: #2e7d32;
+            --border-radius: 8px;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, "Microsoft JhengHei";
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-color), #4caf50);
+            color: white;
+            padding: 30px 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        header p {
+            margin: 10px 0 0 0;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .section-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--secondary-color);
+        }
+
+        .section-title {
+            color: var(--secondary-color);
+            margin-top: 0;
+            border-bottom: 2px solid var(--secondary-light);
+            padding-bottom: 8px;
+            font-size: 1.3rem;
+        }
+
+        .reading-passage {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            border: 1px solid #e0e0e0;
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+            text-align: justify;
+        }
+
+        .question-block {
+            margin-bottom: 22px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #e0e0e0;
+        }
+
+        .question-block:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 12px;
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        @media (min-width: 600px) {
+            .options-container.grid-2 {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: #fafafa;
+            border: 1px solid #e0e0e0;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-label:hover {
+            background-color: var(--secondary-light);
+            border-color: var(--secondary-color);
+        }
+
+        .option-label input {
+            margin-right: 12px;
+            transform: scale(1.1);
+        }
+
+        /* Review and Results styling */
+        .result-box {
+            display: none;
+            background-color: var(--primary-light);
+            border: 2px solid var(--primary-color);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .score-display {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 15px 0;
+        }
+
+        .explanation {
+            margin-top: 10px;
+            padding: 12px;
+            background-color: #fffde7;
+            border-left: 4px solid #fbc02d;
+            font-size: 0.95rem;
+            display: none;
+            border-radius: 4px;
+        }
+
+        .correct-answer {
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        .wrong-answer {
+            color: var(--error-color);
+            text-decoration: line-through;
+        }
+
+        .action-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            display: block;
+            margin: 30px auto;
+            transition: background-color 0.2s;
+        }
+
+        .action-btn:hover {
+            background-color: #1b5e20;
+        }
+
+        /* History Dashboard Styling */
+        .dashboard-card {
+            background-color: #ffffff;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            margin-top: 25px;
+            border-top: 5px solid #757575;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.95rem;
+        }
+
+        .history-table th, .history-table td {
+            border: 1px solid #e0e0e0;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .history-table th {
+            background-color: #f5f5f5;
+            font-weight: 600;
+        }
+
+        .clear-btn {
+            background-color: #757575;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            font-size: 0.85rem;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .clear-btn:hover {
+            background-color: #616161;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+            background-color: #ff9800;
+            margin-left: 8px;
+        }
+
+        .badge.certainty { background-color: #2196f3; }
+        .badge.possibility { background-color: #9c27b0; }
+        .badge.reading { background-color: #009688; }
+        
+        .back-link {
+            text-decoration: none;
+            font-weight: bold;
+            color: var(--primary-color);
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="english.html" class="back-link">⬅ 返回目錄</a>
+
+    <header>
+        <h1>Unit 8: Save Our World</h1>
+        <p>國小五年級英語文法與閱讀綜合測驗 (Grade 5 Comprehensive English Quiz)</p>
+        <p style="font-size: 0.9rem; margin-top: 5px;">符合台灣108課綱及TOEFL Primary Step 2 標準</p>
+    </header>
+
+    <div id="resultBox" class="result-box">
+        <h2>測驗結果 (Quiz Results)</h2>
+        <div id="scoreDisplay" class="score-display">0 / 100</div>
+        <p id="resultFeedback"></p>
+        <button class="action-btn" style="margin: 10px auto;" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">查看錯題解析</button>
+    </div>
+
+    <form id="quizForm" onsubmit="event.preventDefault(); submitQuiz();">
+        
+        <div class="section-card">
+            <h2 class="section-title">Part A: Grammar Application (文法應用)</h2>
+            <p style="color: #666; font-size: 0.9rem; margin-bottom: 20px;">請根據第一條條件句 (First Conditional) 與不確定語氣助動詞的語法規則，選出最正確的答案。</p>
+            
+            <div class="question-block" id="q1_block">
+                <div class="question-text">1. If the weather is warm tomorrow, the snow ________ very fast. <span class="badge certainty">Certainty</span></div>
+                <div class="options-container grid-2">
+                    <label class="option-label"><input type="radio" name="q1" value="A"> A) melts</label>
+                    <label class="option-label"><input type="radio" name="q1" value="B"> B) will melt</label>
+                    <label class="option-label"><input type="radio" name="q1" value="C"> C) melted</label>
+                    <label class="option-label"><input type="radio" name="q1" value="D"> D) is melting</label>
+                </div>
+                <div class="explanation" id="exp_q1">正確答案：B。If引導的從屬子句使用現在簡單式(is)，主要子句表達預期發生的結果，應使用「will + 原形動詞」。</div>
+            </div>
+
+            <div class="question-block" id="q2_block">
+                <div class="question-text">2. Many sea animals ________ their homes if humans continue to pollute the oceans. <span class="badge certainty">Certainty</span></div>
+                <div class="options-container grid-2">
+                    <label class="option-label"><input type="radio" name="q2" value="A"> A) lose</label>
+                    <label class="option-label"><input type="radio" name="q2" value="B"> B) lost</label>
+                    <label class="option-label"><input type="radio" name="q2" value="C"> C) will lose</label>
+                    <label class="option-label"><input type="radio" name="q2" value="D"> D) going to lose</label>
+                </div>
+                <div class="explanation" id="exp_q2">正確答案：C。If引導的條件子句在後面(if humans continue...)，主要子句放在前面，需使用「will + 原形動詞」表示確定會發生的結果。</div>
+            </div>
+
+            <div class="question-block" id="q3_block">
+                <div class="question-text">3. If you do not recycle that plastic bottle, it ________ in the environment for hundreds of years. <span class="badge certainty">Certainty</span></div>
+                <div class="options-container grid-2">
+                    <label class="option-label"><input type="radio" name="q3" value="A"> A) stays</label>
+                    <label class="option-label"><input type="radio" name="q3" value="B"> B) stay</label>
+                    <label class="option-label"><input type="radio" name="q3" value="C"> C) will stay</label>
+                    <label class="option-label"><input type="radio" name="q3" value="D"> D) stayed</label>
+                </div>
+                <div class="explanation" id="exp_q3">正確答案：C。條件子句使用現在簡單式的否定型(do not recycle)，主要子句用will搭配原形動詞表示必然發生的後果。</div>
+            </div>
+
+            <div class="question-block" id="q4_block">
+                <div class="question-text">4. Scientists are not 100% sure, but global warming ________ cause more storms in the future. <span class="badge possibility">Possibility</span></div>
+                <div class="options-container grid-2">
+                    <label class="option-label"><input type="radio" name="q4" value="A"> A) will definitely</label>
+                    <label class="option-label"><input type="radio" name="q4" value="B"> B) won't</label>
+                    <label class="option-label"><input type="radio" name="q4" value="C"> C) might</label>
+                    <label class="option-label"><input type="radio" name="q4" value="D"> D) does</label>
+                </div>
+                <div class="explanation" id="exp_q4">正確答案：C。題目提及「not 100% sure」(非百分之百確定)，表示一種未知的可能性，故應選代表可能性的助動詞 might。</div>
+            </div>
+
+            <div class="question-block" id="q5_block">
+                <div class="question-text">5. Choose the sentence with the CORRECT punctuation (標點符號).</div>
+                <div class="options-container">
+                    <label class="option-label"><input type="radio" name="q5" value="A"> A) If we save water we will help the Earth.</label>
+                    <label class="option-label"><input type="radio" name="q5" value="B"> B) If we save water, we will help the Earth.</label>
+                    <label class="option-label"><input type="radio" name="q5" value="C"> C) We will help the Earth, if we save water.</label>
+                    <label class="option-label"><input type="radio" name="q5" value="D"> D) If, we save water we will help the Earth.</label>
+                </div>
+                <div class="explanation" id="exp_q5">正確答案：B。當 If 子句放在句首時，與主要子句之間必須加上逗號(,)隔開；若主要子句在前，則不需加逗號。</div>
+            </div>
+
+            <div class="question-block" id="q6_block">
+                <div class="question-text">6. If everyone ________ public transportation, the air will become much cleaner. <span class="badge certainty">Certainty</span></div>
+                <div class="options-container grid-2">
+                    <label class="option-label"><input type="radio" name="q6" value="A"> A) uses</label>
+                    <label class="option-label"><input type="radio" name="q6" value="B"> B) use</label>
+                    <label class="option-label"><input type="radio" name="q6" value="C"> C) will use</label>
+                    <label class="option-label"><input type="radio" name="q6" value="D"> D) used</label>
+                </div>
+                <div class="explanation" id="exp_q6">正確答案：A。If引導的條件子句中要使用現在簡單式代替未來式。主詞 everyone 視為單數，因此動詞 use 要加 s 變成 uses。</div>
+            </div>
+
+            <div class="question-block" id="q7_block">
+                <div class="question-text">7. If we do not protect the forests, wild animals ________ have enough food to eat. <span class="badge certainty">Certainty</span></div>
+                <div class="options-container grid-2">
+                    <label class="option-label"><input type="radio" name="q7" value="A"> A) don't</label>
+                    <label class="option-label"><input type="radio" name="q7" value="B"> B) won't</label>
+                    <label class="option-label"><input type="radio" name="q7" value="C"> C) wouldn't</label>
+                    <label class="option-label"><input type="radio" name="q7" value="D"> D) haven't</label>
+                </div>
+                <div class="explanation" id="exp_q7">正確答案：B。主要子句表否定且具確定性，使用 won't (will not) 搭配原形動詞 have。</div>
+            </div>
+
+            <div class="question-block" id="q8_block">
+                <div class="question-text">8. Look at the cloudy sky! If it rains, the outdoor Earth Day party ________ be canceled, but they haven't decided yet. <span class="badge possibility">Possibility</span></div>
+                <div class="options-container grid-2">
+                    <label class="option-label"><input type="radio" name="q8" value="A"> A) will</label>
+                    <label class="option-label"><input type="radio" name="q8" value="B"> B) may</label>
+                    <label class="option-label"><input type="radio" name="q8" value="C"> C) is</label>
+                    <label class="option-label"><input type="radio" name="q8" value="D"> D) won't</label>
+                </div>
+                <div class="explanation" id="exp_q8">正確答案：B。後半句提到「they haven't decided yet」(他們還沒決定)，表示這件事是不確定的，所以選表示可能性的助動詞 may。</div>
+            </div>
+
+            <div class="question-block" id="q9_block">
+                <div class="question-text">9. If the sea level ________ too much, coastal cities will face severe floods. <span class="badge certainty">Certainty</span></div>
+                <div class="options-container grid-2">
+                    <label class="option-label"><input type="radio" name="q9" value="A"> A) rise</label>
+                    <label class="option-label"><input type="radio" name="q9" value="B"> B) rises</label>
+                    <label class="option-label"><input type="radio" name="q9" value="C"> C) will rise</label>
+                    <label class="option-label"><input type="radio" name="q9" value="D"> D) rising</label>
+                </div>
+                <div class="explanation" id="exp_q9">正確答案：B。If 子句內使用現在簡單式。主詞 the sea level（海平面）是不可數名詞，視為單數，動詞用 rises。</div>
+            </div>
+
+            <div class="question-block" id="q10_block">
+                <div class="question-text">10. If we plant more trees, they ________ carbon dioxide from the air. <span class="badge certainty">Certainty</span></div>
+                <div class="options-container grid-2">
+                    <label class="option-label"><input type="radio" name="q10" value="A"> A) take in</label>
+                    <label class="option-label"><input type="radio" name="q10" value="B"> B) took in</label>
+                    <label class="option-label"><input type="radio" name="q10" value="C"> C) will take in</label>
+                    <label class="option-label"><input type="radio" name="q10" value="D"> D) are taking in</label>
+                </div>
+                <div class="explanation" id="exp_q10">正確答案：C。主要子句說明種樹之後會帶來的必然結果，應使用第一條件句的標準結構「will + 原形動詞」。</div>
+            </div>
+
+            <div class="question-block" id="q11_block">
+                <div class="question-text">11. There is a small chance, but we ________ save the endangered birds if we act immediately. <span class="badge possibility">Possibility</span></div>
+                <div class="options-container grid-2">
+                    <label class="option-label"><input type="radio" name="q11" value="A"> A) will definitely</label>
+                    <label class="option-label"><input type="radio" name="q11" value="B"> B) could</label>
+                    <label class="option-label"><input type="radio" name="q11" value="C"> C) can't</label>
+                    <label class="option-label"><input type="radio" name="q11" value="D"> D) shouldn't</label>
+                </div>
+                <div class="explanation" id="exp_q11">正確答案：B。關鍵詞「There is a small chance」（有一絲機會），代表這並非百分之百保證，而是一種弱可能性，應選 could。</div>
+            </div>
+
+            <div class="question-block" id="q12_block">
+                <div class="question-text">12. If people ________ less meat, it will help reduce green house gases. <span class="badge certainty">Certainty</span></div>
+                <div class="options-container grid-2">
+                    <label class="option-label"><input type="radio" name="q12" value="A"> A) eat</label>
+                    <label class="option-label"><input type="radio" name="q12" value="B"> B) eats</label>
+                    <label class="option-label"><input type="radio" name="q12" value="C"> C) will eat</label>
+                    <label class="option-label"><input type="radio" name="q12" value="D"> D) eating</label>
+                </div>
+                <div class="explanation" id="exp_q12">正確答案：A。If引導的條件子句主詞為複數名詞 people，因此動詞使用現在簡單式的原形動詞 eat。</div>
+            </div>
+
+            <div class="question-block" id="q13_block">
+                <div class="question-text">13. Choose the sentence that shows the result is NOT 100% certain. (選出結果「非百分之百確定」的句子)</div>
+                <div class="options-container">
+                    <label class="option-label"><input type="radio" name="q13" value="A"> A) If the temperature rises, the ice caps will melt.</label>
+                    <label class="option-label"><input type="radio" name="q13" value="B"> B) If the temperature rises, the ice caps may melt.</label>
+                    <label class="option-label"><input type="radio" name="q13" value="C"> C) If the temperature rises, the ice caps are going to melt.</label>
+                    <label class="option-label"><input type="radio" name="q13" value="D"> D) If the temperature rises, the ice caps melt.</label>
+                </div>
+                <div class="explanation" id="exp_q13">正確答案：B。助動詞 may 代表「可能（不確定）」，而 A、C、D 選項皆表達極高的肯定或必然規則。</div>
+            </div>
+
+            <div class="question-block" id="q14_block">
+                <div class="question-text">14. If the factory ________ dumping dirty water into the river, the fish will recover. <span class="badge certainty">Certainty</span></div>
+                <div class="options-container grid-2">
+                    <label class="option-label"><input type="radio" name="q14" value="A"> A) stop</label>
+                    <label class="option-label"><input type="radio" name="q14" value="B"> B) will stop</label>
+                    <label class="option-label"><input type="radio" name="q14" value="C"> C) stops</label>
+                    <label class="option-label"><input type="radio" name="q14" value="D"> D) stopped</label>
+                </div>
+                <div class="explanation" id="exp_q14">正確答案：C。主詞 the factory 是單數名詞，所以在 If 條件子句的現在簡單式中，動詞須為單數型態 stops。</div>
+            </div>
+
+            <div class="question-block" id="q15_block">
+                <div class="question-text">15. If we don't start cleaning the beach, the trash ________ be washed into the ocean during the next storm, but we don't know the exact path of the wind. <span class="badge possibility">Possibility</span></div>
+                <div class="options-container grid-2">
+                    <label class="option-label"><input type="radio" name="q15" value="A"> A) won't</label>
+                    <label class="option-label"><input type="radio" name="q15" value="B"> B) might</label>
+                    <label class="option-label"><input type="radio" name="q15" value="C"> C) is definitely</label>
+                    <label class="option-label"><input type="radio" name="q15" value="D"> D) must not</label>
+                </div>
+                <div class="explanation" id="exp_q15">正確答案：B。因為有「we don't know the exact path...」（我們不知道精確的路徑），這代表未知的可能性，所以最適合使用 might。</div>
+            </div>
+
+            <div class="question-block" id="q16_block">
+                <div class="question-text">16. The Arctic animals might lose their habitats if the world ________ warmer. <span class="badge possibility">Possibility</span></div>
+                <div class="options-container grid-2">
+                    <label class="option-label"><input type="radio" name="q16" value="A"> A) get</label>
+                    <label class="option-label"><input type="radio" name="q16" value="B"> B) gets</label>
+                    <label class="option-label"><input type="radio" name="q16" value="C"> C) will get</label>
+                    <label class="option-label"><input type="radio" name="q16" value="D"> D) got</label>
+                </div>
+                <div class="explanation" id="exp_q16">正確答：B。雖然主要子句用了 might 表可能性，但 if 引導的條件子句規則不變，依然使用現在簡單式。主詞 the world 為單數，故選 gets。</div>
+            </div>
+
+            <div class="question-block" id="q17_block">
+                <div class="question-text">17. Identify the grammatically CORRECT sentence below.</div>
+                <div class="options-container">
+                    <label class="option-label"><input type="radio" name="q17" value="A"> A) If we will turn off the lights, we will save electricity.</label>
+                    <label class="option-label"><input type="radio" name="q17" value="B"> B) If we turn off the lights, we will save electricity.</label>
+                    <label class="option-label"><input type="radio" name="q17" value="C"> C) If we turn off the lights we may saved electricity.</label>
+                    <label class="option-label"><input type="radio" name="q17" value="D"> D) We save electricity if we will turn off the lights.</label>
+                </div>
+                <div class="explanation" id="exp_q17">正確答案：B。If 子句不可使用未來式 will，應使用現在簡單式 turn off；主要子句用 will save。且句首有 If，中間有逗號。</div>
+            </div>
+
+            <div class="question-block" id="q18_block">
+                <div class="question-text">18. If a student ________ paper bags instead of plastic ones, they help the trees. <span class="badge certainty">Certainty</span></div>
+                <div class="options-container grid-2">
+                    <label class="option-label"><input type="radio" name="q18" value="A"> A) uses</label>
+                    <label class="option-label"><input type="radio" name="q18" value="B"> B) using</label>
+                    <label class="option-label"><input type="radio" name="q18" value="C"> C) use</label>
+                    <label class="option-label"><input type="radio" name="q18" value="D"> D) will use</label>
+                </div>
+                <div class="explanation" id="exp_q18">正確答案：A。主詞 a student 為單數名詞，If 條件子句內使用現在簡單式單數動詞 uses。</div>
+            </div>
+
+            <div class="question-block" id="q19_block">
+                <div class="question-text">19. If you leave the tap running while brushing your teeth, you ________ tons of fresh water. <span class="badge certainty">Certainty</span></div>
+                <div class="options-container grid-2">
+                    <label class="option-label"><input type="radio" name="q19" value="A"> A) waste</label>
+                    <label class="option-label"><input type="radio" name="q19" value="B"> B) will waste</label>
+                    <label class="option-label"><input type="radio" name="q19" value="C"> C) wasted</label>
+                    <label class="option-label"><input type="radio" name="q19" value="D"> D) might not waste</label>
+                </div>
+                <div class="explanation" id="exp_q19">正確答案：B。開水龍頭刷牙必然會造成浪費，這是客觀預測的結果，因此主要子句用「will + 原形動詞」。</div>
+            </div>
+
+            <div class="question-block" id="q20_block">
+                <div class="question-text">20. Coral reefs ________ die if the seawater temperature continues to go up, but scientists are hoping some corals can adapt. <span class="badge possibility">Possibility</span></div>
+                <div class="options-container grid-2">
+                    <label class="option-label"><input type="radio" name="q20" value="A"> A) might</label>
+                    <label class="option-label"><input type="radio" name="q20" value="B"> B) won't</label>
+                    <label class="option-label"><input type="radio" name="q20" value="C"> C) are not</label>
+                    <label class="option-label"><input type="radio" name="q20" value="D"> D) did</label>
+                </div>
+                <div class="explanation" id="exp_q20">正確答案：A。後半句說科學家希望珊瑚能適應，表示死去的結果並非绝对，而是一種可能發生的威脅，因此選 might。</div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2 class="section-title">Part B: Reading Comprehension 1 (閱讀理解一)</h2>
+            <div class="reading-passage">
+                <strong>The Green Campus Project</strong><br><br>
+                Greenwood Elementary School is starting a new project next Monday. The students want to make their school clean and green. If they collect 500 kilograms of paper and plastic bottles in one month, the principal will throw a big "Zero-Waste Pizza Party" for the whole school. 
+                <br><br>
+                The science teacher, Mr. Green, explains that if students recycle more, less garbage will go into the local landfill. He tells the class, "If we work together, we will definitely reach our goal. However, if we do not sort our trash correctly, the recycling factory might not accept our boxes. We must be very careful."
+                <br><br>
+                Many students are excited. Lily, a grade 5 student, says, "If my friends and I bring old newspapers from home, we will reach the goal faster. If we succeed, our campus will become a model for other schools in the city!"
+            </div>
+
+            <div class="question-block" id="q21_block">
+                <div class="question-text">21. According to the story, what will happen if the students successfully collect 500 kilograms of recyclable materials? <span class="badge reading">Inference</span></div>
+                <div class="options-container">
+                    <label class="option-label"><input type="radio" name="q21" value="A"> A) Mr. Green will buy them new science books.</label>
+                    <label class="option-label"><input type="radio" name="q21" value="B"> B) The school will get a prize from the government.</label>
+                    <label class="option-label"><input type="radio" name="q21" value="C"> C) The principal will host a pizza party for the school.</label>
+                    <label class="option-label"><input type="radio" name="q21" value="D"> D) They will visit a recycling factory next week.</label>
+                </div>
+                <div class="explanation" id="exp_q21">正確答案：C。根據文章第一段「...the principal will throw a big 'Zero-Waste Pizza Party' for the whole school.」可推得此結果。</div>
+            </div>
+
+            <div class="question-block" id="q22_block">
+                <div class="question-text">22. What is a possible negative outcome if students are careless when sorting the trash? <span class="badge reading">Inference</span></div>
+                <div class="options-container">
+                    <label class="option-label"><input type="radio" name="q22" value="A"> A) The pizza party will definitely be canceled immediately.</label>
+                    <label class="option-label"><input type="radio" name="q22" value="B"> B) The recycling factory might refuse to take their boxes.</label>
+                    <label class="option-label"><input type="radio" name="q22" value="C"> C) Students will have to pay money to Mr. Green.</label>
+                    <label class="option-label"><input type="radio" name="q22" value="D"> D) Less paper will be brought from home.</label>
+                </div>
+                <div class="explanation" id="exp_q22">正確答案：B。文章第二段提到：「...if we do not sort our trash correctly, the recycling factory might not accept our boxes.」由此可知。</div>
+            </div>
+
+            <div class="question-block" id="q23_block">
+                <div class="question-text">23. Based on Mr. Green's words, what is a CERTAIN result of recycling more? <span class="badge reading">Inference</span></div>
+                <div class="options-container">
+                    <label class="option-label"><input type="radio" name="q23" value="A"> A) Less garbage will go into the city's landfill.</label>
+                    <label class="option-label"><input type="radio" name="q23" value="B"> B) The students will win a recycling contest.</label>
+                    <label class="option-label"><input type="radio" name="q23" value="C"> C) The local recycling factory may close down.</label>
+                    <label class="option-label"><input type="radio" name="q23" value="D"> D) Every student will get an A in science class.</label>
+                </div>
+                <div class="explanation" id="exp_q23">正確答案：A。文中第二段指出「if students recycle more, less garbage will go into the local landfill.」使用will表示確定的結果。</div>
+            </div>
+
+            <div class="question-block" id="q24_block">
+                <div class="question-text">24. What will happen if Lily and her friends bring newspapers from home? <span class="badge reading">Inference</span></div>
+                <div class="options-container">
+                    <label class="option-label"><input type="radio" name="q24" value="A"> A) They might get tired of the project.</label>
+                    <label class="option-label"><input type="radio" name="q24" value="B"> B) The school will run out of space for paper.</label>
+                    <label class="option-label"><input type="radio" name="q24" value="C"> C) They will achieve their 500 kg goal more quickly.</label>
+                    <label class="option-label"><input type="radio" name="q24" value="D"> D) The principal will give them extra pizza.</label>
+                </div>
+                <div class="explanation" id="exp_q24">正確答案：C。第三段Lily提到「If my friends and I bring old newspapers from home, we will reach the goal faster.」。</div>
+            </div>
+
+            <div class="question-block" id="q25_block">
+                <div class="question-text">25. Which statement can be inferred (推論) from the reading passage? <span class="badge reading">Inference</span></div>
+                <div class="options-container">
+                    <label class="option-label"><input type="radio" name="q25" value="A"> A) The project has already finished and was very successful.</label>
+                    <label class="option-label"><input type="radio" name="q25" value="B"> B) Greenwood Elementary is currently the only green school in the city.</label>
+                    <label class="option-label"><input type="radio" name="q25" value="C"> C) The success of the project relies on the students' actions and cooperation.</label>
+                    <label class="option-label"><input type="radio" name="q25" value="D"> D) Plastic bottles are harder to collect than old newspapers.</label>
+                </div>
+                <div class="explanation" id="exp_q25">正確答案：C。整篇文章利用多個條件句（if...）說明計畫成敗完全取決於學生的行動（是否分類正確、是否帶報紙、是否合作）。</div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2 class="section-title">Part C: Reading Comprehension 2 (閱讀理解二)</h2>
+            <div class="reading-passage">
+                <strong>The Uncertain Future of Sea Turtles</strong><br><br>
+                Sea turtles are beautiful marine animals, but they face many dangers today. Because of global warming, ocean levels are rising, and sandy beaches are disappearing. Sea turtles lay their eggs on these beaches. If their nesting beaches disappear, sea turtles might not find a safe place to lay eggs, which could lead to a drop in their population.
+                <br><br>
+                Another big threat is plastic pollution. Turtles often mistake plastic bags for jellyfish, which is their favorite food. If a turtle eats plastic, it may become very sick or even die. 
+                <br><br>
+                Marine scientists say that if we reduce plastic waste on land, we will protect these ancient creatures. However, if governments do not create stronger laws to stop ocean pollution soon, some species of sea turtles could disappear completely within fifty years. Their survival is in our hands.
+            </div>
+
+            <div class="question-block" id="q26_block">
+                <div class="question-text">26. Why are disappearing beaches a threat to sea turtles according to the text? <span class="badge reading">Inference</span></div>
+                <div class="options-container">
+                    <label class="option-label"><input type="radio" name="q26" value="A"> A) Turtles will not be able to swim near the land.</label>
+                    <label class="option-label"><input type="radio" name="q26" value="B"> B) Turtles might not have safe places to lay their eggs.</label>
+                    <label class="option-label"><input type="radio" name="q26" value="C"> C) Humans will catch more turtles on the beaches.</label>
+                    <label class="option-label"><input type="radio" name="q26" value="D"> D) The sand will become too hot for adult turtles.</label>
+                </div>
+                <div class="explanation" id="exp_q26">正確答案：B。第一段指出「If their nesting beaches disappear, sea turtles might not find a safe place to lay eggs...」。</div>
+            </div>
+
+            <div class="question-block" id="q27_block">
+                <div class="question-text">27. What is a POSSIBLE result if a sea turtle eats a plastic bag? <span class="badge reading">Inference</span></div>
+                <div class="options-container">
+                    <label class="option-label"><input type="radio" name="q27" value="A"> A) It will immediately learn to find actual jellyfish.</label>
+                    <label class="option-label"><input type="radio" name="q27" value="B"> B) It will definitely swim faster to escape danger.</label>
+                    <label class="option-label"><input type="radio" name="q27" value="C"> C) It may get sick or even lose its life.</label>
+                    <label class="option-label"><input type="radio" name="q27" value="D"> D) It could change the color of its shell.</label>
+                </div>
+                <div class="explanation" id="exp_q27">正確答案：C。第二段指出「If a turtle eats plastic, it may become very sick or even die.」這裡使用 may 表可能性。</div>
+            </div>
+
+            <div class="question-block" id="q28_block">
+                <div class="question-text">28. Based on the passage, what is a DEFINITE (確定的) outcome if humans decrease plastic waste on land? <span class="badge reading">Inference</span></div>
+                <div class="options-container">
+                    <label class="option-label"><input type="radio" name="q28" value="A"> A) Sea turtles will be protected.</label>
+                    <label class="option-label"><input type="radio" name="q28" value="B"> B) Sea levels will stop rising immediately.</label>
+                    <label class="option-label"><input type="radio" name="q28" value="C"> C) Beaches will grow larger.</label>
+                    <label class="option-label"><input type="radio" name="q28" value="D"> D) Jellyfish numbers will grow quickly.</label>
+                </div>
+                <div class="explanation" id="exp_q28">正確答案：A。第三段明確說明：「...if we reduce plastic waste on land, we will protect these ancient creatures.」，will 表確定發生的積極結果。</div>
+            </div>
+
+            <div class="question-block" id="q29_block">
+                <div class="question-text">29. What might happen if governments do NOT make stronger laws to prevent ocean pollution? <span class="badge reading">Inference</span></div>
+                <div class="options-container">
+                    <label class="option-label"><input type="radio" name="q29" value="A"> A) Scientists will stop studying turtles.</label>
+                    <label class="option-label"><input type="radio" name="q29" value="B"> B) Some sea turtle species could completely vanish in 50 years.</label>
+                    <label class="option-label"><input type="radio" name="q29" value="C"> C) Turtles will move to live on dry land.</label>
+                    <label class="option-label"><input type="radio" name="q29" value="D"> D) Plastic bags will turn into jellyfish automatically.</label>
+                </div>
+                <div class="explanation" id="exp_q29">正確答案：B。第三段最後提到「...if governments do not create stronger laws... some species of sea turtles could disappear completely...」。</div>
+            </div>
+
+            <div class="question-block" id="q30_block">
+                <div class="question-text">30. Why did the author use the words "might", "may", and "could" throughout most of the article? <span class="badge reading">Inference</span></div>
+                <div class="options-container">
+                    <label class="option-label"><input type="radio" name="q30" value="A"> A) To show that sea turtles are already extinct.</label>
+                    <label class="option-label"><input type="radio" name="q30" value="B"> B) To prove that scientists are wrong about global warming.</label>
+                    <label class="option-label"><input type="radio" name="q30" value="C"> C) To explain that these future dangers are possible but can still be prevented if we change.</label>
+                    <label class="option-label"><input type="radio" name="q30" value="D"> D) To show that turtles only live for a short time.</label>
+                </div>
+                <div class="explanation" id="exp_q30">正確答案：C。這些表達可能性的助動詞用來點出「潛在的未來威脅」，表示若人類此時採取行動改變，惡果就不一定會發生。</div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <h2 class="section-title">Part D: Sentence Completion (句子填空)</h2>
+            <p style="color: #666; font-size: 0.9rem; margin-bottom: 20px;">請依據句中提示的「確定程度(Certainty / Possibility)」，選出最符合語境的助動詞。</p>
+
+            <div class="question-block" id="q31_block">
+                <div class="question-text">31. If you drop your trash on the floor, the teacher ________ be angry with you. (提示: 這是必然且確定的結果)</div>
+                <div class="options-container grid-2">
+                    <label class="option-label"><input type="radio" name="q31" value="A"> A) might</label>
+                    <label class="option-label"><input type="radio" name="q31" value="B"> B) will</label>
+                    <label class="option-label"><input type="radio" name="q31" value="C"> C) could</label>
+                    <label class="option-label"><input type="radio" name="q31" value="D"> D) may</label>
+                </div>
+                <div class="explanation" id="exp_q31">正確答案：B。提示註明是「必然且確定的結果」，在條件句的主要子句中應使用將來確定式助動詞 will。</div>
+            </div>
+
+            <div class="question-block" id="q32_block">
+                <div class="question-text">32. If we keep the lights on all night, we ________ waste electricity. (提示: 根據科學事實，這是必然的後果)</div>
+                <div class="options-container grid-2">
+                    <label class="option-label"><input type="radio" name="q32" value="A"> A) will</label>
+                    <label class="option-label"><input type="radio" name="q32" value="B"> B) may not</label>
+                    <label class="option-label"><input type="radio" name="q32" value="C"> C) might</label>
+                    <label class="option-label"><input type="radio" name="q32" value="D"> D) could</label>
+                </div>
+                <div class="explanation" id="exp_q32">正確答案：A。通宵開燈必然造成電力浪費，屬於極度確定的客觀事實，故用 will。</div>
+            </div>
+
+            <div class="question-block" id="q33_block">
+                <div class="question-text">33. If we don't protect the polar bears, they ________ survive in the future. (提示: 100% 確定無法生存)</div>
+                <div class="options-container grid-2">
+                    <label class="option-label"><input type="radio" name="q33" value="A"> A) might not</label>
+                    <label class="option-label"><input type="radio" name="q33" value="B"> B) won't</label>
+                    <label class="option-label"><input type="radio" name="q33" value="C"> C) may</label>
+                    <label class="option-label"><input type="radio" name="q33" value="D"> D) could</label>
+                </div>
+                <div class="explanation" id="exp_q33">正確答案：B。提示強調「100% 確定無法生存」，表示確定否定的未來結果，應使用 won't。</div>
+            </div>
+
+            <div class="question-block" id="q34_block">
+                <div class="question-text">34. If your family buys an electric car, you ________ reduce your carbon footprint, but it depends on how often you drive it. (提示: 有此可能性，但非绝对)</div>
+                <div class="options-container grid-2">
+                    <label class="option-label"><input type="radio" name="q34" value="A"> A) will definitely</label>
+                    <label class="option-label"><input type="radio" name="q34" value="B"> B) might</label>
+                    <label class="option-label"><input type="radio" name="q34" value="C"> C) won't</label>
+                    <label class="option-label"><input type="radio" name="q34" value="D"> D) are</label>
+                </div>
+                <div class="explanation" id="exp_q34">正確答案：B。由提示「有此可能性，但非絕對」及「depends on how often you drive」可知此結果帶有不確定性，應選 might。</div>
+            </div>
+
+            <div class="question-block" id="q35_block">
+                <div class="question-text">35. If we don't clean the local park, people ________ want to go there anymore, though some people might not care. (提示: 表示不確定的否定預測)</div>
+                <div class="options-container grid-2">
+                    <label class="option-label"><input type="radio" name="q35" value="A"> A) won't</label>
+                    <label class="option-label"><input type="radio" name="q35" value="B"> B) might not</label>
+                    <label class="option-label"><input type="radio" name="q35" value="C"> C) don't</label>
+                    <label class="option-label"><input type="radio" name="q35" value="D"> D) are going to</label>
+                </div>
+                <div class="explanation" id="exp_q35">正確答案：B。後句補充說明「有些人在意、有些人不在意」，表示這是一種不確定的否定預測，故選擇 might not 最為貼切。</div>
+            </div>
+        </div>
+
+        <button type="submit" class="action-btn" id="submitBtn">提交答案 (Submit Quiz)</button>
+    </form>
+
+    <div class="dashboard-card">
+        <h3>歷史成績儀表板 (LocalStorage History Dashboard)</h3>
+        <p style="font-size: 0.85rem; color: #666;">您的瀏覽器會自動保存每次在本機做題的歷史數據。</p>
+        <table class="history-table">
+            <thead>
+                <tr>
+                    <th>測驗時間 (Time)</th>
+                    <th>得分 (Score)</th>
+                    <th>評語 (Feedback)</th>
+                </tr>
+            </thead>
+            <tbody id="historyBody">
+                <tr>
+                    <td colspan="3" style="color:#999;">目前尚無作答紀錄</td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="clear-btn" onclick="clearHistory()">清除歷史紀錄 (Clear History)</button>
+    </div>
+</div>
+
+<script>
+    // Correct Answer Key Mapping
+    const answerKey = {
+        q1: "B", q2: "C", q3: "C", q4: "C", q5: "B",
+        q6: "A", q7: "B", q8: "B", q9: "B", q10: "C",
+        q11: "B", q12: "A", q13: "B", q14: "C", q15: "B",
+        q16: "B", q17: "B", q18: "A", q19: "B", q20: "A",
+        q21: "C", q22: "B", q23: "A", q24: "C", q25: "C",
+        q26: "B", q27: "C", q28: "A", q29: "B", q30: "C",
+        q31: "B", q32: "A", q33: "B", q34: "B", q35: "B"
+    };
+
+    // On page load, render history
+    document.addEventListener("DOMContentLoaded", () => {
+        renderHistory();
+    });
+
+    function submitQuiz() {
+        const form = document.getElementById("quizForm");
+        const totalQuestions = Object.keys(answerKey).length;
+        let correctCount = 0;
+        let unanswered = [];
+
+        // Grade the test
+        for (let q in answerKey) {
+            const selected = form.elements[q] ? form.elements[q].value : "";
+            if (!selected) {
+                unanswered.push(q.replace('q', ''));
+            }
+            
+            const block = document.getElementById(q + '_block');
+            const exp = document.getElementById('exp_' + q);
+            
+            // Display explanations
+            if (exp) exp.style.display = "block";
+
+            if (selected === answerKey[q]) {
+                correctCount++;
+                if (block) {
+                    block.style.backgroundColor = "var(--primary-light)";
+                    block.style.borderColor = "var(--success-color)";
+                }
+            } else {
+                if (block) {
+                    block.style.backgroundColor = "#ffebee";
+                    block.style.borderColor = "var(--error-color)";
+                }
+            }
+            
+            // Highlight options
+            if (block) {
+                const labels = block.querySelectorAll('.option-label');
+                labels.forEach(label => {
+                    const input = label.querySelector('input');
+                    if (input.value === answerKey[q]) {
+                        label.style.fontWeight = 'bold';
+                        label.style.color = 'var(--success-color)';
+                        label.style.borderColor = 'var(--success-color)';
+                        label.style.backgroundColor = 'var(--primary-light)';
+                    } else if (input.checked && input.value !== answerKey[q]) {
+                        label.style.textDecoration = 'line-through';
+                        label.style.color = 'var(--error-color)';
+                        label.style.borderColor = 'var(--error-color)';
+                    }
+                });
+            }
+        }
+
+        const score = Math.round((correctCount / totalQuestions) * 100);
+        
+        const resultBox = document.getElementById('resultBox');
+        const scoreDisplay = document.getElementById('scoreDisplay');
+        const resultFeedback = document.getElementById('resultFeedback');
+        
+        resultBox.style.display = 'block';
+        scoreDisplay.textContent = score + ' / 100';
+        
+        let feedback = '';
+        if (score >= 90) feedback = '太棒了！你的文法與閱讀能力非常優秀！🌟';
+        else if (score >= 80) feedback = '表現很好！繼續保持！👍';
+        else if (score >= 60) feedback = '不錯哦！但還有進步空間，請仔細複習錯題。💪';
+        else feedback = '加油！請務必查看下方的錯題解析，把觀念弄懂！📚';
+        
+        if (unanswered.length > 0) {
+            feedback += '<br><span style="color:var(--error-color);font-size:0.9em;">(注意：您有 ' + unanswered.length + ' 題未作答)</span>';
+        }
+        
+        resultFeedback.innerHTML = feedback;
+        
+        document.getElementById('submitBtn').disabled = true;
+        document.getElementById('submitBtn').style.opacity = '0.5';
+        document.getElementById('submitBtn').textContent = '測驗已提交';
+
+        saveHistory(score, feedback.split('<br>')[0]);
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    function saveHistory(score, feedback) {
+        const history = JSON.parse(localStorage.getItem('quizUnit8GrammarHistory') || '[]');
+        const now = new Date();
+        const timeString = now.getFullYear() + '/' + (now.getMonth() + 1) + '/' + now.getDate() + ' ' + 
+                           now.getHours().toString().padStart(2, '0') + ':' + 
+                           now.getMinutes().toString().padStart(2, '0');
+        
+        history.push({ time: timeString, score: score, feedback: feedback });
+        localStorage.setItem('quizUnit8GrammarHistory', JSON.stringify(history));
+        renderHistory();
+    }
+
+    function renderHistory() {
+        const history = JSON.parse(localStorage.getItem('quizUnit8GrammarHistory') || '[]');
+        const tbody = document.getElementById('historyBody');
+        
+        if (history.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="3" style="color:#999;">目前尚無作答紀錄</td></tr>';
+            return;
+        }
+        
+        tbody.innerHTML = '';
+        // Show newest first
+        history.slice().reverse().forEach(record => {
+            const tr = document.createElement('tr');
+            
+            let scoreColor = 'var(--text-color)';
+            if (record.score >= 90) scoreColor = 'var(--success-color)';
+            else if (record.score < 60) scoreColor = 'var(--error-color)';
+            
+            tr.innerHTML = `
+                <td>${record.time}</td>
+                <td style="font-weight:bold; color:${scoreColor}">${record.score}</td>
+                <td>${record.feedback}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function clearHistory() {
+        if (confirm('確定要清除所有的歷史紀錄嗎？這個動作無法復原。')) {
+            localStorage.removeItem('quizUnit8GrammarHistory');
+            renderHistory();
+        }
+    }
+</script>
+
+</body>
+</html>
