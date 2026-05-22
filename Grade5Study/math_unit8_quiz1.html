@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5下 數學測驗 - 單元 8：比率與百分率綜合練習卷</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ── Quiz-specific overrides ── */
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 28px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            padding: 16px 24px;
+            border-radius: 16px;
+        }
+        .quiz-header span { font-weight: 600; font-size: 1rem; color: var(--text-secondary); }
+        .quiz-header input[type="text"] {
+            background: var(--glass-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 6px 12px;
+            color: var(--text-primary);
+            font-family: 'Inter', "Microsoft JhengHei", sans-serif;
+            font-size: 1rem;
+            width: 140px;
+        }
+        #finalScoreDisplay { font-weight: 700; color: var(--accent-primary); }
+
+        .section-block { margin-bottom: 32px; }
+        .section-title {
+            display: inline-block;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: white;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            padding: 8px 20px;
+            border-radius: 99px;
+            margin-bottom: 20px;
+            letter-spacing: 0.02em;
+        }
+
+        .question-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--border-color);
+            padding: 22px 26px;
+            border-radius: 18px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s;
+        }
+        .question-card.incorrect {
+            background: rgba(239,68,68,0.05);
+            border-color: var(--accent-danger);
+        }
+        .question-card p {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .options label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 18px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+        }
+        .options label:hover { border-color: var(--accent-primary); background: var(--bg-primary); }
+        .options input[type="radio"] { accent-color: var(--accent-primary); width: 18px; height: 18px; cursor: pointer; }
+
+        .fill-input {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 6px 12px;
+            color: var(--text-primary);
+            font-family: 'Inter', "Microsoft JhengHei", sans-serif;
+            font-size: 1rem;
+            text-align: center;
+            transition: border-color 0.2s;
+        }
+        .fill-input:focus { outline: none; border-color: var(--accent-primary); }
+        .fill-input.wide   { width: 100px; }
+        .fill-input.narrow { width: 60px; }
+
+        /* 分數排列 */
+        .fraction { display: inline-flex; flex-direction: column; vertical-align: middle; align-items: center; margin: 0 4px; line-height: 1.2; }
+        .numerator { border-bottom: 1.5px solid var(--text-primary); padding: 0 5px; }
+        .denominator { padding: 0 5px; }
+
+        .feedback {
+            display: none;
+            margin-top: 14px;
+            padding: 14px 18px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        .feedback.correct { background: rgba(16,185,129,0.1); border-left: 5px solid var(--accent-success); color: var(--accent-success); }
+        .feedback.wrong   { background: rgba(239,68,68,0.08); border-left: 5px solid var(--accent-danger); color: var(--text-primary); }
+        .feedback.wrong strong { color: var(--accent-danger); }
+
+        .submit-btn {
+            display: block;
+            width: 220px;
+            margin: 36px auto 0;
+            padding: 16px;
+            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border: none;
+            border-radius: 99px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 10px 20px -5px rgba(99,102,241,0.35);
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+        .submit-btn:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 16px 30px -5px rgba(99,102,241,0.45); }
+
+        .score-display {
+            display: none;
+            text-align: center;
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin: 28px 0 10px;
+            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .back-link { display: inline-block; margin-bottom: 24px; text-decoration: none; font-weight: 600; color: var(--accent-primary); transition: opacity 0.2s; }
+        .back-link:hover { opacity: 0.75; }
+
+        /* ── History Section ── */
+        .history-section {
+            margin-top: 60px;
+            border-top: 2px solid var(--border-color);
+            padding-top: 30px;
+        }
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .history-header h2 { margin-bottom: 0; font-size: 1.4rem; }
+        .clear-btn {
+            background: var(--accent-danger);
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 99px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .clear-btn:hover { opacity: 0.8; }
+
+        .history-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+        .history-table th, .history-table td { border: 1px solid var(--border-color); padding: 12px 16px; text-align: center; }
+        .history-table th { background: var(--bg-secondary); font-weight: 700; color: var(--text-secondary); }
+        .history-table td { color: var(--text-primary); }
+        .history-table tr:hover td { background: var(--glass-bg); }
+
+        .detail-btn {
+            background: var(--accent-primary);
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+        .detail-btn:hover { opacity: 0.8; }
+
+        /* ── Modal ── */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+        }
+        .modal-content {
+            background: var(--bg-secondary);
+            margin: 6% auto;
+            padding: 30px;
+            width: 85%;
+            max-width: 640px;
+            max-height: 78vh;
+            overflow-y: auto;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+        }
+        .modal-content h2 { margin-bottom: 20px; font-size: 1.3rem; }
+        .wrong-item {
+            background: rgba(239,68,68,0.06);
+            border-left: 4px solid var(--accent-danger);
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+        .close-btn {
+            margin-top: 20px;
+            padding: 10px 24px;
+            background: var(--text-secondary);
+            color: white;
+            border: none;
+            border-radius: 99px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+        .close-btn:hover { opacity: 0.8; }
+
+        .empty-history { text-align: center; color: var(--text-secondary); padding: 30px; font-size: 1rem; }
+    </style>
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const btn = document.getElementById('themeBtn');
+            const newTheme = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            btn.innerHTML = newTheme === 'dark' ? '<span>☀️</span> 亮色模式' : '<span>🌙</span> 暗色模式';
+            localStorage.setItem('theme', newTheme);
+        }
+        window.addEventListener('DOMContentLoaded', function () {
+            const saved = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', saved);
+            if (saved === 'dark') document.getElementById('themeBtn').innerHTML = '<span>☀️</span> 亮色模式';
+            renderHistory();
+        });
+    </script>
+</head>
+<body>
+
+<div class="theme-toggle">
+    <button id="themeBtn" onclick="toggleTheme()"><span>🌙</span> 暗色模式</button>
+</div>
+
+<div class="container">
+    <a href="math.html" class="back-link">⬅ 返回數學目錄</a>
+    <h1>🔢 單元 8：比率與百分率綜合練習卷</h1>
+    <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem;">範圍：比率、百分率與除法自主複習 (108 課綱)</p>
+
+    <div class="quiz-header">
+        <span>姓名：<input type="text" id="userName" placeholder="請輸入姓名"></span>
+        <span id="finalScoreDisplay">得分：____</span>
+    </div>
+
+    <form id="mathQuiz">
+
+        <!-- 一、選擇題 -->
+        <div class="section-block">
+            <span class="section-title">一、選擇題 (每題 4 分，共 20 分)</span>
+
+            <div class="question-card" id="q_mc1">
+                <p>1. 將比率大約是 0.333 的投籃命中率寫成百分率，四捨五入法取概數到個位數是多少？</p>
+                <div class="options">
+                    <label><input type="radio" name="mc1" value="1"> (1) 3%</label>
+                    <label><input type="radio" name="mc1" value="2"> (2) 33%</label>
+                    <label><input type="radio" name="mc1" value="3"> (3) 34%</label>
+                    <label><input type="radio" name="mc1" value="4"> (4) 30%</label>
+                </div>
+                <div class="feedback" id="fb_mc1">
+                    <strong>【正確解答：(2) 33%】</strong><br>
+                    解析：0.333 化成百分率為 33.3%。利用四捨五入法取到個位數，要看小數點後第一位（十分位）是 3，小於 5 捨去，所以大約是 33%。
+                </div>
+            </div>
+
+            <div class="question-card" id="q_mc2">
+                <p>2. 一件定價 2000 的外套打「七五折」出售，這代表售價是定價的多少？</p>
+                <div class="options">
+                    <label><input type="radio" name="mc2" value="1"> (1) 7.5%</label>
+                    <label><input type="radio" name="mc2" value="2"> (2) 25%</label>
+                    <label><input type="radio" name="mc2" value="3"> (3) 75%</label>
+                    <label><input type="radio" name="mc2" value="4"> (4) 0.75%</label>
+                </div>
+                <div class="feedback" id="fb_mc2">
+                    <strong>【正確解答：(3) 75%】</strong><br>
+                    解析：「七五折」代表售價是定價的 75%（或 0.75 倍）。
+                </div>
+            </div>
+
+            <div class="question-card" id="q_mc3">
+                <p>3. 某款運動鞋舉辦「30% off」的促銷活動，等同於打幾折出售？</p>
+                <div class="options">
+                    <label><input type="radio" name="mc3" value="1"> (1) 三折</label>
+                    <label><input type="radio" name="mc3" value="2"> (2) 三五折</label>
+                    <label><input type="radio" name="mc3" value="3"> (3) 七折</label>
+                    <label><input type="radio" name="mc3" value="4"> (4) 七五折</label>
+                </div>
+                <div class="feedback" id="fb_mc3">
+                    <strong>【正確解答：(3) 七折】</strong><br>
+                    解析：「30% off」代表售價是定價扣除 30%，也就是定價的 100% － 30% ＝ 70%，在台灣習慣稱為打「七折」。
+                </div>
+            </div>
+
+            <div class="question-card" id="q_mc4">
+                <p>4. 一杯 500 毫升的木瓜牛奶中含有 50 毫升 of 純木瓜原汁，原汁佔這杯飲料的比率是多少？</p>
+                <div class="options">
+                    <label><input type="radio" name="mc4" value="1"> (1) 0.1</label>
+                    <label><input type="radio" name="mc4" value="2"> (2) 0.5</label>
+                    <label><input type="radio" name="mc4" value="3"> (3) 10</label>
+                    <label><input type="radio" name="mc4" value="4"> (4) 0.05</label>
+                </div>
+                <div class="feedback" id="fb_mc4">
+                    <strong>【正確解答：(1) 0.1】</strong><br>
+                    解析：根據「部分量 ÷ 全部量 ＝ 比率」公式，木瓜原汁比率 ＝ 50 ÷ 500 ＝ 0.1。
+                </div>
+            </div>
+
+            <div class="question-card" id="q_mc5">
+                <p>5. 有一塊長方形土地，面積是 32.4 平方公尺，已知寬是 6 公尺，請問長是多少公尺？</p>
+                <div class="options">
+                    <label><input type="radio" name="mc5" value="1"> (1) 5.4 公尺</label>
+                    <label><input type="radio" name="mc5" value="2"> (2) 5.14 公尺</label>
+                    <label><input type="radio" name="mc5" value="3"> (3) 6.4 公尺</label>
+                    <label><input type="radio" name="mc5" value="4"> (4) 4.5 公尺</label>
+                </div>
+                <div class="feedback" id="fb_mc5">
+                    <strong>【正確解答：(1) 5.4 公尺】</strong><br>
+                    解析：長方形面積 ＝ 長 × 寬，所以 長 ＝ 面積 ÷ 寬 ＝ 32.4 ÷ 6 ＝ 5.4 公尺。
+                </div>
+            </div>
+        </div>
+
+        <!-- 二、填填看 -->
+        <div class="section-block">
+            <span class="section-title">二、填充題 (每格 4 分，共 40 分)</span>
+
+            <div class="question-card" id="q_fill1">
+                <p>1. 將分數化成小數：
+                    <span class="fraction"><span class="numerator">7</span><span class="denominator">8</span></span> ＝ 
+                    <input type="text" id="fill1_val" class="fill-input wide" placeholder="？">
+                </p>
+                <div class="feedback" id="fb_fill1">
+                    <strong>【正確解答：0.875】</strong><br>
+                    解析：7 ÷ 8 ＝ 0.875。
+                </div>
+            </div>
+
+            <div class="question-card" id="q_fill2">
+                <p>2. 將分數化成小數：
+                    <span class="fraction"><span class="numerator">3</span><span class="denominator">25</span></span> ＝ 
+                    <input type="text" id="fill2_val" class="fill-input wide" placeholder="？">
+                </p>
+                <div class="feedback" id="fb_fill2">
+                    <strong>【正確解答：0.12】</strong><br>
+                    解析：3 ÷ 25 ＝ 0.12。
+                </div>
+            </div>
+
+            <div class="question-card" id="q_fill3">
+                <p>3. 將小數 0.45 化成分數，並換算成「最簡分數」：<br>
+                    <input type="text" id="fill3_val" class="fill-input wide" placeholder="例如: 9/20">
+                </p>
+                <div class="feedback" id="fb_fill3">
+                    <strong>【正確解答：9/20】</strong><br>
+                    解析：0.45 ＝ 45/100，分子與分母同時用 5 約分後，得到最簡分數為 9/20。
+                </div>
+            </div>
+
+            <div class="question-card" id="q_fill4">
+                <p>4. 將比率化成百分率：0.625 ＝ 
+                    <input type="text" id="fill4_val" class="fill-input wide" placeholder="？"> %
+                </p>
+                <div class="feedback" id="fb_fill4">
+                    <strong>【正確解答：62.5】</strong><br>
+                    解析：小數化成百分率時，將小數點向右移兩位並加上 % 符號。0.625 ＝ 62.5%。
+                </div>
+            </div>
+
+            <div class="question-card" id="q_fill5">
+                <p>5. 將百分率化成小數：7% ＝ 
+                    <input type="text" id="fill5_val" class="fill-input wide" placeholder="？">
+                </p>
+                <div class="feedback" id="fb_fill5">
+                    <strong>【正確解答：0.07】</strong><br>
+                    解析：7% ＝ 7 ÷ 100 ＝ 0.07。
+                </div>
+            </div>
+
+            <div class="question-card" id="q_fill6">
+                <p>6. 在括號中填入符合大小關係的符號（請填入 ＞、＜ 或 ＝）：<br>
+                    <span class="fraction"><span class="numerator">1</span><span class="denominator">4</span></span> 公升（ 
+                    <input type="text" id="fill6_val" class="fill-input narrow" placeholder="？"> ）0.3 公升
+                </p>
+                <div class="feedback" id="fb_fill6">
+                    <strong>【正確解答：＜】</strong><br>
+                    解析：1/4 公升 ＝ 1 ÷ 4 ＝ 0.25 公升。因為 0.25 ＜ 0.3，所以填入 ＜。
+                </div>
+            </div>
+
+            <div class="question-card" id="q_fill7">
+                <p>7. 在括號中填入符合大小關係的符號（請填入 ＞、＜ 或 ＝）：<br>
+                    0.08 公尺（ 
+                    <input type="text" id="fill7_val" class="fill-input narrow" placeholder="？"> ） 
+                    <span class="fraction"><span class="numerator">3</span><span class="denominator">100</span></span> 公尺
+                </p>
+                <div class="feedback" id="fb_fill7">
+                    <strong>【正確解答：＞】</strong><br>
+                    解析：3/100 公尺 ＝ 0.03 公尺。因為 0.08 ＞ 0.03，所以填入 ＞。
+                </div>
+            </div>
+
+            <div class="question-card" id="q_fill8">
+                <p>8. 位數移動計算：45.6 ÷ 100 ＝ 
+                    <input type="text" id="fill8_val" class="fill-input wide" placeholder="？">
+                </p>
+                <div class="feedback" id="fb_fill8">
+                    <strong>【正確解答：0.456】</strong><br>
+                    解析：除以 100 代表小數點要向左移動兩位，故為 0.456。
+                </div>
+            </div>
+
+            <div class="question-card" id="q_fill9">
+                <p>9. 位數移動計算：0.9 ÷ 10 ＝ 
+                    <input type="text" id="fill9_val" class="fill-input wide" placeholder="？">
+                </p>
+                <div class="feedback" id="fb_fill9">
+                    <strong>【正確解答：0.09】</strong><br>
+                    解析：除以 10 代表小數點要向左移動一位，故為 0.09。
+                </div>
+            </div>
+
+            <div class="question-card" id="q_fill10">
+                <p>10. 位數移動計算：2.34 ÷ 1000 ＝ 
+                    <input type="text" id="fill10_val" class="fill-input wide" placeholder="？">
+                </p>
+                <div class="feedback" id="fb_fill10">
+                    <strong>【正確解答：0.00234】</strong><br>
+                    解析：除以 1000 代表小數點要向左移動三位，位數不夠時補 0，故為 0.00234。
+                </div>
+            </div>
+        </div>
+
+        <!-- 三、應用題 -->
+        <div class="section-block">
+            <span class="section-title">三、應用題 (每格 5 分，共 40 分)</span>
+
+            <div class="question-card" id="q_app1">
+                <p>1. 廚具店買進一個進貨成本為 4000 元的氣炸鍋，老闆決定「加三成」作為定價。請問定價是多少元？</p>
+                <p>答：<input type="text" id="app1_val" class="fill-input wide"> 元</p>
+                <div class="feedback" id="fb_app1">
+                    <strong>【正確解答：5200】</strong><br>
+                    解析：加三成代表加上成本的 30%。定價 ＝ 成本 × (1 ＋ 30%) ＝ 4000 × 1.3 ＝ 5200 元。
+                </div>
+            </div>
+
+            <div class="question-card" id="q_app2">
+                <p>2. 承上題，後來配合特賣會，老闆將氣炸鍋以定價的「八五折」售出。請問最後的售價是多少元？老闆這樣是賺錢還是賠錢？</p>
+                <p>答售價：<input type="text" id="app2a_val" class="fill-input wide"> 元，屬於：<input type="text" id="app2b_val" class="fill-input wide" placeholder="賺錢/賠錢"></p>
+                <div class="feedback" id="fb_app2">
+                    <strong>【正確解答：售價 4420 元，屬於 賺錢】</strong><br>
+                    解析：八五折代表定價的 85%。售價 ＝ 5200 × 0.85 ＝ 4420 元。因為售價 4420 元高於成本 4000 元，所以老闆是「賺錢」。
+                </div>
+            </div>
+
+            <div class="question-card" id="q_app3">
+                <p>3. 五年一班全班共有 32 人，健康檢查發現近視的人數有 12 人。請問該班的近視率是多少？（請用百分率表示，若除不盡則用四捨五入法算到個位數）</p>
+                <p>答：<input type="text" id="app3_val" class="fill-input wide"> %</p>
+                <div class="feedback" id="fb_app3">
+                    <strong>【正確解答：38】</strong><br>
+                    解析：近視人數 ÷ 全班人數 ＝ 12 ÷ 32 ＝ 0.375。換算成百分率為 37.5%，四捨五入到個位數（看小數點後第一位 5 進位）為 38%。
+                </div>
+            </div>
+
+            <div class="question-card" id="q_app4">
+                <p>4. 爸爸和朋友共 4 人到福氣餐廳聚餐，每人的餐費是 800 元，結帳時餐廳規定需要另外「加收一成服務費」。請問他們總共需要付多少元？</p>
+                <p>答：<input type="text" id="app4_val" class="fill-input wide"> 元</p>
+                <div class="feedback" id="fb_app4">
+                    <strong>【正確解答：3520】</strong><br>
+                    解析：基本總餐費 ＝ 800 × 4 ＝ 3200 元。加收一成服務費代表另外加上 10% 的金額。總費用 ＝ 3200 × (1 ＋ 10%) ＝ 3200 × 1.1 ＝ 3520 元。
+                </div>
+            </div>
+
+            <div class="question-card" id="q_app5">
+                <p>5. 學校舉辦 800 公尺跑走測驗，六年級共有 150 個人參加，已知通過率是 86%。請問順利通過測驗的共有多少人？</p>
+                <p>答：<input type="text" id="app5_val" class="fill-input wide"> 人</p>
+                <div class="feedback" id="fb_app5">
+                    <strong>【正確解答：129】</strong><br>
+                    解析：通過人數 ＝ 總人數 × 通過率 ＝ 150 × 86% ＝ 150 × 0.86 ＝ 129 人。
+                </div>
+            </div>
+
+            <div class="question-card" id="q_app6">
+                <p>6. 哥哥用一條長 14.6 公尺的繩子，剛好可以圍成一個正方形花圃一圈。請問這個正方形花圃的每邊長是多少公尺？</p>
+                <p>答：<input type="text" id="app6_val" class="fill-input wide"> 公尺</p>
+                <div class="feedback" id="fb_app6">
+                    <strong>【正確解答：3.65】</strong><br>
+                    解析：正方形有 4 個等長的邊。每邊長 ＝ 周長 ÷ 4 ＝ 14.6 ÷ 4 ＝ 3.65 公尺。
+                </div>
+            </div>
+
+            <div class="question-card" id="q_app7">
+                <p>7. 有一個平行四邊形花園，面積是 50.25 平方公尺。已知它的底是 15 公尺，請問高是多少公尺？</p>
+                <p>答：<input type="text" id="app7_val" class="fill-input wide"> 公尺</p>
+                <div class="feedback" id="fb_app7">
+                    <strong>【正確解答：3.35】</strong><br>
+                    解析：平行四邊形面積 ＝ 底 × 高，所以 高 ＝ 面積 ÷ 底 ＝ 50.25 ÷ 15 ＝ 3.35 公尺。
+                </div>
+            </div>
+        </div>
+
+        <button type="button" class="submit-btn" onclick="calculateScore()">提交測驗並紀錄成績 ✅</button>
+    </form>
+
+    <div class="score-display" id="scoreBoard"></div>
+
+    <!-- ── 測驗紀錄 ── -->
+    <div class="history-section">
+        <div class="history-header">
+            <h2>📊 測驗紀錄</h2>
+            <button class="clear-btn" onclick="clearHistory()">🗑 清除紀錄</button>
+        </div>
+        <table class="history-table">
+            <thead>
+                <tr>
+                    <th>日期時間</th>
+                    <th>姓名</th>
+                    <th>得分</th>
+                    <th>詳情</th>
+                </tr>
+            </thead>
+            <tbody id="historyBody"></tbody>
+        </table>
+        <div id="emptyHistory" class="empty-history" style="display:none;">尚無測驗紀錄</div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="detailModal" class="modal" onclick="if(event.target===this)closeModal()">
+    <div class="modal-content">
+        <h2 id="modalTitle">錯題詳情</h2>
+        <div id="modalBody"></div>
+        <button class="close-btn" onclick="closeModal()">關閉</button>
+    </div>
+</div>
+
+<script>
+const STORAGE_KEY = 'mathU8Q1History';
+
+function calculateScore() {
+    let score = 0;
+    const form = document.getElementById('mathQuiz');
+    const mistakes = [];
+
+    document.querySelectorAll('.feedback').forEach(f => f.style.display = 'none');
+    document.querySelectorAll('.question-card').forEach(q => q.classList.remove('incorrect'));
+
+    // --- 一、選擇題 (每題 4 分，共 20 分) ---
+    const answersMC = { mc1: "2", mc2: "3", mc3: "3", mc4: "1", mc5: "1" };
+    const labelsMC = { mc1: "選擇題 1", mc2: "選擇題 2", mc3: "選擇題 3", mc4: "選擇題 4", mc5: "選擇題 5" };
+    const correctTextsMC = { mc1: "(2) 33%", mc2: "(3) 75%", mc3: "(3) 七折", mc4: "(1) 0.1", mc5: "(1) 5.4 公尺" };
+
+    for (let id in answersMC) {
+        const sel = form.querySelector(`input[name="${id}"]:checked`);
+        if (sel && sel.value === answersMC[id]) {
+            score += 4;
+            showFeedback(id, true);
+        } else {
+            showFeedback(id, false);
+            mistakes.push({ label: labelsMC[id], correct: correctTextsMC[id] });
+        }
+    }
+
+    // --- 二、填充題 (每格 4 分，共 40 分) ---
+    // Q1
+    const f1 = document.getElementById('fill1_val').value.trim();
+    if (f1 === "0.875") { score += 4; showFeedback('fill1', true); }
+    else { showFeedback('fill1', false); mistakes.push({ label: '填充題 1', correct: '0.875' }); }
+
+    // Q2
+    const f2 = document.getElementById('fill2_val').value.trim();
+    if (f2 === "0.12") { score += 4; showFeedback('fill2', true); }
+    else { showFeedback('fill2', false); mistakes.push({ label: '填充題 2', correct: '0.12' }); }
+
+    // Q3
+    const f3 = document.getElementById('fill3_val').value.trim();
+    if (f3 === "9/20") { score += 4; showFeedback('fill3', true); }
+    else { showFeedback('fill3', false); mistakes.push({ label: '填充題 3', correct: '9/20' }); }
+
+    // Q4
+    const f4 = document.getElementById('fill4_val').value.trim().replace('%', '');
+    if (f4 === "62.5") { score += 4; showFeedback('fill4', true); }
+    else { showFeedback('fill4', false); mistakes.push({ label: '填充題 4', correct: '62.5' }); }
+
+    // Q5
+    const f5 = document.getElementById('fill5_val').value.trim();
+    if (f5 === "0.07") { score += 4; showFeedback('fill5', true); }
+    else { showFeedback('fill5', false); mistakes.push({ label: '填充題 5', correct: '0.07' }); }
+
+    // Q6
+    const f6 = document.getElementById('fill6_val').value.trim().replace(/＜/g, '<').replace(/＆lt;/g, '<');
+    if (f6 === "<") { score += 4; showFeedback('fill6', true); }
+    else { showFeedback('fill6', false); mistakes.push({ label: '填充題 6', correct: '＜ (或 <)' }); }
+
+    // Q7
+    const f7 = document.getElementById('fill7_val').value.trim().replace(/＞/g, '>').replace(/＆gt;/g, '>');
+    if (f7 === ">") { score += 4; showFeedback('fill7', true); }
+    else { showFeedback('fill7', false); mistakes.push({ label: '填充題 7', correct: '＞ (或 >)' }); }
+
+    // Q8
+    const f8 = document.getElementById('fill8_val').value.trim();
+    if (f8 === "0.456") { score += 4; showFeedback('fill8', true); }
+    else { showFeedback('fill8', false); mistakes.push({ label: '填充題 8', correct: '0.456' }); }
+
+    // Q9
+    const f9 = document.getElementById('fill9_val').value.trim();
+    if (f9 === "0.09") { score += 4; showFeedback('fill9', true); }
+    else { showFeedback('fill9', false); mistakes.push({ label: '填充題 9', correct: '0.09' }); }
+
+    // Q10
+    const f10 = document.getElementById('fill10_val').value.trim();
+    if (f10 === "0.00234") { score += 4; showFeedback('fill10', true); }
+    else { showFeedback('fill10', false); mistakes.push({ label: '填充題 10', correct: '0.00234' }); }
+
+    // --- 三、應用題 (每格 5 分，共 40 分) ---
+    // Q1
+    const a1 = document.getElementById('app1_val').value.trim();
+    if (a1 === "5200") { score += 5; showFeedback('app1', true); }
+    else { showFeedback('app1', false); mistakes.push({ label: '應用題 1', correct: '5200' }); }
+
+    // Q2 (Two blanks, 5 points each)
+    const a2a = document.getElementById('app2a_val').value.trim();
+    const a2b = document.getElementById('app2b_val').value.trim();
+    let q2Correct = true;
+    if (a2a === "4420") score += 5; else q2Correct = false;
+    if (a2b === "賺錢") score += 5; else q2Correct = false;
+    showFeedback('app2', q2Correct);
+    if (!q2Correct) mistakes.push({ label: '應用題 2', correct: '售價 4420，屬於 賺錢' });
+
+    // Q3
+    const a3 = document.getElementById('app3_val').value.trim().replace('%', '');
+    if (a3 === "38") { score += 5; showFeedback('app3', true); }
+    else { showFeedback('app3', false); mistakes.push({ label: '應用題 3', correct: '38' }); }
+
+    // Q4
+    const a4 = document.getElementById('app4_val').value.trim();
+    if (a4 === "3520") { score += 5; showFeedback('app4', true); }
+    else { showFeedback('app4', false); mistakes.push({ label: '應用題 4', correct: '3520' }); }
+
+    // Q5
+    const a5 = document.getElementById('app5_val').value.trim();
+    if (a5 === "129") { score += 5; showFeedback('app5', true); }
+    else { showFeedback('app5', false); mistakes.push({ label: '應用題 5', correct: '129' }); }
+
+    // Q6
+    const a6 = document.getElementById('app6_val').value.trim();
+    if (a6 === "3.65") { score += 5; showFeedback('app6', true); }
+    else { showFeedback('app6', false); mistakes.push({ label: '應用題 6', correct: '3.65' }); }
+
+    // Q7
+    const a7 = document.getElementById('app7_val').value.trim();
+    if (a7 === "3.35") { score += 5; showFeedback('app7', true); }
+    else { showFeedback('app7', false); mistakes.push({ label: '應用題 7', correct: '3.35' }); }
+
+    const finalScore = Math.min(score, 100);
+
+    // Show score banner
+    const board = document.getElementById('scoreBoard');
+    board.style.display = 'block';
+    board.innerHTML = `🎉 測驗完成！總分：${finalScore} / 100`;
+    document.getElementById('finalScoreDisplay').innerHTML =
+        `得分：<span style="color:var(--accent-secondary)">${finalScore}</span>`;
+    
+    // Scroll to results
+    board.scrollIntoView({ behavior: 'smooth' });
+
+    // Save record
+    const name = document.getElementById('userName').value.trim() || '無名氏';
+    saveRecord({ name, score: finalScore, date: new Date().toLocaleString('zh-TW'), mistakes });
+    renderHistory();
+}
+
+function showFeedback(id, isCorrect) {
+    const fb = document.getElementById('fb_' + id);
+    const q  = document.getElementById('q_' + id);
+    if (!fb) return;
+    fb.style.display = 'block';
+    if (isCorrect) {
+        fb.className = 'feedback correct';
+        fb.innerHTML = '✅ 恭喜答對！';
+    } else {
+        fb.className = 'feedback wrong';
+        fb.style.display = 'block'; 
+        q.classList.add('incorrect');
+    }
+}
+
+function saveRecord(record) {
+    const history = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    history.unshift(record); 
+    if (history.length > 5) history.pop(); // Keep last 5
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
+}
+
+function renderHistory() {
+    const history = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    const tbody = document.getElementById('historyBody');
+    const empty = document.getElementById('emptyHistory');
+    if (history.length === 0) {
+        tbody.innerHTML = '';
+        empty.style.display = 'block';
+        return;
+    }
+    empty.style.display = 'none';
+    tbody.innerHTML = history.map((rec, i) => `
+        <tr>
+            <td>${rec.date}</td>
+            <td>${rec.name}</td>
+            <td><strong>${rec.score}</strong></td>
+            <td><button class="detail-btn" onclick="showDetail(${i})">查看詳情</button></td>
+        </tr>
+    `).join('');
+}
+
+function showDetail(index) {
+    const history = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    const rec = history[index];
+    document.getElementById('modalTitle').textContent = `${rec.name} 的錯題分析（得分：${rec.score}）`;
+    const body = document.getElementById('modalBody');
+    if (!rec.mistakes || rec.mistakes.length === 0) {
+        body.innerHTML = "<p style='color:var(--accent-success);font-weight:700;'>🎊 太棒了！全對！</p>";
+    } else {
+        body.innerHTML = rec.mistakes.map(m => `
+            <div class="wrong-item">
+                <strong>${m.label}</strong><br>
+                正確解答：<strong>${m.correct}</strong>
+            </div>
+        `).join('');
+    }
+    document.getElementById('detailModal').style.display = 'block';
+}
+
+function closeModal() {
+    document.getElementById('detailModal').style.display = 'none';
+}
+
+function clearHistory() {
+    if (confirm('確定要清除所有測驗紀錄嗎？此動作無法復原。')) {
+        localStorage.removeItem(STORAGE_KEY);
+        renderHistory();
+    }
+}
+</script>
+
+</body>
+</html>
