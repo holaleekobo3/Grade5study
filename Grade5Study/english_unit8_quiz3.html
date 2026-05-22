@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 9 進階文法專題特訓</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .nav-tabs {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .nav-tabs span {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--text-secondary);
+            transition: all 0.3s;
+        }
+
+        .nav-tabs span.active {
+            border-bottom: 3px solid var(--accent-primary);
+            color: var(--accent-primary);
+        }
+
+        .section-desc {
+            background: var(--bg-secondary);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--accent-primary);
+            border-top: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .question-card {
+            margin-bottom: 25px;
+            padding: 24px;
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            background: var(--bg-primary);
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.25em;
+            margin-bottom: 15px;
+            white-space: pre-line;
+        }
+
+        .options label {
+            display: flex;
+            align-items: center;
+            padding: 16px 24px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            margin-bottom: 8px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1.15rem;
+        }
+
+        .options label:hover {
+            border-color: var(--accent-primary);
+            background: var(--bg-primary);
+        }
+
+        .options input {
+            margin-right: 15px;
+        }
+
+        .reading-passage {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            border-left: 5px solid var(--accent-secondary);
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            white-space: pre-line;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+            box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.4);
+        }
+
+        button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 30px -5px rgba(99, 102, 241, 0.5);
+        }
+
+        #result-section, #review-section, #history-section {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .review-item {
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .wrong-ans {
+            border-left: 5px solid var(--accent-danger);
+        }
+
+        .correct-ans {
+            border-left: 5px solid var(--accent-success);
+        }
+
+        .explanation {
+            font-size: 0.95em;
+            color: var(--text-secondary);
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background: var(--bg-primary);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .history-table th, .history-table td {
+            border: 1px solid var(--border-color);
+            padding: 16px;
+            text-align: center;
+        }
+        
+        .history-table th {
+            background: var(--bg-secondary);
+            font-weight: bold;
+        }
+
+        .back-link {
+            text-decoration: none;
+            font-weight: bold;
+            color: var(--accent-primary);
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="theme-toggle">
+    <button id="themeBtn" onclick="toggleTheme()"><span>🌙</span> 暗色模式</button>
+</div>
+
+<div class="container">
+    <a href="english.html" class="back-link">⬅ 返回目錄</a>
+    
+    <div class="nav-tabs">
+        <span id="tab-quiz" class="active" onclick="showView('quiz')">開始測驗</span>
+        <span id="tab-history" onclick="showView('history')">歷史成績</span>
+    </div>
+
+    <div id="quiz-view">
+        <h1 style="margin-bottom: 0;">Unit 9 核心文法專題特訓測驗</h1>
+        <p style="text-align:center; font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 2rem;">重點聚焦：Lesson 2 (Would you like...) & Lesson 6 (Could you please...) | 總計 35 題</p>
+
+        <form id="quiz-form">
+            <!-- Part A -->
+            <div class="section-desc">
+                <strong>Part A: 核心文法應用 (Multiple Choice 1-25)</strong><br>
+                💡 <strong>文法提醒：</strong><br>
+                1. <strong>Would you like + 名詞</strong> (想要某物) / <strong>Would you like + to + 原形動詞</strong> (想要做某事)。<br>
+                2. <strong>Could you + 原形動詞 (+ please)?</strong> 用於客氣地請求他人協助。
+            </div>
+            <div id="part-a-questions"></div>
+
+            <!-- Part B -->
+            <div class="section-desc">
+                <strong>Part B: 情境閱讀理解一 (Reading Comprehension 1)</strong>
+            </div>
+            <div class="reading-passage">Welcome to the Chichicastenango Market Helper! 
+
+Are you looking for beautiful traditional clothes or colorful blankets made of high-quality cotton? Our market has everything you need! If you are a visitor, you might feel confused about the prices or sizes. Don't worry! You can always use these polite expressions to talk to our local shopkeepers.
+
+When you see a nice jacket on a high shelf, you can say: "Could you please take it down for me? I would like to try it on in the fitting room." If you think the price is a bit too expensive, you can politely ask: "Could you please show me a cheaper one?" 
+
+Most shopkeepers are very friendly. They will welcome you and ask: "Would you like to buy some special handmade crafts as gifts for your family? We accept both local money and international dollars!" Remember, being polite always makes your travel experience much happier and healthier!</div>
+            <div id="part-b-questions"></div>
+
+            <!-- Part C -->
+            <div class="section-desc">
+                <strong>Part C: 情境閱讀理解二 (Reading Comprehension 2)</strong>
+            </div>
+            <div class="reading-passage">An Evening Conversation in Antigua
+
+Mia and Luke are walking through a quiet street in Antigua after a long day of exploring. They stop in front of a small cafe that sells traditional Guatemalan hot chocolate.
+
+Cafe Owner: Good evening! You look a bit tired and cold from the night wind. Would you like a warm table inside by the window?
+Mia: Yes, please. That sounds very cozy. 
+Luke: Excuse me, sir. Could you please show us the menu? We would like to see what traditional snacks you have.
+Cafe Owner: Certainly! Here is the menu. Today, we have special sweet bread. Would you like to try some? It goes perfectly with our hot chocolate.
+Mia: Oh, I would love to! It looks delicious in the picture. 
+Luke: Could you please bring us two cups of hot chocolate and one plate of sweet bread?
+Cafe Owner: Of course! Please wait for a few minutes. I will bring them to your table right away. Enjoy your evening!
+Mia: Thank you. People here are so polite and caring. It always makes me smile!</div>
+            <div id="part-c-questions"></div>
+
+            <button type="button" onclick="calculateScore()">提交測驗 (Submit Special Test)</button>
+        </form>
+    </div>
+
+    <div id="result-section">
+        <h2 style="text-align: center; color: var(--accent-primary);">測驗結果 (Quiz Results)</h2>
+        <div style="text-align:center; font-size: 2em; margin: 20px 0; font-weight: bold; color: var(--text-primary);" id="final-score"></div>
+        <button onclick="location.reload()" style="background: var(--text-secondary);">重新測驗 (Retake Quiz)</button>
+    </div>
+
+    <div id="review-section">
+        <h3 style="color: var(--accent-primary); margin-bottom: 15px;">🔍 弱點精準解析 (Review & Explanations)</h3>
+        <div id="review-content"></div>
+    </div>
+
+    <div id="history-view" style="display:none;">
+        <h2 style="text-align: center; color: var(--accent-primary);">歷史成績 Dashboard</h2>
+        <table class="history-table">
+            <thead>
+                <tr>
+                    <th>時間 (Timestamp)</th>
+                    <th>分數 (Score)</th>
+                </tr>
+            </thead>
+            <tbody id="history-body"></tbody>
+        </table>
+        <button onclick="clearHistory()" style="background: var(--accent-danger); margin-top:20px;">清除紀錄 (Clear History)</button>
+    </div>
+</div>
+
+<script>
+    function toggleTheme() {
+        const html = document.documentElement;
+        const btn = document.getElementById('themeBtn');
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', newTheme);
+        btn.innerHTML = newTheme === 'dark' ? '<span>☀️</span> 亮色模式' : '<span>🌙</span> 暗色模式';
+        localStorage.setItem('theme', newTheme);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        const btn = document.getElementById('themeBtn');
+        if (savedTheme === 'dark') btn.innerHTML = '<span>☀️</span> 亮色模式';
+    });
+
+    const questions = [
+    {
+        "q": "Clerk: Welcome! Would you like ______ traditional cotton blanket from Guatemala? It is very warm.\nCustomer: Yes, I would love to see it.",
+        "a": "to buy",
+        "options": [
+            "buy",
+            "buying",
+            "to buy",
+            "bought"
+        ],
+        "type": "grammar",
+        "exp": "句型為「Would you like + to + 原形動詞」，表示想要做某事，此處意為「你想要購買這條傳統棉毯嗎？」"
+    },
+    {
+        "q": "Luke: My hands are full of heavy bags. Could you please ______ the car door for me?\nMia: Of course! Let me get that.",
+        "a": "open",
+        "options": [
+            "open",
+            "opening",
+            "to open",
+            "opened"
+        ],
+        "type": "grammar",
+        "exp": "「Could you please + 原形動詞」為客氣請求句型，故選原形動詞 open。"
+    },
+    {
+        "q": "Teacher: It is quite dark in the classroom. Could you ______ turn on the lights, Luke?\nLuke: Sure, I will do it right away.",
+        "a": "please",
+        "options": [
+            "try",
+            "please",
+            "like",
+            "want"
+        ],
+        "type": "grammar",
+        "exp": "在客氣請求句型「Could you ...?」中，常加入 please 來增加禮貌語氣，放於動詞前或句尾。"
+    },
+    {
+        "q": "Mom: Would you like ______ glass of warm juice before going to bed?\nSon: No, thank you. I am already full.",
+        "a": "another",
+        "options": [
+            "to",
+            "try",
+            "another",
+            "any"
+        ],
+        "type": "grammar",
+        "exp": "後方 glass 為可數單數名詞，此處為「Would you like + 名詞」結構，表示「你想要再一杯熱果汁嗎？」，故選 another。"
+    },
+    {
+        "q": "Guide: We are visiting a bright and colorful market today. ______ you like to try on these traditional clothes?",
+        "a": "Would",
+        "options": [
+            "Could",
+            "Would",
+            "Do",
+            "Are"
+        ],
+        "type": "grammar",
+        "exp": "配合後方的 like to try on，屬於「Would you like to...」固定邀請句型。"
+    },
+    {
+        "q": "Mia: This market stall has so many pretty crafts! Could you please ______ me twenty dollars?\nLuke: No problem. Here you go.",
+        "a": "lend",
+        "options": [
+            "lend",
+            "lending",
+            "to lend",
+            "lent"
+        ],
+        "type": "grammar",
+        "exp": "「Could you please + 原形動詞」表請求，故選原形動詞 lend（借給）。"
+    },
+    {
+        "q": "Shopkeeper: Would you like a small blue shirt or a large red ______?\nCustomer: The blue one, please. It looks cozy.",
+        "a": "one",
+        "options": [
+            "one",
+            "ones",
+            "shirt with",
+            "it"
+        ],
+        "type": "grammar",
+        "exp": "為了避免重複提及單數名詞 shirt，應用單數不定代名詞 one 來代替。"
+    },
+    {
+        "q": "Dad: The music from the radio is way too loud! Could you please ______ it down?\nSon: Yes, Dad. Sorry about that.",
+        "a": "turn",
+        "options": [
+            "turning",
+            "turn",
+            "turned",
+            "to turn"
+        ],
+        "type": "grammar",
+        "exp": "「Could you please + 原形動詞」表示客氣請求他人將音量關小，故選 turn。"
+    },
+    {
+        "q": "Luke: I cannot find the price tag on this cotton jacket. Could you please ______ me how much it costs?",
+        "a": "tell",
+        "options": [
+            "tell",
+            "telling",
+            "to tell",
+            "told"
+        ],
+        "type": "grammar",
+        "exp": "「Could you please + 原形動詞」表示客氣請店員或他人告訴自己價格。"
+    },
+    {
+        "q": "Clerk: Would you like ______ these soft shoes on in the fitting room?\nCustomer: Yes, please. They look very comfortable.",
+        "a": "to try",
+        "options": [
+            "try",
+            "trying",
+            "to try",
+            "tried"
+        ],
+        "type": "grammar",
+        "exp": "「Would you like + to-V」表示詢問意願、邀請嘗試，try on 表示試穿。"
+    },
+    {
+        "q": "Officer: Excuse me, sir. Could you please ______ your bag here for a quick check?\nTraveler: Sure thing. No problem.",
+        "a": "put",
+        "options": [
+            "put",
+            "putting",
+            "to put",
+            "placed"
+        ],
+        "type": "grammar",
+        "exp": "「Could you please + 原形動詞」，put 為原形動詞，符合文法結構。"
+    },
+    {
+        "q": "Mia: I am so thirsty after walking around the village. Would you like ______ some fresh water with me?",
+        "a": "to have",
+        "options": [
+            "have",
+            "having",
+            "had",
+            "to have"
+        ],
+        "type": "grammar",
+        "exp": "「Would you like + to + 原形動詞」，表示提出一同喝水的邀請。"
+    },
+    {
+        "q": "Luke: Look at those beautiful handmade birds! Would you like ______?",
+        "a": "one",
+        "options": [
+            "they",
+            "one",
+            "try",
+            "to"
+        ],
+        "type": "grammar",
+        "exp": "「Would you like + 名詞/代名詞」，此處 one 作為代名詞，代表「想要其中一個嗎？」"
+    },
+    {
+        "q": "Grandma: My eyes are tired. Could you please ______ this traditional story out loud for me?\nGrandson: Of course, Grandma.",
+        "a": "read",
+        "options": [
+            "read",
+            "reading",
+            "to read",
+            "readed"
+        ],
+        "type": "grammar",
+        "exp": "「Could you please + 原形動詞」用於請求孫子朗讀故事，選原形動詞 read。"
+    },
+    {
+        "q": "Customer: I really love this green craft, but it is too expensive. Could you please ______ me a lower price?",
+        "a": "give",
+        "options": [
+            "giving",
+            "give",
+            "to give",
+            "gave"
+        ],
+        "type": "grammar",
+        "exp": "「Could you please + 原形動詞」請求給予更便宜的價格，故選 give。"
+    },
+    {
+        "q": "Luke: Would you like ______ to the national park to see the wild Quetzal birds tomorrow?\nMia: I'd love to! I want to take photos of them.",
+        "a": "to go",
+        "options": [
+            "go",
+            "going",
+            "to go",
+            "went"
+        ],
+        "type": "grammar",
+        "exp": "固定句型「Would you like + to-V」表示提出活動邀請（去國家公園）。"
+    },
+    {
+        "q": "Clerk: Would you like ______ pocket on your jacket or do you prefer it plain?\nCustomer: A pocket would be great, thank you.",
+        "a": "a",
+        "options": [
+            "a",
+            "to",
+            "try",
+            "some"
+        ],
+        "type": "grammar",
+        "exp": "後方 pocket 為單數可數名詞，此處為「Would you like + 名詞」結構，故選單數不定冠詞 a。"
+    },
+    {
+        "q": "Mia: Could you please ______ for a few minutes? The shopkeeper is finding a medium size for you.",
+        "a": "wait",
+        "options": [
+            "waiting",
+            "to wait",
+            "wait",
+            "waited"
+        ],
+        "type": "grammar",
+        "exp": "「Could you please + 原形動詞」客氣請求對方稍候，選 wait。"
+    },
+    {
+        "q": "Mom: Would you like ______ a funny joke to your little brother to make him laugh?\nSister: Sure, I know a very good one!",
+        "a": "to tell",
+        "options": [
+            "tell",
+            "telling",
+            "to tell",
+            "told"
+        ],
+        "type": "grammar",
+        "exp": "「Would you like + to + 原形動詞」表示詢問是否有意願講笑話給弟弟聽。"
+    },
+    {
+        "q": "Tourist: Excuse me, I am lost. Could you please ______ me where the central market is?",
+        "a": "show",
+        "options": [
+            "showing",
+            "show",
+            "to show",
+            "showed"
+        ],
+        "type": "grammar",
+        "exp": "「Could you please + 原形動詞」向路人客氣詢問、請求指引方向，選 show。"
+    },
+    {
+        "q": "Situation: You want your friend to stop talking because you are listening to a traditional story. You should say: \"Could you please ______ quiet for a moment?\"",
+        "a": "be",
+        "options": [
+            "be",
+            "being",
+            "to be",
+            "are"
+        ],
+        "type": "grammar",
+        "exp": "「Could you please + 原形動詞」，quiet 為形容詞，前面需要搭配原形連繫動詞 be。"
+    },
+    {
+        "q": "Situation: The sales clerk offers you a beautiful cotton scarf. If you want to accept it happily, you can say: \"Yes, I would ______ to.\"",
+        "a": "love",
+        "options": [
+            "like",
+            "love",
+            "want",
+            "please"
+        ],
+        "type": "grammar",
+        "exp": "接受邀請時，常用固定客氣答話 \"Yes, I would love to.\" 來表達由衷的樂意。"
+    },
+    {
+        "q": "Situation: You are in a craft shop and see a lovely handmade bird. You want to see it closer. You ask the clerk: \"Could you please ______ that bird to me?\"",
+        "a": "show",
+        "options": [
+            "showed",
+            "showing",
+            "show",
+            "to show"
+        ],
+        "type": "grammar",
+        "exp": "「Could you please + 原形動詞」表示客氣請求對方展示某物，故選 show。"
+    },
+    {
+        "q": "Situation: Your mother asks if you want a new pocket on your traditional shirt. She says: \"Would you like ______ pocket on it?\"",
+        "a": "a",
+        "options": [
+            "to",
+            "a",
+            "some",
+            "try"
+        ],
+        "type": "grammar",
+        "exp": "pocket 為單數可數名詞，適用「Would you like + 單數名詞」結構，應填入不定冠詞 a。"
+    },
+    {
+        "q": "Situation: You are carrying many dollars in your hands and need help. You ask your brother: \"______ you please help me put this money in my pocket?\"",
+        "a": "Could",
+        "options": [
+            "Would",
+            "Could",
+            "Are",
+            "Do"
+        ],
+        "type": "grammar",
+        "exp": "表示請求他人協助（help me...）的最常用且最客氣的對話結構為 「Could you please...?」"
+    },
+    {
+        "q": "What is the main purpose of this short guide article?",
+        "a": "To teach visitors how to use polite language patterns in a market.",
+        "options": [
+            "To explain the historical origin of traditional cotton clothing.",
+            "To teach visitors how to use polite language patterns in a market.",
+            "To tell a story about a shopkeeper who lost his dollars.",
+            "To complain about how expensive the crafts are in Guatemala."
+        ],
+        "type": "reading",
+        "exp": "文章旨在指導遊客在市場中如何使用客氣、有禮貌的句型（如 Could you please... / Would you like...）與店家溝通。"
+    },
+    {
+        "q": "If a traveler wants to check if a jacket fits them, what should they ask according to the text?",
+        "a": "\"Could you please take it down? I would like to try it on.\"",
+        "options": [
+            "\"Could you please show me a cheaper one?\"",
+            "\"Would you like to buy some special crafts?\"",
+            "\"Could you please take it down? I would like to try it on.\"",
+            "\"Could you please accept my international dollars?\""
+        ],
+        "type": "reading",
+        "exp": "文中第三段明言，若看到高處的夾克想試穿，可以說：\"Could you please take it down for me? I would like to try it on...\""
+    },
+    {
+        "q": "Based on the guide, what can we infer about the shopkeepers in this market?",
+        "a": "They are open to communication and are generally helpful.",
+        "options": [
+            "They only accept local currency and refuse dollars.",
+            "They do not allow any customers to try clothes on.",
+            "They are open to communication and are generally helpful.",
+            "They get angry when people ask questions about sizes."
+        ],
+        "type": "reading",
+        "exp": "文中提到 \"Most shopkeepers are very friendly\" 且會主動詢問意願，可推論他們樂意與人溝通且樂於助人。"
+    },
+    {
+        "q": "Which language structure is recommended in the text when a visitor finds an item too expensive?",
+        "a": "Using a request starting with 'Could you please' to look at a cheaper option.",
+        "options": [
+            "Using a request starting with 'Could you please' to look at a cheaper option.",
+            "Shouting loudly to make the shopkeeper feel scared.",
+            "Leaving the market immediately without saying anything.",
+            "Offering to pay with a pocket full of cotton."
+        ],
+        "type": "reading",
+        "exp": "文章第三段指出，若覺得太貴，可以客氣詢問：\"Could you please show me a cheaper one?\"，這正是一個由 Could you please 開頭的請求。"
+    },
+    {
+        "q": "Why does the writer believe that using these polite expressions is good for travelers?",
+        "a": "It makes their overall travel experience happier and better.",
+        "options": [
+            "It helps them get everything completely for free.",
+            "It makes their overall travel experience happier and better.",
+            "It teaches them how to fly like a beautiful bird.",
+            "It helps them change the colors of their traditional clothes."
+        ],
+        "type": "reading",
+        "exp": "文章最後一句提到 \"being polite always makes your travel experience much happier and healthier!\"，對旅行體驗大有幫助。"
+    },
+    {
+        "q": "Why does the Cafe Owner initially offer Mia and Luke a table inside?",
+        "a": "Because he infers that they feel cold and tired.",
+        "options": [
+            "Because they are making too much noise outside.",
+            "Because he infers that they feel cold and tired.",
+            "Because all the tables outside are completely full.",
+            "Because he wants them to buy some expensive cotton blankets."
+        ],
+        "type": "reading",
+        "exp": "老闆一開始就說 \"You look a bit tired and cold from the night wind\"，因而主動推測並詢問是否需要坐到溫暖的室內。"
+    },
+    {
+        "q": "Which question does Luke use when he wants to know the options and prices of the cafe's food?",
+        "a": "\"Could you please show us the menu?\"",
+        "options": [
+            "\"Would you like a warm table inside?\"",
+            "\"Would you like to try some sweet bread?\"",
+            "\"Could you please show us the menu?\"",
+            "\"Could you please bring us two cups of hot chocolate?\""
+        ],
+        "type": "reading",
+        "exp": "對話中 Luke 說 \"Could you please show us the menu? We would like to see what traditional snacks you have.\"，菜單即是用來查看餐點選項的。"
+    },
+    {
+        "q": "How many language structures expressing an invitation or offer ('Would you like...') are used by the Cafe Owner in the story?",
+        "a": "Two",
+        "options": [
+            "Only one",
+            "Two",
+            "Three",
+            "None"
+        ],
+        "type": "reading",
+        "exp": "老闆共用了兩次：第一次是 \"Would you like a warm table inside...?\"；第二次是 \"Would you like to try some (sweet bread)?\"。"
+    },
+    {
+        "q": "What can we infer about Mia's attitude towards the sweet bread?",
+        "a": "She is very eager and happy to experience it.",
+        "options": [
+            "She thinks it looks too cheap and bad.",
+            "She is very eager and happy to experience it.",
+            "She feels scared because it has a funny color.",
+            "She wants to put it inside her jacket pocket."
+        ],
+        "type": "reading",
+        "exp": "當老闆推薦麵包時，Mia 興奮地回應 \"Oh, I would love to! It looks delicious...\"，展現出非常期待與高興的態度。"
+    },
+    {
+        "q": "What does Luke's final request \"Could you please bring us two cups...\" show about his manner?",
+        "a": "He maintains a polite and structured way of asking for service.",
+        "options": [
+            "He is impatient and wants to leave quickly.",
+            "He is practicing his school English quiz rules.",
+            "He maintains a polite and structured way of asking for service.",
+            "He is confused about how many things he wants to buy."
+        ],
+        "type": "reading",
+        "exp": "Luke 使用了精準且標準的 \"Could you please + 原形動詞\" 句型來點餐，體現出他維持著非常有禮貌且有條理的點餐態度。"
+    }
+];
+
+    function initQuiz() {
+        const partA = document.getElementById('part-a-questions');
+        const partB = document.getElementById('part-b-questions');
+        const partC = document.getElementById('part-c-questions');
+
+        questions.forEach((item, index) => {
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.innerHTML = `
+                <div class="question-text">${index + 1}. ${item.q}</div>
+                <div class="options">
+                    ${item.options.map((opt, oIdx) => `
+                        <label>
+                            <input type="radio" name="q${index}" value="${opt.replace(/"/g, '&quot;')}"> <span>${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            if (index < 25) partA.appendChild(card);
+            else if (index < 30) partB.appendChild(card);
+            else partC.appendChild(card);
+        });
+        loadHistory();
+    }
+
+    function calculateScore() {
+        let score = 0;
+        let reviewHTML = '';
+        const formData = new FormData(document.getElementById('quiz-form'));
+        let allCorrect = true;
+
+        questions.forEach((item, index) => {
+            const userAnswer = formData.get(`q${index}`);
+            const isCorrect = userAnswer === item.a;
+            if (isCorrect) {
+                score++;
+            } else {
+                allCorrect = false;
+            }
+
+            reviewHTML += `
+                <div class="review-item ${isCorrect ? 'correct-ans' : 'wrong-ans'}">
+                    <strong>Q${index + 1}: ${item.q}</strong><br>
+                    您的答案: <span style="color: ${isCorrect ? 'var(--accent-success)' : 'var(--accent-danger)'}; font-weight: bold;">${userAnswer || '未回答'}</span> | 正確答案: <span style="color: var(--accent-success); font-weight: bold;">${item.a}</span><br>
+                    <div class="explanation">💡 <strong>解析：</strong>${item.exp}</div>
+                </div>
+            `;
+            
+            // Highlight options in UI
+            const optionsGroup = document.getElementsByName(`q${index}`);
+            optionsGroup.forEach(opt => {
+                const label = opt.parentElement;
+                if(opt.value === item.a) {
+                    label.style.borderColor = "var(--accent-success)";
+                    label.style.background = "rgba(16, 185, 129, 0.1)";
+                    label.style.color = "var(--accent-success)";
+                    label.style.fontWeight = "bold";
+                } else if(opt.checked && opt.value !== item.a) {
+                    label.style.borderColor = "var(--accent-danger)";
+                    label.style.background = "rgba(239, 68, 68, 0.1)";
+                }
+            });
+        });
+
+        if(allCorrect) {
+            reviewHTML += '<p style="color: var(--accent-success); font-size: 1.2rem; font-weight: bold; text-align: center;">太棒了！所有題目都答對了！🎉</p>';
+        }
+
+        const finalScorePercent = Math.round((score / questions.length) * 100);
+        document.getElementById('final-score').innerHTML = `得分: ${finalScorePercent} / 100 <br><span style="font-size:0.5em; color: var(--text-secondary);">(${score} / ${questions.length} 答對)</span>`;
+        document.getElementById('review-content').innerHTML = reviewHTML;
+        
+        // Remove display none for result
+        document.getElementById('result-section').style.display = 'block';
+        document.getElementById('review-section').style.display = 'block';
+        
+        // Hide the submit button
+        const submitBtn = document.querySelector('button[onclick="calculateScore()"]');
+        if(submitBtn) submitBtn.style.display = 'none';
+
+        saveHistory(finalScorePercent);
+        
+        window.scrollTo({ top: document.getElementById('result-section').offsetTop - 20, behavior: 'smooth' });
+    }
+
+    function saveHistory(score) {
+        const history = JSON.parse(localStorage.getItem('quizUnit9SpecialHistory') || '[]');
+        history.push({ score: score, time: new Date().toLocaleString() });
+        localStorage.setItem('quizUnit9SpecialHistory', JSON.stringify(history));
+        loadHistory();
+    }
+
+    function loadHistory() {
+        const history = JSON.parse(localStorage.getItem('quizUnit9SpecialHistory') || '[]');
+        const body = document.getElementById('history-body');
+        if (history.length === 0) {
+            body.innerHTML = '<tr><td colspan="2">尚無紀錄</td></tr>';
+            return;
+        }
+        body.innerHTML = history.reverse().map(item => `
+            <tr>
+                <td>${item.time}</td>
+                <td style="font-weight:bold; color:var(--accent-primary);">${item.score}%</td>
+            </tr>
+        `).join('');
+    }
+
+    function clearHistory() {
+        if(confirm("確定要清除所有歷史紀錄嗎？")) {
+            localStorage.removeItem('quizUnit9SpecialHistory');
+            loadHistory();
+        }
+    }
+
+    function showView(view) {
+        document.getElementById('quiz-view').style.display = view === 'quiz' ? 'block' : 'none';
+        document.getElementById('history-view').style.display = view === 'history' ? 'block' : 'none';
+        document.getElementById('tab-quiz').className = view === 'quiz' ? 'active' : '';
+        document.getElementById('tab-history').className = view === 'history' ? 'active' : '';
+    }
+
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>
