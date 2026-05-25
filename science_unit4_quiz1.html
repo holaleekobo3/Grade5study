@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>台灣 108 課綱 — 國小五年級自然科學第4單元數位練習卷</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --correct-color: #2980b9;
+            --incorrect-color: #c0392b;
+            --bg-color: #f5f7fa;
+            --card-bg: #ffffff;
+        }
+        body {
+            font-family: "Microsoft JhengHei", -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--primary-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 {
+            text-align: center;
+            color: var(--primary-color);
+        }
+        .history-section {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .history-table th, .history-table td {
+            border: 1px solid #bdc3c7;
+            padding: 8px;
+            text-align: center;
+            font-size: 14px;
+        }
+        .history-table th {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        .quiz-section {
+            margin-bottom: 30px;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 20px;
+        }
+        .quiz-title {
+            font-size: 18px;
+            font-weight: bold;
+            background: var(--secondary-color);
+            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+        .question-block {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 6px;
+            background: #fafafa;
+            border-left: 4px solid #bdc3c7;
+        }
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        .input-text {
+            width: 120px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            text-align: center;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .data-table th, .data-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        .data-table th {
+            background-color: #eaeded;
+        }
+        .feedback {
+            margin-top: 10px;
+            font-weight: bold;
+            display: none;
+        }
+        .correct-text { color: var(--correct-color); }
+        .incorrect-text { color: var(--incorrect-color); }
+        .analysis {
+            margin-top: 8px;
+            background: #edf7ed;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            color: #1e4620;
+            display: none;
+            border-left: 3px solid #4caf50;
+        }
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 30px;
+        }
+        .btn-submit:hover {
+            background-color: #1a252f;
+        }
+        .score-display {
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: var(--primary-color);
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>揭祕動物的世界 — 數位練習卷</h1>
+    <h3>（範圍：4-1 動物偵查員 與 4-2 動物的生存之道）</h3>
+
+    <div class="history-section">
+        <strong>📊 學習歷程最近 5 次歷史成績單</strong>
+        <table class="history-table">
+            <thead>
+                <tr>
+                    <th>練習日期時間</th>
+                    <th>單元名稱</th>
+                    <th>得分</th>
+                </tr>
+            </thead>
+            <tbody id="history-log">
+                <tr><td colspan="3">尚無歷史練習紀錄</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <form id="quiz-form">
+        <div class="quiz-section">
+            <div class="quiz-title">一、是非題 (每題 4 分，共 24 分)</div>
+            
+            <div class="question-block" data-qtype="tf" data-ans="O" data-qid="1">
+                <div class="question-text">1. 同時間生活在同一區域的同種生物個體所組成的群體，稱為「族群」。</div>
+                <div class="options-group">
+                    <label class="option-item"><input type="radio" name="q1" value="O"> ○ 正確</label>
+                    <label class="option-item"><input type="radio" name="q1" value="X"> ╳ 錯誤</label>
+                </div>
+                <div class="feedback"></div>
+                <div class="analysis">【解析】根據教材第100頁：同時間生活在同一區域的同種生物個體所組成的群體，稱為族群。</div>
+            </div>
+
+            <div class="question-block" data-qtype="tf" data-ans="X" data-qid="2">
+                <div class="question-text">2. 蜜蜂群體中由蟻后負責產卵、兵蟻負責防禦，這是一種分工合作的社會性行為。</div>
+                <div class="options-group">
+                    <label class="option-item"><input type="radio" name="q2" value="O"> ○ 正確</label>
+                    <label class="option-item"><input type="radio" name="q2" value="X"> ╳ 錯誤</label>
+                </div>
+                <div class="feedback"></div>
+                <div class="analysis">【解析】根據教材第102-103頁：負責產卵、防禦（防震/防禦）與搬運工作的是「螞蟻」窩裡的成員（蟻后、兵蟻、工蟻），而非蜜蜂的完整對應稱呼。教材中蜜蜂也是社會性動物，但「蟻后、兵蟻」是屬於螞蟻。</div>
+            </div>
+
+            <div class="question-block" data-qtype="tf" data-ans="O" data-qid="3">
+                <div class="question-text">3. 蝸牛和蜆都屬於沒有骨骼的動物，牠們都是靠收縮有肌肉的足來推動身體前進。</div>
+                <div class="options-group">
+                    <label class="option-item"><input type="radio" name="q3" value="O"> ○ 正確</label>
+                    <label class="option-item"><input type="radio" name="q3" value="X"> ╳ 錯誤</label>
+                </div>
+                <div class="feedback"></div>
+                <div class="analysis">【解析】根據教材第104頁：有些動物沒有骨骼，例如蝸牛和蜆，牠們都是靠收縮有肌肉的足，來推動身體前進。</div>
+            </div>
+
+            <div class="question-block" data-qtype="tf" data-ans="X" data-qid="4">
+                <div class="question-text">4. 外溫動物是指利用身體內部所產生的熱、透過散熱和保溫來調節體溫的動物，例如哺乳類與鳥類。</div>
+                <div class="options-group">
+                    <label class="option-item"><input type="radio" name="q4" value="O"> ○ 正確</label>
+                    <label class="option-item"><input type="radio" name="q4" value="X"> ╳ 錯誤</label>
+                </div>
+                <div class="feedback"></div>
+                <div class="analysis">【解析】根據教材第114-115頁：利用身體內部所產生的熱來調節體溫、體溫變化不大且代表物種為哺乳類與鳥類的是「內溫動物」，外溫動物是從外界環境吸收熱或降溫。</div>
+            </div>
+
+            <div class="question-block" data-qtype="tf" data-ans="O" data-qid="5">
+                <div class="question-text">5. 當我們的內側肌肉收縮、外側肌肉舒張時，會帶動骨骼和關節，使手臂完成彎曲的動作。</div>
+                <div class="options-group">
+                    <label class="option-item"><input type="radio" name="q5" value="O"> ○ 正確</label>
+                    <label class="option-item"><input type="radio" name="q5" value="X"> ╳ 錯誤</label>
+                </div>
+                <div class="feedback"></div>
+                <div class="analysis">【解析】根據教材第105頁：內側肌肉收縮，外側的肌肉舒張時，會帶動骨骼和關節，使手臂彎曲。</div>
+            </div>
+
+            <div class="question-block" data-qtype="tf" data-ans="X" data-qid="6">
+                <div class="question-text">6. 人體組成的層次，由最基本的單位到整體的順序為：細胞 &rarr; 器官 &rarr; 組織 &rarr; 器官系統 &rarr; 個體。</div>
+                <div class="options-group">
+                    <label class="option-item"><input type="radio" name="q6" value="O"> ○ 正確</label>
+                    <label class="option-item"><input type="radio" name="q6" value="X"> ╳ 錯誤</label>
+                </div>
+                <div class="feedback"></div>
+                <div class="analysis">【解析】根據教材第108-109頁：人體層次應為「細胞 &rarr; 組織 &rarr; 器官 &rarr; 器官系統 &rarr; 個體」，題目中器官與組織的順序顛倒了。</div>
+            </div>
+        </div>
+
+        <div class="quiz-section">
+            <div class="quiz-title">二、選擇題 (每題 4 分，共 24 分)</div>
+
+            <div class="question-block" data-qtype="mc" data-ans="2" data-qid="7">
+                <div class="question-text">7. 在同一個時間與溼地環境中，紅樹林裡的所有生物集合在一起，在生態學層次上稱為什麼？</div>
+                <div class="options-group">
+                    <label class="option-item"><input type="radio" name="q7" value="1"> (1) 個體</label>
+                    <label class="option-item"><input type="radio" name="q7" value="2"> (2) 群集</label>
+                    <label class="option-item"><input type="radio" name="q7" value="3"> (3) 族群</label>
+                    <label class="option-item"><input type="radio" name="q7" value="4"> (4) 食物鏈</label>
+                </div>
+                <div class="feedback"></div>
+                <div class="analysis">【解析】根據教材第100頁表格：群集是指同時、同地、多種生物的集合（例如紅樹林中的所有生物集合）。</div>
+            </div>
+
+            <div class="question-block" data-qtype="mc" data-ans="4" data-qid="8">
+                <div class="question-text">8. 台灣獼猴個體之間常常會進行互相「理毛」的行為，這在生物學上屬於什麼行為的展現？</div>
+                <div class="options-group">
+                    <label class="option-item"><input type="radio" name="q8" value="1"> (1) 覓食行為</label>
+                    <label class="option-item"><input type="radio" name="q8" value="2"> (2) 繁殖行為</label>
+                    <label class="option-item"><input type="radio" name="q8" value="3"> (3) 仿生行為</label>
+                    <label class="option-item"><input type="radio" name="q8" value="4"> (4) 社會行為</label>
+                </div>
+                <div class="feedback"></div>
+                <div class="analysis">【解析】根據教材第103頁：台灣獼猴成員之間的相互理毛，屬於「常見的社會行為」。</div>
+            </div>
+
+            <div class="question-block" data-qtype="mc" data-ans="1" data-qid="9">
+                <div class="question-text">9. 釣魚時使用的「擬餌」是模仿小魚、小蟲或蝦子的外形或動作，這種學習動物樣子和行為來發明有用東西的設計稱作什麼？</div>
+                <div class="options-group">
+                    <label class="option-item"><input type="radio" name="q9" value="1"> (1) 仿生學</label>
+                    <label class="option-item"><input type="radio" name="q9" value="2"> (2) 生物學</label>
+                    <label class="option-item"><input type="radio" name="q9" value="3"> (3) 解剖學</label>
+                    <label class="option-item"><input type="radio" name="q9" value="4"> (4) 環境學</label>
+                </div>
+                <div class="feedback"></div>
+                <div class="analysis">【解析】根據教材第105頁充電站：像擬餌這樣的設計，就是一種「仿生學」的應用，透過學習動物的樣子和行為，來發明有用的東西。</div>
+            </div>
+
+            <div class="question-block" data-qtype="mc" data-ans="3" data-qid="10">
+                <div class="question-text">10. 關於動物適應環境變化的遷徙行為，下列哪一項對應是完全符合教材文本敘述的？</div>
+                <div class="options-group">
+                    <label class="option-item"><input type="radio" name="q10" value="1"> (1) 家燕：在夏末秋初抵達台灣進行繁殖</label>
+                    <label class="option-item"><input type="radio" name="q10" value="2"> (2) 黑面琵鷺：春季時遷徙到溫暖地區度冬</label>
+                    <label class="option-item"><input type="radio" name="q10" value="3"> (3) 紫斑蝶：冬天時會到南台灣溫暖的山谷度冬</label>
+                    <label class="option-item"><input type="radio" name="q10" value="4"> (4) 烏魚：春夏季節時水溫下降，從南方游到北方</label>
+                </div>
+                <div class="feedback"></div>
+                <div class="analysis">【解析】根據教材第110-111頁：家燕是春末抵達台灣繁殖；黑面琵鷺是秋季遷徙度冬；烏魚是秋冬季節水溫下降，從寒冷北方游到台灣西南部海域產卵；紫斑蝶冬天時會到南台灣溫暖的山谷度冬完全正確。</div>
+            </div>
+
+            <div class="question-block" data-qtype="mc" data-ans="3" data-qid="11">
+                <div class="question-text">11. 夏季樹上的「台灣熊蟬」特別多且一直鳴叫，根據文本，牠們鳴叫的主要原因是什麼？</div>
+                <div class="options-group">
+                    <label class="option-item"><input type="radio" name="q11" value="1"> (1) 警示天敵不要靠近</label>
+                    <label class="option-item"><input type="radio" name="q11" value="2"> (2) 調節體溫以利消暑</label>
+                    <label class="option-item"><input type="radio" name="q11" value="3"> (3) 雄蟬利用蟬鳴吸引雌蟬完成交配產卵</label>
+                    <label class="option-item"><input type="radio" name="q11" value="4"> (4) 群體分工合作宣告食物來源</div>
+                </div>
+                <div class="feedback"></div>
+                <div class="analysis">【解析】根據教材第98頁：5~9月是台灣熊蟬成蟲出現的季節，雄蟬會趁這時候利用蟬鳴吸引雌蟬完成交配產卵。</div>
+            </div>
+
+            <div class="question-block" data-qtype="mc" data-ans="1" data-qid="12">
+                <div class="question-text">12. 氣溫過高時，哪一種動物會表現出「躲在石頭下或洞穴中」的行為來調節體溫？</div>
+                <div class="options-group">
+                    <label class="option-item"><input type="radio" name="q12" value="1"> (1) 蜥蜴</label>
+                    <label class="option-item"><input type="radio" name="q12" value="2"> (2) 非洲象</label>
+                    <label class="option-item"><input type="radio" name="q12" value="3"> (3) 狗</label>
+                    <label class="option-item"><input type="radio" name="q12" value="4"> (4) 龜</label>
+                </div>
+                <div class="feedback"></div>
+                <div class="analysis">【解析】根據教材第115頁外溫動物行為表格：氣溫過高時，蜥蜴會躲在石頭下或洞穴中。</div>
+            </div>
+        </div>
+
+        <div class="quiz-section">
+            <div class="quiz-title">三、科學探究與圖表結構填空題 (每格 4 分，共 52 分)</div>
+            
+            <div class="question-block">
+                <div class="question-text">【主題探究：動物如何適應環境溫度變化】</div>
+                <p>請根據教材中「主題探究記錄表」與「體溫調節方式」，在空格中填入正確的<b>核心專有名詞（如：生產者、外溫動物、內溫動物、遷徙、細胞）</b>或<b>動物名稱</b>：</p>
+                
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>動物名稱</th>
+                            <th>環境溫度變化</th>
+                            <th>適應環境溫度變化的方法或行為</th>
+                            <th>依構造分類的體溫類型</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>黑面琵鷺</td>
+                            <td>變寒冷</td>
+                            <td>
+                                <input type="text" class="input-text fill-blank" data-ans="遷徙" data-qid="13"> (填四字行為)
+                            </td>
+                            <td>鳥類，屬於 <input type="text" class="input-text fill-blank" data-ans="內溫動物" data-qid="14"></td>
+                        </tr>
+                        <tr>
+                            <td>龜</td>
+                            <td>變寒冷</td>
+                            <td>晒太陽來維持體溫</td>
+                            <td>爬蟲類，屬於 <input type="text" class="input-text fill-blank" data-ans="外溫動物" data-qid="15"></td>
+                        </tr>
+                        <tr>
+                            <td>非洲象</td>
+                            <td>變炎熱</td>
+                            <td>
+                                <input type="text" class="input-text fill-blank" data-ans="搧動耳朵散熱" data-qid="16"> (填七字方法)
+                            </td>
+                            <td>哺乳類，屬於內溫動物</td>
+                        </tr>
+                        <tr>
+                            <td>北極熊</td>
+                            <td>變寒冷</td>
+                            <td>利用厚厚的 <input type="text" class="input-text fill-blank" data-ans="皮下脂肪" data-qid="17"> 和濃密的毛禦寒</td>
+                            <td>哺乳類，體溫變化不大</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="feedback" id="fb-group-1"></div>
+            </div>
+
+            <div class="question-block">
+                <div class="question-text">【食物鏈與動物覓食構造對照】</div>
+                <p>請根據教材第101頁與第106-107頁內容，精準填寫文本中的專有名詞與身體構造：</p>
+                <ol style="display: flex; flex-direction: column; gap: 12px; padding-left: 20px;">
+                    <li>在溼地生態食物鏈中，植物及藻類能自行製造養分，被稱為 <input type="text" class="input-text fill-blank" data-ans="生產者" data-qid="18">。而以其為食物的虱目魚屬於 <input type="text" class="input-text fill-blank" data-ans="一級消費者" data-qid="19">。</li>
+                    <li>將吃與被吃的關係以箭頭連結，就稱作 <input type="text" class="input-text fill-blank" data-ans="食物鏈" data-qid="20">。</li>
+                    <li><b>覓食構造適應：</b>
+                        <ul>
+                            <li>柑橘鳳蝶：用像吸管的 <input type="text" class="input-text fill-blank" data-ans="口器" data-qid="21"> 吸食花蜜。</li>
+                            <li>大冠鷲：用強而有力的 <input type="text" class="input-text fill-blank" data-ans="腳爪" data-qid="22"> 抓取獵物。</li>
+                            <li>變色龍：用可快速伸長的 <input type="text" class="input-text fill-blank" data-ans="舌頭" data-qid="23"> 黏住獵物。</li>
+                        </ul>
+                    </li>
+                    <li>蜜蜂在團體中有效的傳遞訊息，會以 <input type="text" class="input-text fill-blank" data-ans="舞蹈" data-qid="24"> 告知同伴蜜源的訊息。</li>
+                    <li>人體組成最基本的單位為 <input type="text" class="input-text fill-blank" data-ans="細胞" data-qid="25">，許多功能相近的此單位則共同組成「組織」。</li>
+                </ol>
+                <div class="feedback" id="fb-group-2"></div>
+            </div>
+        </div>
+
+        <button type="button" class="btn-submit" onclick="calculateScore()">提交練習卷並進行自動批改</button>
+    </form>
+
+    <div class="score-display" id="score-result"></div>
+</div>
+
+<script>
+    // 網頁載入時讀取 LocalStorage 歷程
+    window.onload = function() {
+        showHistory();
+    };
+
+    function calculateScore() {
+        const questions = document.querySelectorAll('.question-block');
+        let totalScore = 0;
+        let scorePerQuestion = 4; // 總共25個填答點 (6是非 + 6選擇 + 13填空 = 25題 * 4分 = 100分)
+        
+        // 檢查是非與選擇 (1-12)
+        for (let i = 1; i <= 12; i++) {
+            let qBlock = document.querySelector(`[data-qid="${i}"]`);
+            let ans = qBlock.getAttribute('data-ans');
+            let selected = document.querySelector(`input[name="q${i}"]:checked`);
+            let feedback = qBlock.querySelector('.feedback');
+            let analysis = qBlock.querySelector('.analysis');
+            
+            feedback.style.display = 'block';
+            analysis.style.display = 'block';
+            
+            if (selected && selected.value === ans) {
+                totalScore += scorePerQuestion;
+                feedback.innerHTML = "點評：✓ 回答正確！";
+                feedback.className = "feedback correct-text";
+            } else {
+                feedback.innerHTML = `點評：&times; 回答錯誤！正確答案是 [ ${ans} ]`;
+                feedback.className = "feedback incorrect-text";
+            }
+        }
+
+        // 檢查填空題 (13-25)
+        for (let i = 13; i <= 25; i++) {
+            let inputField = document.querySelector(`[data-qid="${i}"]`);
+            let correctAns = inputField.getAttribute('data-ans');
+            let userAns = inputField.value.trim();
+            
+            // 尋找外層的 question-block 或讓填空題所在的塊顯示解析
+            if (userAns === correctAns) {
+                totalScore += scorePerQuestion;
+                inputField.style.border = "2px solid #2980b9";
+                inputField.style.backgroundColor = "#e8f4f8";
+            } else {
+                inputField.style.border = "2px solid #c0392b";
+                inputField.style.backgroundColor = "#fce4d6";
+                // 動態提示正確答案
+                inputField.title = `正確答案是: ${correctAns}`;
+            }
+        }
+
+        // 顯示所有解析區塊
+        document.querySelectorAll('.analysis').forEach(el => el.style.display = 'block');
+        document.querySelectorAll('.feedback').forEach(el => el.style.display = 'block');
+
+        // 顯示總分
+        let scoreDiv = document.getElementById('score-result');
+        scoreDiv.style.display = 'block';
+        scoreDiv.innerHTML = `您的總得分為：<span style="color:${totalScore >= 60 ? '#2980b9':'#c0392b'}">${totalScore}</span> 分 / 100 分`;
+
+        // 儲存至 LocalStorage
+        saveToHistory(totalScore);
+        
+        // 滾動到最上方看成績
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    function saveToHistory(score) {
+        let history = JSON.parse(localStorage.getItem('nature_quiz_history')) || [];
+        let now = new Date();
+        let timeStr = `${now.getFullYear()}/${now.getMonth()+1}/${now.getDate()} ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+        
+        let newRecord = {
+            date: timeStr,
+            unit: "揭祕動物的世界 (4-1, 4-2)",
+            score: score
+        };
+        
+        history.unshift(newRecord); // 加到最前面
+        if (history.length > 5) history.pop(); // 只留5筆
+        
+        localStorage.setItem('nature_quiz_history', JSON.stringify(history));
+        showHistory();
+    }
+
+    function showHistory() {
+        let history = JSON.parse(localStorage.getItem('nature_quiz_history')) || [];
+        let tbody = document.getElementById('history-log');
+        
+        if (history.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="3">尚無歷史練習紀錄</td></tr>`;
+            return;
+        }
+        
+        tbody.innerHTML = history.map(r => `
+            <tr>
+                <td>${r.date}</td>
+                <td>${r.unit}</td>
+                <td style="font-weight:bold; color:${r.score >= 60 ? '#2980b9':'#c0392b'}">${r.score} 分</td>
+            </tr>
+        `).join('');
+    }
+</script>
+
+</body>
+</html>
