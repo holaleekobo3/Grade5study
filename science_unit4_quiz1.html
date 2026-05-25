@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>台灣 108 課綱 — 國小五年級自然科學第4單元數位練習卷</title>
+    <title>台灣 108 課綱 — 國小五年級自然科學第4單元數位練習卷（修正版）</title>
     <style>
         :root {
             --primary-color: #2c3e50;
@@ -29,7 +29,7 @@
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
-        h1, h2, h3 {
+        h1, h3 {
             text-align: center;
             color: var(--primary-color);
         }
@@ -91,12 +91,13 @@
             cursor: pointer;
         }
         .input-text {
-            width: 120px;
+            width: 130px;
             padding: 5px;
             border: 1px solid #ccc;
             border-radius: 4px;
-            font-size: 16px;
+            font-size: 15px;
             text-align: center;
+            transition: all 0.3s;
         }
         .data-table {
             width: 100%;
@@ -153,6 +154,11 @@
             color: var(--primary-color);
             display: none;
         }
+        .blank-container {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #ddd;
+        }
     </style>
 </head>
 <body>
@@ -198,7 +204,7 @@
                     <label class="option-item"><input type="radio" name="q2" value="X"> ╳ 錯誤</label>
                 </div>
                 <div class="feedback"></div>
-                <div class="analysis">【解析】根據教材第102-103頁：負責產卵、防禦（防震/防禦）與搬運工作的是「螞蟻」窩裡的成員（蟻后、兵蟻、工蟻），而非蜜蜂的完整對應稱呼。教材中蜜蜂也是社會性動物，但「蟻后、兵蟻」是屬於螞蟻。</div>
+                <div class="analysis">【解析】根據教材第102-103頁：負責產卵、防禦（防震/防禦）與搬運工作的是「螞蟻」窩裡的成員（蟻后、兵蟻、工蟻），而非蜜蜂的完整對應稱呼。蜜蜂社會雖然也有分工，但沒有兵蟻和蟻后。</div>
             </div>
 
             <div class="question-block" data-qtype="tf" data-ans="O" data-qid="3">
@@ -218,7 +224,7 @@
                     <label class="option-item"><input type="radio" name="q4" value="X"> ╳ 錯誤</label>
                 </div>
                 <div class="feedback"></div>
-                <div class="analysis">【解析】根據教材第114-115頁：利用身體內部所產生的熱來調節體溫、體溫變化不大且代表物種為哺乳類與鳥類的是「內溫動物」，外溫動物是從外界環境吸收熱或降溫。</div>
+                <div class="analysis">【解析】根據教材第114-115頁：利用身體內部所產生的熱來調節體溫、體溫變化不大且代表物種為哺乳類與鳥類的是「內溫動物」，外溫動物是主要從外界環境吸收熱或降溫。</div>
             </div>
 
             <div class="question-block" data-qtype="tf" data-ans="O" data-qid="5">
@@ -314,7 +320,7 @@
                     <label class="option-item"><input type="radio" name="q12" value="4"> (4) 龜</label>
                 </div>
                 <div class="feedback"></div>
-                <div class="analysis">【解析】根據教材第115頁外溫動物行為表格：氣溫過高時，蜥蜴會躲在石頭下或洞穴中。</div>
+                <div class="analysis">【解析】根據教材第115頁外溫動物行為表格：氣溫過高時，蜥蜴會躲在石頭下或洞穴中以調節體溫。</div>
             </div>
         </div>
 
@@ -323,7 +329,7 @@
             
             <div class="question-block">
                 <div class="question-text">【主題探究：動物如何適應環境溫度變化】</div>
-                <p>請根據教材中「主題探究記錄表」與「體溫調節方式」，在空格中填入正確的<b>核心專有名詞（如：生產者、外溫動物、內溫動物、遷徙、細胞）</b>或<b>動物名稱</b>：</p>
+                <p>請根據教材中「主題探究記錄表」與「體溫調節方式」，在空格中填入正確的<b>核心專有名詞（如：生產者、外溫動物、內溫動物、遷徙、細胞）</b>或<b>動物適應行為描述</b>：</p>
                 
                 <table class="data-table">
                     <thead>
@@ -339,52 +345,122 @@
                             <td>黑面琵鷺</td>
                             <td>變寒冷</td>
                             <td>
-                                <input type="text" class="input-text fill-blank" data-ans="遷徙" data-qid="13"> (填四字行為)
+                                <div class="blank-container" data-qtype="bf" data-ans="遷徙" data-qid="13">
+                                    <input type="text" class="input-text fill-blank"> (填四字行為)
+                                    <div class="feedback"></div>
+                                    <div class="analysis">【出處】教材第114頁主題探究：黑面琵鷺在環境變寒冷時的適應方法為「遷徙」。</div>
+                                </div>
                             </td>
-                            <td>鳥類，屬於 <input type="text" class="input-text fill-blank" data-ans="內溫動物" data-qid="14"></td>
+                            <td>鳥類，屬於 
+                                <div class="blank-container" data-qtype="bf" data-ans="內溫動物" data-qid="14">
+                                    <input type="text" class="input-text fill-blank">
+                                    <div class="feedback"></div>
+                                    <div class="analysis">【出處】教材第114頁：利用體內產生熱量調節，體溫變化不大之鳥類、哺乳類稱為「內溫動物」。</div>
+                                </div>
+                            </td>
                         </tr>
                         <tr>
                             <td>龜</td>
                             <td>變寒冷</td>
                             <td>晒太陽來維持體溫</td>
-                            <td>爬蟲類，屬於 <input type="text" class="input-text fill-blank" data-ans="外溫動物" data-qid="15"></td>
+                            <td>爬蟲類，屬於 
+                                <div class="blank-container" data-qtype="bf" data-ans="外溫動物" data-qid="15">
+                                    <input type="text" class="input-text fill-blank">
+                                    <div class="feedback"></div>
+                                    <div class="analysis">【出處】教材第115頁：爬蟲類主要從環境吸熱，體溫隨環境改變，稱為「外溫動物」。</div>
+                                </div>
+                            </td>
                         </tr>
                         <tr>
                             <td>非洲象</td>
                             <td>變炎熱</td>
                             <td>
-                                <input type="text" class="input-text fill-blank" data-ans="搧動耳朵散熱" data-qid="16"> (填七字方法)
+                                <div class="blank-container" data-qtype="bf" data-ans="搧動耳朵散熱" data-qid="16">
+                                    <input type="text" class="input-text fill-blank"> (填六字方法)
+                                    <div class="feedback"></div>
+                                    <div class="analysis">【出處】教材第114頁探究紀錄表：非洲象在環境變炎熱時，會利用「搧動耳朵散熱」。</div>
+                                </div>
                             </td>
                             <td>哺乳類，屬於內溫動物</td>
                         </tr>
                         <tr>
                             <td>北極熊</td>
                             <td>變寒冷</td>
-                            <td>利用厚厚的 <input type="text" class="input-text fill-blank" data-ans="皮下脂肪" data-qid="17"> 和濃密的毛禦寒</td>
+                            <td>利用厚厚的 
+                                <div class="blank-container" data-qtype="bf" data-ans="皮下脂肪" data-qid="17">
+                                    <input type="text" class="input-text fill-blank">
+                                    <div class="feedback"></div>
+                                    <div class="analysis">【出處】教材第114頁：生活在寒冷地區的北極熊，能利用厚厚的「皮下脂肪」和濃密的毛禦寒。</div>
+                                </div> 和濃密的毛禦寒
+                            </td>
                             <td>哺乳類，體溫變化不大</td>
                         </tr>
                     </tbody>
                 </table>
-                <div class="feedback" id="fb-group-1"></div>
             </div>
 
             <div class="question-block">
-                <div class="question-text">【食物鏈與動物覓食構造對照】</div>
+                <div class="question-text">【食物鏈與動物覓食構造概念填空】</div>
                 <p>請根據教材第101頁與第106-107頁內容，精準填寫文本中的專有名詞與身體構造：</p>
-                <ol style="display: flex; flex-direction: column; gap: 12px; padding-left: 20px;">
-                    <li>在溼地生態食物鏈中，植物及藻類能自行製造養分，被稱為 <input type="text" class="input-text fill-blank" data-ans="生產者" data-qid="18">。而以其為食物的虱目魚屬於 <input type="text" class="input-text fill-blank" data-ans="一級消費者" data-qid="19">。</li>
-                    <li>將吃與被吃的關係以箭頭連結，就稱作 <input type="text" class="input-text fill-blank" data-ans="食物鏈" data-qid="20">。</li>
+                <ol style="padding-left: 20px; line-height: 2;">
+                    <li>在溼地生態食物鏈中，植物及藻類能自行製造養分，被稱為 
+                        <div class="blank-container" data-qtype="bf" data-ans="生產者" data-qid="18">
+                            <input type="text" class="input-text fill-blank">
+                            <div class="feedback"></div>
+                            <div class="analysis">【出處】教材第101頁：能自行製造養分的植物和藻類叫做「生產者」。</div>
+                        </div>。而以其為食物的虱目魚屬於 
+                        <div class="blank-container" data-qtype="bf" data-ans="一級消費者" data-qid="19">
+                            <input type="text" class="input-text fill-blank">
+                            <div class="feedback"></div>
+                            <div class="analysis">【出處】教材第101頁：以生產者為食的草食動物或雜食動物叫做「一級消費者」。</div>
+                        </div>。
+                    </li>
+                    <li>將吃與被吃的關係以箭頭連結，就稱作 
+                        <div class="blank-container" data-qtype="bf" data-ans="食物鏈" data-qid="20">
+                            <input type="text" class="input-text fill-blank">
+                            <div class="feedback"></div>
+                            <div class="analysis">【出處】教材第101頁：生物之間吃與被吃的關係用箭頭連接起來，形成了「食物鏈」。</div>
+                        </div>。
+                    </li>
                     <li><b>覓食構造適應：</b>
                         <ul>
-                            <li>柑橘鳳蝶：用像吸管的 <input type="text" class="input-text fill-blank" data-ans="口器" data-qid="21"> 吸食花蜜。</li>
-                            <li>大冠鷲：用強而有力的 <input type="text" class="input-text fill-blank" data-ans="腳爪" data-qid="22"> 抓取獵物。</li>
-                            <li>變色龍：用可快速伸長的 <input type="text" class="input-text fill-blank" data-ans="舌頭" data-qid="23"> 黏住獵物。</li>
+                            <li>柑橘鳳蝶：用像吸管的 
+                                <div class="blank-container" data-qtype="bf" data-ans="口器" data-qid="21">
+                                    <input type="text" class="input-text fill-blank">
+                                    <div class="feedback"></div>
+                                    <div class="analysis">【出處】教材第106頁：柑橘鳳蝶用像吸管的「口器」吸食花蜜。</div>
+                                </div> 吸食花蜜。
+                            </li>
+                            <li>大冠鷲：用強而有力的 
+                                <div class="blank-container" data-qtype="bf" data-ans="腳爪" data-qid="22">
+                                    <input type="text" class="input-text fill-blank">
+                                    <div class="feedback"></div>
+                                    <div class="analysis">【出處】教材第107頁：大冠鷲用強而有力的「腳爪」抓取獵物。</div>
+                                </div> 抓取獵物。
+                            </li>
+                            <li>變色龍：用可快速伸長的 
+                                <div class="blank-container" data-qtype="bf" data-ans="舌頭" data-qid="23">
+                                    <input type="text" class="input-text fill-blank">
+                                    <div class="feedback"></div>
+                                    <div class="analysis">【出處】教材第107頁：變色龍用可快速伸長的「舌頭」黏住獵物。</div>
+                                </div> 黏住獵物。
+                            </li>
                         </ul>
                     </li>
-                    <li>蜜蜂在團體中有效的傳遞訊息，會以 <input type="text" class="input-text fill-blank" data-ans="舞蹈" data-qid="24"> 告知同伴蜜源的訊息。</li>
-                    <li>人體組成最基本的單位為 <input type="text" class="input-text fill-blank" data-ans="細胞" data-qid="25">，許多功能相近的此單位則共同組成「組織」。</li>
+                    <li>蜜蜂在團體中有效的傳遞訊息，會以 
+                        <div class="blank-container" data-qtype="bf" data-ans="舞蹈" data-qid="24">
+                            <input type="text" class="input-text fill-blank">
+                            <div class="feedback"></div>
+                            <div class="analysis">【出處】教材第103頁：蜜蜂會以「舞蹈」告知同伴蜜源的訊息。</div>
+                        </div> 告知同伴蜜源的訊息。
+                    </li>
+                    <li>人體組成最基本的單位為 
+                        <div class="blank-container" data-qtype="bf" data-ans="細胞" data-qid="25">
+                            <input type="text" class="input-text fill-blank">
+                            <div class="feedback"></div>
+                            <div class="analysis">【出處】教材第108頁：人體組成的最基本單位為「細胞」。</div>
+                        </div>，許多功能相近的此單位則共同組成「組織」。</li>
                 </ol>
-                <div class="feedback" id="fb-group-2"></div>
             </div>
         </div>
 
@@ -395,69 +471,83 @@
 </div>
 
 <script>
-    // 網頁載入時讀取 LocalStorage 歷程
     window.onload = function() {
         showHistory();
     };
 
     function calculateScore() {
-        const questions = document.querySelectorAll('.question-block');
         let totalScore = 0;
-        let scorePerQuestion = 4; // 總共25個填答點 (6是非 + 6選擇 + 13填空 = 25題 * 4分 = 100分)
+        const scorePerQuestion = 4; // 25題 * 4分 = 100分
         
-        // 檢查是非與選擇 (1-12)
+        // 1. 批改是非題與選擇題 (1~12 題)
         for (let i = 1; i <= 12; i++) {
             let qBlock = document.querySelector(`[data-qid="${i}"]`);
+            if (!qBlock) continue;
+            
             let ans = qBlock.getAttribute('data-ans');
             let selected = document.querySelector(`input[name="q${i}"]:checked`);
             let feedback = qBlock.querySelector('.feedback');
             let analysis = qBlock.querySelector('.analysis');
             
-            feedback.style.display = 'block';
-            analysis.style.display = 'block';
+            if (feedback) feedback.style.display = 'block';
+            if (analysis) analysis.style.display = 'block';
             
             if (selected && selected.value === ans) {
                 totalScore += scorePerQuestion;
-                feedback.innerHTML = "點評：✓ 回答正確！";
-                feedback.className = "feedback correct-text";
+                if (feedback) {
+                    feedback.innerHTML = "點評：✓ 回答正確！";
+                    feedback.className = "feedback correct-text";
+                }
             } else {
-                feedback.innerHTML = `點評：&times; 回答錯誤！正確答案是 [ ${ans} ]`;
-                feedback.className = "feedback incorrect-text";
+                if (feedback) {
+                    feedback.innerHTML = `點評：&times; 回答錯誤！正確答案是 [ ${ans} ]`;
+                    feedback.className = "feedback incorrect-text";
+                }
             }
         }
 
-        // 檢查填空題 (13-25)
+        // 2. 批改第三大題結構化填空題 (13~25 題)
         for (let i = 13; i <= 25; i++) {
-            let inputField = document.querySelector(`[data-qid="${i}"]`);
-            let correctAns = inputField.getAttribute('data-ans');
+            let container = document.querySelector(`.blank-container[data-qid="${i}"]`);
+            if (!container) continue;
+            
+            let inputField = container.querySelector('input.fill-blank');
+            let correctAns = container.getAttribute('data-ans');
             let userAns = inputField.value.trim();
             
-            // 尋找外層的 question-block 或讓填空題所在的塊顯示解析
+            let feedback = container.querySelector('.feedback');
+            let analysis = container.querySelector('.analysis');
+            
+            if (feedback) feedback.style.display = 'block';
+            if (analysis) analysis.style.display = 'block';
+            
             if (userAns === correctAns) {
                 totalScore += scorePerQuestion;
                 inputField.style.border = "2px solid #2980b9";
                 inputField.style.backgroundColor = "#e8f4f8";
+                if (feedback) {
+                    feedback.innerHTML = "點評：✓ 完全吻合教材標準語彙！";
+                    feedback.className = "feedback correct-text";
+                }
             } else {
                 inputField.style.border = "2px solid #c0392b";
                 inputField.style.backgroundColor = "#fce4d6";
-                // 動態提示正確答案
-                inputField.title = `正確答案是: ${correctAns}`;
+                if (feedback) {
+                    feedback.innerHTML = `點評：&times; 填答不符！標準語彙為：【${correctAns}】`;
+                    feedback.className = "feedback incorrect-text";
+                }
             }
         }
 
-        // 顯示所有解析區塊
-        document.querySelectorAll('.analysis').forEach(el => el.style.display = 'block');
-        document.querySelectorAll('.feedback').forEach(el => el.style.display = 'block');
-
-        // 顯示總分
+        // 3. 顯示總成績
         let scoreDiv = document.getElementById('score-result');
         scoreDiv.style.display = 'block';
         scoreDiv.innerHTML = `您的總得分為：<span style="color:${totalScore >= 60 ? '#2980b9':'#c0392b'}">${totalScore}</span> 分 / 100 分`;
 
-        // 儲存至 LocalStorage
+        // 4. 記錄到歷史紀錄
         saveToHistory(totalScore);
         
-        // 滾動到最上方看成績
+        // 5. 畫面流暢滾動回頂端看成績
         window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
@@ -468,12 +558,12 @@
         
         let newRecord = {
             date: timeStr,
-            unit: "揭祕動物的世界 (4-1, 4-2)",
+            unit: "揭祕動物的世界 (4-1, 4-2) 修正版",
             score: score
         };
         
-        history.unshift(newRecord); // 加到最前面
-        if (history.length > 5) history.pop(); // 只留5筆
+        history.unshift(newRecord);
+        if (history.length > 5) history.pop();
         
         localStorage.setItem('nature_quiz_history', JSON.stringify(history));
         showHistory();
@@ -499,4 +589,4 @@
 </script>
 
 </body>
-</html>
+</html> 
