@@ -1,124 +1,400 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>五年級社會：日治時期的社會變遷（一）測驗卷</title>
-<style>
-:root { --primary:#2b6cb0; --success:#3182ce; --danger:#e53e3e; --bg:#f7fafc; --card-bg:#ffffff; --text:#2d3748; --border:#e2e8f0; }
-body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif,'Microsoft JhengHei';background-color:var(--bg);color:var(--text);line-height:1.6;margin:0;padding:20px;}
-.max-w-4xl{max-width:800px;margin:auto;}
-.container{max-width:800px;margin:auto;}
-.card{background:var(--card-bg);padding:30px;border-radius:10px;box-shadow:0 4px 6px rgba(0,0,0,0.1);}
-h1,h2,h3{color:var(--primary);}h1{text-align:center;border-bottom:2px solid var(--primary);padding-bottom:10px;}
-.history-box{background:#e6fffa;border:1px solid #319795;padding:15px;border-radius:8px;margin-bottom:20px;}
-table{width:100%;border-collapse:collapse;margin-top:10px;}
-th,td{border:1px solid var(--border);padding:8px;text-align:center;}
-th{background-color:#ebf8ff;}
-.section{margin-bottom:30px;}
-.question{margin-bottom:20px;padding:15px;background:#fdfdfd;border-radius:8px;border:1px solid var(--border);}
-.question-title{font-weight:bold;margin-bottom:10px;}
-label{display:block;margin-bottom:5px;cursor:pointer;}
-input[type="radio"],input[type="checkbox"]{margin-right:8px;}
-.explanation{display:none;margin-top:10px;padding:10px;background-color:#fffff0;border-left:4px solid #ecc94b;color:#555;}
-.correct-text{color:var(--success);font-weight:bold;}
-.wrong-text{color:var(--danger);font-weight:bold;}
-.btn-submit{display:block;width:100%;padding:15px;background-color:var(--primary);color:#fff;border:none;border-radius:8px;font-size:1.2em;cursor:pointer;transition:background .3s;}
-.btn-submit:hover{background-color:#2c5282;}
-#resultBox{display:none;text-align:center;font-size:1.5em;font-weight:bold;margin-top:20px;padding:20px;background:#ebf8ff;border-radius:8px;}
-select{padding:5px;font-size:1em;margin-right:10px;}
-.reading-text{background:#edf2f7;padding:15px;border-radius:8px;font-style:italic;margin-bottom:15px;}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>五年級社會：日治時期的社會變遷（一）測驗卷</title>
+    <style>
+        :root {
+            --primary: #2b6cb0;
+            --success: #3182ce;
+            --danger: #e53e3e;
+            --bg: #f7fafc;
+            --card-bg: #ffffff;
+            --text: #2d3748;
+            --border: #e2e8f0;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, 'Microsoft JhengHei';
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        .max-w-4xl { max-width: 800px; margin: auto; }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3 { color: var(--primary); }
+        h1 { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; }
+        .history-box {
+            background: #e6fffa;
+            border: 1px solid #319795;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid var(--border); padding: 8px; text-align: center; }
+        th { background-color: #ebf8ff; }
+        .section { margin-bottom: 30px; }
+        .question { margin-bottom: 20px; padding: 15px; background: #fdfdfd; border-radius: 8px; border: 1px solid var(--border); }
+        .question-title { font-weight: bold; margin-bottom: 10px; }
+        label { display: block; margin-bottom: 5px; cursor: pointer; }
+        input[type="radio"], input[type="checkbox"] { margin-right: 8px; }
+        .explanation {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #fffff0;
+            border-left: 4px solid #ecc94b;
+            font-size: 0.95em;
+            color: #555;
+        }
+        .correct-text { color: var(--success); font-weight: bold; }
+        .wrong-text { color: var(--danger); font-weight: bold; }
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .btn-submit:hover { background-color: #2c5282; }
+        #resultBox {
+            display: none;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 20px;
+            background: #ebf8ff;
+            border-radius: 8px;
+        }
+        select { padding: 5px; font-size: 1em; margin-right: 10px; }
+        .reading-text { background: #edf2f7; padding: 15px; border-radius: 8px; font-style: italic; margin-bottom: 15px;}
+    </style>
 </head>
 <body>
+
 <div class="container">
-<h1>五下社會：日治時期的社會變遷（一）練習卷</h1>
-<p><a href="society_unit4_quiz1.html" class="btn-submit" style="display:inline-block;margin-bottom:20px;">點此開始測驗</a></p>
-<div class="history-box" id="historyBox">
-<h3>📊 学习历程成绩单（近 5 次纪录）</h3>
-<table id="historyTable"><thead><tr><th>日期</th><th>單元名稱</th><th>得分</th></tr></thead><tbody></tbody></table>
+    <h1>五下社會：日治時期的社會變遷（一）練習卷</h1>
+    
+    <div class="history-box" id="historyBox">
+        <h3>📊 學習歷程成績單（近 5 次紀錄）</h3>
+        <table id="historyTable">
+            <thead>
+                <tr><th>日期</th><th>單元名稱</th><th>得分</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    
+    <form id="quizForm">
+        <div class="section">
+            <h2>一、是非題（每題 4 分，共 20 分）</h2>
+            
+            <div class="question" id="q-tf-1">
+                <div class="question-title">1. 日治時期完成的西部縱貫鐵路，改善了臺灣河川東西流向對陸上交通的阻礙。</div>
+                <label><input type="radio" name="tf-1" value="O"> ( O )</label>
+                <label><input type="radio" name="tf-1" value="X"> ( X )</label>
+                <div class="explanation" id="exp-tf-1">解析：正確。西部縱貫鐵路於1908年完成，連接基隆到高雄，解決了臺灣河川東西流向造成的南北交通障礙。</div>
+            </div>
+            
+            <div class="question" id="q-tf-2">
+                <div class="question-title">2. 為了方便將物產運回日本，總督府整修了淡水港與安平港作為當時主要輸出的港口。</div>
+                <label><input type="radio" name="tf-2" value="O"> ( O )</label>
+                <label><input type="radio" name="tf-2" value="X"> ( X )</label>
+                <div class="explanation" id="exp-tf-2">解析：錯誤。日治時期主要整建的是「基隆港」與「高雄港」，有利於輸出蔗糖、稻米等物產。</div>
+            </div>
+            
+            <div class="question" id="q-tf-3">
+                <div class="question-title">3. 日本企業在臺灣引進現代化的廠房設備，在高雄橋仔頭設立了臺灣第一座新式糖廠。</div>
+                <label><input type="radio" name="tf-3" value="O"> ( O )</label>
+                <label><input type="radio" name="tf-3" value="X"> ( X )</label>
+                <div class="explanation" id="exp-tf-3">解析：正確。總督府引進日本企業發展新式製糖業，高雄橋仔頭糖廠即為臺灣第一座新式糖廠。</div>
+            </div>
+            
+            <div class="question" id="q-tf-4">
+                <div class="question-title">4. 開發阿里山林場時，為了運送木材下山興建了森林鐵路，這同時帶動了山下臺南市街的商業發展。</div>
+                <label><input type="radio" name="tf-4" value="O"> ( O )</label>
+                <label><input type="radio" name="tf-4" value="X"> ( X )</label>
+                <div class="explanation" id="exp-tf-4">解析：錯誤。阿里山林木運送下山是聚集在「嘉義製材工場」，帶動的是「嘉義」市街的繁榮，而非臺南。</div>
+            </div>
+            
+            <div class="question" id="q-tf-5">
+                <div class="question-title">5. 總督府開發山林資源時，開放樟腦業者入山開採，此舉嚴重侵犯了原住民族的權益與生活空間。</div>
+                <label><input type="radio" name="tf-5" value="O"> ( O )</label>
+                <label><input type="radio" name="tf-5" value="X"> ( X )</label>
+                <div class="explanation" id="exp-tf-5">解析：正確。總督府的開發政策直接侵犯原住民族領域，例如西元1900年引發的泰雅族「大豹社事件」。</div>
+            </div>
+            
+        </div>
+        
+        <div class="section">
+            <h2>二、選擇題（每題 4 分，共 20 分）</h2>
+            
+            <div class="question" id="q-mc-1">
+                <div class="question-title">1. 日治時期，哪一項建設完成後，使得臺灣的稻米與蔗糖等物產能大量且便利地運往日本？</div>
+                <label><input type="radio" name="mc-1" value="1"> ① 高速鐵路與飛機場</label>
+                <label><input type="radio" name="mc-1" value="2"> ② 西部縱貫鐵路與基隆、高雄港口</label>
+                <label><input type="radio" name="mc-1" value="3"> ③ 橫貫公路與東部鐵路</label>
+                <label><input type="radio" name="mc-1" value="4"> ④ 捷運系統與輕軌</label>
+                <div class="explanation" id="exp-mc-1">解析：②。鐵路構成陸上運輸網，基隆港與高雄港則是與日本聯繫的門戶。</div>
+            </div>
+            
+            <div class="question" id="q-mc-2">
+                <div class="question-title">2. 被後世尊稱為「嘉南大圳之父」的是哪一位歷史人物？</div>
+                <label><input type="radio" name="mc-2" value="1"> ① 曹謹</label>
+                <label><input type="radio" name="mc-2" value="2"> ② 劉銘傳</label>
+                <label><input type="radio" name="mc-2" value="3"> ③ 郭錫瑠</label>
+                <label><input type="radio" name="mc-2" value="4"> ④ 八田與一</label>
+                <div class="explanation" id="exp-mc-2">解析：④。八田與一提出並主持興建嘉南大圳計畫，解決了嘉南平原的灌溉問題。</div>
+            </div>
+            
+            <div class="question" id="q-mc-3">
+                <div class="question-title">3. 關於日治時期新式製糖業的敘述，下列何者正確？</div>
+                <label><input type="radio" name="mc-3" value="1"> ① 總督府設立糖業試驗場來培育優良甘蔗品種</label>
+                <label><input type="radio" name="mc-3" value="2"> ② 臺灣農民可自由將甘蔗賣給出價最高的任何糖廠</label>
+                <label><input type="radio" name="mc-3" value="3"> ③ 糖業鐵路只載運甘蔗，嚴格禁止當地居民搭乘</label>
+                <label><input type="radio" name="mc-3" value="4"> ④ 蔗農完全掌握了製糖的生產與銷售權利</label>
+                <div class="explanation" id="exp-mc-3">解析：①。②錯誤，收購區域受限；③錯誤，糖鐵也成為居民往來工具；④錯誤，生產銷售受日本企業束縛。</div>
+            </div>
+            
+            <div class="question" id="q-mc-4">
+                <div class="question-title">4. 日治時期嘉南大圳完工後，配合實施了哪一項制度，改變了嘉南平原的土地利用型態？</div>
+                <label><input type="radio" name="mc-4" value="1"> ① 保甲制度</label>
+                <label><input type="radio" name="mc-4" value="2"> ② 專賣制度</label>
+                <label><input type="radio" name="mc-4" value="3"> ③ 三年輪作給水法</label>
+                <label><input type="radio" name="mc-4" value="4"> ④ 屯墾政策</label>
+                <div class="explanation" id="exp-mc-4">解析：③。為了讓農民得到合理水量，推行輪流灌溉水稻、甘蔗、雜糧的「三年輪作給水法」。</div>
+            </div>
+            
+            <div class="question" id="q-mc-5">
+                <div class="question-title">5. 泰雅族大豹社族人在部落領導人瓦旦‧燮促率領下反抗日本，主要原因為何？</div>
+                <label><input type="radio" name="mc-5" value="1"> ① 總督府禁止他們出海捕魚</label>
+                <label><input type="radio" name="mc-5" value="2"> ② 日本人強迫他們搬遷到都市</label>
+                <label><input type="radio" name="mc-5" value="3"> ③ 總督府開放樟腦業者進入山區，侵犯其領域</label>
+                <label><input type="radio" name="mc-5" value="4"> ④ 不滿興建鐵路徵收他們的土地</label>
+                <div class="explanation" id="exp-mc-5">解析：③。大豹溪一帶擁有豐富樟樹，大量業者進入開採嚴重侵犯原住民族生存空間。</div>
+            </div>
+            
+        </div>
+        
+        <div class="section">
+            <h2>三、配合題：臺灣農業水利發展（每格 4 分，共 20 分）</h2>
+            <p>請為下列各個歷史事件，選擇發生（或建設）的對應時代：</p>
+            <div class="question" id="q-mt">
+                <ol>
+                    <li style="margin-bottom: 10px;">
+                        <select name="mt-1">
+                            <option value="">請選擇...</option>
+                            <option value="A">史前時代</option>
+                            <option value="B">大航海時代(荷蘭)</option>
+                            <option value="C">鄭氏政權</option>
+                            <option value="D">清帝國時期</option>
+                            <option value="E">日治時期</option>
+                        </select>
+                        興建曹公圳、瑠公圳、八堡圳等水利建設，加速土地開墾。
+                    </li>
+                    <li style="margin-bottom: 10px;">
+                        <select name="mt-2">
+                            <option value="">請選擇...</option>
+                            <option value="A">史前時代</option>
+                            <option value="B">大航海時代(荷蘭)</option>
+                            <option value="C">鄭氏政權</option>
+                            <option value="D">清帝國時期</option>
+                            <option value="E">日治時期</option>
+                        </select>
+                        招募漢人來臺，種植稻米與甘蔗，並引進黃牛與豌豆。
+                    </li>
+                    <li style="margin-bottom: 10px;">
+                        <select name="mt-3">
+                            <option value="">請選擇...</option>
+                            <option value="A">史前時代</option>
+                            <option value="B">大航海時代(荷蘭)</option>
+                            <option value="C">鄭氏政權</option>
+                            <option value="D">清帝國時期</option>
+                            <option value="E">日治時期</option>
+                        </select>
+                        設立新式糖廠，並由八田與一興建嘉南大圳。
+                    </li>
+                    <li style="margin-bottom: 10px;">
+                        <select name="mt-4">
+                            <option value="">請選擇...</option>
+                            <option value="A">史前時代</option>
+                            <option value="B">大航海時代(荷蘭)</option>
+                            <option value="C">鄭氏政權</option>
+                            <option value="D">清帝國時期</option>
+                            <option value="E">日治時期</option>
+                        </select>
+                        推動屯墾政策，軍隊在南部地區進行土地開墾與農耕。
+                    </li>
+                    <li style="margin-bottom: 10px;">
+                        <select name="mt-5">
+                            <option value="">請選擇...</option>
+                            <option value="A">史前時代</option>
+                            <option value="B">大航海時代(荷蘭)</option>
+                            <option value="C">鄭氏政權</option>
+                            <option value="D">清帝國時期</option>
+                            <option value="E">日治時期</option>
+                        </select>
+                        就地取材，以鐵器（如十三行遺址的鐵鋤）進行農耕。
+                    </li>
+                </ol>
+                <div class="explanation" id="exp-mt">解析：1(D)清朝開墾三大圳。2(B)荷蘭人引進黃牛。3(E)日治現代化建設。4(C)鄭氏屯墾解決軍糧。5(A)史前十三行鐵器。</div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>四、勾選題（每格 4 分，共 20 分）</h2>
+            <p>關於日治時期的資源開發與影響，下列敘述哪些是正確的？請勾選：</p>
+            <div class="question" id="q-cb">
+                <label><input type="checkbox" name="cb" value="1"> (1) 總督府在臺灣北部開採煤礦與金礦。</label>
+                <label><input type="checkbox" name="cb" value="2"> (2) 開發山林資源吸引了外地人口聚集，促進了當地的發展。</label>
+                <label><input type="checkbox" name="cb" value="3"> (3) 開採樟腦與伐木的政策，非常尊重並保護了原住民族的傳統文化。</label>
+                <label><input type="checkbox" name="cb" value="4"> (4) 阿里山、八仙山、太平山是當時設置林場，砍伐珍貴林木的重要地區。</label>
+                <label><input type="checkbox" name="cb" value="5"> (5) 臺灣生產的蔗糖、木材、稻米等資源，多藉由港口運往日本滿足其國內需求。</label>
+                <div class="explanation" id="exp-cb">解析：(1)(2)(4)(5)為正確事實。(3)錯誤，日人政策直接侵犯原住民族的生命財產與生活空間，甚至引發如大豹社事件的抗爭。</div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>五、情境題組（每題 4 分，共 20 分）</h2>
+            <div class="reading-text">
+                「阿明是一位生活在1930年代臺灣嘉南平原的年輕農夫。以前他的祖父種田時，總是看天吃飯，常常因為缺水而無法種植稻米。但最近幾年，阿明的田地有了穩定的灌溉水源，不但可以種稻米，還能配合政府政策輪流種植甘蔗和雜糧。收成的農產品，阿明會透過村莊附近新鋪設的鐵路支線運送到港口。
+                
+                不過，阿明的舅舅在糖廠工作，常抱怨糖廠收購甘蔗的價格不合理，秤重也不公平，農民其實很吃虧。」
+            </div>
+            
+            <div class="question" id="q-rd-1">
+                <div class="question-title">1. 讓阿明的農田擁有穩定水源，主要歸功於哪一項大型水利工程完工？</div>
+                <label><input type="radio" name="rd-1" value="1"> ① 烏山頭水庫與嘉南大圳</label>
+                <label><input type="radio" name="rd-1" value="2"> ② 曹公圳與高屏溪攔河堰</label>
+                <label><input type="radio" name="rd-1" value="3"> ③ 翡翠水庫與瑠公圳</label>
+                <label><input type="radio" name="rd-1" value="4"> ④ 日月潭與八堡圳</label>
+                <div class="explanation" id="exp-rd-1">解析：①。嘉南平原的灌溉基礎是在日治時期1930年完工的烏山頭水庫與嘉南大圳。</div>
+            </div>
+            
+            <div class="question" id="q-rd-2">
+                <div class="question-title">2. 阿明的農田能輪流種植水稻、甘蔗和雜糧，這是因為實施了什麼制度？</div>
+                <label><input type="radio" name="rd-2" value="1"> ① 地主減租法</label>
+                <label><input type="radio" name="rd-2" value="2"> ② 三年輪作給水法</label>
+                <label><input type="radio" name="rd-2" value="3"> ③ 保甲連坐法</label>
+                <label><input type="radio" name="rd-2" value="4"> ④ 皇民化運動</label>
+                <div class="explanation" id="exp-rd-2">解析：②。八田與一為配合嘉南大圳，推行了每區三年內輪流種植三種作物的給水法。</div>
+            </div>
+            
+            <div class="question" id="q-rd-3">
+                <div class="question-title">3. 阿明收成的稻米和蔗糖，最可能透過當時哪兩個被擴建的重要港口輸出到日本？</div>
+                <label><input type="radio" name="rd-3" value="1"> ① 淡水港、安平港</label>
+                <label><input type="radio" name="rd-3" value="2"> ② 臺中港、花蓮港</label>
+                <label><input type="radio" name="rd-3" value="3"> ③ 基隆港、高雄港</label>
+                <label><input type="radio" name="rd-3" value="4"> ④ 蘇澳港、馬公港</label>
+                <div class="explanation" id="exp-rd-3">解析：③。基隆與高雄港是日治時期北部與南部重要的物產輸出樞紐。</div>
+            </div>
+            
+            <div class="question" id="q-rd-4">
+                <div class="question-title">4. (是非題) 根據文章及歷史知識，日治時期新式製糖業雖然引進了現代化設備，但臺灣蔗農的權益常受到日本企業的束縛。</div>
+                <label><input type="radio" name="rd-4" value="O"> ( O )</label>
+                <label><input type="radio" name="rd-4" value="X"> ( X )</label>
+                <div class="explanation" id="exp-rd-4">解析：正確。甘蔗限定收購且價格常不合理，蔗農從種植到銷售皆受制於日本企業。</div>
+            </div>
+            
+            <div class="question" id="q-rd-5">
+                <div class="question-title">5. (是非題) 幫助阿明運送貨物到港口的鐵路，是清朝劉銘傳統治時期所建設完成的，並非日治時期的新建設。</div>
+                <label><input type="radio" name="rd-5" value="O"> ( O )</label>
+                <label><input type="radio" name="rd-5" value="X"> ( X )</label>
+                <div class="explanation" id="exp-rd-5">解析：錯誤。清代鐵路僅在北部，西元1908年完成從基隆到高雄的「西部縱貫鐵路」是日治時期重大建設。</div>
+            </div>
+            
+        </div>
+        
+        <button type="submit" class="btn-submit">送出答案並看成績</button>
+    </form>
+    
+    <div id="resultBox"></div>
 </div>
-<form id="quizForm">
-<div class="section">
-<h2>一、是非題（每題 4 分，共 20 分）</h2>
-<div class="question" id="q-tf-1">
-<div class="question-title">1. 日治時期完成的西部縱貫鐵路，改善了臺灣河川東西流向對陸上交通的阻礙。</div>
-<label><input type="radio" name="tf-1" value="O"> ( O )</label>
-<label><input type="radio" name="tf-1" value="X"> ( X )</label>
-<div class="explanation" id="exp-tf-1">解析：正確。西部縱貫鐵路於1908年完成，連接基隆到高雄，解決了臺灣河川東西流向造成的南北交通障礙。</div>
-</div>
-<div class="question" id="q-tf-2">
-<div class="question-title">2. 為了方便將物產運回日本，總督府整修了淡水港與安平港作為當時主要輸出的港口。</div>
-<label><input type="radio" name="tf-2" value="O"> ( O )</label>
-<label><input type="radio" name="tf-2" value="X"> ( X )</label>
-<div class="explanation" id="exp-tf-2">解析：錯誤。日治時期主要整建的是「基隆港」與「高雄港」，有利於輸出蔗糖、稻米等物產。</div>
-</div>
-<div class="question" id="q-tf-3">
-<div class="question-title">3. 日本企業在臺灣引進現代化的廠房設備，在高雄橋仔頭設立了臺灣第一座新式糖廠。</div>
-<label><input type="radio" name="tf-3" value="O"> ( O )</label>
-<label><input type="radio" name="tf-3" value="X"> ( X )</label>
-<div class="explanation" id="exp-tf-3">解析：正確。總督府引進日本企業發展新式製糖業，高雄橋仔頭糖廠即為臺灣第一座新式糖廠。</div>
-</div>
-<div class="question" id="q-tf-4">
-<div class="question-title">4. 開發阿里山林場時，為了運送木材下山興建了森林鐵路，這同時帶動了山下臺南市街的商業發展。</div>
-<label><input type="radio" name="tf-4" value="O"> ( O )</label>
-<label><input type="radio" name="tf-4" value="X"> ( X )</label>
-<div class="explanation" id="exp-tf-4">解析：錯誤。阿里山林木運送下山是聚集在「嘉義製材工場」，帶動的是「嘉義」市街的繁榮，而非臺南。</div>
-</div>
-<div class="question" id="q-tf-5">
-<div class="question-title">5. 總督府開發山林資源時，開放樟腦業者入山開採，此舉嚴重侵犯了原住民族的權益與生活空間。</div>
-<label><input type="radio" name="tf-5" value="O"> ( O )</label>
-<label><input type="radio" name="tf-5" value="X"> ( X )</label>
-<div class="explanation" id="exp-tf-5">解析：正確。總督府的開發政策直接侵犯原住民族領域，例如西元1900年引發的泰雅族「大豹社事件」。</div>
-</div>
-</div>
-<div class="section">
-<h2>二、選擇題（每題 4 分，共 20 分）</h2>
-<div class="question" id="q-mc-1">
-<div class="question-title">1. 日治時期，哪一項建設完成後，使得臺灣的稻米與蔗糖等物產能大量且便利地運往日本？</div>
-<label><input type="radio" name="mc-1" value="1"> ① 高速鐵路與飛機場</label>
-<label><input type="radio" name="mc-1" value="2"> ② 西部縱貫鐵路與基隆、高雄港口</label>
-<label><input type="radio" name="mc-1" value="3"> ③ 橫貫公路與東部鐵路</label>
-<label><input type="radio" name="mc-1" value="4"> ④ 捷運系統與輕軌</label>
-<div class="explanation" id="exp-mc-1">解析：②。鐵路構成陸上運輸網，基隆港與高雄港則是與日本聯繫的門戶。</div>
-</div>
-<div class="question" id="q-mc-2">
-<div class="question-title">2. 被後世尊稱為「嘉南大圳之父」的是哪一位歷史人物？</div>
-<label><input type="radio" name="mc-2" value="1"> ① 曹謹</label>
-<label><input type="radio" name="mc-2" value="2"> ② 劉銘傳</label>
-<label><input type="radio" name="mc-2" value="3"> ③ 郭錫瑠</label>
-<label><input type="radio" name="mc-2" value="4"> ④ 八田與一</label>
-<div class="explanation" id="exp-mc-2">解析：④。八田與一提出並主持興建嘉南大圳計畫，解決了嘉南平原的灌溉問題。</div>
-</div>
-<div class="question" id="q-mc-3">
-<div class="question-title">3. 關於日治時期新式製糖業的敘述，下列何者正確？</div>
-<label><input type="radio" name="mc-3" value="1"> ① 總督府設立糖業試驗場來培育優良甘蔗品種</label>
-<label><input type="radio" name="mc-3" value="2"> ② 臺灣農民可自由將甘蔗賣給出價最高的任何糖廠</label>
-<label><input type="radio" name="mc-3" value="3"> ③ 糖業鐵路只載運甘蔗，嚴格禁止當地居民搭乘</label>
-<label><input type="radio" name="mc-3" value="4"> ④ 蔗農完全掌握了製糖的生產與銷售權利</label>
-<div class="explanation" id="exp-mc-3">解析：①。②錯誤，收購區域受限；③錯誤，糖鐵也成為居民往來工具；④錯誤，生產銷售受日本企業束縛。</div>
-</div>
-<div class="question" id="q-mc-4">
-<div class="question-title">4. 日治時期嘉南大圳完工後，配合實施了哪一項制度，改變了嘉南平原的土地利用型態？</div>
-<label><input type="radio" name="mc-4" value="1"> ① 保甲制度</label>
-<label><input type="radio" name="mc-4" value="2"> ② 專賣制度</label>
-<label><input type="radio" name="mc-4" value="3"> ③ 三年輪作給水法</label>
-<label><input type="radio" name="mc-4" value="4"> ④ 屯墾政策</label>
-<div class="explanation" id="exp-mc-4">解析：③。為了讓農民得到合理水量，推行輪流灌溉水稻、甘蔗、雜糧的「三年輪作給水法」。</div>
-</div>
-<div class="question" id="q-mc-5">
-<div class="question-title">5. 泰雅族大豹社族人在部落領導人瓦旦‧燮促率領下反抗日本，主要原因為何？</div>
-<label><input type="radio" name="mc-5" value="1"> ① 總督府禁止他們出海捕魚</label>
-<label><input type="radio" name="mc-5" value="2"> ② 日本人強迫他們搬遷到都市</label>
-<label><input type="radio" name="mc-5" value="3"> ③ 總督府開放樟腦業者進入山區，侵犯其領域</label>
-<label><input type="radio" name="mc-5" value="4"> ④ 不滿興建鐵路徵收他們的土地</label>
-<div class="explanation" id="exp-mc-5">解析：③。大豹溪一帶擁有豐富樟樹，大量業者進入開採嚴重侵犯原住民族生存空間。</div>
-</div>
-</div>
-<button type="submit" class="btn-submit">送出答案並看成績</button>
-</form>
-<div id="resultBox"></div>
-</div>
-<script src="quiz-engine.js"></script>
+
+<script>
+    const answerKey = {
+        'tf-1': 'O', 'tf-2': 'X', 'tf-3': 'O', 'tf-4': 'X', 'tf-5': 'O',
+        'mc-1': '2', 'mc-2': '4', 'mc-3': '1', 'mc-4': '3', 'mc-5': '3',
+        'mt-1': 'D', 'mt-2': 'B', 'mt-3': 'E', 'mt-4': 'C', 'mt-5': 'A',
+        'cb': ['1', '2', '4', '5'],
+        'rd-1': '1', 'rd-2': '2', 'rd-3': '3', 'rd-4': 'O', 'rd-5': 'X'
+    };
+
+    function loadHistory() {
+        const history = JSON.parse(localStorage.getItem('socialQuizHistory')) || [];
+        const tbody = document.querySelector('#historyTable tbody');
+        tbody.innerHTML = '';
+        if(history.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="3">尚無測驗紀錄</td></tr>';
+            return;
+        }
+        history.slice(0, 5).forEach(record => {
+            tbody.innerHTML += `<tr><td>${record.date}</td><td>${record.unit}</td><td>${record.score} 分</td></tr>`;
+        });
+    }
+
+    document.getElementById('quizForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        let score = 0;
+        const form = new FormData(this);
+        const singleKeys = ['tf-1','tf-2','tf-3','tf-4','tf-5','mc-1','mc-2','mc-3','mc-4','mc-5','mt-1','mt-2','mt-3','mt-4','mt-5','rd-1','rd-2','rd-3','rd-4','rd-5'];
+        singleKeys.forEach(key => {
+            const container = document.getElementById('q-' + key) || document.querySelector(`select[name="${key}"]`).parentElement;
+            const userAnswer = form.get(key);
+            const isCorrect = userAnswer === answerKey[key];
+            if(isCorrect) {
+                score += 4;
+                container.style.borderColor = "var(--success)";
+            } else {
+                container.style.borderColor = "var(--danger)";
+            }
+        });
+        // Checkbox scoring
+        const cbAnswers = form.getAll('cb');
+        const cbCorrect = answerKey['cb'];
+        let cbMistakes = 0;
+        ['1','2','3','4','5'].forEach(val => {
+            const isChecked = cbAnswers.includes(val);
+            const shouldBeChecked = cbCorrect.includes(val);
+            if(isChecked !== shouldBeChecked) cbMistakes++;
+        });
+        const cbScore = Math.max(0, 20 - (cbMistakes * 4));
+        score += cbScore;
+        const cbContainer = document.getElementById('q-cb').closest('.question');
+        cbContainer.style.borderColor = cbMistakes === 0 ? "var(--success)" : "var(--danger)";
+        // Show explanations
+        document.querySelectorAll('.explanation').forEach(el => el.style.display = 'block');
+        // Result display
+        const resultBox = document.getElementById('resultBox');
+        resultBox.style.display = 'block';
+        resultBox.innerHTML = `您的總分是：<span style="color:var(--danger);">${score}</span> / 100 分`;
+        // Save history
+        const history = JSON.parse(localStorage.getItem('socialQuizHistory')) || [];
+        history.unshift({date: new Date().toLocaleString('zh-TW'), unit: '日治時期的社會變遷', score});
+        localStorage.setItem('socialQuizHistory', JSON.stringify(history));
+        loadHistory();
+        // Disable submit button
+        document.querySelector('.btn-submit').disabled = true;
+        document.querySelector('.btn-submit').innerText = '已批改完成，請參閱解析';
+    });
+    loadHistory();
+</script>
+
 </body>
 </html>
