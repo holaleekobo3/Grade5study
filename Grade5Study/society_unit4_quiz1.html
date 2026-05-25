@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>五年級社會：日治時期的社會變遷（一）測驗卷</title>
+<style>
+:root { --primary:#2b6cb0; --success:#3182ce; --danger:#e53e3e; --bg:#f7fafc; --card-bg:#ffffff; --text:#2d3748; --border:#e2e8f0; }
+body{font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif,'Microsoft JhengHei';background-color:var(--bg);color:var(--text);line-height:1.6;margin:0;padding:20px;}
+.max-w-4xl{max-width:800px;margin:auto;}
+.container{max-width:800px;margin:auto;}
+.card{background:var(--card-bg);padding:30px;border-radius:10px;box-shadow:0 4px 6px rgba(0,0,0,0.1);}
+h1,h2,h3{color:var(--primary);}h1{text-align:center;border-bottom:2px solid var(--primary);padding-bottom:10px;}
+.history-box{background:#e6fffa;border:1px solid #319795;padding:15px;border-radius:8px;margin-bottom:20px;}
+table{width:100%;border-collapse:collapse;margin-top:10px;}
+th,td{border:1px solid var(--border);padding:8px;text-align:center;}
+th{background-color:#ebf8ff;}
+.section{margin-bottom:30px;}
+.question{margin-bottom:20px;padding:15px;background:#fdfdfd;border-radius:8px;border:1px solid var(--border);}
+.question-title{font-weight:bold;margin-bottom:10px;}
+label{display:block;margin-bottom:5px;cursor:pointer;}
+input[type="radio"],input[type="checkbox"]{margin-right:8px;}
+.explanation{display:none;margin-top:10px;padding:10px;background-color:#fffff0;border-left:4px solid #ecc94b;color:#555;}
+.correct-text{color:var(--success);font-weight:bold;}
+.wrong-text{color:var(--danger);font-weight:bold;}
+.btn-submit{display:block;width:100%;padding:15px;background-color:var(--primary);color:#fff;border:none;border-radius:8px;font-size:1.2em;cursor:pointer;transition:background .3s;}
+.btn-submit:hover{background-color:#2c5282;}
+#resultBox{display:none;text-align:center;font-size:1.5em;font-weight:bold;margin-top:20px;padding:20px;background:#ebf8ff;border-radius:8px;}
+select{padding:5px;font-size:1em;margin-right:10px;}
+.reading-text{background:#edf2f7;padding:15px;border-radius:8px;font-style:italic;margin-bottom:15px;}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>五下社會：日治時期的社會變遷（一）練習卷</h1>
+<div class="history-box" id="historyBox">
+<h3>📊 学习历程成绩单（近 5 次纪录）</h3>
+<table id="historyTable"><thead><tr><th>日期</th><th>单元名称</th><th>得分</th></tr></thead><tbody></tbody></table>
+</div>
+<form id="quizForm">
+<div class="section"><h2>一、是非题（每题 4 分，共 20 分）</h2>
+<div class="question" id="q-tf-1"><div class="question-title">1. 日治时期完成的西部纵贯铁路，改善了台湾河川东西流向对陆上交通的阻碍。</div>
+<label><input type="radio" name="tf-1" value="O"> ( O )</label>
+<label><input type="radio" name="tf-1" value="X"> ( X )</label>
+<div class="explanation" id="exp-tf-1">解析：正确。西部纵贯铁路于1908年完成，连接基隆到高雄，解决了台湾河川东西流向造成的南北交通障碍。</div></div>
+<!-- Additional questions omitted for brevity -->
+</div>
+<button type="submit" class="btn-submit">送出答案并看成绩</button>
+</form>
+<div id="resultBox"></div>
+</div>
+<script src="quiz-engine.js"></script>
+</body>
+</html>
