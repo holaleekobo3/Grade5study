@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit 8: Save Our World - 綜合語法測驗 (Retest)</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Page-specific styling aligned with Grade5Study modern design system */
+        .exam-header {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .exam-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            text-align: center;
+            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .student-info-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .student-info-table td {
+            border: 1px solid var(--border-color);
+            padding: 12px 16px;
+            color: var(--text-primary);
+        }
+
+        .dashboard-box {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-left: 6px solid var(--accent-primary);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-box h3 {
+            font-size: 1.2rem;
+            color: var(--accent-primary);
+            margin-bottom: 15px;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-primary);
+            font-size: 0.9rem;
+            text-align: center;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .history-table th, .history-table td {
+            border: 1px solid var(--border-color);
+            padding: 10px 12px;
+            color: var(--text-primary);
+        }
+
+        .history-table th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+        }
+
+        .section-title {
+            background: linear-gradient(90deg, var(--bg-secondary), transparent);
+            color: var(--accent-primary);
+            padding: 12px 16px;
+            font-weight: 700;
+            margin: 35px 0 20px 0;
+            border-left: 5px solid var(--accent-primary);
+            border-radius: 0 8px 8px 0;
+            font-size: 1.15rem;
+        }
+
+        .dialogue-box, .reading-box {
+            background-color: var(--bg-secondary);
+            border: 2px dashed var(--accent-secondary);
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-primary);
+        }
+
+        .question-item {
+            background: var(--bg-primary);
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            transition: border-color 0.3s ease;
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-left: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 12px 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+        }
+
+        .option-label:hover {
+            border-color: var(--accent-primary);
+            background: var(--bg-primary);
+        }
+
+        .option-label input {
+            margin-right: 12px;
+            transform: scale(1.1);
+        }
+
+        .text-input-group {
+            background: var(--bg-primary);
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .text-input-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .input-underline {
+            width: 100%;
+            max-width: 500px;
+            border: 2px solid var(--border-color);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            padding: 10px 16px;
+            font-size: 1rem;
+            border-radius: 10px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-underline:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+        }
+
+        .explanation {
+            margin-top: 15px;
+            padding: 12px 16px;
+            background-color: rgba(245, 158, 11, 0.08);
+            border-left: 4px solid var(--accent-warning);
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            display: none;
+            border-radius: 6px;
+        }
+
+        /* Override correct/incorrect visual feedback */
+        .correct-ans {
+            background-color: rgba(16, 185, 129, 0.12) !important;
+            color: var(--accent-success) !important;
+            border-color: var(--accent-success) !important;
+            font-weight: 600;
+        }
+
+        .incorrect-ans {
+            background-color: rgba(239, 68, 68, 0.12) !important;
+            color: var(--accent-danger) !important;
+            border-color: var(--accent-danger) !important;
+        }
+
+        /* Styling for text inputs when graded */
+        .input-underline.correct-ans {
+            background-color: rgba(16, 185, 129, 0.12) !important;
+            color: var(--accent-success) !important;
+            border-color: var(--accent-success) !important;
+            font-weight: bold;
+        }
+
+        .input-underline.incorrect-ans {
+            background-color: rgba(239, 68, 68, 0.12) !important;
+            color: var(--accent-danger) !important;
+            border-color: var(--accent-danger) !important;
+        }
+
+        .submit-container {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .btn {
+            padding: 14px 40px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            box-shadow: 0 8px 16px -4px rgba(99, 102, 241, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 20px -4px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-reset {
+            background: var(--text-secondary);
+            margin-left: 15px;
+            box-shadow: none;
+        }
+
+        .btn-reset:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .score-banner {
+            display: none;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+            border: 2px solid var(--accent-primary);
+            padding: 25px;
+            border-radius: 18px;
+            text-align: center;
+            margin-bottom: 25px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .score-num {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent-primary);
+            font-family: 'Outfit', sans-serif;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="theme-toggle">
+        <button id="themeBtn" onclick="toggleTheme()"><span>🌙</span> 暗色模式</button>
+    </div>
+
+    <div class="container">
+        <p><a href="english.html" class="back-home">⬅ 返回目錄</a></p>
+
+        <!-- 考卷標頭資訊面版 -->
+        <div class="exam-header">
+            <div class="exam-title">Grammar Goals 5 Unit 8 Quiz (Retest)</div>
+            <table class="student-info-table">
+                <tr>
+                    <td><strong>Name:</strong> Alan</td>
+                    <td><strong>Class:</strong> 孝班 502</td>
+                    <td><strong>Number:</strong> 17</td>
+                    <td rowspan="2" style="width: 25%; text-align: center; font-size: 16px;">
+                        <strong>Score:</strong><br>
+                        <span id="scoreDisplay" style="font-weight:bold; color:var(--accent-danger); font-size:24px;">--</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Date:</strong> 2026 / 06 / 06</td>
+                    <td colspan="2"><strong>Parent's signature:</strong></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- 歷程學習看板 Dashboard -->
+        <div class="dashboard-box">
+            <h3>📊 學習歷程紀錄 Dashboard</h3>
+            <table class="history-table" id="historyTable">
+                <thead>
+                    <tr>
+                        <th>測驗時間</th>
+                        <th>總得分</th>
+                        <th>評語狀態</th>
+                    </tr>
+                </thead>
+                <tbody id="historyBody">
+                    <tr>
+                        <td colspan="3" style="color: var(--text-secondary);">尚無作答紀錄，送出測驗後將在此累積數據。</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="text-align: right; margin-top: 12px;">
+                <button type="button" class="btn btn-reset" style="padding: 6px 14px; font-size: 12px; margin-left: 0;" onclick="clearLogs()">清除歷史紀錄</button>
+            </div>
+        </div>
+
+        <div class="score-banner" id="scoreBanner">
+            <div class="score-num" id="bannerScoreText">0 分</div>
+            <p id="bannerComment" style="margin-top: 5px; font-size: 14px; color: var(--accent-primary);"></p>
+        </div>
+
+        <form id="quizForm" onsubmit="gradeQuiz(event)">
+            
+            <!-- Part I -->
+            <div class="section-title">Part I. Vocabulary and Grammar. (40% - 每題 4 分)</div>
+            
+            <div class="question-item" id="q1">
+                <div class="question-text">1. If we clean the beach tomorrow, we ________ a lot of plastic trash.</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="m1" value="A"> (A) collect</label>
+                    <label class="option-label"><input type="radio" name="m1" value="B"> (B) will collect</label>
+                    <label class="option-label"><input type="radio" name="m1" value="C"> (C) will going to collect</label>
+                    <label class="option-label"><input type="radio" name="m1" value="D"> (D) collecting</label>
+                </div>
+                <div class="explanation" id="exp-q1"></div>
+            </div>
+
+            <div class="question-item" id="q2">
+                <div class="question-text">2. We should ________ all our allowance next week to help the injured sea turtles.</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="m2" value="A"> (A) donate</label>
+                    <label class="option-label"><input type="radio" name="m2" value="B"> (B) donation</label>
+                    <label class="option-label"><input type="radio" name="m2" value="C"> (C) donates</label>
+                    <label class="option-label"><input type="radio" name="m2" value="D"> (D) donating</label>
+                </div>
+                <div class="explanation" id="exp-q2"></div>
+            </div>
+
+            <div class="question-item" id="q3">
+                <div class="question-text">3. Look at those dark clouds! It ________ rain, but the scientists are not 100% sure.</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="m3" value="A"> (A) will</label>
+                    <label class="option-label"><input type="radio" name="m3" value="B"> (B) might</label>
+                    <label class="option-label"><input type="radio" name="m3" value="C"> (C) is going to be</label>
+                    <label class="option-label"><input type="radio" name="m3" value="D"> (D) does</label>
+                </div>
+                <div class="explanation" id="exp-q3"></div>
+            </div>
+
+            <div class="question-item" id="q4">
+                <div class="question-text">4. Many wild animals won't have enough forests to survive if we ________ down trees.</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="m4" value="A"> (A) don't stop</label>
+                    <label class="option-label"><input type="radio" name="m4" value="B"> (B) doesn't stop</label>
+                    <label class="option-label"><input type="radio" name="m4" value="C"> (C) won't stop</label>
+                    <label class="option-label"><input type="radio" name="m4" value="D"> (D) aren't stop</label>
+                </div>
+                <div class="explanation" id="exp-q4"></div>
+            </div>
+
+            <div class="question-item" id="q5">
+                <div class="question-text">5. If the ocean water gets too hot, the coral reefs ________ die in the future.</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="m5" value="A"> (A) will going to</label>
+                    <label class="option-label"><input type="radio" name="m5" value="B"> (B) will becoming</label>
+                    <label class="option-label"><input type="radio" name="m5" value="C"> (C) will</label>
+                    <label class="option-label"><input type="radio" name="m5" value="D"> (D) are going to be</label>
+                </div>
+                <div class="explanation" id="exp-q5"></div>
+            </div>
+
+            <div class="question-item" id="q6">
+                <div class="question-text">6. Choose the sentence with the CORRECT punctuation (標點符號).</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="m6" value="A"> (A) If we reduce waste we will save the earth.</label>
+                    <label class="option-label"><input type="radio" name="m6" value="B"> (B) If we reduce waste, we will save the earth.</label>
+                    <label class="option-label"><input type="radio" name="m6" value="C"> (C) We will save the earth, if we reduce waste.</label>
+                    <label class="option-label"><input type="radio" name="m6" value="D"> (D) If, we reduce waste we will save the earth.</label>
+                </div>
+                <div class="explanation" id="exp-q6"></div>
+            </div>
+
+            <div class="question-item" id="q7">
+                <div class="question-text">7. What time ________ the school eco-project presentation start this afternoon?</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="m7" value="A"> (A) starts</label>
+                    <label class="option-label"><input type="radio" name="m7" value="B"> (B) does</label>
+                    <label class="option-label"><input type="radio" name="m7" value="C"> (C) is</label>
+                    <label class="option-label"><input type="radio" name="m7" value="D"> (D) will starts</label>
+                </div>
+                <div class="explanation" id="exp-q7"></div>
+            </div>
+
+            <div class="question-item" id="q8">
+                <div class="question-text">8. If you want to protect the environment, you can go ________ with your family this weekend.</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="m8" value="A"> (A) to camping</label>
+                    <label class="option-label"><input type="radio" name="m8" value="B"> (B) camping</label>
+                    <label class="option-label"><input type="radio" name="m8" value="C"> (C) camp</label>
+                    <label class="option-label"><input type="radio" name="m8" value="D"> (D) to camp</label>
+                </div>
+                <div class="explanation" id="exp-q8"></div>
+            </div>
+
+            <div class="question-item" id="q9">
+                <div class="question-text">9. If everyone brings a reusable bag, we ________ create too much trash.</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="m9" value="A"> (A) don't</label>
+                    <label class="option-label"><input type="radio" name="m9" value="B"> (B) won't</label>
+                    <label class="option-label"><input type="radio" name="m9" value="C"> (C) doesn't</label>
+                    <label class="option-label"><input type="radio" name="m9" value="D"> (D) haven't</label>
+                </div>
+                <div class="explanation" id="exp-q9"></div>
+            </div>
+
+            <div class="question-item" id="q10">
+                <div class="question-text">10. In my opinion, polar bears ________ survive without our help because the sea ice is melting too fast.</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="m10" value="A"> (A) aren't</label>
+                    <label class="option-label"><input type="radio" name="m10" value="B"> (B) won't</label>
+                    <label class="option-label"><input type="radio" name="m10" value="C"> (C) doesn't</label>
+                    <label class="option-label"><input type="radio" name="m10" value="D"> (D) hasn't</label>
+                </div>
+                <div class="explanation" id="exp-q10"></div>
+            </div>
+
+            <!-- Part II -->
+            <div class="section-title">Part II. Cloze Test. (20% - 每題 4 分)</div>
+            <div class="dialogue-box">
+                Sally: Are you (11) ________ on the eco-trip to the green center tomorrow?<br>
+                Gina: Of course. I think it will be fun. When (12) ________ the bus leaving?<br>
+                Sally: It is going to leave at 8:15, so don't be late! By the way, what are you going to wear?<br>
+                Gina: I have no idea. Last weekend, I went shopping and bought a shirt made from recycled plastic. My mom said that I look good when I wear it.<br>
+                Sally: Wow! If we reuse old materials, we (13) ________ protect our earth. I watched a documentary on global warming last night.<br>
+                Gina: Why (14) ________ there be any sea ice left for polar bears in 50 years if global warming gets worse?<br>
+                Sally: There won't be much left. That's why I am (15) ________ all my allowance next month to an environmental group.
+            </div>
+
+            <div class="question-item" id="q11">
+                <div class="question-text">11.</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="m11" value="A"> (A) go</label>
+                    <label class="option-label"><input type="radio" name="m11" value="B"> (B) going</label>
+                    <label class="option-label"><input type="radio" name="m11" value="C"> (C) leaves</label>
+                    <label class="option-label"><input type="radio" name="m11" value="D"> (D) to go</label>
+                </div>
+                <div class="explanation" id="exp-q11"></div>
+            </div>
+
+            <div class="question-item" id="q12">
+                <div class="question-text">12.</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="m12" value="A"> (A) does</label>
+                    <label class="option-label"><input type="radio" name="m12" value="B"> (B) will</label>
+                    <label class="option-label"><input type="radio" name="m12" value="C"> (C) is</label>
+                    <label class="option-label"><input type="radio" name="m12" value="D"> (D) starts</label>
+                </div>
+                <div class="explanation" id="exp-q12"></div>
+            </div>
+
+            <div class="question-item" id="q13">
+                <div class="question-text">13.</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="m13" value="A"> (A) will</label>
+                    <label class="option-label"><input type="radio" name="m13" value="B"> (B) are going to be</label>
+                    <label class="option-label"><input type="radio" name="m13" value="C"> (C) will becoming</label>
+                    <label class="option-label"><input type="radio" name="m13" value="D"> (D) going to</label>
+                </div>
+                <div class="explanation" id="exp-q13"></div>
+            </div>
+
+            <div class="question-item" id="q14">
+                <div class="question-text">14.</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="m14" value="A"> (A) will</label>
+                    <label class="option-label"><input type="radio" name="m14" value="B"> (B) won't</label>
+                    <label class="option-label"><input type="radio" name="m14" value="C"> (C) does</label>
+                    <label class="option-label"><input type="radio" name="m14" value="D"> (D) can't</label>
+                </div>
+                <div class="explanation" id="exp-q14"></div>
+            </div>
+
+            <div class="question-item" id="q15">
+                <div class="question-text">15.</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="m15" value="A"> (A) donate</label>
+                    <label class="option-label"><input type="radio" name="m15" value="B"> (B) going to donate</label>
+                    <label class="option-label"><input type="radio" name="m15" value="C"> (C) donates</label>
+                    <label class="option-label"><input type="radio" name="m15" value="D"> (D) going to save</label>
+                </div>
+                <div class="explanation" id="exp-q15"></div>
+            </div>
+
+            <!-- Part III -->
+            <div class="section-title">Part III. Reading Comprehension. (20% - 每題 4 分)</div>
+            <div class="reading-box">
+                Tina and Susan both love shopping and always go together to the shopping mall. <br><br>
+                Tina: Chinese New Year is coming. If I get a lot of red envelope money, I'll buy a new reusable water bottle. Things at the eco-shop on Oak Street are very good.<br>
+                Susan: Me too! If I get enough money, I'll take you to that street vendor on the corner. They sell beautiful shopping bags made of cloth. They are so cheap. If we use cloth bags, we won't need plastic bags anymore.<br>
+                Tina: Really! Could you take me there this afternoon so we can have a look?<br>
+                Susan: I'm sorry. If I have a piano lesson this afternoon, I won't have time. How about next Saturday?<br>
+                Tina: That sounds great! If it rains next Saturday, we can still go because the vendor has a big umbrella.
+            </div>
+
+            <div class="question-item" id="q16">
+                <div class="question-text">16. What do Tina and Susan both love to do?</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="m16" value="A"> (A) They both love to play the piano.</label>
+                    <label class="option-label"><input type="radio" name="m16" value="B"> (B) They both love to go shopping.</label>
+                    <label class="option-label"><input type="radio" name="m16" value="C"> (C) They both love to collect plastic cups.</label>
+                    <label class="option-label"><input type="radio" name="m16" value="D"> (D) They both love to go to the beach.</label>
+                </div>
+                <div class="explanation" id="exp-q16"></div>
+            </div>
+
+            <div class="question-item" id="q17">
+                <div class="question-text">17. Why will Susan not go to the street vendor this afternoon?</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="m17" value="A"> (A) Because she has a piano lesson.</label>
+                    <label class="option-label"><input type="radio" name="m17" value="B"> (B) Because she doesn't like cloth bags.</label>
+                    <label class="option-label"><input type="radio" name="m17" value="C"> (C) Because it is raining heavily today.</label>
+                    <label class="option-label"><input type="radio" name="m17" value="D"> (D) Because she has to visit her teacher.</label>
+                </div>
+                <div class="explanation" id="exp-q17"></div>
+            </div>
+
+            <div class="question-item" id="q18">
+                <div class="question-text">18. What is true about the shopping bags at the street vendor?</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="m18" value="A"> (A) They are very expensive.</label>
+                    <label class="option-label"><input type="radio" name="m18" value="B"> (B) They are made of plastic waste.</label>
+                    <label class="option-label"><input type="radio" name="m18" value="C"> (C) They are beautiful and made of cloth.</label>
+                    <label class="option-label"><input type="radio" name="m18" value="D"> (D) They are sold inside the big mall.</label>
+                </div>
+                <div class="explanation" id="exp-q18"></div>
+            </div>
+
+            <div class="question-item" id="q19">
+                <div class="question-text">19. What will happen if they use cloth bags?</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="m19" value="A"> (A) They will get more red envelopes.</label>
+                    <label class="option-label"><input type="radio" name="m19" value="B"> (B) They won't need plastic bags anymore.</label>
+                    <label class="option-label"><input type="radio" name="m19" value="C"> (C) They will waste more money.</label>
+                    <label class="option-label"><input type="radio" name="m19" value="D"> (D) They will miss the piano lesson.</label>
+                </div>
+                <div class="explanation" id="exp-q19"></div>
+            </div>
+
+            <div class="question-item" id="q20">
+                <div class="question-text">20. Which statement is TRUE based on the dialogue?</div>
+                <div class="options-group">
+                    <label class="option-label"><input type="radio" name="m20" value="A"> (A) Tina will not go if it rains next Saturday.</label>
+                    <label class="option-label"><input type="radio" name="m20" value="B"> (B) Susan already bought a new reusable bottle.</label>
+                    <label class="option-label"><input type="radio" name="m20" value="C"> (C) Tina expects to get red envelope money on Chinese New Year.</label>
+                    <label class="option-label"><input type="radio" name="m20" value="D"> (D) Susan will go shopping alone this afternoon.</label>
+                </div>
+                <div class="explanation" id="exp-q20"></div>
+            </div>
+
+            <!-- Part IV -->
+            <div class="section-title">Part IV. Change the sentences to future tense or conditional statements. (12% - 每題 4 分)</div>
+            <p style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 15px; padding-left: 10px;">例題參考：She is ten years old. (next year) &rarr; She will be eleven years old next year.</p>
+            
+            <div class="text-input-group" id="q21">
+                <label>21. The student protects the environment. (in the future)</label>
+                &rarr; The student <input type="text" id="ans21" class="input-underline" placeholder="填寫完整的未來式句子">
+                <div class="explanation" id="exp-q21"></div>
+            </div>
+
+            <div class="text-input-group" id="q22">
+                <label>22. We pick up plastic bottles every Friday morning. (tomorrow morning)</label>
+                &rarr; We <input type="text" id="ans22" class="input-underline" placeholder="填寫完整的未來式句子">
+                <div class="explanation" id="exp-q22"></div>
+            </div>
+
+            <div class="text-input-group" id="q23">
+                <label>23. People ride bicycles. They save energy. (用 If... 引導第一條件句改寫)</label>
+                &rarr; If <input type="text" id="ans23" class="input-underline" placeholder="If people..., they will...">
+                <div class="explanation" id="exp-q23"></div>
+            </div>
+
+            <!-- Part V -->
+            <div class="section-title">Part V. Write the Questions. (8% - 每題 4 分)</div>
+            <p style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 15px; padding-left: 10px;">例題參考：My train leaves at 5:30. &rarr; What time does your train leave?</p>
+
+            <div class="text-input-group" id="q24">
+                <label>24. The eco-friendly stores close at 9 o'clock.</label>
+                &rarr; <input type="text" id="ans24" class="input-underline" placeholder="根據時間造出 What time 問句">
+                <div class="explanation" id="exp-q24"></div>
+            </div>
+
+            <div class="text-input-group" id="q25">
+                <label>25. The documentary movie about sea turtles starts at 7 o'clock.</label>
+                &rarr; <input type="text" id="ans25" class="input-underline" placeholder="根據時間造出 What time 問句">
+                <div class="explanation" id="exp-q25"></div>
+            </div>
+
+            <!-- 按鈕區 -->
+            <div class="submit-container">
+                <button type="submit" class="btn" id="submitBtn">提交測驗送出分數</button>
+                <button type="button" class="btn btn-reset" id="reloadBtn" style="display:none;" onclick="window.location.reload()">重新挑戰</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const correctAnswers = {
+            m1: "B", m2: "A", m3: "B", m4: "A", m5: "C",
+            m6: "B", m7: "B", m8: "B", m9: "B", m10: "B",
+            m11: "B", m12: "C", m13: "A", m14: "A", m15: "B",
+            m16: "B", m17: "A", m18: "C", m19: "B", m20: "C"
+        };
+
+        const explanations = {
+            m1: "If子句使用現在簡單式clean，主要子句表達未來必然結果，結構為「will + 原形動詞」，故選(B)。(C)選項 will going 語法錯誤。",
+            m2: "情態助動詞 should (應該) 後面必須接「原形動詞」，選(A) donate。不可使用名詞(donation)或單數動詞(donates)。",
+            m3: "提示提到「科學家並非100%確定」，因此主要子句屬於不確定推測，應選表示弱機率的助動詞(B) might。",
+            m4: "If子句內使用現在簡單式代替未來。主詞為複數 we，否定句結構使用 don't + 原形動詞，故選(A)。",
+            m5: "主要子句表達未來必然發生的結果狀態，應使用「will + 原形動詞 die」，選(C)。其餘選項如 will becoming 均為混淆語法。",
+            m6: "當 If 引導的條件子句置於句首時，與主要子句之間必須以「逗號(,)」隔離，選(B)。如果If在後面則不用逗號。",
+            m7: "特訓題：一般動詞問句。學校環保發表會(presentation)為單數主詞，疑問句需搭配單數助動詞 does，後面接原形動詞 start。",
+            m8: "特訓題：去從事戶外休閒活動使用「go + V-ing」結構，如 go camping，中間「絕對不可」加上介系詞 to，故選(B)。",
+            m9: "第一條件句的結果子句。大家如果帶環保袋，未來「將不會」製造這麼多垃圾，使用未來式否定「won't + 原形動詞」。",
+            m10: "表達主觀認為未來必定會發生的結果。因為海冰融化，北極熊未來將無法生存，使用「won't + 原形動詞 survive」。",
+            m11: "模擬原卷：be動詞 are 後方搭配現在分詞構成「be going on a trip」表達即將進行的規劃，選(B)。",
+            m12: "後面動詞為 leaving (V-ing)，前面問句必須搭配 Be 動詞 is 來構成現在進行式表未來，選(C)。不可選 does 或 will。",
+            m13: "If引導的現在簡單式條件成立後，主要子句使用「will + 原形動詞 protect」表達未來的必然結果，選(A)。",
+            m14: "模擬原卷 Gina 的疑惑問句：『如果暖化變糟，50年後世界上還「會」有海冰嗎？』，故選表示未來的助動詞 (A) will。",
+            m15: "模擬原卷：未來式預計規劃結構為「be going to + 原形動詞」，前面已有 I am，故後方接 (B) going to donate。",
+            m16: "從文章第一句 'Tina and Susan both love shopping' 可直接得知她們都熱愛購物，選(B)。",
+            m17: "對話中 Susan 說 'If I have a piano lesson this afternoon, I won't have time.'，代表下午有鋼琴課，選(A)。",
+            m18: "Susan 提到 'They sell beautiful shopping bags made of cloth.'，明確指出是布製的漂亮包包，選(C)。",
+            m19: "Susan 說 'If we use cloth bags, we won't need plastic bags anymore.'，代表不會再需要塑膠袋，選(B)。",
+            m20: "Tina 第一句話說 'If I get a lot of red envelope money...'，符合過年預期收到紅包錢的情境，故(C)正確。",
+            q21: "正確答案：<b>will protect the environment in the future.</b><br>未來式結構為「will + 原形動詞」，原單數動詞 protects 必須恢復為原形 protect。",
+            q22: "正確答案：<b>will pick up plastic bottles tomorrow morning.</b><br>時間改為明天早上，動詞結構需改為未來式「will pick up」。",
+            q23: "正確答案：<b>If people ride bicycles, they will save energy.</b><br>將兩句合併為第一條件句，If 子句放句首，中間要記得加逗號，結果子句改為 will save。",
+            q24: "正確答案：<b>What time do the eco-friendly stores close?</b><br>錯題特訓：主詞為複數的 stores，問句的助動詞必須選用 <b>do</b>，且後方搭配原形動詞 close。不能用 does 或 is。",
+            q25: "正確答案：<b>What time does the documentary movie about sea turtles start?</b><br>錯題特訓：主詞為單數的 movie，助動詞必須選用 <b>does</b>，且後方的一般動詞必須恢復成原形 <b>start</b>，絕不能寫成 starts 或與 is 連用。"
+        };
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const btn = document.getElementById('themeBtn');
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            btn.innerHTML = newTheme === 'dark' ? '<span>☀️</span> 亮色模式' : '<span>🌙</span> 暗色模式';
+            localStorage.setItem('theme', newTheme);
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            const btn = document.getElementById('themeBtn');
+            if (savedTheme === 'dark') btn.innerHTML = '<span>☀️</span> 亮色模式';
+            loadHistoryText();
+        });
+
+        function loadHistoryText() {
+            const history = JSON.parse(localStorage.getItem("unit8_v2_logs")) || [];
+            const tbody = document.getElementById("historyBody");
+            if (history.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="3" style="color: var(--text-secondary); text-align: center;">尚無作答紀錄，送出測驗後將在此累積數據。</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = history.map(item => `
+                <tr>
+                    <td>${item.time}</td>
+                    <td style="font-weight:bold; color:var(--accent-primary);">${item.score} 分</td>
+                    <td>${item.msg}</td>
+                </tr>
+            `).join("");
+        }
+
+        function clearLogs() {
+            if(confirm("確定要刪除所有歷史測驗學習紀錄嗎？")) {
+                localStorage.removeItem("unit8_v2_logs");
+                loadHistoryText();
+            }
+        }
+
+        function gradeQuiz(e) {
+            e.preventDefault();
+            let score = 0;
+
+            // 1. 批改選擇與克漏字、閱讀 (Part I, II, III) - 共 20 題，每題 4 分
+            for (let i = 1; i <= 20; i++) {
+                const qKey = "m" + i;
+                const radioGroup = document.getElementsByName(qKey);
+                let selectedValue = "";
+                for (let radio of radioGroup) {
+                    if (radio.checked) {
+                        selectedValue = radio.value;
+                    }
+                    radio.disabled = true; // 鎖定
+                }
+
+                const expDiv = document.getElementById("exp-q" + i);
+                expDiv.style.display = "block";
+                expDiv.innerHTML = `💡 <b>答案：(${correctAnswers[qKey]})</b> — ${explanations[qKey]}`;
+
+                // 標示正確與錯誤選項視覺
+                for (let radio of radioGroup) {
+                    const label = radio.parentElement;
+                    if (radio.value === correctAnswers[qKey]) {
+                        label.classList.add("correct-ans");
+                    }
+                    if (radio.checked && radio.value !== correctAnswers[qKey]) {
+                        label.classList.add("incorrect-ans");
+                    }
+                }
+
+                if (selectedValue === correctAnswers[qKey]) {
+                    score += 4;
+                }
+            }
+
+            // 2. 批改手寫改寫與問句 (Part IV, V) - 共 5 題，每題 4 分
+            const textAnswers = {
+                21: ["will protect the environment in the future.", "is going to protect the environment in the future."],
+                22: ["will pick up plastic bottles tomorrow morning.", "are going to pick up plastic bottles tomorrow morning."],
+                23: ["if people ride bicycles, they will save energy."],
+                24: ["what time do the eco-friendly stores close?", "what time do the stores close?"],
+                25: ["what time does the documentary movie about sea turtles start?", "what time does the movie start?"]
+            };
+
+            for (let i = 21; i <= 25; i++) {
+                const userVal = document.getElementById("ans" + i).value.trim().toLowerCase().replace(/[.\s\?]+/g, ' ');
+                const expDiv = document.getElementById("exp-q" + i);
+                const inputElem = document.getElementById("ans" + i);
+                inputElem.disabled = true;
+
+                expDiv.style.display = "block";
+                expDiv.innerHTML = `💡 <b>解析觀念：</b> ${explanations["q" + i]}`;
+
+                let isCorrect = false;
+                const possibleMatch = textAnswers[i];
+                for (let match of possibleMatch) {
+                    let cleanMatch = match.toLowerCase().replace(/[.\s\?]+/g, ' ');
+                    if (userVal.includes(cleanMatch.trim()) || cleanMatch.trim().includes(userVal) && userVal.length > 5) {
+                        isCorrect = true;
+                        break;
+                    }
+                }
+
+                // 寬鬆關鍵字核心比對（針對小五學生打字容錯率）
+                if (i === 21 && userVal.includes("will protect")) isCorrect = true;
+                if (i === 22 && userVal.includes("will pick up")) isCorrect = true;
+                if (i === 23 && userVal.includes("if people ride") && userVal.includes("will save")) isCorrect = true;
+                if (i === 24 && userVal.startsWith("what time do") && userVal.includes("close")) isCorrect = true;
+                if (i === 25 && userVal.startsWith("what time does") && userVal.includes("start")) isCorrect = true;
+
+                if (isCorrect && userVal !== "") {
+                    score += 4;
+                    inputElem.classList.add("correct-ans");
+                } else {
+                    inputElem.classList.add("incorrect-ans");
+                }
+            }
+
+            // 顯示右上角大分數
+            document.getElementById("scoreDisplay").innerText = score + " 分";
+
+            // 評語判定
+            let commentMsg = "";
+            if (score === 100) commentMsg = "太神了！完美的滿分！徹底掌握了 will 與 does 的原形動詞規則！";
+            else if (score >= 80) commentMsg = "非常優秀！表示未來的時態與條件句運用得很流暢，少數手寫題再細心一點即可！";
+            else if (score >= 60) commentMsg = "及格了！請特別注意黃色解析框，小心不要在 does 後面重複加上動詞變形。";
+            else commentMsg = "仍需努力！別氣餒，看懂下方每一題的黃金觀念解析後，點擊重新挑戰再試一次！";
+
+            // 顯示分數 Banner
+            document.getElementById("bannerScoreText").innerText = score + " 分";
+            document.getElementById("bannerComment").innerText = commentMsg;
+            document.getElementById("scoreBanner").style.display = "block";
+
+            // 存入 LocalStorage
+            const history = JSON.parse(localStorage.getItem("unit8_v2_logs")) || [];
+            const dt = new Date();
+            const timeStr = `${dt.getFullYear()}/${dt.getMonth()+1}/${dt.getDate()} ${dt.getHours().toString().padStart(2,'0')}:${dt.getMinutes().toString().padStart(2,'0')}`;
+            
+            history.unshift({ time: timeStr, score: score, msg: commentMsg });
+            localStorage.setItem("unit8_v2_logs", JSON.stringify(history));
+
+            loadHistoryText();
+
+            // 按鈕切換
+            document.getElementById("submitBtn").style.display = "none";
+            document.getElementById("reloadBtn").style.display = "inline-block";
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
