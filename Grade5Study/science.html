@@ -90,6 +90,7 @@
     <div class="unit-title">📍 第四單元：動物世界探索（第4單元）</div>
     <ul>
         <li><a href="science_unit4_quiz1.html" class="quiz-link">📝 測驗 1：動物世界（第4單元）</a></li>
+        <li><a href="science_unit4_quiz_retest1.html" class="quiz-link">📝 測驗 2：動物世界 補救測驗 (Retest)</a></li>
     </ul>
 </div>
 
@@ -97,10 +98,21 @@
     </div>
 
     <script>
-        // Theme sync logic
+        function toggleTheme() {
+            const html = document.documentElement;
+            const btn = document.getElementById('themeBtn');
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            btn.innerHTML = newTheme === 'dark' ? '<span>☀️</span> 亮色模式' : '<span>🌙</span> 暗色模式';
+            localStorage.setItem('theme', newTheme);
+        }
+
         window.addEventListener('DOMContentLoaded', function () {
             const savedTheme = localStorage.getItem('theme') || 'light';
             document.documentElement.setAttribute('data-theme', savedTheme);
+            const btn = document.getElementById('themeBtn');
+            if (savedTheme === 'dark') btn.innerHTML = '<span>☀️</span> 亮色模式';
         });
     </script>
 

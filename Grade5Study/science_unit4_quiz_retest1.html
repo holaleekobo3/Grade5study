@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>五下自然科學測驗：揭祕動物的世界 (Retest)</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Page-specific styling aligned with Grade5Study modern design system */
+        .header-section {
+            background-color: var(--bg-secondary);
+            padding: 24px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+            border-left: 5px solid var(--accent-primary);
+            border-top: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-section h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            text-align: center;
+            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .header-section p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        .history-board {
+            background-color: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 25px;
+        }
+
+        .history-board h3 {
+            font-size: 1.2rem;
+            color: var(--accent-primary);
+            margin-bottom: 15px;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .history-board ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .history-board li {
+            padding: 8px 0;
+            border-bottom: 1px dashed var(--border-color);
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .question-block {
+            background-color: var(--bg-primary);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .question-title {
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+        }
+
+        .options label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            cursor: pointer;
+            padding: 12px 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            color: var(--text-primary);
+            transition: all 0.2s ease;
+        }
+
+        .options label:hover {
+            border-color: var(--accent-primary);
+            background: var(--bg-primary);
+        }
+
+        .options input {
+            margin-right: 12px;
+            transform: scale(1.1);
+        }
+
+        .matching-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .matching-table th, .matching-table td {
+            border: 1px solid var(--border-color);
+            padding: 12px 16px;
+            text-align: left;
+            color: var(--text-primary);
+        }
+
+        .matching-table th {
+            background-color: var(--bg-secondary);
+            font-weight: 700;
+        }
+
+        input[type="text"], select {
+            padding: 10px 16px;
+            border: 2px solid var(--border-color);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border-radius: 10px;
+            outline: none;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus, select:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+        }
+
+        .btn-submit {
+            background: linear-gradient(to right, var(--accent-success), var(--accent-primary));
+            color: white;
+            border: none;
+            padding: 16px 30px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            border-radius: 14px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            margin-top: 30px;
+            box-shadow: 0 8px 16px -4px rgba(16, 185, 129, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 20px -4px rgba(16, 185, 129, 0.4);
+        }
+
+        .explanation {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background-color: rgba(245, 158, 11, 0.08);
+            border-left: 4px solid var(--accent-warning);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .correct-text { color: var(--accent-success); font-weight: bold; }
+        .wrong-text { color: var(--accent-danger); font-weight: bold; }
+
+        #score-display {
+            display: none;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
+            border: 2px dashed var(--accent-primary);
+            border-radius: 18px;
+            color: var(--text-primary);
+            font-family: 'Outfit', sans-serif;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="theme-toggle">
+        <button id="themeBtn" onclick="toggleTheme()"><span>🌙</span> 暗色模式</button>
+    </div>
+
+    <div class="container">
+        <p><a href="science.html" class="back-home">⬅ 返回目錄</a></p>
+
+        <div class="header-section">
+            <h1>五下自然科學測驗：揭祕動物的世界</h1>
+            <p>本測驗涵蓋「4-1 動物偵查員」、「4-2 動物的生存之道」與「4-3 動物的生命延續」。請仔細閱讀題目並作答，提交後可查看解析與得分。</p>
+        </div>
+
+        <div class="history-board">
+            <h3>📊 歷史練習成績單 (最近 5 次)</h3>
+            <ul id="history-list">
+                <li style="color: var(--text-secondary);">尚無練習紀錄，趕快開始挑戰吧！</li>
+            </ul>
+        </div>
+
+        <form id="quiz-form">
+            <h2 class="section-title">一、選擇題 (共 10 題，每題 4 分，共 40 分)</h2>
+
+            <div class="question-block" id="q1-block">
+                <div class="question-title">1. 關於「族群」與「群集」的定義，下列敘述何者正確？</div>
+                <div class="options">
+                    <label><input type="radio" name="q1" value="A"> A. 個體單獨一隻稱為群集</label>
+                    <label><input type="radio" name="q1" value="B"> B. 同時間生活在同一區域的同種生物個體組成的群體，稱為族群</label>
+                    <label><input type="radio" name="q1" value="C"> C. 溼地中包含招潮蟹、小白鷺等不同生物族群的集合稱為族群</label>
+                    <label><input type="radio" name="q1" value="D"> D. 群集是指單一物種的集合</label>
+                </div>
+                <div class="explanation" id="q1-exp"></div>
+            </div>
+
+            <div class="question-block" id="q2-block">
+                <div class="question-title">2. 在食物鏈中，可以自行製造養分的生物被稱作什麼？</div>
+                <div class="options">
+                    <label><input type="radio" name="q2" value="A"> A. 生產者</label>
+                    <label><input type="radio" name="q2" value="B"> B. 一級消費者</label>
+                    <label><input type="radio" name="q2" value="C"> C. 二級消費者</label>
+                    <label><input type="radio" name="q2" value="D"> D. 分解者</label>
+                </div>
+                <div class="explanation" id="q2-exp"></div>
+            </div>
+
+            <div class="question-block" id="q3-block">
+                <div class="question-title">3. 蜜蜂是一種社會性動物，牠們主要以什麼方式來告知同伴蜜源的訊息？</div>
+                <div class="options">
+                    <label><input type="radio" name="q3" value="A"> A. 互相理毛</label>
+                    <label><input type="radio" name="q3" value="B"> B. 發出聲音</label>
+                    <label><input type="radio" name="q3" value="C"> C. 舞蹈</label>
+                    <label><input type="radio" name="q3" value="D"> D. 分泌氣味</label>
+                </div>
+                <div class="explanation" id="q3-exp"></div>
+            </div>
+
+            <div class="question-block" id="q4-block">
+                <div class="question-title">4. 以人體運動為例，當我們的手臂「彎曲」時，肌肉是如何運作的？</div>
+                <div class="options">
+                    <label><input type="radio" name="q4" value="A"> A. 內側肌肉舒張，外側肌肉收縮</label>
+                    <label><input type="radio" name="q4" value="B"> B. 內側肌肉收縮，外側肌肉舒張</label>
+                    <label><input type="radio" name="q4" value="C"> C. 內側與外側肌肉同時收縮</label>
+                    <label><input type="radio" name="q4" value="D"> D. 內側與外側肌肉同時舒張</label>
+                </div>
+                <div class="explanation" id="q4-exp"></div>
+            </div>
+
+            <div class="question-block" id="q5-block">
+                <div class="question-title">5. 釣魚時使用的「擬餌」，是模仿小魚或小蟲的外形或動作所做出來的假餌。這種透過學習動物樣子和行為來發明東西的應用稱為什麼？</div>
+                <div class="options">
+                    <label><input type="radio" name="q5" value="A"> A. 生物學</label>
+                    <label><input type="radio" name="q5" value="B"> B. 環境學</label>
+                    <label><input type="radio" name="q5" value="C"> C. 仿生學</label>
+                    <label><input type="radio" name="q5" value="D"> D. 遺傳學</label>
+                </div>
+                <div class="explanation" id="q5-exp"></div>
+            </div>
+
+            <div class="question-block" id="q6-block">
+                <div class="question-title">6. 人體的組成層次，從最基本單位到個體的正確順序為何？</div>
+                <div class="options">
+                    <label><input type="radio" name="q6" value="A"> A. 組織 → 細胞 → 器官 → 器官系統 → 個體</label>
+                    <label><input type="radio" name="q6" value="B"> B. 細胞 → 組織 → 器官 → 器官系統 → 個體</label>
+                    <label><input type="radio" name="q6" value="C"> C. 器官 → 組織 → 細胞 → 器官系統 → 個體</label>
+                    <label><input type="radio" name="q6" value="D"> D. 細胞 → 器官 → 組織 → 器官系統 → 個體</label>
+                </div>
+                <div class="explanation" id="q6-exp"></div>
+            </div>
+
+            <div class="question-block" id="q7-block">
+                <div class="question-title">7. 關於動物適應環境溫度的方法，下列何者屬於「外溫動物」的特徵或行為？</div>
+                <div class="options">
+                    <label><input type="radio" name="q7" value="A"> A. 利用厚厚的皮下脂肪禦寒</label>
+                    <label><input type="radio" name="q7" value="B"> B. 藉由汗水蒸發降低體溫</label>
+                    <label><input type="radio" name="q7" value="C"> C. 體溫變化不大，維持恆定</label>
+                    <label><input type="radio" name="q7" value="D"> D. 天冷時，龜晒太陽增加體溫</label>
+                </div>
+                <div class="explanation" id="q7-exp"></div>
+            </div>
+
+            <div class="question-block" id="q8-block">
+                <div class="question-title">8. 許多動物為了適應環境或繁殖會遷徙，下列哪一種動物的遷徙敘述正確？</div>
+                <div class="options">
+                    <label><input type="radio" name="q8" value="A"> A. 黑面琵鷺在秋季時會遷徙到比較溫暖的地區度冬</label>
+                    <label><input type="radio" name="q8" value="B"> B. 烏魚在秋冬季會遷徙至比較寒冷的水域</label>
+                    <label><input type="radio" name="q8" value="C"> C. 紫斑蝶冬天時會飛往高緯度寒冷的山谷度冬</label>
+                    <label><input type="radio" name="q8" value="D"> D. 家燕在夏末秋初抵達臺灣進行繁殖</label>
+                </div>
+                <div class="explanation" id="q8-exp"></div>
+            </div>
+
+            <div class="question-block" id="q9-block">
+                <div class="question-title">9. 為了繁衍下一代，動物會展現不同的求偶行為。下列動物與求偶方式的配對，何者正確？</div>
+                <div class="options">
+                    <label><input type="radio" name="q9" value="A"> A. 螢火蟲 — 聲音</label>
+                    <label><input type="radio" name="q9" value="B"> B. 鹿 — 打鬥</label>
+                    <label><input type="radio" name="q9" value="C"> C. 蛙 — 展示</label>
+                    <label><input type="radio" name="q9" value="D"> D. 雄孔雀 — 發光</label>
+                </div>
+                <div class="explanation" id="q9-exp"></div>
+            </div>
+
+            <div class="question-block" id="q10-block">
+                <div class="question-title">10. 關於「卵生」的敘述，下列何者正確？</div>
+                <div class="options">
+                    <label><input type="radio" name="q10" value="A"> A. 母體受精卵在子宮內發育</label>
+                    <label><input type="radio" name="q10" value="B"> B. 胚胎發育所需要的養分主要由卵黃提供</label>
+                    <label><input type="radio" name="q10" value="C"> C. 哺乳類動物通常屬於卵生動物</label>
+                    <label><input type="radio" name="q10" value="D"> D. 胚胎透過臍帶吸收母體養分</label>
+                </div>
+                <div class="explanation" id="q10-exp"></div>
+            </div>
+
+            <h2 class="section-title">二、是非題 (共 5 題，每題 4 分，共 20 分)</h2>
+            <p style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 15px; padding-left: 10px;">請判斷下列敘述，正確選「○」，錯誤選「Ｘ」。</p>
+
+            <div class="question-block" id="tf1-block">
+                <div class="question-title">1. 螞蟻窩裡住著蟻后、雄蟻、兵蟻和工蟻，各自有不同工作，這稱為社會性動物。</div>
+                <div class="options">
+                    <label><input type="radio" name="tf1" value="T"> ○ 正確</label>
+                    <label><input type="radio" name="tf1" value="F"> Ｘ 錯誤</label>
+                </div>
+                <div class="explanation" id="tf1-exp"></div>
+            </div>
+
+            <div class="question-block" id="tf2-block">
+                <div class="question-title">2. 蝸牛因為沒有骨骼，所以是靠收縮觸角來推動身體前進。</div>
+                <div class="options">
+                    <label><input type="radio" name="tf2" value="T"> ○ 正確</label>
+                    <label><input type="radio" name="tf2" value="F"> Ｘ 錯誤</label>
+                </div>
+                <div class="explanation" id="tf2-exp"></div>
+            </div>
+
+            <div class="question-block" id="tf3-block">
+                <div class="question-title">3. 人體的胃是由數個不同組織所形成的器官。</div>
+                <div class="options">
+                    <label><input type="radio" name="tf3" value="T"> ○ 正確</label>
+                    <label><input type="radio" name="tf3" value="F"> Ｘ 錯誤</label>
+                </div>
+                <div class="explanation" id="tf3-exp"></div>
+            </div>
+
+            <div class="question-block" id="tf4-block">
+                <div class="question-title">4. 狗的汗腺非常發達，氣溫太高時主要藉由全身流汗來降低體溫。</div>
+                <div class="options">
+                    <label><input type="radio" name="tf4" value="T"> ○ 正確</label>
+                    <label><input type="radio" name="tf4" value="F"> Ｘ 錯誤</label>
+                </div>
+                <div class="explanation" id="tf4-exp"></div>
+            </div>
+
+            <div class="question-block" id="tf5-block">
+                <div class="question-title">5. 海豚與虎鯨的胎兒在母體內發育，發育完成才從母體產下，這種生殖方式稱為胎生。</div>
+                <div class="options">
+                    <label><input type="radio" name="tf5" value="T"> ○ 正確</label>
+                    <label><input type="radio" name="tf5" value="F"> Ｘ 錯誤</label>
+                </div>
+                <div class="explanation" id="tf5-exp"></div>
+            </div>
+
+            <h2 class="section-title">三、配合題：動物的覓食 (每格 4 分，共 20 分)</h2>
+            <div class="question-block">
+                <p style="margin-bottom: 15px; font-weight: 600;">請根據動物特有的身體構造與覓食方式，選擇正確的代號。</p>
+                <ul style="list-style:none; padding-left:0; margin-bottom:20px; color: var(--text-secondary); line-height: 1.8;">
+                    <li>(A) 用長長的鼻子抓取食物放進口中</li>
+                    <li>(B) 用像吸管的口器吸食花蜜</li>
+                    <li>(C) 用可快速伸長的舌頭黏住獵物</li>
+                    <li>(D) 用爪子挖開蟻丘，用長長舌頭伸入捕食</li>
+                    <li>(E) 利用長脖子與細長的舌頭，方便取食高處枝葉</li>
+                </ul>
+                <table class="matching-table">
+                    <tr>
+                        <th>動物名稱</th>
+                        <th>覓食特徵代號</th>
+                    </tr>
+                    <tr>
+                        <td>1. 變色龍</td>
+                        <td>
+                            <select name="m1" id="m1">
+                                <option value="">請選擇</option>
+                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option>
+                            </select>
+                            <div id="m1-mark" style="display:inline-block; margin-left:10px;"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2. 長頸鹿</td>
+                        <td>
+                            <select name="m2" id="m2">
+                                <option value="">請選擇</option>
+                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option>
+                            </select>
+                            <div id="m2-mark" style="display:inline-block; margin-left:10px;"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>3. 柑橘鳳蝶</td>
+                        <td>
+                            <select name="m3" id="m3">
+                                <option value="">請選擇</option>
+                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option>
+                            </select>
+                            <div id="m3-mark" style="display:inline-block; margin-left:10px;"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4. 大象</td>
+                        <td>
+                            <select name="m4" id="m4">
+                                <option value="">請選擇</option>
+                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option>
+                            </select>
+                            <div id="m4-mark" style="display:inline-block; margin-left:10px;"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>5. 大食蟻獸</td>
+                        <td>
+                            <select name="m5" id="m5">
+                                <option value="">請選擇</option>
+                                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option>
+                            </select>
+                            <div id="m5-mark" style="display:inline-block; margin-left:10px;"></div>
+                        </td>
+                    </tr>
+                </table>
+                <div class="explanation" id="match-exp"></div>
+            </div>
+
+            <h2 class="section-title">四、填充題 (每格 10 分，共 20 分)</h2>
+            <div class="question-block" id="f1-block">
+                <div class="question-title">1. 生物體組成最基本的單位稱為什麼？</div>
+                <input type="text" id="f1" class="input-underline" placeholder="請輸入兩個字">
+                <div class="explanation" id="f1-exp"></div>
+            </div>
+
+            <div class="question-block" id="f2-block">
+                <div class="question-title">2. 同時間生活在同一區域的同種生物個體所組成的群體，稱為什麼？</div>
+                <input type="text" id="f2" class="input-underline" placeholder="請輸入兩個字">
+                <div class="explanation" id="f2-exp"></div>
+            </div>
+
+            <button type="button" class="btn-submit" onclick="submitQuiz()">提交答案並計算得分</button>
+            <div id="score-display"></div>
+        </form>
+    </div>
+
+    <script>
+        // 正確答案配置
+        const answers = {
+            q1: "B", q2: "A", q3: "C", q4: "B", q5: "C", 
+            q6: "B", q7: "D", q8: "A", q9: "B", q10: "B",
+            tf1: "T", tf2: "F", tf3: "T", tf4: "F", tf5: "T",
+            m1: "C", m2: "E", m3: "B", m4: "A", m5: "D",
+            f1: "細胞", f2: "族群"
+        };
+
+        // 解析配置
+        const explanations = {
+            q1: "解析：「同時間生活在同一區域的同種生物個體所組成的群體，稱作族群。」 選項B正確。",
+            q2: "解析：「植物及藻類行光合作用製造的養分...被稱作生產者（可以自行製造養分）。」",
+            q3: "解析：「蜜蜂以舞蹈告知同伴蜜源的訊息」",
+            q4: "解析：「內側肌肉收縮，外側的肌肉舒張時，會帶動骨骼和關節，使手臂彎曲。」",
+            q5: "解析：「像擬餌這樣的設計，就是一種『仿生學』的應用，透過學習動物的樣子和行為，來發明有用的東西。」",
+            q6: "解析：「人體是由細胞所組成，具有由細胞、組織、器官、器官系統到個體等不同層次的構造。」",
+            q7: "解析：「外溫動物：從外界環境吸收熱或降溫（如天冷時，龜晒太陽增加體溫）。」",
+            q8: "解析：「秋季時，黑面琵鷺會遷徙到比較溫暖的地區度冬。」",
+            q9: "解析：「求偶方式：打鬥（鹿）、聲音（蛙）、發光（螢火蟲）、展示（雄孔雀）。」",
+            q10: "解析：「卵生動物的胚胎發育：由卵裡提供胚胎發育所需的養分（卵黃）。」 選項A、D為胎生特徵，哺乳類多為胎生。",
+            tf1: "解析：正確。「螞蟻會聚集在一起生活、分工合作...具有社會性的行為，就稱為社會性的動物。」",
+            tf2: "解析：錯誤。「蝸牛和蜆都是靠收縮有肌肉的足，來推動身體前進。」並非觸角。",
+            tf3: "解析：正確。「數個不同組織形成器官，例如：胃。」",
+            tf4: "解析：錯誤。「狗的汗腺不發達，利用喘氣和吐舌頭來降低體溫。」",
+            tf5: "解析：正確。「胎兒在母體內發育...發育完成後才從母體產下，這種方式稱為胎生。」圖示中海豚與虎鯨皆屬此類。",
+            match: "解析：變色龍用伸長舌頭黏獵物；長頸鹿利用長脖子與細長舌頭；柑橘鳳蝶用吸管口器吸花蜜；大象用長鼻子抓食物；大食蟻獸用爪子與長舌頭捕食。",
+            f1: "解析：「人體組成最基本的單位為細胞。」",
+            f2: "解析：「同時間生活在同一區域的同種生物個體所組成的群體，稱族群。」"
+        };
+
+        function toggleTheme() {
+            const html = document.documentElement;
+            const btn = document.getElementById('themeBtn');
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            btn.innerHTML = newTheme === 'dark' ? '<span>☀️</span> 亮色模式' : '<span>🌙</span> 暗色模式';
+            localStorage.setItem('theme', newTheme);
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            const btn = document.getElementById('themeBtn');
+            if (savedTheme === 'dark') btn.innerHTML = '<span>☀️</span> 亮色模式';
+            displayHistory();
+        });
+
+        function displayHistory() {
+            const historyList = document.getElementById('history-list');
+            const history = JSON.parse(localStorage.getItem('scienceQuizHistory')) || [];
+            
+            if (history.length > 0) {
+                historyList.innerHTML = '';
+                history.forEach(record => {
+                    const li = document.createElement('li');
+                    li.textContent = `${record.date} - 單元：${record.unit} - 得分：${record.score} 分`;
+                    historyList.appendChild(li);
+                });
+            }
+        }
+
+        function saveHistory(score) {
+            let history = JSON.parse(localStorage.getItem('scienceQuizHistory')) || [];
+            const record = {
+                date: new Date().toLocaleString('zh-TW'),
+                unit: '五下自然 單元四 (Retest)',
+                score: score
+            };
+            history.unshift(record); // Add to beginning
+            if (history.length > 5) history.pop(); // Keep only last 5
+            localStorage.setItem('scienceQuizHistory', JSON.stringify(history));
+            displayHistory();
+        }
+
+        function checkRadio(name, ans, expId) {
+            let points = 0;
+            const block = document.getElementById(`${name}-block`);
+            const selected = document.querySelector(`input[name="${name}"]:checked`);
+            const expDiv = document.getElementById(expId);
+            
+            if (selected) {
+                if (selected.value === ans) {
+                    points = 4;
+                    block.style.borderLeft = "5px solid var(--accent-success)";
+                    expDiv.innerHTML = `<span class="correct-text">✔ 答對了！</span><br>${explanations[name]}`;
+                } else {
+                    block.style.borderLeft = "5px solid var(--accent-danger)";
+                    expDiv.innerHTML = `<span class="wrong-text">✘ 答錯了。正確答案是 ${ans}。</span><br>${explanations[name]}`;
+                }
+            } else {
+                block.style.borderLeft = "5px solid var(--accent-danger)";
+                expDiv.innerHTML = `<span class="wrong-text">✘ 未作答。正確答案是 ${ans}。</span><br>${explanations[name]}`;
+            }
+            expDiv.style.display = "block";
+            return points;
+        }
+
+        function checkMatch(name, ans) {
+            let points = 0;
+            const select = document.getElementById(name);
+            const mark = document.getElementById(`${name}-mark`);
+            if (select.value === ans) {
+                points = 4;
+                mark.innerHTML = `<span class="correct-text">✔</span>`;
+            } else {
+                mark.innerHTML = `<span class="wrong-text">✘ (正確: ${ans})</span>`;
+            }
+            return points;
+        }
+
+        function checkFill(name, ans) {
+            let points = 0;
+            const input = document.getElementById(name);
+            const block = document.getElementById(`${name}-block`);
+            const expDiv = document.getElementById(`${name}-exp`);
+            const userAns = input.value.trim();
+            
+            if (userAns === ans) {
+                points = 10;
+                block.style.borderLeft = "5px solid var(--accent-success)";
+                expDiv.innerHTML = `<span class="correct-text">✔ 答對了！</span><br>${explanations[name]}`;
+            } else {
+                block.style.borderLeft = "5px solid var(--accent-danger)";
+                expDiv.innerHTML = `<span class="wrong-text">✘ 答錯了。正確答案是「${ans}」。</span><br>${explanations[name]}`;
+            }
+            expDiv.style.display = "block";
+            return points;
+        }
+
+        function submitQuiz() {
+            let totalScore = 0;
+            
+            // MCQs (10 * 4 = 40)
+            for(let i=1; i<=10; i++) totalScore += checkRadio(`q${i}`, answers[`q${i}`], `q${i}-exp`);
+            
+            // True/False (5 * 4 = 20)
+            for(let i=1; i<=5; i++) totalScore += checkRadio(`tf${i}`, answers[`tf${i}`], `tf${i}-exp`);
+            
+            // Matching (5 * 4 = 20)
+            for(let i=1; i<=5; i++) totalScore += checkMatch(`m${i}`, answers[`m${i}`]);
+            document.getElementById('match-exp').style.display = "block";
+            document.getElementById('match-exp').innerHTML = explanations['match'];
+            
+            // Fill in the blank (2 * 10 = 20)
+            totalScore += checkFill('f1', answers['f1']);
+            totalScore += checkFill('f2', answers['f2']);
+
+            // Display Score
+            const scoreDisplay = document.getElementById('score-display');
+            scoreDisplay.innerHTML = `測驗結束！您的總得分是：<span style="color:${totalScore >= 60 ? 'var(--accent-success)':'var(--accent-danger)'}">${totalScore}</span> / 100 分`;
+            scoreDisplay.style.display = "block";
+            
+            saveHistory(totalScore);
+            window.scrollTo({ top: scoreDisplay.offsetTop - 50, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
