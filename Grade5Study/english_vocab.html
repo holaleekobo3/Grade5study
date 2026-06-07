@@ -33,18 +33,48 @@
 <div class="container">
     <h1>📚 英文單字庫</h1>
     
-    <div class="unit-section">
+    <!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英文單字庫</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const btn = document.getElementById('themeBtn');
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            btn.innerHTML = newTheme === 'dark' ? '<span>☀️</span> 亮色模式' : '<span>🌙</span> 暗色模式';
+            localStorage.setItem('theme', newTheme);
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            const btn = document.getElementById('themeBtn');
+            if (savedTheme === 'dark') btn.innerHTML = '<span>☀️</span> 亮色模式';
+        });
+    </script>
+</head>
+<body>
+
+<div class="theme-toggle">
+    <button id="themeBtn" onclick="toggleTheme()"><span>🌙</span> 暗色模式</button>
+</div>
+
+<div class="container">
+    <h1>📚 英文單字庫</h1>
+    
+    
         <ul>
             <li><a href="english_unit6_7_vocab.html" class="quiz-link">📝 單元 6 & 7：Vocabulary Study List (單字表)</a></li>
-            <li><a href="english_unit6_7_vocab_quiz1.html" class="quiz-link">✍️ 單元 6 & 7：Vocabulary Spelling Quiz 1</a></li>
             <li><a href="english_unit7_vocab.html" class="quiz-link">📝 單元 7：Vocabulary Study List (單字表)</a></li>
-            <li><a href="english_unit7_vocab_quiz1.html" class="quiz-link">✍️ 單元 7：Vocabulary Spelling Quiz (小考 1)</a></li>
-            <li><a href="english_unit7_vocab_quiz2.html" class="quiz-link">✍️ 單元 7：Vocabulary Spelling Quiz (小考 2)</a></li>
-            <li><a href="english_unit7_vocab_quiz3.html" class="quiz-link">✍️ 單元 7：Vocabulary Spelling Quiz (小考 3)</a></li>
-            <li><a href="english_unit7_vocab_quiz4.html" class="quiz-link">✍️ 單元 7：Vocabulary Spelling Quiz (小考 4)</a></li>
-            <li><a href="english_unit7_vocab_quiz5.html" class="quiz-link">✍️ 單元 7：Vocabulary Spelling Quiz (小考 5)</a></li>
             <li><a href="english_unit8_vocab.html" class="quiz-link">📝 單元 8：Vocabulary Study List (單字表)</a></li>
         </ul>
+
     </div>
 
     <p><a href="english.html" style="text-decoration: none; font-weight: bold; color: var(--accent-primary);">⬅ 返回英文目錄</a></p>
