@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>五下數學互動練習卷 — 第九單元：容積和容量</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /*  quiz-specific overrides — use CSS vars from style.css */
+        .section-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 28px;
+            backdrop-filter: blur(8px);
+        }
+        .section-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+            border-bottom: 2px solid var(--accent-primary);
+            padding-bottom: 6px;
+            margin-bottom: 18px;
+        }
+        .context-intro {
+            background: rgba(99, 102, 241, 0.08);
+            padding: 14px;
+            border-radius: 10px;
+            margin-bottom: 18px;
+            font-weight: 600;
+            border-left: 4px solid var(--accent-primary);
+            color: var(--text-primary);
+        }
+        ol {
+            padding-left: 22px;
+            margin: 0;
+        }
+        li {
+            margin-bottom: 20px;
+            font-size: 1.02rem;
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            margin: 10px 0;
+            padding-left: 4px;
+        }
+        .options-group label {
+            margin-bottom: 7px;
+            cursor: pointer;
+            font-size: 0.98rem;
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 10px 14px;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .options-group label:hover {
+            background: rgba(99, 102, 241, 0.06);
+            border-color: var(--accent-primary);
+        }
+        .options-group input[type="radio"] {
+            margin-right: 8px;
+            accent-color: var(--accent-primary);
+        }
+
+        /* 填空框 */
+        .quiz-blank {
+            width: 90px;
+            padding: 5px 10px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            margin: 0 4px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .quiz-blank:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+        }
+
+        /* 分數顯示（豎式） */
+        .mixed-num {
+            display: inline-flex;
+            align-items: center;
+            vertical-align: middle;
+            font-weight: bold;
+            margin: 0 2px;
+        }
+        .fraction {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            padding: 0 4px;
+            vertical-align: middle;
+        }
+        .num {
+            border-bottom: 1.5px solid var(--text-primary);
+            padding-bottom: 2px;
+            font-size: 0.85em;
+        }
+        .den {
+            padding-top: 2px;
+            font-size: 0.85em;
+        }
+
+        /* 批改燈號 */
+        .correct-glow {
+            border-color: var(--accent-success) !important;
+            background-color: rgba(16, 185, 129, 0.1) !important;
+            color: var(--accent-success) !important;
+        }
+        .incorrect-glow {
+            border-color: var(--accent-danger) !important;
+            background-color: rgba(239, 68, 68, 0.08) !important;
+            color: var(--accent-danger) !important;
+        }
+
+        /* 詳解區塊 */
+        .explanation-box {
+            display: none;
+            background: rgba(99, 102, 241, 0.05);
+            border-left: 4px solid var(--accent-primary);
+            padding: 14px;
+            margin-top: 14px;
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+        .explanation-box p {
+            margin: 5px 0;
+        }
+        .exp-title {
+            font-weight: 700;
+            color: var(--accent-primary);
+            margin-bottom: 8px !important;
+        }
+
+        /* 提交按鈕 */
+        .btn-submit {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            padding: 14px 48px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: 'Outfit', sans-serif;
+            border: none;
+            border-radius: 99px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.35);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: block;
+            margin: 32px auto 0;
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(99, 102, 241, 0.45);
+        }
+        .action-area {
+            text-align: center;
+            margin-top: 32px;
+        }
+
+        /* 總分橫幅 */
+        .score-banner {
+            display: none;
+            margin-top: 28px;
+            padding: 22px;
+            border-radius: 16px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            font-family: 'Outfit', sans-serif;
+        }
+        .score-high {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent-success);
+            border: 1.5px solid var(--accent-success);
+        }
+        .score-low {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--accent-danger);
+            border: 1.5px solid var(--accent-danger);
+        }
+
+        /* 學習歷程 */
+        .history-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 28px;
+        }
+        .history-card h3 {
+            margin-top: 0;
+            color: var(--accent-primary);
+            font-family: 'Outfit', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+        }
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 12px;
+            background: var(--bg-primary);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .history-table th {
+            background: var(--accent-primary);
+            color: white;
+            padding: 12px 16px;
+            text-align: center;
+            font-weight: 600;
+        }
+        .history-table td {
+            padding: 10px 14px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .history-score {
+            color: var(--accent-success);
+            font-weight: 700;
+        }
+    </style>
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const btn = document.getElementById('themeBtn');
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            btn.innerHTML = newTheme === 'dark' ? '<span>☀️</span> 亮色模式' : '<span>🌙</span> 暗色模式';
+            localStorage.setItem('theme', newTheme);
+        }
+        window.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            const btn = document.getElementById('themeBtn');
+            if (savedTheme === 'dark') btn.innerHTML = '<span>☀️</span> 亮色模式';
+        });
+    </script>
+</head>
+<body>
+
+<div class="theme-toggle">
+    <button id="themeBtn" onclick="toggleTheme()"><span>🌙</span> 暗色模式</button>
+</div>
+
+<div class="container">
+    <p><a href="math.html" style="text-decoration: none; font-weight: bold; color: var(--accent-primary);">⬅ 返回數學測驗目錄</a></p>
+    <h1>國小五年級數學互動練習卷</h1>
+    <p style="text-align:center; color: var(--text-secondary); font-size: 1rem; margin-top: -16px; margin-bottom: 28px;">單元九：容積和容量（符合108課綱核心素養情境）</p>
+
+    <div class="history-card">
+        <h3>📊 學習歷程成績單（最近5次）</h3>
+        <div id="history-list"></div>
+    </div>
+
+    <form id="quizForm" onsubmit="event.preventDefault(); gradeQuiz();">
+
+        <div class="section-box">
+            <div class="section-title">一、選擇題（每題 4 分，共 16 分）</div>
+            <ol>
+                <li>
+                    關於「容積」與「容量」的數學基礎觀念，下列哪一個敘述是正確的？
+                    <div class="options-group" id="q1_group">
+                        <label><input type="radio" name="q1" value="1"> ① 容積是指容器外面所占空間的大小。</label>
+                        <label><input type="radio" name="q1" value="2"> ② 容量是指容器內部空間可以容納最大液體的量。</label>
+                        <label><input type="radio" name="q1" value="3"> ③ 1毫升（mL）水的體積大約是1立方公尺（m³）。</label>
+                        <label><input type="radio" name="q1" value="4"> ④ 當容器的厚度越厚時，其內部的容積會隨之變得越大。</label>
+                    </div>
+                    <div class="explanation-box" id="exp_q1">
+                        <p class="exp-title">💡 觀念思維解析：</p>
+                        <p>容器內部所能容納物體的體積稱為「容積」；而容器內部所能容納最大液體的量，則稱為「容量」，兩者本質皆代表內部空間大小。1 mL = 1 cm³；厚度越厚，內部空間反而會縮小。因此正確答案選 ②。</p>
+                    </div>
+                </li>
+                <li>
+                    將一個不規則的實心鐵塊完全沉入一個裝滿水的水槽中，溢出來的水全部收集後倒入量筒。請問這份溢出來的水的液量，代表該鐵塊的什麼？
+                    <div class="options-group" id="q2_group">
+                        <label><input type="radio" name="q2" value="1"> ① 鐵塊的體積</label>
+                        <label><input type="radio" name="q2" value="2"> ② 鐵塊的重量</label>
+                        <label><input type="radio" name="q2" value="3"> ③ 水槽外部的體積</label>
+                        <label><input type="radio" name="q2" value="4"> ④ 水槽的原本高度</label>
+                    </div>
+                    <div class="explanation-box" id="exp_q2">
+                        <p class="exp-title">💡 觀念思維解析：</p>
+                        <p>根據 108 課綱排水法核心概念：當物體完全沉入水中時，物體所排開（或溢出）的水的體積，會恰好等於該不規則物體本身的體積。因此正確答案選 ①。</p>
+                    </div>
+                </li>
+                <li>
+                    自來水公司在計算我們家中的用水量時，通常是以「度」作為基本計費單位。請問「1度水」的體積在公制單位中是多少？
+                    <div class="options-group" id="q3_group">
+                        <label><input type="radio" name="q3" value="1"> ① 1 立方公分（cm³）</label>
+                        <label><input type="radio" name="q3" value="2"> ② 1 公升（L）</label>
+                        <label><input type="radio" name="q3" value="3"> ③ 1 毫升（mL）</label>
+                        <label><input type="radio" name="q3" value="4"> ④ 1 立方公尺（m³）</label>
+                    </div>
+                    <div class="explanation-box" id="exp_q3">
+                        <p class="exp-title">💡 觀念思維解析：</p>
+                        <p>自來水公司的計費規範中，1 度用水量被嚴謹定義為 1 立方公尺（m³）的水體積，亦等於 1000 公升（L）或 1 公秉（kL）。因此正確答案選 ④。</p>
+                    </div>
+                </li>
+                <li>
+                    有一個「無蓋」的長方體木盒，外面測得的長是 22 公分、寬是 12 公分、高是 11 公分。已知木盒的木板厚度統一為 1 公分。在計算木盒內部的容積時，裡面的「高」應該帶入多少公分計算才正確？
+                    <div class="options-group" id="q4_group">
+                        <label><input type="radio" name="q4" value="1"> ① 11 公分</label>
+                        <label><input type="radio" name="q4" value="2"> ② 10 公分</label>
+                        <label><input type="radio" name="q4" value="3"> ③ 9 公分</label>
+                        <label><input type="radio" name="q4" value="4"> ④ 8 公分</label>
+                    </div>
+                    <div class="explanation-box" id="exp_q4">
+                        <p class="exp-title">💡 觀念思維解析：</p>
+                        <p>因為木盒是「無蓋」的，這代表內部的長與寬皆需要扣除左右兩側的厚度（各扣 2 次），但是內部的「高」只需要扣除底部的厚度（只扣 1 次）。計算式：11－1＝10 公分。因此正確答案選 ②。</p>
+                    </div>
+                </li>
+            </ol>
+        </div>
+
+        <div class="section-box">
+            <div class="section-title">二、填填看：單位與觀念換算（每個空格 3 分，共 27 分）</div>
+            <ol>
+                <li>15 公升 40 毫升 ＝ <input type="text" id="b1" class="quiz-blank"> 毫升。</li>
+                <li>30050 毫升 ＝ <input type="text" id="b2" class="quiz-blank"> 公升 <input type="text" id="b3" class="quiz-blank"> 毫升。</li>
+                <li>內部邊長 2 公尺的正方體貨櫃，內部體積是 <input type="text" id="b4" class="quiz-blank"> 立方公尺，其最大容量也就是 <input type="text" id="b5" class="quiz-blank"> 公秉。</li>
+                <li>7.25 立方公尺 ＝ <input type="text" id="b6" class="quiz-blank"> 公升。</li>
+                <li>6400000 立方公分 ＝ <input type="text" id="b7" class="quiz-blank"> 立方公尺。</li>
+                <li>
+                    一款大型運動水壺的容量是
+                    <span class="mixed-num">2<span class="fraction"><span class="num">3</span><span class="den">5</span></span></span>
+                    公升，換算成毫升規格，等於 <input type="text" id="b8" class="quiz-blank"> 毫升。
+                </li>
+                <li>一桶家庭號礦泉水的標示為 12000 c.c.，其液量相當於 <input type="text" id="b9" class="quiz-blank"> 公升。</li>
+            </ol>
+            <div class="explanation-box" id="exp_sec2">
+                <p class="exp-title">💡 單位換算思維解析：</p>
+                <p>1. 15 L = 15000 mL，加 40 mL 得 15040 mL。</p>
+                <p>2. 30000 mL = 30 L，剩餘 50 mL，故為 30 L 50 mL。</p>
+                <p>3. 正方體體積 = 邊長³ = 2 × 2 × 2 = 8 m³。1 m³ = 1 公秉，故容量為 8 公秉。</p>
+                <p>4. 1 m³ = 1000 L，故 7.25 × 1000 = 7250 L。</p>
+                <p>5. 1 m³ = 1000000 cm³，故 6400000 ÷ 1000000 = 6.4 m³。</p>
+                <p>6. 2又5分之3公升 = 2.6公升。因 1 L = 1000 mL，2.6 × 1000 = 2600 mL。</p>
+                <p>7. 1 c.c. = 1 mL，12000 c.c. = 12000 mL = 12 L。</p>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <div class="section-title">三、不規則物體與排水法計算（每個空格 4 分，共 16 分）</div>
+            <div class="context-intro">
+                情境：有一個正方體玻璃水槽，內部每邊長度皆為 20 公分，原本水槽內部注入清水，水深高度恰好為 10 公分。
+            </div>
+            <ol>
+                <li>原本水槽之內，清水的體積總共是 <input type="text" id="b10" class="quiz-blank"> 立方公分。</li>
+                <li>小強將一塊不規則石頭完全沉入該水槽後，發現水面高度上升到了 14 公分，代表水面總共上升了 <input type="text" id="b11" class="quiz-blank"> 公分。</li>
+                <li>利用水面上升增加的體積來推算，這塊不規則石頭的體積是 <input type="text" id="b12" class="quiz-blank"> 立方公分。</li>
+                <li>若將石頭取出，改放入一個重沉的鐵球並完全沉入，結果水槽內的水溢出了 500 毫升。這代表該鐵球的體積是 <input type="text" id="b13" class="quiz-blank"> 立方公分。</li>
+            </ol>
+            <div class="explanation-box" id="exp_sec3">
+                <p class="exp-title">💡 排水法思維步驟解析：</p>
+                <p>1. 原水體積 = 底面積 × 水深 = 20 × 20 × 10 = 4000 cm³。</p>
+                <p>2. 水面變化 = 後來高度－原來高度 = 14－10 = 4 公分。</p>
+                <p>3. 石頭體積 = 水面上升增加的內部體積 = 20 × 20 × 4 = 1600 cm³。</p>
+                <p>4. 溢出的液量等同物體完全沉入的體積。500 mL ＝ 500 cm³，故鐵球體積為 500 立方公分。</p>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <div class="section-title">四、厚度與容器計算填空（每個空格 5 分，共 20 分）</div>
+            <div class="context-intro">
+                情境：小美店裡訂製了一個「有蓋」的正方體保麗龍外送箱。從外面量，箱子的每邊邊長都是 46 公分，保麗龍的箱壁厚度統一為 3 公分。
+            </div>
+            <ol>
+                <li>此保麗龍箱內部的實際長、寬、高都應該是 <input type="text" id="b14" class="quiz-blank"> 公分。</li>
+                <li>這個保麗龍箱內部真正的「容積」大小是 <input type="text" id="b15" class="quiz-blank"> 立方公分。</li>
+                <li>換算成容量單位，此箱子最大可以裝入 <input type="text" id="b16" class="quiz-blank"> 公升的液體。</li>
+                <li>如果工廠改將此箱子設計為「無蓋」外送箱，外部長寬高依然維持 46 公分，厚度維持 3 公分，則該無蓋箱內部的「高」會變成 <input type="text" id="b17" class="quiz-blank"> 公分。</li>
+            </ol>
+            <div class="explanation-box" id="exp_sec4">
+                <p class="exp-title">💡 厚度與內部空間步驟解析：</p>
+                <p>1. 由於是「有蓋」箱，內部每個維度皆被兩端的厚度壓縮。裡面邊長 = 外面邊長－厚度×2 = 46－3×2 = 40 公分。</p>
+                <p>2. 內部容積 = 40 × 40 × 40 = 64000 立方公分。</p>
+                <p>3. 1000 立方公分 = 1 公升，故 64000 ÷ 1000 = 64 公升。</p>
+                <p>4. 若改為「無蓋」，底部仍有一層厚度，但頂部無蓋不需扣除。內部高度 = 外部高－底部厚度 = 46－3 = 43 公分。</p>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <div class="section-title">五、綜合應用題（每題 5 分，第四題 6 分，共 21 分）</div>
+            <ol>
+                <li>
+                    學校游泳池的內部形狀為長方體，量得內部的長為 50 公尺、寬為 20 公尺、深為 2 公尺。若要把這座游泳池完全裝滿水，自來水公司以每度水費 12 元來向學校計價，學校共需要支付水費 <input type="text" id="b18" class="quiz-blank"> 元。
+                    <div class="explanation-box" id="exp_b18">
+                        <p class="exp-title">💡 應用題 1 步驟解析：</p>
+                        <p>① 游泳池容積 = 50 × 20 × 2 = 2000 立方公尺。</p>
+                        <p>② 1 立方公尺 = 1 度水，故全滿需 2000 度水。</p>
+                        <p>③ 水費 = 2000 × 12 = 24000 元。</p>
+                    </div>
+                </li>
+                <li>
+                    有一個長方體水槽，內部的長為 30 公分、寬為 25 公分，裡面裝有一些水，水深為 15 公分。將一個不規則造景假山完全沉入水中後，水深上升至 19 公分。請問這個造景假山的體積是 <input type="text" id="b19" class="quiz-blank"> 立方公分。
+                    <div class="explanation-box" id="exp_b19">
+                        <p class="exp-title">💡 應用題 2 步驟解析：</p>
+                        <p>① 水面高度上升：19－15 = 4 公分。</p>
+                        <p>② 假山體積 = 30 × 25 × 4 = 3000 立方公分。</p>
+                    </div>
+                </li>
+                <li>
+                    有一個長方體密閉儲水貨櫃，已知其內部的容積總共是 720 立方公尺。如果從內部量得貨櫃的長度為 12 公尺、寬度為 8 公尺，請問這個儲水貨櫃內部的高是 <input type="text" id="b20" class="quiz-blank"> 公尺。
+                    <div class="explanation-box" id="exp_b20">
+                        <p class="exp-title">💡 應用題 3 步驟解析：</p>
+                        <p>① 高 = 容積 ÷ 長 ÷ 寬 = 720 ÷ 12 ÷ 8。</p>
+                        <p>② 計算：720 ÷ 12 ÷ 8 = 60 ÷ 8 = 7.5 公尺。</p>
+                    </div>
+                </li>
+                <li>
+                    奕廷打算用厚度為 2 公分的厚木板，DIY 做一個「無蓋」的長方體木質桌上收納盒。他設定外觀量起來的總長度為 34 公分、總寬度為 24 公分、總高度為 14 公分。請問這個收納盒完成後，最大的容量是 <input type="text" id="b21" class="quiz-blank"> 毫升。
+                    <div class="explanation-box" id="exp_b21">
+                        <p class="exp-title">💡 應用題 4 步驟解析：</p>
+                        <p>① 內部長 = 34－2×2 = 30 公分（扣左右兩壁）。</p>
+                        <p>② 內部寬 = 24－2×2 = 20 公分（扣前後兩壁）。</p>
+                        <p>③ 內部高 = 14－2 = 12 公分（無蓋，僅扣底部厚度 1 次）。</p>
+                        <p>④ 內部容積 = 30 × 20 × 12 = 7200 立方公分 = 7200 毫升。</p>
+                    </div>
+                </li>
+            </ol>
+        </div>
+
+        <div class="action-area">
+            <button type="submit" class="btn-submit">提交測驗並查看詳細解析</button>
+        </div>
+    </form>
+
+    <div id="scoreBanner" class="score-banner"></div>
+</div>
+
+<script>
+    // 正確答案
+    const correctAnswers = {
+        q1: "2", q2: "1", q3: "4", q4: "2",
+        b1: "15040", b2: "30", b3: "50", b4: "8", b5: "8",
+        b6: "7250", b7: "6.4", b8: "2600", b9: "12",
+        b10: "4000", b11: "4", b12: "1600", b13: "500",
+        b14: "40", b15: "64000", b16: "64", b17: "43",
+        b18: "24000", b19: "3000", b20: "7.5", b21: "7200"
+    };
+
+    // 每題分數權重（總和 = 100）
+    const itemWeights = {
+        q1: 4, q2: 4, q3: 4, q4: 4,
+        b1: 3, b2: 3, b3: 3, b4: 3, b5: 3,
+        b6: 3, b7: 3, b8: 3, b9: 3,
+        b10: 4, b11: 4, b12: 4, b13: 4,
+        b14: 5, b15: 5, b16: 5, b17: 5,
+        b18: 5, b19: 5, b20: 5, b21: 6
+    };
+
+    const STORAGE_KEY = 'math_u9_quiz1_history';
+
+    function loadHistory() {
+        const el = document.getElementById('history-list');
+        const records = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        if (!records.length) {
+            el.innerHTML = '<p style="color: var(--text-secondary); font-style: italic;">目前尚無練習紀錄，趕快開始挑戰吧！</p>';
+            return;
+        }
+        let html = '<table class="history-table"><thead><tr><th>測驗時間</th><th>單元</th><th>分數</th></tr></thead><tbody>';
+        records.slice(0, 5).forEach(r => {
+            html += `<tr><td>${r.date}</td><td>${r.unit}</td><td class="history-score">${r.score} 分</td></tr>`;
+        });
+        html += '</tbody></table>';
+        el.innerHTML = html;
+    }
+
+    function saveRecord(score) {
+        const records = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        const now = new Date();
+        const dateStr = `${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+        records.unshift({ date: dateStr, unit: '第九單元：容積和容量', score: score });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+        loadHistory();
+    }
+
+    function gradeQuiz() {
+        let totalScore = 0;
+
+        ['q1','q2','q3','q4'].forEach(qId => {
+            const sel = document.querySelector(`input[name="${qId}"]:checked`);
+            const groupEl = document.getElementById(`${qId}_group`);
+            if (sel && sel.value === correctAnswers[qId]) {
+                totalScore += itemWeights[qId];
+                groupEl.style.color = 'var(--accent-success)';
+            } else {
+                groupEl.style.color = 'var(--accent-danger)';
+            }
+        });
+
+        const blanks = Object.keys(correctAnswers).filter(k => k.startsWith('b'));
+        blanks.forEach(bId => {
+            const inputEl = document.getElementById(bId);
+            const userAns = inputEl.value.trim().replace(/\s+/g, '');
+            const target = correctAnswers[bId];
+            const isCorrect = (!isNaN(userAns) && !isNaN(target))
+                ? parseFloat(userAns) === parseFloat(target)
+                : userAns === target;
+
+            if (isCorrect) {
+                totalScore += itemWeights[bId];
+                inputEl.className = 'quiz-blank correct-glow';
+            } else {
+                inputEl.className = 'quiz-blank incorrect-glow';
+            }
+        });
+
+        totalScore = Math.round(totalScore);
+
+        const banner = document.getElementById('scoreBanner');
+        banner.style.display = 'block';
+        banner.innerHTML = `💯 測驗完成！實得分數：${totalScore} 分 / 滿分 100 分`;
+        banner.className = `score-banner ${totalScore >= 80 ? 'score-high' : 'score-low'}`;
+
+        document.querySelectorAll('.explanation-box').forEach(box => {
+            box.style.display = 'block';
+        });
+
+        saveRecord(totalScore);
+        banner.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    window.addEventListener('DOMContentLoaded', loadHistory);
+</script>
+</body>
+</html>
