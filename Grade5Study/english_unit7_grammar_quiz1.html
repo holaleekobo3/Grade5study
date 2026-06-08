@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammar Goals 5 Unit 7 — 互動練習卷</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --accent-primary: #6366f1;
+            --accent-secondary: #ec4899;
+            --accent-success: #10b981;
+            --accent-danger: #ef4444;
+            --bg-primary: #f8fafc;
+            --bg-secondary: rgba(255, 255, 255, 0.8);
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: rgba(226, 232, 240, 0.8);
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: rgba(30, 41, 59, 0.8);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: rgba(51, 65, 85, 0.8);
+            --glass-bg: rgba(30, 41, 59, 0.7);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, "Microsoft JhengHei";
+            background-color: var(--bg-primary);
+            background-image: radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%),
+                              radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%),
+                              radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        [data-theme="light"] body {
+            background-image: radial-gradient(at 0% 0%, hsla(253,100%,95%,1) 0, transparent 50%),
+                              radial-gradient(at 50% 0%, hsla(225,100%,92%,1) 0, transparent 50%),
+                              radial-gradient(at 100% 0%, hsla(339,100%,92%,1) 0, transparent 50%);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 1000;
+        }
+        #themeBtn {
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 12px 24px;
+            border-radius: 99px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: inherit;
+        }
+        #themeBtn:hover {
+            transform: translateY(-2px);
+            background: var(--bg-secondary);
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .exam-header-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 25px;
+        }
+        .exam-header-table td {
+            border: 1px solid var(--border-color);
+            padding: 10px 12px;
+            font-size: 0.9rem;
+            vertical-align: middle;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+        .exam-title {
+            text-align: center;
+            color: var(--accent-primary);
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-top: 0;
+            margin-bottom: 5px;
+        }
+        .exam-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+            font-size: 1rem;
+        }
+        .dashboard-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 30px;
+        }
+        .dashboard-title {
+            margin-top: 0;
+            color: var(--accent-primary);
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .log-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 0.85rem;
+        }
+        .log-table th, .log-table td {
+            border: 1px solid var(--border-color);
+            padding: 8px;
+            text-align: center;
+            color: var(--text-primary);
+        }
+        .log-table th {
+            background-color: var(--bg-primary);
+        }
+
+        .section-title {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            margin-top: 30px;
+            margin-bottom: 18px;
+        }
+        .passage-box {
+            background-color: var(--bg-primary);
+            border-left: 4px solid var(--accent-primary);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+            white-space: pre-line;
+            color: var(--text-primary);
+        }
+        .question-item {
+            margin-bottom: 22px;
+            padding-bottom: 18px;
+            border-bottom: 1px dashed var(--border-color);
+        }
+        .question-text {
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+        .option-label:hover {
+            background-color: var(--bg-primary);
+            border-color: var(--accent-primary);
+        }
+        .option-label input {
+            margin-right: 12px;
+            transform: scale(1.1);
+            accent-color: var(--accent-primary);
+        }
+        .text-input-field {
+            width: 100%;
+            max-width: 600px;
+            padding: 10px;
+            font-size: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.2s;
+            font-family: inherit;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+        .text-input-field:focus {
+            border-color: var(--accent-primary);
+        }
+        .explanation-box {
+            display: none;
+            margin-top: 15px;
+            padding: 12px 15px;
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--accent-success);
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+            color: #166534;
+        }
+        [data-theme="dark"] .explanation-box {
+            color: #86efac;
+        }
+        .correct-ans {
+            background-color: rgba(16, 185, 129, 0.2) !important;
+            border-color: var(--accent-success) !important;
+            color: #14532d !important;
+            font-weight: bold;
+        }
+        [data-theme="dark"] .correct-ans {
+            color: #86efac !important;
+        }
+        .incorrect-ans {
+            background-color: rgba(239, 68, 68, 0.2) !important;
+            border-color: var(--accent-danger) !important;
+            color: #7f1d1d !important;
+        }
+        [data-theme="dark"] .incorrect-ans {
+            color: #fca5a5 !important;
+        }
+        .score-banner {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #10b981, #047857);
+            color: white;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .score-banner.fail {
+            background: linear-gradient(135deg, #ef4444, #b91c1c);
+        }
+        .score-num {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 10px 0;
+        }
+        .action-btn-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 35px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.2s;
+            font-family: inherit;
+        }
+        .btn-submit {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+        }
+        .btn-clear {
+            background: var(--text-secondary);
+            color: white;
+            font-size: 0.9rem;
+            padding: 8px 15px;
+        }
+        .btn-clear:hover {
+            background: var(--text-primary);
+            opacity: 0.8;
+        }
+        .hint-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 4px;
+            display: block;
+        }
+        .badge-challenge {
+            background-color: var(--accent-warning);
+            color: white;
+            font-size: 0.75rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+        #log-container {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        .empty-log {
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 20px 10px; }
+            .container { padding: 20px; border-radius: 16px; }
+            .exam-header-table td { display: block; width: 100%; box-sizing: border-box; }
+            .action-btn-container { flex-direction: column; }
+            .score-num { font-size: 2.5rem; }
+        }
+    </style>
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const btn = document.getElementById('themeBtn');
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            btn.innerHTML = newTheme === 'dark' ? '<span>☀️</span> 亮色模式' : '<span>🌙</span> 暗色模式';
+            localStorage.setItem('theme', newTheme);
+        }
+        window.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            const btn = document.getElementById('themeBtn');
+            if (savedTheme === 'dark') btn.innerHTML = '<span>☀️</span> 亮色模式';
+            loadLogs();
+        });
+    </script>
+</head>
+<body>
+
+<div class="theme-toggle">
+    <button id="themeBtn" onclick="toggleTheme()"><span>🌙</span> 暗色模式</button>
+</div>
+
+<div class="container">
+    <h1 class="exam-title">Grammar Goals 5 Unit 7</h1>
+    <div class="exam-subtitle">加強複習測驗 (Focus: Future Tense & Timetables / Is vs. Does 核心觀念修復)</div>
+
+    <table class="exam-header-table">
+        <tr>
+            <td><strong>班級 (Class):</strong> ________</td>
+            <td><strong>座號 (Number):</strong> ________</td>
+            <td><strong>姓名 (Name):</strong> ________</td>
+            <td><strong>分數 (Score):</strong> <span id="header-score" style="font-weight:bold; color:var(--accent-danger);">--</span> / 100</td>
+            <td><strong>家長簽名 (Signature):</strong> _________________</td>
+        </tr>
+    </table>
+
+    <div class="dashboard-box">
+        <h3 class="dashboard-title">📊 學習歷程紀錄 Dashboard</h3>
+        <div id="log-container"><em>暫無歷史作答紀錄。</em></div>
+        <div style="text-align: right; margin-top: 10px;">
+            <button class="btn btn-clear" onclick="clearLogs()">清除歷史紀錄</button>
+        </div>
+    </div>
+
+    <div id="score-banner" class="score-banner">
+        <div id="evaluation-title" style="font-size: 1.3rem; font-weight: bold;">評語計算中...</div>
+        <div class="score-num"><span id="score-display">0</span>分</div>
+        <div id="evaluation-comment">請向下查看詳細的觀念解析。</div>
+    </div>
+
+    <form id="quiz-form" onsubmit="event.preventDefault(); submitQuiz();">
+
+        <div class="section-title">Part I. Vocabulary and Grammar (40% - 每題 4 分)</div>
+
+        <div class="question-item" data-qtype="mc" data-correct="B">
+            <div class="question-text">1. What time ________ the safari park open on weekends?</div>
+            <div class="options-container">
+                <label class="option-label"><input type="radio" name="q1" value="A">(A) is</label>
+                <label class="option-label"><input type="radio" name="q1" value="B">(B) does</label>
+                <label class="option-label"><input type="radio" name="q1" value="C">(C) do</label>
+                <label class="option-label"><input type="radio" name="q1" value="D">(D) are</label>
+            </div>
+            <div class="explanation-box">💡 觀念解析：句尾有原形動詞 open（營業/開門），且主詞 the safari park 是單數，疑問句必須使用助動詞 **does**。不可選 is，因為 is 後面不能直接接原形動詞！</div>
+        </div>
+
+        <div class="question-item" data-qtype="mc" data-correct="A">
+            <div class="question-text">2. ________ the new documentary about endangered rhinos?</div>
+            <div class="options-container">
+                <label class="option-label"><input type="radio" name="q2" value="A">(A) Is</label>
+                <label class="option-label"><input type="radio" name="q2" value="B">(B) Does</label>
+                <label class="option-label"><input type="radio" name="q2" value="C">(C) Are</label>
+                <label class="option-label"><input type="radio" name="q2" value="D">(D) Do</label>
+            </div>
+            <div class="explanation-box">💡 觀念解析：此句主詞為 the new documentary，句中沒有一般普通動詞，about endangered rhinos 是介系詞片語。當句子是在詢問「狀態或身份」而非動作時，必須使用 Be 動詞 **Is**。</div>
+        </div>
+
+        <div class="question-item" data-qtype="mc" data-correct="A">
+            <div class="question-text">3. Our school will ________ a lot of money to the wildlife organization next week.</div>
+            <div class="options-container">
+                <label class="option-label"><input type="radio" name="q3" value="A">(A) donate</label>
+                <label class="option-label"><input type="radio" name="q3" value="B">(B) donates</label>
+                <label class="option-label"><input type="radio" name="q3" value="C">(C) donating</label>
+                <label class="option-label"><input type="radio" name="q3" value="D">(D) to donate</label>
+            </div>
+            <div class="explanation-box">💡 觀念解析：助動詞 **will**（將會）後面，一定要接**原形動詞**。故選 (A) donate。</div>
+        </div>
+
+        <div class="question-item" data-qtype="mc" data-correct="C">
+            <div class="question-text">4. We are going to go ________ in the mountains next Saturday.</div>
+            <div class="options-container">
+                <label class="option-label"><input type="radio" name="q4" value="A">(A) to camp</label>
+                <label class="option-label"><input type="radio" name="q4" value="B">(B) to camping</label>
+                <label class="option-label"><input type="radio" name="q4" value="C">(C) camping</label>
+                <label class="option-label"><input type="radio" name="q4" value="D">(D) camp</label>
+            </div>
+            <div class="explanation-box">💡 觀念解析：去進行某項戶外休閒活動使用「**go + V-ing**」結構，例如：go camping（去露營）、go swimming（去游泳）。中間**絕對不能加 to**！</div>
+        </div>
+
+        <div class="question-item" data-qtype="mc" data-correct="B">
+            <div class="question-text">5. Why ________ that hunter look so suspicious near the forest?</div>
+            <div class="options-container">
+                <label class="option-label"><input type="radio" name="q5" value="A">(A) is</label>
+                <label class="option-label"><input type="radio" name="q5" value="B">(B) does</label>
+                <label class="option-label"><input type="radio" name="q5" value="C">(C) are</label>
+                <label class="option-label"><input type="radio" name="q5" value="D">(D) do</label>
+            </div>
+            <div class="explanation-box">💡 觀念解析：看到句中有一般動詞 **look**（看起來），主詞 that hunter 是單數，因此疑問句必須要派助動詞 **does** 出馬。</div>
+        </div>
+
+        <div class="question-item" data-qtype="mc" data-correct="A">
+            <div class="question-text">6. ________ the Bengal tiger an endangered species in Asia?</div>
+            <div class="options-container">
+                <label class="option-label"><input type="radio" name="q6" value="A">(A) Is</label>
+                <label class="option-label"><input type="radio" name="q6" value="B">(B) Does</label>
+                <label class="option-label"><input type="radio" name="q6" value="C">(C) Are</label>
+                <label class="option-label"><input type="radio" name="q6" value="D">(D) Do</label>
+            </div>
+            <div class="explanation-box">💡 觀念解析：後半句 an endangered species 是名詞片語（一種瀕危物種），全句沒有一般動詞，表示身分狀態，主詞是單數，故選 **Is**。</div>
+        </div>
+
+        <div class="question-item" data-qtype="mc" data-correct="C">
+            <div class="question-text">7. The morning train to the national park ________ at 7:15 a.m. sharp everyday.</div>
+            <div class="options-container">
+                <label class="option-label"><input type="radio" name="q7" value="A">(A) leave</label>
+                <label class="option-label"><input type="radio" name="q7" value="B">(B) leaving</label>
+                <label class="option-label"><input type="radio" name="q7" value="C">(C) leaves</label>
+                <label class="option-label"><input type="radio" name="q7" value="D">(D) is leave</label>
+            </div>
+            <div class="explanation-box">💡 觀念解析：火車時刻表、官方固定行程，在英文中習慣用**現在簡單式**來表示。主詞 The morning train 為單數，動詞要加 s，故選 (C) leaves。</div>
+        </div>
+
+        <div class="question-item" data-qtype="mc" data-correct="A">
+            <div class="question-text">8. Scientists are going to ________ the rare plants in the jungle tomorrow afternoon.</div>
+            <div class="options-container">
+                <label class="option-label"><input type="radio" name="q8" value="A">(A) study</label>
+                <label class="option-label"><input type="radio" name="q8" value="B">(B) studying</label>
+                <label class="option-label"><input type="radio" name="q8" value="C">(C) studies</label>
+                <label class="option-label"><input type="radio" name="q8" value="D">(D) studied</label>
+            </div>
+            <div class="explanation-box">💡 觀念解析：`be going to` 結構代表「即將、打算做某事」，後面的 `to` 是不定詞，後面必須接**原形動詞**。故選 (A) study。</div>
+        </div>
+
+        <div class="question-item" data-qtype="mc" data-correct="D">
+            <div class="question-text">9. If the government ________ stricter laws, the wild animals will die out.<span class="badge-challenge">Challenge 進階題</span></div>
+            <div class="options-container">
+                <label class="option-label"><input type="radio" name="q9" value="A">(A) isn't make</label>
+                <label class="option-label"><input type="radio" name="q9" value="B">(B) won't make</label>
+                <label class="option-label"><input type="radio" name="q9" value="C">(C) don't make</label>
+                <label class="option-label"><input type="radio" name="q9" value="D">(D) doesn't make</label>
+            </div>
+            <div class="explanation-box">💡 觀念解析：在 if 引導的條件句中，「現在式代替未來式」。If 子句的主詞 the government 是單數名詞，一般動詞的否定要用 **doesn't + 原形動詞**。</div>
+        </div>
+
+        <div class="question-item" data-qtype="mc" data-correct="A">
+            <div class="question-text">10. What time ________ the guide saying that the panda tour begins?<span class="badge-challenge">Challenge 進階題</span></div>
+            <div class="options-container">
+                <label class="option-label"><input type="radio" name="q10" value="A">(A) is</label>
+                <label class="option-label"><input type="radio" name="q10" value="B">(B) does</label>
+                <label class="option-label"><input type="radio" name="q10" value="C">(C) do</label>
+                <label class="option-label"><input type="radio" name="q10" value="D">(D) will</label>
+            </div>
+            <div class="explanation-box">💡 觀念解析：注意看到關鍵字 **saying** (V-ing)！這是一個現在進行式的疑問句：「導遊『此時此刻正說著』幾點開始呢？」因此要用 Be 動詞 **is** 來與 V-ing 搭配。</div>
+        </div>
+
+
+        <div class="section-title">Part II. Cloze Test (20% - 每題 4 分)</div>
+        <div class="passage-box">Ken: Are you ready? Our class (11)________ to the Natural Museum tomorrow.
+Amy: Of course! I heard the school bus (12)________ at 8:00 a.m., so I won't be late.
+Ken: Great. What are we going to (13)________ there?
+Amy: We are going to look at some fossils of extinct animals.
+Ken: Awesome! By the way, (14)________ the museum ticket expensive?
+Amy: No, it (15)________ cost much. It is only 50 dollars for students.</div>
+
+        <div class="question-item" data-qtype="mc" data-correct="A">
+            <div class="question-text">11.</div>
+            <div class="options-container">
+                <label class="option-label"><input type="radio" name="q11" value="A">(A) is going</label>
+                <label class="option-label"><input type="radio" name="q11" value="B">(B) will going</label>
+                <label class="option-label"><input type="radio" name="q11" value="C">(C) goes to</label>
+                <label class="option-label"><input type="radio" name="q11" value="D">(D) is go</label>
+            </div>
+            <div class="explanation-box">💡 觀念解析：主詞是 Our class (單數)，後面接 `is going to + 地點` 或 `is going to + 動詞` 表未來。選 (B) 是錯誤語法，will 後面不能直接接 going。</div>
+        </div>
+
+        <div class="question-item" data-qtype="mc" data-correct="B">
+            <div class="question-text">12.</div>
+            <div class="options-container">
+                <label class="option-label"><input type="radio" name="q12" value="A">(A) leave</label>
+                <label class="option-label"><input type="radio" name="q12" value="B">(B) leaves</label>
+                <label class="option-label"><input type="radio" name="q12" value="C">(C) is leave</label>
+                <label class="option-label"><input type="radio" name="q12" value="D">(D) leaving</label>
+            </div>
+            <div class="explanation-box">💡 觀念解析：交通工具時刻表用現在簡單式。主詞 the school bus 是單數，動詞要加 s 變成 **leaves**。</div>
+        </div>
+
+        <div class="question-item" data-qtype="mc" data-correct="C">
+            <div class="question-text">13.</div>
+            <div class="options-container">
+                <label class="option-label"><input type="radio" name="q13" value="A">(A) learning</label>
+                <label class="option-label"><input type="radio" name="q13" value="B">(B) learned</label>
+                <label class="option-label"><input type="radio" name="q13" value="C">(C) learn</label>
+                <label class="option-label"><input type="radio" name="q13" value="D">(D) to learn</label>
+            </div>
+            <div class="explanation-box">💡 觀念解析：前面已經有 `What are we going to`，其中的 to 之後一定要加**原形動詞** **learn**。</div>
+        </div>
+
+        <div class="question-item" data-qtype="mc" data-correct="A">
+            <div class="question-text">14.</div>
+            <div class="options-container">
+                <label class="option-label"><input type="radio" name="q14" value="A">(A) is</label>
+                <label class="option-label"><input type="radio" name="q14" value="B">(B) does</label>
+                <label class="option-label"><input type="radio" name="q14" value="C">(C) are</label>
+                <label class="option-label"><input type="radio" name="q14" value="D">(D) do</label>
+            </div>
+            <div class="explanation-box">💡 觀念解析：句尾的 **expensive** 是「形容詞」，形容詞前面需要用 Be 動詞做搭配，主詞為單數 ticket，故選 **is**。</div>
+        </div>
+
+        <div class="question-item" data-qtype="mc" data-correct="D">
+            <div class="question-text">15.</div>
+            <div class="options-container">
+                <label class="option-label"><input type="radio" name="q15" value="A">(A) isn't</label>
+                <label class="option-label"><input type="radio" name="q15" value="B">(B) hasn't</label>
+                <label class="option-label"><input type="radio" name="q15" value="C">(C) don't</label>
+                <label class="option-label"><input type="radio" name="q15" value="D">(D) doesn't</label>
+            </div>
+            <div class="explanation-box">💡 觀念解析：後面出現了普通動詞 **cost**，主詞是單數 It，普通動詞的現在式否定句一定要用助動詞 **doesn't**。</div>
+        </div>
+
+
+        <div class="section-title">Part III. Reading Comprehension (20% - 每題 5 分)</div>
+        <div class="passage-box">Mindy and Kevin are planning their summer vacation schedules.
+
+Mindy: Next month is July. My parents will take me to a famous panda conservation center in Sichuan. The center opens at 8:30 a.m. everyday, and we want to enter early to see the pandas eat bamboo.
+Kevin: Wow! That sounds wonderful. Does it cost a lot of money to go there?
+Mindy: No, the tickets are quite cheap. But we are going to donate some money to help the workers buy food for the baby pandas. What about you, Kevin?
+Kevin: Well, I don't have any travel plans. I think I will go swimming with my brother every morning. And our English summer camp starts on August 1st.
+Mindy: That's great! Don't forget to write postcards to me!</div>
+
+        <div class="question-item" data-qtype="mc" data-correct="B">
+            <div class="question-text">16. What time does the panda conservation center open?</div>
+            <div class="options-container">
+                <label class="option-label"><input type="radio" name="q16" value="A">(A) It opens at 8:00 a.m.</label>
+                <label class="option-label"><input type="radio" name="q16" value="B">(B) It opens at 8:30 a.m.</label>
+                <label class="option-label"><input type="radio" name="q16" value="C">(C) It opens at 9:00 p.m.</label>
+                <label class="option-label"><input type="radio" name="q16" value="D">(D) It closes at 8:30 a.m.</label>
+            </div>
+            <div class="explanation-box">💡 觀念解析：根據文章 Mindy 提到 "The center opens at 8:30 a.m. everyday"，故選 (B)。</div>
+        </div>
+
+        <div class="question-item" data-qtype="mc" data-correct="A">
+            <div class="question-text">17. Why is Mindy's family going to donate money?</div>
+            <div class="options-container">
+                <label class="option-label"><input type="radio" name="q17" value="A">(A) To help buy food for the baby pandas.</label>
+                <label class="option-label"><input type="radio" name="q17" value="B">(B) Because the museum tickets are very expensive.</label>
+                <label class="option-label"><input type="radio" name="q17" value="C">(C) To buy toys for the monkeys.</label>
+                <label class="option-label"><input type="radio" name="q17" value="D">(D) To travel around the world next year.</label>
+            </div>
+            <div class="explanation-box">💡 觀念解析：文章中寫到 "...donate some money to help the workers buy food for the baby pandas"，故選 (A)。</div>
+        </div>
+
+        <div class="question-item" data-qtype="mc" data-correct="D">
+            <div class="question-text">18. What will Kevin do every morning in July?</div>
+            <div class="options-container">
+                <label class="option-label"><input type="radio" name="q18" value="A">(A) He will go to camping with his parents.</label>
+                <label class="option-label"><input type="radio" name="q18" value="B">(B) He will visit the panda center with Mindy.</label>
+                <label class="option-label"><input type="radio" name="q18" value="C">(C) He will study math at home.</label>
+                <label class="option-label"><input type="radio" name="q18" value="D">(D) He will go swimming with his brother.</label>
+            </div>
+            <div class="explanation-box">💡 觀念解析：Kevin 說 "I think I will go swimming with my brother every morning." 故答案為 (D)。注意 A 選項寫了錯誤語法 go to camping。</div>
+        </div>
+
+        <div class="question-item" data-qtype="mc" data-correct="C">
+            <div class="question-text">19. Which statement is TRUE according to the dialog?<span class="badge-challenge">Challenge 進階題</span></div>
+            <div class="options-container">
+                <label class="option-label"><input type="radio" name="q19" value="A">(A) The tickets for the panda center are expensive.</label>
+                <label class="option-label"><input type="radio" name="q19" value="B">(B) Kevin's summer camp starts in July.</label>
+                <label class="option-label"><input type="radio" name="q19" value="C">(C) Mindy wants to see the pandas eat bamboo early in the morning.</label>
+                <label class="option-label"><input type="radio" name="q19" value="D">(D) Kevin is going to travel to Sichuan with his brother.</label>
+            </div>
+            <div class="explanation-box">💡 觀念解析：(A)文中說 tickets are quite cheap；(B)夏令營是在 August 1st；(D)Kevin沒有旅遊計畫。只有 (C) 符合文意 "enter early to see the pandas eat bamboo"。</div>
+        </div>
+
+
+        <div class="section-title">Part IV. Change Sentences to Future Tense (12% - 每題 4 分)</div>
+        <p style="color:var(--text-secondary); font-size:0.9rem; margin-bottom:15px;">範例：She <strong>is</strong> ten years old. (next year) → She <strong>will be</strong> ten years old next year.</p>
+
+        <div class="question-item" data-qtype="sa" data-qnum="20">
+            <div class="question-text">20. Mr. Lin is a famous scientist. (in the future)</div>
+            <input type="text" class="text-input-field" id="sa-20" placeholder="請在此輸入完整句子...">
+            <span class="hint-text">提示：注意 is 變成未來式助動詞後的變化型態。</span>
+            <div class="explanation-box">💡 觀念解析：未來式可以使用 `will + 原形動詞`。**is** 的原形動詞是 **be**！<br>正確答案：<br>1. <strong>Mr. Lin will be a famous scientist in the future.</strong><br>2. <strong>Mr. Lin is going to be a famous scientist in the future.</strong></div>
+        </div>
+
+        <div class="question-item" data-qtype="sa" data-qnum="21">
+            <div class="question-text">21. My sisters go swimming every summer. (next summer)</div>
+            <input type="text" class="text-input-field" id="sa-21" placeholder="請在此輸入完整句子...">
+            <span class="hint-text">提示：注意去游泳的固定片語寫法，不要加上多餘的介系詞。</span>
+            <div class="explanation-box">💡 觀念解析：未來式 `will + 原形動詞`。原本的動詞 go 已經是原形，後面直接連用 swimming。絕不可寫成意圖錯誤的 "go to swimming"！<br>正確答案：<br>1. <strong>My sisters will go swimming next summer.</strong><br>2. <strong>My sisters are going to go swimming next summer.</strong></div>
+        </div>
+
+        <div class="question-item" data-qtype="sa" data-qnum="22">
+            <div class="question-text">22. The plane lands at 3:00 p.m. every day. (tomorrow afternoon)</div>
+            <input type="text" class="text-input-field" id="sa-22" placeholder="請在此輸入完整句子...">
+            <span class="hint-text">提示：改為未來式時，原本單數動詞字尾的 -s 必須去掉還原。</span>
+            <div class="explanation-box">💡 觀念解析：原本的 lands 是因為單數主詞加了 s。改為 will 後，必須還原成原形動詞 **land**。<br>正確答案：<br>1. <strong>The plane will land at 3:00 p.m. tomorrow afternoon.</strong><br>2. <strong>The plane is going to land at 3:00 p.m. tomorrow afternoon.</strong></div>
+        </div>
+
+
+        <div class="section-title">Part V. Write the Questions (8% - 每題 4 分)</div>
+        <p style="color:var(--accent-danger); font-weight:bold; font-size:0.95rem; margin-bottom:15px;">⚠️ 核心魔王關卡：請仔細分辨何時該用 "is"，何時該用 "does"！</p>
+
+        <div class="question-item" data-qtype="sa" data-qnum="23">
+            <div class="question-text">23. 答：The zoo opens at 8:30 a.m.<br>問：____________________________________________________ (請造出 What time 引導的問句)</div>
+            <input type="text" class="text-input-field" id="sa-23" placeholder="What time...">
+            <span class="hint-text">檢查重點：原句有普通動詞 opens，做成問句要借用哪一個助動詞？後面的動詞有還原嗎？</span>
+            <div class="explanation-box">💡 觀念解析：答案句有一般動作動詞 **opens**，主詞 the zoo 是單數。因此詢問時間的問句必須使用助動詞 **does**，並且將動詞還原成 **open**。<br>正確答案：<strong>What time does the zoo open?</strong></div>
+        </div>
+
+        <div class="question-item" data-qtype="sa" data-qnum="24">
+            <div class="question-text">24. 答：The next safari tour is at 10:00 a.m.<br>問：____________________________________________________ (請造出 What time 引導的問句)</div>
+            <input type="text" class="text-input-field" id="sa-24" placeholder="What time...">
+            <span class="hint-text">檢查重點：原句使用的是 "is"（狀態/時間點），並沒有其他普通動作動詞。問句該用什麼？</span>
+            <div class="explanation-box">💡 觀念解析：答案句中使用的是 Be 動詞 **is**（後面直接接時間 at 10:00 a.m.），裡面**沒有**任何普通的動作動詞。因此造問句時，直接把 Be 動詞提到前面即可！<br>正確答案：<strong>What time is the next safari tour?</strong></div>
+        </div>
+
+        <div class="action-btn-container">
+            <button type="submit" class="btn btn-submit">提交測驗送出分數</button>
+        </div>
+
+    </form>
+
+    <p style="text-align:center; margin-top:30px;">
+        <a href="english.html" style="text-decoration:none; font-weight:bold; color:var(--accent-primary);">⬅ 回到英文測驗目錄</a>
+    </p>
+</div>
+
+<script>
+    const saAnswers = {
+        20: [
+            "mr lin will be a famous scientist in the future",
+            "mr lin is going to be a famous scientist in the future"
+        ],
+        21: [
+            "my sisters will go swimming next summer",
+            "my sisters are going to go swimming next summer"
+        ],
+        22: [
+            "the plane will land at 300 pm tomorrow afternoon",
+            "the plane will land at 3 pm tomorrow afternoon",
+            "the plane will land at 300pm tomorrow afternoon",
+            "the plane will land at 3pm tomorrow afternoon",
+            "the plane is going to land at 300 pm tomorrow afternoon",
+            "the plane is going to land at 3 pm tomorrow afternoon"
+        ],
+        23: [
+            "what time does the zoo open"
+        ],
+        24: [
+            "what time is the next safari tour"
+        ]
+    };
+
+    function simplifyString(str) {
+        return str.toLowerCase()
+                  .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()@]/g, " ")
+                  .replace(/\s+/g, " ")
+                  .trim();
+    }
+
+    function submitQuiz() {
+        let score = 0;
+
+        // Part 1: Q1~Q10 (4pt each)
+        for(let i=1; i<=10; i++) {
+            let q = document.getElementsByName(`q${i}`);
+            let item = q[0]?.closest('.question-item');
+            if(item && q) {
+                let ans = item.getAttribute('data-correct');
+                const labels = item.querySelectorAll('.option-label');
+                labels.forEach(label => {
+                    const radio = label.querySelector('input');
+                    if (radio.value === ans) label.classList.add('correct-ans');
+                });
+                let checked = item.querySelector('input:checked');
+                if(checked && checked.value === ans) {
+                    score += 4;
+                } else if (checked) {
+                    checked.parentElement.classList.add('incorrect-ans');
+                }
+            }
+        }
+        // Part 2: Q11~Q15 (4pt each)
+        for(let i=11; i<=15; i++) {
+            let q = document.getElementsByName(`q${i}`);
+            let item = q[0]?.closest('.question-item');
+            if(item && q) {
+                let ans = item.getAttribute('data-correct');
+                const labels = item.querySelectorAll('.option-label');
+                labels.forEach(label => {
+                    const radio = label.querySelector('input');
+                    if (radio.value === ans) label.classList.add('correct-ans');
+                });
+                let checked = item.querySelector('input:checked');
+                if(checked && checked.value === ans) {
+                    score += 4;
+                } else if (checked) {
+                    checked.parentElement.classList.add('incorrect-ans');
+                }
+            }
+        }
+        // Part 3: Q16~Q19 (5pt each)
+        for(let i=16; i<=19; i++) {
+            let q = document.getElementsByName(`q${i}`);
+            let item = q[0]?.closest('.question-item');
+            if(item && q) {
+                let ans = item.getAttribute('data-correct');
+                const labels = item.querySelectorAll('.option-label');
+                labels.forEach(label => {
+                    const radio = label.querySelector('input');
+                    if (radio.value === ans) label.classList.add('correct-ans');
+                });
+                let checked = item.querySelector('input:checked');
+                if(checked && checked.value === ans) {
+                    score += 5;
+                } else if (checked) {
+                    checked.parentElement.classList.add('incorrect-ans');
+                }
+            }
+        }
+        // Part 4 & 5: Q20~Q24 (4pt each)
+        for(let i=20; i<=24; i++) {
+            let input = document.getElementById(`sa-${i}`);
+            if (!input) continue;
+            let simplifiedUser = simplifyString(input.value);
+            const inputField = input;
+            if(saAnswers[i].some(ans => simplifyString(ans) === simplifiedUser)) {
+                score += 4;
+                inputField.classList.add('correct-ans');
+            } else {
+                inputField.classList.add('incorrect-ans');
+            }
+        }
+
+        // Header score
+        document.getElementById('header-score').innerText = score;
+        document.getElementById('header-score').style.color = score >= 90 ? "var(--accent-success)" : "var(--accent-danger)";
+
+        // Show all explanations
+        document.querySelectorAll('.explanation-box').forEach(box => box.style.display = 'block');
+
+        // Score banner
+        const banner = document.getElementById('score-banner');
+        const scoreDisp = document.getElementById('score-display');
+        const evalTitle = document.getElementById('evaluation-title');
+        const evalComment = document.getElementById('evaluation-comment');
+
+        scoreDisp.innerText = score;
+        banner.style.display = 'block';
+
+        if(score === 100) {
+            banner.classList.remove('fail');
+            evalTitle.innerText = "🎉 完美卓越！太棒了！";
+            evalComment.innerText = "你已經完全掌握了未來式助動詞與時間表問句！特別是 Is 與 Does 的分辨非常完美。繼續保持！";
+        } else if (score >= 85) {
+            banner.classList.remove('fail');
+            evalTitle.innerText = "👍 表現優異！明顯大幅進步！";
+            evalComment.innerText = "這次拿到了比上次更棒的分數！細微的拼字與語法盲點已成功修復，請看下方觀念補強。";
+        } else if (score >= 60) {
+            banner.classList.remove('fail');
+            evalTitle.innerText = "📈 持續加油！概念逐漸清晰！";
+            evalComment.innerText = "看到你在 Is 與 Does 的問句轉換上有抓到訣竅了！請仔細閱讀下方錯題的綠色解析，再接再厲！";
+        } else {
+            banner.classList.add('fail');
+            evalTitle.innerText = "🛡️ 需要加強！讓我們重新複習基礎！";
+            evalComment.innerText = "別灰心！把下方所有「💡 觀念解析」熟讀一次。記住：有普通動詞派 Does，沒動詞表狀態派 Is！";
+        }
+
+        saveLog(score);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function saveLog(score) {
+        let logs = JSON.parse(localStorage.getItem('grammar_u7_quiz_logs')) || [];
+        const timestamp = new Date().toLocaleString('zh-TW', { hour12: false });
+        let comment = score === 100 ? "完美滿分" : score >= 85 ? "高度掌握" : score >= 60 ? "及格邊緣，仍有盲點" : "需重讀核心規則";
+        logs.push({ timestamp, score, comment });
+        localStorage.setItem('grammar_u7_quiz_logs', JSON.stringify(logs));
+        loadLogs();
+    }
+
+    function loadLogs() {
+        let logs = JSON.parse(localStorage.getItem('grammar_u7_quiz_logs')) || [];
+        const container = document.getElementById('log-container');
+        if (logs.length === 0) {
+            container.innerHTML = "<em class=\"empty-log\">暫無歷史作答紀錄。完成測驗並送出後，此處將自動同步更新歷程。</em>";
+            return;
+        }
+        let html = `<table class="log-table"><thead><tr><th>作答時間點</th><th>測驗最終得分</th><th>智能診斷評語</th></tr></thead><tbody>`;
+        for(let i = logs.length - 1; i >= 0; i--) {
+            html += `<tr><td>${logs[i].timestamp}</td><td style="font-weight:bold; color:${logs[i].score >= 85 ? 'var(--accent-success)' : 'var(--accent-danger)'}">${logs[i].score} 分</td><td>${logs[i].comment}</td></tr>`;
+        }
+        html += `</tbody></table>`;
+        container.innerHTML = html;
+    }
+
+    function clearLogs() {
+        if(confirm("確定要清除所有的學習歷程紀錄嗎？")) {
+            localStorage.removeItem('grammar_u7_quiz_logs');
+            loadLogs();
+        }
+    }
+</script>
+
+</body>
+</html>
