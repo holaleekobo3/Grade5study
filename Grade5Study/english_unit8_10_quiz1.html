@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Unit 8-10 — Grammar & Reading Quiz 1</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --accent-primary: #6366f1;
+            --accent-secondary: #ec4899;
+            --accent-success: #10b981;
+            --accent-danger: #ef4444;
+            --accent-warning: #f59e0b;
+            --bg-primary: #f8fafc;
+            --bg-secondary: rgba(255, 255, 255, 0.8);
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: rgba(226, 232, 240, 0.8);
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: rgba(30, 41, 59, 0.8);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: rgba(51, 65, 85, 0.8);
+            --glass-bg: rgba(30, 41, 59, 0.7);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, "Microsoft JhengHei";
+            background-color: var(--bg-primary);
+            background-image: radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%),
+                              radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%),
+                              radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        [data-theme="light"] body {
+            background-image: radial-gradient(at 0% 0%, hsla(253,100%,95%,1) 0, transparent 50%),
+                              radial-gradient(at 50% 0%, hsla(225,100%,92%,1) 0, transparent 50%),
+                              radial-gradient(at 100% 0%, hsla(339,100%,92%,1) 0, transparent 50%);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 1000;
+        }
+
+        #themeBtn {
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 12px 24px;
+            border-radius: 99px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        #themeBtn:hover {
+            transform: translateY(-2px);
+            background: var(--bg-secondary);
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .exam-title {
+            text-align: center;
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .exam-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .exam-meta {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 25px;
+        }
+
+        .dashboard-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-title {
+            margin-top: 0;
+            color: var(--accent-primary);
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .log-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 0.85rem;
+        }
+
+        .log-table th, .log-table td {
+            border: 1px solid var(--border-color);
+            padding: 8px;
+            text-align: center;
+            color: var(--text-primary);
+        }
+
+        .log-table th {
+            background-color: var(--bg-primary);
+        }
+
+        .section-title {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            margin-top: 30px;
+            margin-bottom: 18px;
+        }
+
+        .passage-box {
+            background-color: var(--bg-primary);
+            border-left: 4px solid var(--accent-primary);
+            padding: 15px 20px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+            white-space: pre-line;
+            color: var(--text-primary);
+            line-height: 1.8;
+        }
+
+        .passage-title {
+            font-weight: bold;
+            color: var(--accent-primary);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .question-item {
+            margin-bottom: 22px;
+            padding-bottom: 18px;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .question-text {
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        @media (min-width: 600px) {
+            .options-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .option-label:hover {
+            background-color: var(--bg-primary);
+            border-color: var(--accent-primary);
+        }
+
+        .option-label input {
+            margin-right: 12px;
+            transform: scale(1.1);
+            accent-color: var(--accent-primary);
+        }
+
+        .action-btn-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 35px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-clear {
+            background: var(--text-secondary);
+            color: white;
+            font-size: 0.9rem;
+            padding: 8px 15px;
+        }
+
+        .btn-clear:hover {
+            opacity: 0.8;
+        }
+
+        .result-section {
+            display: none;
+            margin-top: 40px;
+            padding: 25px;
+            border-radius: 12px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--accent-primary);
+        }
+
+        .score-banner {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .score-num {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .score-feedback {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        .review-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 16px;
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .status-correct {
+            background-color: var(--accent-success);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .status-incorrect {
+            background-color: var(--accent-danger);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 700;
+        }
+
+        .explanation-box {
+            background-color: rgba(16, 185, 129, 0.1);
+            border-left: 4px solid var(--accent-success);
+            padding: 10px 15px;
+            margin-top: 10px;
+            font-size: 0.95rem;
+            color: #166534;
+            border-radius: 0 6px 6px 0;
+        }
+
+        [data-theme="dark"] .explanation-box {
+            color: #86efac;
+        }
+
+        .correct-highlight {
+            color: var(--accent-success);
+            font-weight: 700;
+        }
+
+        .incorrect-highlight {
+            color: var(--accent-danger);
+            font-weight: 700;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            color: var(--accent-primary);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 20px 10px; }
+            .container { padding: 20px; }
+            .options-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="theme-toggle">
+    <button id="themeBtn" onclick="toggleTheme()"><span>🌙</span> 暗色模式</button>
+</div>
+
+<div class="container">
+    <h1 class="exam-title">English Unit 8-10 Quiz 1</h1>
+    <div class="exam-subtitle">Grammar & Reading Comprehension — Modal Verbs, Adverbs, Would you like / Could you, Indefinite Pronouns</div>
+    <div class="exam-meta">級別：國小五年級 (108課綱核心指標 × TOEFL Primary Step 2 標準對齊) | 滿分 100 分，每題等值分配</div>
+
+    <div class="dashboard-box">
+        <h3 class="dashboard-title">📊 學習歷程紀錄 Dashboard</h3>
+        <div id="log-container"><em style="color: var(--text-secondary);">尚無歷史作答紀錄。</em></div>
+        <div style="text-align: right; margin-top: 10px;">
+            <button class="btn btn-clear" onclick="clearLogs()">清除歷史紀錄</button>
+        </div>
+    </div>
+
+    <form id="quiz-form" onsubmit="event.preventDefault(); submitQuiz();">
+        <!-- Part A: Grammar -->
+        <div class="section-title">Part I. Grammar Application (25 Questions — Q1~Q25)</div>
+        <div id="part-a-container"></div>
+
+        <!-- Part B: Reading 1 -->
+        <div class="section-title">Part II. Reading Comprehension 1 (Q26~Q30)</div>
+        <div class="passage-box">
+            <div class="passage-title">A Trip to the Nature Park</div>
+Last summer, Leo visited a famous nature park with his family. Before entering, the guide told them the safety rules. "Everyone has to stay inside the car," the guide said. "You can't open the windows, and you must drive carefully."
+
+Leo looked out the window and saw someone sitting near a tree. It was a park ranger watching the animals patiently. Suddenly, Leo saw something moving in the tall grass. It was a baby zebra! Leo wanted to take a picture. He turned to his sister and asked, "Could you hand me the camera, please?"
+
+Later, they stopped at a safe rest area. The guide offered them some snacks. "Would you like to try some traditional local biscuits?" asked the guide. Leo's father smiled and said, "Yes, I would. Thank you!" They enjoyed their lunch. They wanted to go somewhere quiet to rest after lunch, but there were many tourists anywhere they looked. However, it was an amazing trip.
+        </div>
+        <div id="part-b-container"></div>
+
+        <!-- Part C: Reading 2 -->
+        <div class="section-title">Part III. Reading Comprehension 2 (Q31~Q35)</div>
+        <div class="passage-box">
+            <div class="passage-title">The Cultural Festival</div>
+Anna went to an international cultural festival in her city. The festival was huge, and there was music playing everywhere. She was looking for a special gift for her mother. She saw a booth selling beautiful handmade colorful blankets and bags.
+
+The shopkeeper saw Anna looking and asked, "Would you like a closer look at these cotton scarves?" Anna smiled and replied, "Yes, please." She touched a beautiful blue scarf. It felt soft and warm. She wondered about the price, so she said, "Could you tell me how much this costs, please?" The shopkeeper said it was twenty dollars.
+
+Anna didn't have anyone with her to ask for advice, but she knew her mother loved blue. She thought, "I should buy this for Mom's birthday." While she was paying, she noticed someone left a small notebook on the counter. She picked it up and asked the shopkeeper, "Did anyone lose this?" The shopkeeper thanked Anna for being honest and carefully put it away. Anna left the market happily with her perfect gift.
+        </div>
+        <div id="part-c-container"></div>
+
+        <div class="action-btn-container">
+            <button type="submit" class="btn btn-submit">提交測驗並計算分數</button>
+        </div>
+    </form>
+
+    <!-- Result Section -->
+    <div class="result-section" id="result-section">
+        <div class="score-banner">
+            <h2 style="color: var(--text-primary);">測驗結果分析</h2>
+            <div class="score-num" id="score-display">0 / 100</div>
+            <p class="score-feedback" id="feedback-text"></p>
+        </div>
+
+        <div class="section-title" style="margin-top: 20px;">🔍 詳細作答檢討與文法核心解析</div>
+        <div id="review-container"></div>
+        <a href="english.html" class="back-link">⬅ 回到英文測驗目錄</a>
+    </div>
+
+    <a href="english.html" class="back-link" id="back-link-top">⬅ 回到英文測驗目錄</a>
+</div>
+
+<script>
+    const STORAGE_KEY = 'eng_unit8_10_quiz1_logs';
+
+    const quizData = [
+        // Q1-25 Grammar
+        { id: 1,  q: "My younger brother ______ brush his teeth before going to bed every night. It is an important rule in our house.", o: ["have to", "has to", "should to", "can't to"], c: 1, exp: "主詞為單數第三人稱(My younger brother)，表示必須遵守的客觀規定、義務時使用 has to。注意情態助動詞後面直接接動詞原型，不可加 to。" },
+        { id: 2,  q: "Look at that 'No Swimming' sign! You ______ swim in this deep river.", o: ["has to", "don't have to", "can't", "should to"], c: 2, exp: "表示明確的禁止、不被允許的事情時，使用 can't 後接動詞原型。" },
+        { id: 3,  q: "The teacher asked all the students to sit ______ and listen to the story.", o: ["quiet", "quietlyly", "more quiet", "quietly"], c: 3, exp: "此處需要修飾動作動詞 sit，應使用由形容詞 quiet 加 ly 形成之情狀副詞 quietly（安靜地）。" },
+        { id: 4,  q: "These glass cups are very fragile. Please hold them ______ so you don't drop them.", o: ["careful", "carefully", "more careful", "carefullyly"], c: 1, exp: "修飾動作動詞 hold（拿、握），必須使用形容詞字尾加 -ly 的情狀副詞 carefully（小心地）。" },
+        { id: 5,  q: "You have a bad cough and a fever. I think you ______ see a doctor today.", o: ["have to", "shouldn't", "should", "can't"], c: 2, exp: "給予他人主觀、善意的建議（Advice）時，使用 should（應該），語氣較客觀法規義務的 have to 溫和。" },
+        { id: 6,  q: "It is already midnight. You ______ make loud noises in your bedroom.", o: ["don't have to", "shouldn't to", "has to", "shouldn't"], c: 3, exp: "給予不建議或勸阻的強烈建議時，使用 shouldn't（不應該），後接動詞原型。" },
+        { id: 7,  q: "According to the museum rules, visitors ______ touch any ancient paintings.", o: ["should", "can't", "don't have to", "has to"], c: 1, exp: "依據官方嚴格法規表示禁止事項，標準句型使用 can't（不能、禁止）。" },
+        { id: 8,  q: "______ some warm soup or tea? You look very cold after walking in the rain.", o: ["Could you like", "Would you like", "Do you have to", "Should you"], c: 1, exp: "詢問他人意願或有禮貌地提出提議、招待時，使用句型「Would you like + 名詞?」。" },
+        { id: 9,  q: "Would you like ______ the famous national park with us tomorrow morning?", o: ["visit", "visiting", "to visit", "visited"], c: 2, exp: "詢問他人是否想要做某動作時，必須使用「Would you like + to + 動詞原型?」結構。" },
+        { id: 10, q: "A: Would you like to try some of this Swiss cheese?<br>B: ______ It tastes wonderful!", o: ["Yes, I like.", "No, I wouldn't.", "Yes, I do.", "Yes, I would."], c: 3, exp: "針對「Would you like...?」句型的肯定回答，應對應使用「Yes, I would.」。" },
+        { id: 11, q: "A: ______ turn down the television, please? I am studying for my test.<br>B: Oh, sorry. I will do it right now.", o: ["Would you like", "Could you", "Have to you", "Should you to"], c: 1, exp: "有禮貌地請求他人協助做事時，使用「Could you + 動詞原型...?」，字尾常搭配 please 展現禮貌。" },
+        { id: 12, q: "Could you please ______ next to your sister so I can take a photo of both of you?", o: ["to stand", "standing", "stood", "stand"], c: 3, exp: "Could you... 句型中的 Could 是助動詞，後面導出的主要要求動作必須使用動詞原型（stand）。" },
+        { id: 13, q: "The classroom is completely dark and quiet. I don't think ______ is inside.", o: ["someone", "anyone", "anything", "something"], c: 1, exp: "在否定句（don't think...）中，指涉「任何人」時，標準文法使用不定代名詞 anyone。" },
+        { id: 14, q: "I don't know ______ at this new school yet, so I feel a bit lonely today.", o: ["someone", "anything", "something", "anyone"], c: 3, exp: "在含有 don't 的否定句中，表示「任何人」要使用不定代名詞 anyone。" },
+        { id: 15, q: "I am very hungry after class. Is there ______ left to eat in the kitchen?", o: ["something", "anything", "anyone", "someone"], c: 1, exp: "在疑問句中，詢問是否有「任何東西（物）」時，使用不定代名詞 anything。" },
+        { id: 16, q: "The sun is shining beautifully. Let's go ______ nice for a family picnic!", o: ["anywhere", "someone", "somewhere", "something"], c: 2, exp: "在肯定句中，用以表達「某個地方（地點）」時，使用不定代名詞 somewhere。" },
+        { id: 17, q: "It rained heavily all day yesterday, so we didn't go ______.", o: ["somewhere", "anywhere", "anyone", "anything"], c: 1, exp: "在否定句（didn't go）中，用以表達「任何地方」時，必須搭配使用 anywhere。" },
+        { id: 18, q: "Did you travel ______ interesting during your winter vacation, or did you stay home?", o: ["somewhere", "anyone", "anything", "anywhere"], c: 3, exp: "在一般疑問句中，詢問是否去了「任何地方」，使用不定代名詞 anywhere 搭配後置形容詞。" },
+        { id: 19, q: "The polite children are waiting ______ in line to buy tickets for the show.", o: ["patient", "patiently", "patients", "patientlyly"], c: 1, exp: "修飾動詞片語 wait in line（排隊等待），需要使用形容詞 patient 轉化而成的情狀副詞 patiently（耐心地）。" },
+        { id: 20, q: "Lily writes very ______; her homework notebook is always clean and easy to read.", o: ["neat", "neatlyly", "neatly", "more neat"], c: 2, exp: "修飾動詞 writes，表示書寫得整潔、工整，要使用情狀副詞 neatly。" },
+        { id: 21, q: "A: Would you like to buy this beautiful colorful blanket?<br>B: ______. I forgot to bring my wallet with me.", o: ["Yes, I would.", "No, I don't.", "No, I wouldn't.", "Yes, I like."], c: 2, exp: "由後句可知沒帶錢包無法購買，對應 Would you like 句型的否定拒絕回答為「No, I wouldn't.」。" },
+        { id: 22, q: "You ______ brush your teeth after eating sticky candy, or you might get cavities. It's a helpful idea.", o: ["has to", "can't", "have to to", "should"], c: 3, exp: "後半句提到「這是一個有幫助的點子/建議(idea)」，可知屬於建議而非強制法規，故選 should（應該）。" },
+        { id: 23, q: "I want to make a surprise card. Is there ______ in the classroom who has colored paper?", o: ["someone", "anyone", "anything", "something"], c: 1, exp: "在一般疑問句中，用來詢問是否有「任何人」時，使用不定代名詞 anyone。" },
+        { id: 24, q: "We have to walk and speak ______ because the baby is sleeping soundly in the next room.", o: ["quiet", "quietly", "quietlyly", "more quiet"], c: 1, exp: "修飾動作動詞 walk and speak，表示進行這些動作的方式要輕聲安靜，故採用情狀副詞 quietly。" },
+        { id: 25, q: "A: Could you help me look for my lost pen?<br>B: Sure! Let's check under the desk. I think it must be ______ in this room.", o: ["anywhere", "something", "somewhere", "someone"], c: 2, exp: "在肯定句（I think it must be...）中，表示在「某個地方」，應選用代名詞 somewhere。" },
+        // Q26-30 Reading 1
+        { id: 26, q: "Why did the park guide talk about the rules before the family entered the park?", o: ["To teach them how to feed the animals correctly.", "To make sure the family stays safe during the safari.", "To show them where to buy expensive souvenirs.", "To explain how to drive fast inside the jungle."], c: 1, exp: "【閱讀推理題】從文章中導遊叮嚀「全體留在車內、不可開窗、小心開車」等安全法規限制，可以推斷其根本目的是為了確保遊客的安全（stay safe）。" },
+        { id: 27, q: "What can we infer about the park ranger from the text?", o: ["He was looking for his lost truck keys in the tall grass.", "He was angry at the tourists for making too much noise.", "He was performing his duties carefully and without rushing.", "He was sleeping comfortably under a big green tree."], c: 2, exp: "【閱讀推理題】文中提及 Leo 看到護林員坐在樹旁「watching the animals patiently」，可推知他正認真且不慌不忙地執行巡邏與守護工作。" },
+        { id: 28, q: "Why did Leo say, 'Could you hand me the camera, please?' to his sister?", o: ["He wanted his sister to take a beautiful picture of him.", "He did not know how to turn on the camera by himself.", "He wanted to make a polite request to capture an image of the zebra.", "He wanted to hide the camera from the park guide."], c: 2, exp: "【文意推理題】Leo 剛好在草叢中發現了可愛的斑馬寶寶並想要拍照，因此使用禮貌請求句型要求妹妹遞相機給他。" },
+        { id: 29, q: "What does the passage suggest about the rest area after lunch time?", o: ["It was completely empty, lonely, and peaceful.", "It was too dark for Leo to see anything around him.", "It did not provide any traditional snacks or drinks.", "It was very crowded with a large number of people."], c: 3, exp: "【閱讀推理題】他們午餐後想找個安靜的地方休息，但無論往哪看都有大量遊客（tourists anywhere they looked），暗示該休息區當時非常擁擠嘈雜。" },
+        { id: 30, q: "Which of the following best describes Leo's experience based on the text?", o: ["He felt bored and sad because he was forced to stay inside the car.", "He had a wonderful time while successfully following important park rules.", "He unluckily lost his expensive camera during the afternoon tour.", "He did not enjoy the taste of the traditional snacks offered."], c: 1, exp: "【綜合推論題】文章結尾明確指出「However, it was an amazing trip.」，加上他們全程皆遵守導遊交代的規則，可推斷他獲得了遵守規則且愉快美好的體驗。" },
+        // Q31-35 Reading 2
+        { id: 31, q: "Why did Anna say, 'Could you tell me how much this costs, please?'", o: ["She believed that the scarf was too expensive to buy.", "She wanted to know the price of the scarf in a polite way.", "She wanted to ask for a special discount from the shopkeeper.", "She didn't have enough money to pay for her lunch."], c: 1, exp: "【句型應用題】Anna 此時正對價格感到好奇（wondered about the price），因而使用 Could you... please 句型，十分有禮貌地向店主詢問價格。" },
+        { id: 32, q: "Why did Anna choose the blue cotton scarf instead of other colors?", o: ["The shopkeeper told her it was the cheapest item in the market.", "She wanted to match the scarf with her own blue winter jacket.", "She knew that blue was her mother's favorite color.", "It was the only product left at the cultural booth."], c: 2, exp: "【文意推理題】Anna 雖無旁人給意見，但她深知「she knew her mother loved blue」，故以此作為貼心的選擇理由。" },
+        { id: 33, q: "What can we infer about Anna when she discovered the lost notebook?", o: ["She wanted to keep the beautiful notebook for her own school use.", "She felt angry at the person who dropped it on the counter.", "She likes to collect old notebooks from different cultural festivals.", "She is an honest person who cares about other people's belongings."], c: 3, exp: "【品格推理題】Anna 看到別人遺落的筆記本，立刻拾起並主動詢問店家「有人遺失這個嗎？」，店主感謝她的「honest」，充分推斷她是一個誠實且在乎他人財物的人。" },
+        { id: 34, q: "What was the main purpose of the shopkeeper's question, 'Would you like a closer look at these cotton scarves?'", o: ["To warn Anna that she should not touch any delicate items.", "To complain to Anna about how crowded the festival market was.", "To politely invite a customer to examine the products closely.", "To ask Anna to leave the cultural booth as quickly as possible."], c: 2, exp: "【對話功能題】店主看到 Anna 正在注視商品，便主動使用「Would you like...」意願與提議句型，極具禮貌地邀請潛在顧客近距離欣賞與挑選商品。" },
+        { id: 35, q: "What is the main theme of Anna's story?", o: ["Learning how to weave colorful blankets and scarves by hand.", "Getting lost in a large and crowded international music festival.", "Saving a lot of money by buying cheap gifts for family members.", "Having a polite, honest, and meaningful shopping experience."], c: 3, exp: "【主旨推論題】整個故事圍繞著 Anna 在文化節上透過有禮貌的雙向互動、貼心為家人挑選禮物、以及拾金不昧的誠實舉動，最終獲得快樂且充滿意義的購物經驗。" }
+    ];
+
+    const labels = ['A', 'B', 'C', 'D'];
+
+    function renderQuestion(q, displayNum) {
+        let optionsHtml = '';
+        q.o.forEach((opt, idx) => {
+            optionsHtml += `<label class="option-label"><input type="radio" name="q${q.id}" value="${idx}"> <strong>${labels[idx]}.</strong> ${opt}</label>`;
+        });
+        return `
+            <div class="question-item" id="q-card-${q.id}">
+                <div class="question-text">${displayNum}. ${q.q}</div>
+                <div class="options-container">${optionsHtml}</div>
+            </div>
+        `;
+    }
+
+    function initQuiz() {
+        // Part A: Q1-25
+        let htmlA = '';
+        for (let i = 0; i < 25; i++) htmlA += renderQuestion(quizData[i], i + 1);
+        document.getElementById('part-a-container').innerHTML = htmlA;
+
+        // Part B: Q26-30
+        let htmlB = '';
+        for (let i = 25; i < 30; i++) htmlB += renderQuestion(quizData[i], i + 1);
+        document.getElementById('part-b-container').innerHTML = htmlB;
+
+        // Part C: Q31-35
+        let htmlC = '';
+        for (let i = 30; i < 35; i++) htmlC += renderQuestion(quizData[i], i + 1);
+        document.getElementById('part-c-container').innerHTML = htmlC;
+
+        loadLogs();
+    }
+
+    function submitQuiz() {
+        let score = 0;
+        let reviewHtml = '';
+
+        quizData.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="q${q.id}"]:checked`);
+            const isCorrect = selected && parseInt(selected.value) === q.c;
+
+            if (isCorrect) score++;
+            else if (selected) score += 0; // count only correct
+
+            // Build options status text
+            let optionsText = '';
+            q.o.forEach((opt, idx) => {
+                let cls = '';
+                if (idx === q.c) cls = 'correct-highlight';
+                else if (selected && parseInt(selected.value) === idx) cls = 'incorrect-highlight';
+                optionsText += `<li class="${cls}" style="margin-bottom:4px;"><strong>${labels[idx]}.</strong> ${opt}</li>`;
+            });
+
+            reviewHtml += `
+                <div class="review-card">
+                    <div class="review-header">
+                        <span class="${isCorrect ? 'status-correct' : 'status-incorrect'}">${isCorrect ? '✓ 正確' : '✗ 錯誤'}</span>
+                        <span>Q${index + 1}: ${q.q}</span>
+                    </div>
+                    <ul style="padding-left: 20px; margin: 10px 0; font-size: 0.95rem;">${optionsText}</ul>
+                    <div class="explanation-box"><strong>💡 文法核心解析：</strong>${q.exp}</div>
+                </div>
+            `;
+        });
+
+        const pct = Math.round((score / quizData.length) * 100);
+        document.getElementById('score-display').innerText = `${pct} / 100`;
+        document.getElementById('feedback-text').innerText =
+            pct === 100 ? '🌟 太完美了！您完全掌握了單元 8-10 的所有核心語法結構！' :
+            pct >= 85 ? '👍 表現優異！具備極佳的文法概念與素養閱讀推論能力。' :
+            pct >= 70 ? '😊 良好表現！部分細節觀念需要透過下方的解析重新釐清。' :
+            '📚 仍有進步空間。建議仔細閱讀下方的文法解析，重新複習弱點概念。';
+
+        document.getElementById('review-container').innerHTML = reviewHtml;
+        const resultSection = document.getElementById('result-section');
+        resultSection.style.display = 'block';
+        resultSection.scrollIntoView({ behavior: 'smooth' });
+
+        saveLog(pct);
+    }
+
+    function saveLog(score) {
+        let logs = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        const ts = new Date().toLocaleString('zh-TW', { hour12: false });
+        logs.push({ timestamp: ts, score });
+        // keep last 10
+        if (logs.length > 10) logs = logs.slice(-10);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(logs));
+        loadLogs();
+    }
+
+    function loadLogs() {
+        let logs = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        const container = document.getElementById('log-container');
+        if (logs.length === 0) {
+            container.innerHTML = '<em style="color: var(--text-secondary);">尚無歷史作答紀錄。</em>';
+            return;
+        }
+        let html = `<table class="log-table"><thead><tr><th>作答時間</th><th>得分</th><th>評語</th></tr></thead><tbody>`;
+        logs.slice().reverse().forEach((log, idx) => {
+            const rating = log.score >= 90 ? '👑 頂尖' : log.score >= 80 ? '✨ 優良' : log.score >= 60 ? '📈 通過' : '⚠️ 需加強';
+            html += `<tr><td>${log.timestamp}</td><td style="font-weight:bold; color:${log.score >= 70 ? 'var(--accent-success)' : 'var(--accent-danger)'}">${log.score} 分</td><td>${rating}</td></tr>`;
+        });
+        html += '</tbody></table>';
+        container.innerHTML = html;
+    }
+
+    function clearLogs() {
+        if (confirm('確定要清除所有的學習歷程紀錄嗎？')) {
+            localStorage.removeItem(STORAGE_KEY);
+            loadLogs();
+        }
+    }
+
+    function toggleTheme() {
+        const html = document.documentElement;
+        const btn = document.getElementById('themeBtn');
+        const currentTheme = html.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', newTheme);
+        btn.innerHTML = newTheme === 'dark' ? '<span>☀️</span> 亮色模式' : '<span>🌙</span> 暗色模式';
+        localStorage.setItem('theme', newTheme);
+    }
+
+    window.addEventListener('DOMContentLoaded', function() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        const btn = document.getElementById('themeBtn');
+        if (savedTheme === 'dark') btn.innerHTML = '<span>☀️</span> 亮色模式';
+        initQuiz();
+    });
+</script>
+
+</body>
+</html>
