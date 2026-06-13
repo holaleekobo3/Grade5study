@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>五下社會：日治時期的影響 (數位練習卷)</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --bg-color: #f9f9f9;
+            --correct-color: #0000ff;
+            --incorrect-color: #ff0000;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, 'Microsoft JhengHei';
+            background-color: var(--bg-color);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1, h2, h3 {
+            color: var(--primary-color);
+        }
+        h1 {
+            text-align: center;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+        }
+        #history-panel {
+            background: #fff;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+            border-left: 5px solid var(--accent-color);
+        }
+        #history-panel h3 { margin-top: 0; }
+        #history-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        #history-list li {
+            padding: 5px 0;
+            border-bottom: 1px dashed #ccc;
+            font-size: 0.95em;
+        }
+        .section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+        .question {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .question-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .options label {
+            display: block;
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+        .options input {
+            margin-right: 8px;
+        }
+        .btn-submit {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2em;
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn-submit:hover { background-color: #2980b9; }
+        #result-panel {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background: #e8f8f5;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        .explanation {
+            display: none;
+            margin-top: 10px;
+            padding: 15px;
+            background-color: #fdf2e9;
+            border-left: 4px solid #e67e22;
+            font-size: 0.9em;
+            color: #555;
+            border-radius: 4px;
+        }
+        .reading-text {
+            background-color: #f2f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>五下社會：日治時期的影響 (數位練習卷)</h1>
+
+    <div id="history-panel">
+        <h3>📊 歷史練習成績單 (最近 5 次)</h3>
+        <ul id="history-list"></ul>
+    </div>
+
+    <form id="quiz-form">
+        <div class="section">
+            <h2>一、是非題 (每題 4 分，共 28 分)</h2>
+            <p>請判斷下列敘述是否正確。</p>
+
+            <div class="question" id="q1">
+                <div class="question-title">1. 日治時期，總督府引進西方的星期制，規定一個星期有七天，並將星期日訂為休假日。</div>
+                <div class="options">
+                    <label><input type="radio" name="q1" value="O"> (O) 是</label>
+                    <label><input type="radio" name="q1" value="X"> (X) 否</label>
+                </div>
+            </div>
+
+            <div class="question" id="q2">
+                <div class="question-title">2. 蔡阿信是臺灣第一位醫學博士，他在蛇毒、鴉片及中藥的研究上有傑出的貢獻。</div>
+                <div class="options">
+                    <label><input type="radio" name="q2" value="O"> (O) 是</label>
+                    <label><input type="radio" name="q2" value="X"> (X) 否</label>
+                </div>
+            </div>
+
+            <div class="question" id="q3">
+                <div class="question-title">3. 清帝國時期，臺灣常見的初等教育場所為公學校與小學校，學習教材包含三字經和千字文。</div>
+                <div class="options">
+                    <label><input type="radio" name="q3" value="O"> (O) 是</label>
+                    <label><input type="radio" name="q3" value="X"> (X) 否</label>
+                </div>
+            </div>
+
+            <div class="question" id="q4">
+                <div class="question-title">4. 臺灣現代化教育制度的推廣是從日治時期開始，並逐漸將女性納入接受教育的對象，提升了女性就學率。</div>
+                <div class="options">
+                    <label><input type="radio" name="q4" value="O"> (O) 是</label>
+                    <label><input type="radio" name="q4" value="X"> (X) 否</label>
+                </div>
+            </div>
+
+            <div class="question" id="q5">
+                <div class="question-title">5. 公會堂在日治時期不僅是地方會議與政令宣導的場所，也是藝文展演的空間，讓臺灣人有機會接觸西方與日本文化。</div>
+                <div class="options">
+                    <label><input type="radio" name="q5" value="O"> (O) 是</label>
+                    <label><input type="radio" name="q5" value="X"> (X) 否</label>
+                </div>
+            </div>
+
+            <div class="question" id="q6">
+                <div class="question-title">6. 陳澄波是日治時期著名的雕塑家，他的作品《水牛群像》目前展示於臺北中山堂。</div>
+                <div class="options">
+                    <label><input type="radio" name="q6" value="O"> (O) 是</label>
+                    <label><input type="radio" name="q6" value="X"> (X) 否</label>
+                </div>
+            </div>
+
+            <div class="question" id="q7">
+                <div class="question-title">7. 日治時期為了培養專業人才設立了新式學校，其中在林獻堂等人爭取下成立的「臺中中學校」，是第一所專為臺灣人子弟設立的中學。</div>
+                <div class="options">
+                    <label><input type="radio" name="q7" value="O"> (O) 是</label>
+                    <label><input type="radio" name="q7" value="X"> (X) 否</label>
+                </div>
+            </div>
+
+            <div class="explanation exp-section1">
+                <strong>【素養解析 - 是非題】：</strong><br>
+                Q2 錯誤，臺灣第一位醫學博士是「杜聰明」，蔡阿信則是臺灣第一位女醫師。<br>
+                Q3 錯誤，清帝國時期的學習場所為「私塾」與「書院」；公學校與小學校是日治時期才設立的。<br>
+                Q6 錯誤，《水牛群像》是雕塑家「黃土水」的作品；陳澄波為畫家，代表作為《嘉義街外(一)》。
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>二、選擇題 (每題 4 分，共 28 分)</h2>
+            <p>請選出一個最適合的答案。</p>
+
+            <div class="question" id="q8">
+                <div class="question-title">8. 關於臺灣早期與日治時期的「時間觀念」，下列敘述何者正確？</div>
+                <div class="options">
+                    <label><input type="radio" name="q8" value="A"> (A) 早期臺灣人普遍以陽曆安排作息</label>
+                    <label><input type="radio" name="q8" value="B"> (B) 總督府在火車站等公共場所設立時鐘，是為了宣導守時的習慣</label>
+                    <label><input type="radio" name="q8" value="C"> (C) 日治時期臺灣人的生活作息完全以農曆為依據</label>
+                    <label><input type="radio" name="q8" value="D"> (D) 日治時期的休假日僅適用於日本學生</label>
+                </div>
+            </div>
+
+            <div class="question" id="q9">
+                <div class="question-title">9. 下列哪一項「不是」日本或西方文化引進臺灣後所帶來的改變？</div>
+                <div class="options">
+                    <label><input type="radio" name="q9" value="A"> (A) 民眾開始穿著西裝與洋裝</label>
+                    <label><input type="radio" name="q9" value="B"> (B) 建築物室內出現榻榻米與拉門的設計</label>
+                    <label><input type="radio" name="q9" value="C"> (C) 臺灣女性全面被禁止就學與外出</label>
+                    <label><input type="radio" name="q9" value="D"> (D) 泡溫泉、看戲劇成為新興的休閒活動</label>
+                </div>
+            </div>
+
+            <div class="question" id="q10">
+                <div class="question-title">10. 日治時期針對不同族群設立了不同的初等教育學校。請問提供給「原住民族兒童」就讀的學校名稱為何？</div>
+                <div class="options">
+                    <label><input type="radio" name="q10" value="A"> (A) 蕃童教育所</label>
+                    <label><input type="radio" name="q10" value="B"> (B) 公學校</label>
+                    <label><input type="radio" name="q10" value="C"> (C) 小學校</label>
+                    <label><input type="radio" name="q10" value="D"> (D) 書院</label>
+                </div>
+            </div>
+
+            <div class="question" id="q11">
+                <div class="question-title">11. 關於臺灣第一位女醫師蔡阿信的貢獻與事蹟，下列哪一項敘述「錯誤」？</div>
+                <div class="options">
+                    <label><input type="radio" name="q11" value="A"> (A) 設立清信醫院，並訂定對貧困者減免收費的原則</label>
+                    <label><input type="radio" name="q11" value="B"> (B) 創設產婆學校，致力於提升接生技術與衛生觀念</label>
+                    <label><input type="radio" name="q11" value="C"> (C) 遠赴日本留學，成為臺灣首位入選日本帝國美術展覽會的女性</label>
+                    <label><input type="radio" name="q11" value="D"> (D) 眼科實習過程中體會到病人的辛苦，強調行醫要有同理心</label>
+                </div>
+            </div>
+
+            <div class="question" id="q12">
+                <div class="question-title">12. 下列關於日治時期「公會堂」的敘述，何者正確？</div>
+                <div class="options">
+                    <label><input type="radio" name="q12" value="A"> (A) 建築外觀完全保留傳統漢人的閩南式風格</label>
+                    <label><input type="radio" name="q12" value="B"> (B) 僅供日本總督府高階官員使用，臺灣人絕對禁止進入</label>
+                    <label><input type="radio" name="q12" value="C"> (C) 建築外觀常有弧形拱門、長窗，凸顯殖民政府的權威</label>
+                    <label><input type="radio" name="q12" value="D"> (D) 現今臺灣所有的公會堂都已被拆除，改建為商業大樓</label>
+                </div>
+            </div>
+
+            <div class="question" id="q13">
+                <div class="question-title">13. 面對日治時期不平等的升學制度，許多臺灣精英依然努力爭取學習機會。出身於阿里山鄒族，畢業於臺南師範學校，致力於原住民文化保存與教育的是哪一位歷史人物？</div>
+                <div class="options">
+                    <label><input type="radio" name="q13" value="A"> (A) 林獻堂</label>
+                    <label><input type="radio" name="q13" value="B"> (B) 杜聰明</label>
+                    <label><input type="radio" name="q13" value="C"> (C) 馬偕</label>
+                    <label><input type="radio" name="q13" value="D"> (D) 高一生</label>
+                </div>
+            </div>
+
+            <div class="question" id="q14">
+                <div class="question-title">14. 俊康在嘉義公園參觀時，看到了日治時期畫家陳澄波的畫作介紹。關於陳澄波的作品特色，下列敘述何者正確？</div>
+                <div class="options">
+                    <label><input type="radio" name="q14" value="A"> (A) 主題多以描繪日本東京的街景為主，極少畫臺灣</label>
+                    <label><input type="radio" name="q14" value="B"> (B) 畫風融合東、西方風格，常表現出濃厚的臺灣鄉土情懷</label>
+                    <label><input type="radio" name="q14" value="C"> (C) 是受到傳教士啟發而開始作畫，完全採用傳統水墨畫技法</label>
+                    <label><input type="radio" name="q14" value="D"> (D) 他的畫作多用來宣導總督府的公共衛生政策</label>
+                </div>
+            </div>
+
+            <div class="explanation exp-section2">
+                <strong>【素養解析 - 選擇題】：</strong><br>
+                Q9 (C) 錯誤，日治時期引進新式教育，將女性納入受教對象，女性就學率是上升的。<br>
+                Q11 (C) 錯誤，入選帝國美術展覽會的是畫家「陳澄波」，蔡阿信是醫學領域的傑出人物。<br>
+                Q13 (D) 高一生（吾雍・雅達烏猶卡那）為鄒族精英，從事教育、音樂並致力於部落發展，是108課綱中重要的多元族群代表人物。
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>三、觀念判斷題 (每題 4 分，共 20 分)</h2>
+            <p>五年甲班正在整理日治時期「初等教育」的特色，請判斷下列敘述是否符合當時的史實（符合請選 O，不符合請選 X）。</p>
+
+            <div class="question" id="q15">
+                <div class="question-title">15. 學習課程內容包含了日語（國語）、算術、博物、圖畫與體操等現代化科目。</div>
+                <div class="options">
+                    <label><input type="radio" name="q15" value="O"> (O) 符合</label>
+                    <label><input type="radio" name="q15" value="X"> (X) 不符合</label>
+                </div>
+            </div>
+
+            <div class="question" id="q16">
+                <div class="question-title">16. 教學所使用的核心教材，與清帝國時期一樣，皆以《三字經》、《千字文》與四書五經為主。</div>
+                <div class="options">
+                    <label><input type="radio" name="q16" value="O"> (O) 符合</label>
+                    <label><input type="radio" name="q16" value="X"> (X) 不符合</label>
+                </div>
+            </div>
+
+            <div class="question" id="q17">
+                <div class="question-title">17. 總督府針對不同身分對象，分別設立了公學校（臺灣人）、小學校（日本人）與蕃童教育所（原住民族）。</div>
+                <div class="options">
+                    <label><input type="radio" name="q17" value="O"> (O) 符合</label>
+                    <label><input type="radio" name="q17" value="X"> (X) 不符合</label>
+                </div>
+            </div>
+
+            <div class="question" id="q18">
+                <div class="question-title">18. 當時的教育制度十分公平，臺灣人與日本人享有完全相同的教育資源、設備與升學名額。</div>
+                <div class="options">
+                    <label><input type="radio" name="q18" value="O"> (O) 符合</label>
+                    <label><input type="radio" name="q18" value="X"> (X) 不符合</label>
+                </div>
+            </div>
+
+            <div class="question" id="q19">
+                <div class="question-title">19. 傳統社會普遍不認同女性升學的觀念被打破，接受初等教育的女性人數呈現成長的趨勢。</div>
+                <div class="options">
+                    <label><input type="radio" name="q19" value="O"> (O) 符合</label>
+                    <label><input type="radio" name="q19" value="X"> (X) 不符合</label>
+                </div>
+            </div>
+
+            <div class="explanation exp-section3">
+                <strong>【素養解析 - 觀念判斷題】：</strong><br>
+                Q16 (X) 日治時期實施的是新式教育，不再以傳統漢學典籍為主。<br>
+                Q18 (X) 日治時期的教育存在明顯的「差別待遇」，臺灣人就讀的公學校資源較差，且中學以上的升學名額受到嚴格限制。這體現了殖民統治下的不平等。
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>四、閱讀素養題 (每題 4 分，共 24 分)</h2>
+            <div class="reading-text">
+                【閱讀短文】<br>
+                日治時期，臺灣引進了西方的標準時間與星期制。總督府不僅在各地火車站、公會堂等公共場所設立時鐘，並推行「時間就是金錢」的海報，要求人們養成守時的習慣，同時也訂定了政府機關、工廠及學校的固定作息時間。<br><br>
+                每週日成為固定的休假日後，加上總督府興建了公園、海水浴場等公共設施，民眾開始有了安排休閒娛樂的時間。棒球、登山等戶外體育活動風氣逐漸興起，溫泉浴場、戲院、咖啡廳也陸續出現在城市的街道上，大幅改變了臺灣人的生活面貌。
+            </div>
+
+            <div class="question" id="q20">
+                <div class="question-title">20. 根據文章與所學，日治時期引進的曆法與時間制度為何？</div>
+                <div class="options">
+                    <label><input type="radio" name="q20" value="A"> (A) 農曆與十二時辰制</label>
+                    <label><input type="radio" name="q20" value="B"> (B) 陽曆與一天二十四小時制</label>
+                    <label><input type="radio" name="q20" value="C"> (C) 農曆與一週七天制</label>
+                    <label><input type="radio" name="q20" value="D"> (D) 陽曆與十二小時制</label>
+                </div>
+            </div>
+
+            <div class="question" id="q21">
+                <div class="question-title">21. 為什麼總督府要特別在「火車站」等地點設置大型時鐘？</div>
+                <div class="options">
+                    <label><input type="radio" name="q21" value="A"> (A) 為了裝飾公共空間，展現西方建築美學</label>
+                    <label><input type="radio" name="q21" value="B"> (B) 為了讓臺灣人學習羅馬數字的念法</label>
+                    <label><input type="radio" name="q21" value="C"> (C) 因為火車有固定發車時刻，藉此要求民眾養成守時的習慣</label>
+                    <label><input type="radio" name="q21" value="D"> (D) 為了推廣日本進口時鐘的銷售</label>
+                </div>
+            </div>
+
+            <div class="question" id="q22">
+                <div class="question-title">22. 下列哪一項休閒活動或設施，「不是」在日治時期引進或興建的？</div>
+                <div class="options">
+                    <label><input type="radio" name="q22" value="A"> (A) 傳統私塾聽書</label>
+                    <label><input type="radio" name="q22" value="B"> (B) 北投溫泉浴場</label>
+                    <label><input type="radio" name="q22" value="C"> (C) 咖啡廳與戲院</label>
+                    <label><input type="radio" name="q22" value="D"> (D) 提供戶外活動的海水浴場</label>
+                </div>
+            </div>
+
+            <div class="question" id="q23">
+                <div class="question-title">23. 這樣的時間與休假制度，對臺灣社會發展產生了什麼最主要的影響？</div>
+                <div class="options">
+                    <label><input type="radio" name="q23" value="A"> (A) 促使臺灣人完全拋棄傳統農曆，不再過春節</label>
+                    <label><input type="radio" name="q23" value="B"> (B) 改變了人們的生活型態，促進現代休閒文化的發展</label>
+                    <label><input type="radio" name="q23" value="C"> (C) 導致工廠生產力大幅下降，經濟衰退</label>
+                    <label><input type="radio" name="q23" value="D"> (D) 讓所有臺灣人都變得非常富有</label>
+                </div>
+            </div>
+
+            <div class="question" id="q24">
+                <div class="question-title">24. (是非判斷) 當時的「火車時刻表」已經規畫了明確的發車時間，民眾若不守時就會錯過預計搭乘的車班。</div>
+                <div class="options">
+                    <label><input type="radio" name="q24" value="O"> (O) 正確</label>
+                    <label><input type="radio" name="q24" value="X"> (X) 錯誤</label>
+                </div>
+            </div>
+
+            <div class="question" id="q25">
+                <div class="question-title">25. (是非判斷) 總督府興建的各項休閒設施（如公園、戲院），規定只有日本人可以使用，臺灣人完全被禁止進入。</div>
+                <div class="options">
+                    <label><input type="radio" name="q25" value="O"> (O) 正確</label>
+                    <label><input type="radio" name="q25" value="X"> (X) 錯誤</label>
+                </div>
+            </div>
+
+            <div class="explanation exp-section4">
+                <strong>【素養解析 - 閱讀素養題】：</strong><br>
+                Q22 (A) 私塾聽書屬於清帝國時期的傳統學習與休閒樣態，非日治時期引進的現代休閒。<br>
+                Q23 (B) 這是 108 課綱核心精神：理解歷史制度改變（星期制、標準時間）如何實質形塑現代人的生活與文化樣貌。<br>
+                Q25 (X) 休閒設施如公園、戲院等，臺灣人也可以購票或進入參與，並非完全禁止，這些場所也成為當時社交的重要場域。
+            </div>
+        </div>
+
+        <button type="submit" class="btn-submit">送出考卷看成績</button>
+    </form>
+
+    <div id="result-panel">
+        總分：<span id="score-display"></span> / 100 分
+    </div>
+
+    <a href="society.html" class="back-home">⬅ 回到社會科目錄</a>
+
+    <script>
+        const answers = {
+            q1: 'O', q2: 'X', q3: 'X', q4: 'O', q5: 'O', q6: 'X', q7: 'O',
+            q8: 'B', q9: 'C', q10: 'A', q11: 'C', q12: 'C', q13: 'D', q14: 'B',
+            q15: 'O', q16: 'X', q17: 'O', q18: 'X', q19: 'O',
+            q20: 'B', q21: 'C', q22: 'A', q23: 'B', q24: 'O', q25: 'X'
+        };
+
+        function loadHistory() {
+            const historyList = document.getElementById('history-list');
+            const historyData = JSON.parse(localStorage.getItem('quizHistory_4_2_3')) || [];
+            historyList.innerHTML = '';
+            if (historyData.length === 0) {
+                historyList.innerHTML = '<li>尚無練習紀錄，趕快開始第一次測驗吧！</li>';
+                return;
+            }
+            historyData.forEach(record => {
+                const li = document.createElement('li');
+                li.textContent = `📝 ${record.date} - 單元：${record.unit} - 得分：${record.score} 分`;
+                historyList.appendChild(li);
+            });
+        }
+
+        document.getElementById('quiz-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            let score = 0;
+            const formData = new FormData(this);
+
+            for (let i = 1; i <= 25; i++) {
+                const qId = 'q' + i;
+                const userAns = formData.get(qId);
+                const qDiv = document.getElementById(qId);
+                const titleDiv = qDiv.querySelector('.question-title');
+
+                titleDiv.style.color = '#333';
+
+                if (userAns === answers[qId]) {
+                    score += 4;
+                    titleDiv.style.color = 'var(--correct-color)';
+                    titleDiv.innerHTML = titleDiv.innerHTML.replace(/^[❌✅]\s/, '');
+                    titleDiv.innerHTML = '✅ ' + titleDiv.innerHTML;
+                } else {
+                    titleDiv.style.color = 'var(--incorrect-color)';
+                    titleDiv.innerHTML = titleDiv.innerHTML.replace(/^[❌✅]\s/, '');
+                    titleDiv.innerHTML = `❌ ${titleDiv.innerHTML} (正確答案: ${answers[qId]})`;
+                }
+            }
+
+            const resultPanel = document.getElementById('result-panel');
+            document.getElementById('score-display').textContent = score;
+            resultPanel.style.display = 'block';
+
+            const explanations = document.querySelectorAll('.explanation');
+            explanations.forEach(exp => exp.style.display = 'block');
+
+            const currentDate = new Date().toLocaleString('zh-TW', { hour12: false });
+            let historyData = JSON.parse(localStorage.getItem('quizHistory_4_2_3')) || [];
+
+            historyData.unshift({
+                date: currentDate,
+                unit: '日治時期的影響',
+                score: score
+            });
+
+            if (historyData.length > 5) historyData.pop();
+
+            localStorage.setItem('quizHistory_4_2_3', JSON.stringify(historyData));
+            loadHistory();
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        window.onload = loadHistory;
+    </script>
+</body>
+</html>
