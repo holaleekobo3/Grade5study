@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 5 Spelling & Vocabulary Challenge</title>
+    <style>
+        :root {
+            --primary: #4a90e2;
+            --primary-hover: #357abd;
+            --correct: #27ae60;
+            --correct-light: #e8f8f0;
+            --incorrect: #c0392b;
+            --incorrect-light: #fceae9;
+            --background: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-main: #2c3e50;
+            --text-muted: #7f8c8d;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #edf2f7;
+            padding-bottom: 20px;
+        }
+
+        header h1 {
+            color: var(--primary);
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .dashboard-section {
+            background: #ebf4ff;
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 25px;
+        }
+
+        .dashboard-title {
+            font-weight: bold;
+            color: var(--primary-hover);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .history-list {
+            max-height: 120px;
+            overflow-y: auto;
+            font-size: 0.9rem;
+            list-style: none;
+        }
+
+        .history-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+            border-bottom: 1px dashed #cbd5e0;
+        }
+
+        .quiz-info-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            background: #f8fafc;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+
+        .question-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .question-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+        }
+
+        .question-number {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--primary);
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .sentence {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .hint-container {
+            margin-bottom: 15px;
+        }
+
+        .hint-badge {
+            display: inline-block;
+            background: #edf2f7;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: var(--text-main);
+        }
+
+        .hint-text {
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #2b6cb0;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 1.1rem;
+            border: 2px solid #cbd5e0;
+            border-radius: 8px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-field:focus {
+            border-color: var(--primary);
+        }
+
+        .action-btn {
+            display: block;
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 30px;
+        }
+
+        .action-btn:hover {
+            background: var(--primary-hover);
+        }
+
+        /* Results & Review UI Styles */
+        .hidden {
+            display: none !important;
+        }
+
+        .score-summary-box {
+            text-align: center;
+            padding: 30px;
+            background: #f8fafc;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .score-display {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 10px 0;
+        }
+
+        .summary-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 8px;
+        }
+
+        .result-row {
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .result-row.correct-row {
+            background-color: var(--correct-light);
+            border-color: #c6f6d5;
+        }
+
+        .result-row.incorrect-row {
+            background-color: var(--incorrect-light);
+            border-color: #fed7d7;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: white;
+            margin-bottom: 8px;
+        }
+
+        .status-badge.correct-badge {
+            background: var(--correct);
+        }
+
+        .status-badge.incorrect-badge {
+            background: var(--incorrect);
+        }
+
+        .data-label {
+            font-weight: bold;
+            color: var(--text-main);
+        }
+
+        .explanation-box {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed #cbd5e0;
+            font-size: 0.95rem;
+            color: #4a5568;
+        }
+
+        .explanation-box em {
+            color: #2b6cb0;
+            font-weight: 600;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .container { padding: 15px; }
+            header h1 { font-size: 1.6rem; }
+            .sentence { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Vocabulary & Spelling Challenge</h1>
+        <p>Grade 5 English Practice Resource</p>
+    </header>
+
+    <!-- History Dashboard Component -->
+    <div class="dashboard-section">
+        <div class="dashboard-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            Your Performance History Dashboard
+        </div>
+        <ul id="historyList" class="history-list">
+            <li class="text-muted" style="font-style: italic;">No previous attempts recorded yet. Compete with yourself!</li>
+        </ul>
+    </div>
+
+    <!-- QUIZ INTERFACE VIEW -->
+    <div id="quizView">
+        <div class="quiz-info-bar">
+            <span>Target Goal: Spelling Mastery</span>
+            <span id="questionCount">Total Words: 36</span>
+        </div>
+
+        <div id="questionsContainer"></div>
+
+        <button id="submitBtn" class="action-btn" onclick="checkResults()">Check Results</button>
+    </div>
+
+    <!-- RESULTS SUMMARY & REVIEW VIEW -->
+    <div id="resultsView" class="hidden">
+        <div class="score-summary-box">
+            <h2>Quiz Evaluation Complete!</h2>
+            <div class="score-display" id="finalScore">0 / 36</div>
+            <p id="scoreFeedback">Keep practicing to improve your spelling metrics!</p>
+        </div>
+
+        <h3 class="summary-title">Comprehensive Answer Review</h3>
+        <div id="reviewContainer"></div>
+
+        <button class="action-btn" onclick="restartQuiz()">Restart / Try Again</button>
+    </div>
+</div>
+
+<script>
+    // Robust spelling data payload complete with contexts and structural rules
+    const quizData = [
+        { word: "dictionary", sentence: "Look up the word in the ________ to see what it means.", explanation: "A dictionary is a noun referring to a reference book or digital tool that lists words and their meanings." },
+        { word: "word", sentence: "What is the meaning of this difficult ________?", explanation: "A word is a singular noun representing a standalone element of speech or writing." },
+        { word: "explain", sentence: "Can you ________ how to solve this tricky math problem?", explanation: "Explain is a action verb meaning to make an idea clear. It fits in its base form following the helping verb 'can'." },
+        { word: "illustration", sentence: "The book has a beautiful, colorful ________ on the front cover.", explanation: "An illustration is a singular noun meaning a picture, drawing, or diagram that clarifies text." },
+        { word: "pronunciation", sentence: "Check the dictionary data for the correct ________ of the word.", explanation: "Pronunciation is a noun indicating the accepted way a word is spoken aloud." },
+        { word: "free", sentence: "You don't have to pay for the ticket; it is entirely ________.", explanation: "Free acts here as a predicate adjective describing a noun that costs zero money." },
+        { word: "mean", sentence: "What does this unusual road symbol ________?", explanation: "Mean is a base verb used alongside the auxiliary verb 'does' to ask about intention or significance." },
+        { word: "inside", sentence: "It is raining outside, so let's play safety games ________ the house.", explanation: "Inside functions as a preposition indicating location within the interior boundary of a building." },
+        { word: "someone", sentence: "I hear a sudden knock; ________ is waiting at the front door.", explanation: "Someone is an indefinite pronoun used for an unknown person, matching with the singular verb 'is'." },
+        { word: "something", sentence: "There is ________ shiny and metallic sparkling out in the green grass.", explanation: "Something is an indefinite pronoun representing an unspecified object or item." },
+        { word: "anyone", sentence: "Does ________ in the classroom know the answer to this question?", explanation: "Anyone is an indefinite pronoun typically used in questions to refer to any person at all." },
+        { word: "anything", sentence: "I am so completely full that I cannot eat ________ else.", explanation: "Anything is an indefinite pronoun used here inside a negative clause ('cannot eat') to signify a matter of any kind." },
+        { word: "waitress", sentence: "The polite ________ brought us our drinks quickly at the restaurant.", explanation: "A waitress is a singular noun explicitly denoting a female server who attends to tables." },
+        { word: "positive", sentence: "She always stays ________ and tries to look on the bright side.", explanation: "Positive is an adjective describing an optimistic, confident mindset or perspective." },
+        { word: "negative", sentence: "Try to avoid making ________ comments that might discourage your peers.", explanation: "Negative functions here as a descriptive adjective modifying the plural noun 'comments'." },
+        { word: "pronounce", sentence: "It is often hard to ________ some long English words correctly.", explanation: "Pronounce is a base verb forming an infinitive statement with 'to' that means to produce word sounds." },
+        { word: "incorrectly", sentence: "He spelled the vocabulary term ________, so he had to fix it.", explanation: "Incorrectly is an adverb of manner modifying the past tense verb 'spelled' by showing *how* it was done wrongly." },
+        { word: "alphabet", sentence: "There are twenty-six characters in the English ________.", explanation: "The alphabet is a collective noun specifying the set of symbols used to construct a written language." },
+        { word: "definition", sentence: "Read the written ________ to understand what the vocabulary word means.", explanation: "A definition is a singular count noun representing the exact formal statement of what a word means." },
+        { word: "piece", sentence: "Would you like a delicious ________ of chocolate cake?", explanation: "Piece is a noun describing a distinct portion or fraction broken or cut away from a whole structural unit." },
+        { word: "bacon", sentence: "My brother loves eating crispy ________ alongside breakfast eggs.", explanation: "Bacon is an uncountable mass noun denoting cured meat from the sides or back of a pig." },
+        { word: "Internet", sentence: "We regularly use the global ________ to search for fast information online.", explanation: "The Internet is treated as a proper noun representing the global network, requiring a capitalized initial element." },
+        { word: "engine", sentence: "The bus won't start because there is a severe problem with its ________.", explanation: "An engine is a singular count noun specifying the mechanical machine that converts power into kinetic movement." },
+        { word: "button", sentence: "Press the large red ________ to start the arcade game.", explanation: "A button is a concrete noun indicating a small knob or switch mechanism that activates electrical circuits." },
+        { word: "result", sentence: "His hard work showed when he received an excellent test ________.", explanation: "A result is a singular noun indicating the clean consequence or outcome of an action or evaluation." },
+        { word: "downstairs", sentence: "The kitchen is located ________, but my bedroom is on the top floor.", explanation: "Downstairs functions as an adverb of place specifying a lower level or floor within a building architecture." },
+        { word: "upstairs", sentence: "Walk directly ________ to locate the school library on the second floor.", explanation: "Upstairs serves as an adverb of place directing action toward an elevated floor or upper level." },
+        { word: "above", sentence: "The brilliant stars shone beautifully ________ the dark mountains.", explanation: "Above is a spatial preposition indicating a physical location directly higher than the referenced object." },
+        { word: "across from", sentence: "The green park is right ________ the bakery on the other side of the street.", explanation: "Across from is a compound preposition denoting a structural location directly opposite a specific boundary line." },
+        { word: "below", sentence: "The outdoor temperature dropped far ________ freezing point last night.", explanation: "Below acts as a preposition indicating a point lower than a baseline measurement or relative standard." },
+        { word: "outside", sentence: "Let's grab a ball and go ________ to play soccer in the sunshine.", explanation: "Outside functions as an adverb of direction specifying movement out into the open air or outdoor space." },
+        { word: "jewelry", sentence: "She wore a valuable gold necklace and other sparkling ________ to the party.", explanation: "Jewelry is an uncountable collective noun representing decorative ornaments worn for personal adornment." },
+        { word: "triangular", sentence: "A slice of pizza usually has a distinct ________ shape with three corners.", explanation: "Triangular is a descriptive geometric adjective denoting an object possessing three sides and three angles." },
+        { word: "brochure", sentence: "I read a helpful travel ________ to learn more about the holiday resort.", explanation: "A brochure is a noun signifying a thin pamphlet or booklet containing descriptive pictures and informative details." },
+        { word: "miserable", sentence: "The freezing, rainy weather made everyone feel quite ________.", explanation: "Miserable is a predicate adjective describing an internal state or atmosphere of profound discomfort or unhappiness." },
+        { word: "frightened", sentence: "The sudden loud explosion of thunder made the little puppy feel very ________.", explanation: "Frightened acts as a participial adjective detailing an emotional state marked by sudden fear or anxiety." }
+    ];
+
+    // Auto-generates customized hints protecting formatting rules for spaces/phrases
+    function generateHint(word) {
+        return word.split(' ').map(part => {
+            if (part.length === 1) return part;
+            if (part.length === 2) return part[0] + '_';
+            return part[0] + '_'.repeat(part.length - 2) + part[part.length - 1];
+        }).join(' ');
+    }
+
+    // Programmatically render the layout fields for the Grade 5 user
+    function initQuiz() {
+        const container = document.getElementById('questionsContainer');
+        container.innerHTML = '';
+
+        quizData.forEach((item, index) => {
+            const calculatedHint = generateHint(item.word);
+
+            const card = document.createElement('div');
+            card.className = 'question-card';
+            card.innerHTML = `
+                <div class="question-number">Question ${index + 1}</div>
+                <div class="sentence">${item.sentence}</div>
+                <div class="hint-container">
+                    <span class="hint-badge">Hint Pattern: <span class="hint-text">${calculatedHint}</span> (${item.word.length} chars)</span>
+                </div>
+                <input type="text" class="input-field spelling-input"
+                       data-index="${index}"
+                       placeholder="Type your spelled answer here..."
+                       autocomplete="off" spellcheck="false">
+            `;
+            container.appendChild(card);
+        });
+
+        loadHistoryDashboard();
+    }
+
+    // Process accuracy metrics, render reports, save logs to storage
+    function checkResults() {
+        const inputs = document.querySelectorAll('.spelling-input');
+        let correctCount = 0;
+
+        const reviewContainer = document.getElementById('reviewContainer');
+        reviewContainer.innerHTML = '';
+
+        inputs.forEach(input => {
+            const index = parseInt(input.getAttribute('data-index'));
+            const targetItem = quizData[index];
+            const userRaw = input.value || '';
+            const userClean = userRaw.trim();
+
+            // Case-insensitive clean comparison logic
+            const isCorrect = userClean.toLowerCase() === targetItem.word.toLowerCase();
+            if (isCorrect) correctCount++;
+
+            // Dynamic presentation of results lines
+            const row = document.createElement('div');
+            row.className = `result-row ${isCorrect ? 'correct-row' : 'incorrect-row'}`;
+
+            row.innerHTML = `
+                <div>
+                    <span class="status-badge ${isCorrect ? 'correct-badge' : 'incorrect-badge'}">
+                        ${isCorrect ? 'Correct' : 'Incorrect'}
+                    </span>
+                </div>
+                <div style="margin-bottom: 5px;"><strong>Sentence Context:</strong> ${targetItem.sentence.replace('________', '<u>' + targetItem.word + '</u>')}</div>
+                <div><span class="data-label">Visual Pattern Clue:</span> <code style="letter-spacing:1px">${generateHint(targetItem.word)}</code></div>
+                <div><span class="data-label">Your Inputted Spelling:</span> <span style="color: ${isCorrect ? 'var(--correct)' : 'var(--incorrect)'}; font-weight:bold;">${userClean || '[Blank Space Entry]'}</span></div>
+                <div><span class="data-label">Correct Vocabulary Term:</span> <strong style="color: var(--correct)">${targetItem.word}</strong></div>
+                <div class="explanation-box">
+                    <strong>Educational Rule Explanation:</strong> <em>${targetItem.explanation}</em>
+                </div>
+            `;
+
+            reviewContainer.appendChild(row);
+        });
+
+        // Compute metrics and manage storage state
+        const totalQuestions = quizData.length;
+        document.getElementById('finalScore').innerText = `${correctCount} / ${totalQuestions}`;
+
+        const feedbackEl = document.getElementById('scoreFeedback');
+        const percentage = (correctCount / totalQuestions) * 100;
+        if (percentage === 100) {
+            feedbackEl.innerText = "Excellent! You earned perfect marks and unlocked spelling mastery!";
+            feedbackEl.style.color = "var(--correct)";
+        } else if (percentage >= 70) {
+            feedbackEl.innerText = "Great work! You have strong structural word skills.";
+            feedbackEl.style.color = "var(--primary-hover)";
+        } else {
+            feedbackEl.innerText = "Keep practicing! Review the structural syntax details below to master these concepts.";
+            feedbackEl.style.color = "var(--incorrect)";
+        }
+
+        // Commit profile results to local storage session pipeline
+        saveAttemptToHistory(correctCount, totalQuestions);
+
+        // UI view shift sequence
+        document.getElementById('quizView').classList.add('hidden');
+        document.getElementById('resultsView').classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Persist scores inside local storage array
+    function saveAttemptToHistory(score, total) {
+        const timestamp = new Date().toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute:'2-digit' });
+        const entry = { score, total, timestamp };
+
+        let existingHistory = [];
+        try {
+            existingHistory = JSON.parse(localStorage.getItem('grade5_spelling_history')) || [];
+        } catch(e) {
+            existingHistory = [];
+        }
+
+        existingHistory.unshift(entry);
+        if (existingHistory.length > 5) existingHistory.pop();
+
+        localStorage.setItem('grade5_spelling_history', JSON.stringify(existingHistory));
+        loadHistoryDashboard();
+    }
+
+    // Read metrics from browser context
+    function loadHistoryDashboard() {
+        const listElement = document.getElementById('historyList');
+        let existingHistory = [];
+
+        try {
+            existingHistory = JSON.parse(localStorage.getItem('grade5_spelling_history')) || [];
+        } catch(e) {
+            existingHistory = [];
+        }
+
+        if (existingHistory.length === 0) {
+            listElement.innerHTML = `<li class="text-muted" style="font-style: italic;">No previous attempts recorded yet. Ready to start?</li>`;
+            return;
+        }
+
+        listElement.innerHTML = existingHistory.map((item, index) => {
+            const rate = ((item.score / item.total) * 100).toFixed(0);
+            return `
+                <li class="history-item">
+                    <span>Attempt #${existingHistory.length - index} &bull; <strong>${item.score}/${item.total} Correct</strong> (${rate}%)</span>
+                    <span style="color: var(--text-muted); font-size:0.8rem">${item.timestamp}</span>
+                </li>
+            `;
+        }).join('');
+    }
+
+    // Reset layout fields to zero for a clean restart cycle
+    function restartQuiz() {
+        document.getElementById('resultsView').classList.add('hidden');
+        document.getElementById('quizView').classList.remove('hidden');
+        initQuiz();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Initial load orchestration
+    window.onload = function() {
+        initQuiz();
+    };
+</script>
+
+</body>
+</html>
