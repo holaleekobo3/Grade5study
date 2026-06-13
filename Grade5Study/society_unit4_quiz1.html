@@ -1,608 +1,740 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>社會科單元四：日治時期的建設與社會變遷 - 學習測驗</title>
-    <link rel="stylesheet" href="style.css">
+    <title>台灣 108 課綱 — 國小五年級社會互動練習卷</title>
     <style>
-        .section-title {
-            background: linear-gradient(135deg, var(--accent-primary), #4338ca);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin: 30px 0 20px 0;
-        }
-
-        .true-false-group {
-            display: flex;
-            gap: 24px;
-            padding-left: 10px;
-            margin-top: 10px;
-        }
-
-        .true-false-group label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 20px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .true-false-group label:hover {
-            border-color: var(--accent-primary);
-            background: var(--bg-primary);
-        }
-
-        .true-false-group input[type="radio"]:checked + span {
-            color: var(--accent-primary);
-            font-weight: 600;
-        }
-
-        .matching-box {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
+        body {
+            font-family: "Helvetica Neue", Arial, "Apple LiGothic Medium", "Noto Sans TC", sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+            margin: 0;
             padding: 20px;
+        }
+        .quiz-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 35px;
             border-radius: 16px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+        header {
+            text-align: center;
+            border-bottom: 3px double #3b82f6;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        header h1 {
+            color: #1e3a8a;
+            margin: 0 0 10px 0;
+            font-size: 28px;
+        }
+        header p {
+            color: #64748b;
+            margin: 0;
+            font-size: 16px;
+        }
+
+        /* 歷史紀錄面板 */
+        .history-panel {
+            background-color: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 30px;
+        }
+        .history-panel h3 {
+            margin-top: 0;
+            color: #334155;
+            font-size: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #ffffff;
+            font-size: 14px;
+        }
+        .history-table th, .history-table td {
+            border: 1px solid #cbd5e1;
+            padding: 8px;
+            text-align: center;
+        }
+        .history-table th {
+            background-color: #e2e8f0;
+            color: #334155;
+        }
+        .btn-clear {
+            background-color: #ef4444;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .btn-clear:hover { background-color: #dc2626; }
+
+        /* 大題排版 */
+        .section-title {
+            background-color: #1e3a8a;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-size: 18px;
+            margin-top: 30px;
             margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .question-block {
+            padding: 15px;
+            border-bottom: 1px dashed #e2e8f0;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+            border-radius: 6px;
+        }
+        .question-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-left: 10px;
+        }
+        .options-inline {
+            display: flex;
+            gap: 20px;
+            padding-left: 10px;
+        }
+        label {
+            cursor: pointer;
+            font-size: 15px;
         }
 
-        .matching-header {
-            font-weight: 700;
-            margin-bottom: 16px;
-            color: var(--accent-primary);
+        /* 配合題結構化排版 */
+        .matching-box {
+            background-color: #f8fafc;
+            border: 1px solid #cbd5e1;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
         }
-
         .matching-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 12px;
-            margin-bottom: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
         }
-
         .matching-item {
-            background: var(--bg-primary);
-            padding: 10px 14px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 0.95rem;
+            background: #ffffff;
+            padding: 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            font-size: 14px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
         }
-
-        .matching-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .matching-row:last-child { border-bottom: none; }
-
         .match-select {
-            padding: 8px 12px;
-            font-size: 1rem;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            cursor: pointer;
-            min-width: 70px;
+            padding: 4px 8px;
+            font-size: 15px;
+            border-radius: 4px;
+            border: 1px solid #cbd5e1;
+            margin-right: 10px;
         }
 
-        .checkbox-question {
-            background: var(--bg-primary);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 16px;
-            border: 1px solid var(--border-color);
-            transition: all 0.2s ease;
+        /* 批改結果區塊樣式 */
+        .correct-block {
+            background-color: #f0fdf4 !important;
+            border-left: 5px solid #16a34a !important;
+        }
+        .incorrect-block {
+            background-color: #fef2f2 !important;
+            border-left: 5px solid #dc2626 !important;
         }
 
-        .checkbox-question:hover { border-color: var(--accent-primary); }
-
-        .checkbox-question label {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            cursor: pointer;
-            font-size: 1.05rem;
-            line-height: 1.6;
-        }
-
-        .checkbox-question input[type="checkbox"] {
-            width: 22px;
-            height: 22px;
-            margin-top: 2px;
-            cursor: pointer;
-            accent-color: var(--accent-primary);
-        }
-
-        .context-box {
-            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(236, 72, 153, 0.1));
-            border: 1px solid var(--accent-primary);
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            font-size: 0.95rem;
-            line-height: 1.7;
-        }
-
-        .context-box strong { color: var(--accent-primary); }
-
-        .correct-feedback {
-            background: rgba(16, 185, 129, 0.1) !important;
-            border-left: 5px solid var(--accent-success) !important;
-        }
-
-        .incorrect-feedback {
-            background: rgba(239, 68, 68, 0.1) !important;
-            border-left: 5px solid var(--accent-danger) !important;
-        }
-
+        /* 修正核心：即時回饋答案字卡樣式 */
         .feedback-msg {
             margin-top: 10px;
-            padding: 10px 14px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 6px 12px;
+            border-radius: 4px;
+            display: block;
+            width: fit-content;
         }
-
         .feedback-correct {
-            background: rgba(16, 185, 129, 0.15);
-            color: var(--accent-success);
+            color: #15803d;
+            background-color: #dcfce7;
+            border: 1px solid #bbf7d0;
         }
-
         .feedback-incorrect {
-            background: rgba(239, 68, 68, 0.15);
-            color: var(--accent-danger);
+            color: #b91c1c;
+            background-color: #fee2e2;
+            border: 1px solid #fecaca;
         }
 
-        .score-display-result {
-            font-size: 4rem;
-            font-weight: 900;
+        /* 按鈕與分數顯示 */
+        .submit-area {
             text-align: center;
-            margin: 20px 0;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .history-section {
             margin-top: 40px;
-            padding-top: 30px;
-            border-top: 2px solid var(--border-color);
+        }
+        .btn-submit {
+            background-color: #2563eb;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 12px 40px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+            transition: background 0.2s;
+        }
+        .btn-submit:hover { background-color: #1d4ed8; }
+
+        #result-panel {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .score-display {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 10px 0;
         }
 
-        .history-section h3 { margin-bottom: 20px; color: var(--text-primary); }
-
-        .quiz-subtitle {
-            text-align: center;
-            color: var(--text-secondary);
-            margin-bottom: 3rem;
-            font-size: 1.1rem;
+        /* 深度解析區塊 */
+        .analysis-box {
+            margin-top: 35px;
+            border-top: 2px solid #cbd5e1;
+            padding-top: 20px;
+            display: none;
+        }
+        .analysis-box h2 {
+            color: #1e3a8a;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        .analysis-section {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+        .analysis-section h4 {
+            margin-top: 0;
+            color: #0f172a;
+            border-bottom: 1px solid #cbd5e1;
+            padding-bottom: 5px;
+        }
+        .analysis-section p {
+            font-size: 14px;
+            color: #475569;
+            margin: 5px 0;
         }
     </style>
 </head>
 <body>
 
-    <div class="theme-toggle">
-        <button id="themeBtn" onclick="toggleTheme()"><span>🌙</span> 暗色模式</button>
+<div class="quiz-container">
+    <header>
+        <h1>五年級下學期社會科：日治時期的台灣建設與社會變遷</h1>
+        <p>單元範圍：第四單元（4-1 經濟交通、4-2 教育制度、4-3 社會文化變遷）— 素養導向練習卷</p>
+    </header>
+
+    <div class="history-panel">
+        <h3>
+            <span>📊 歷史練習成績單（最近 5 次進度）</span>
+            <button class="btn-clear" onclick="clearHistory()">清除歷史紀錄</button>
+        </h3>
+        <table class="history-table">
+            <thead>
+                <tr>
+                    <th style="width: 30%;">練習日期</th>
+                    <th style="width: 50%;">單元名稱</th>
+                    <th style="width: 20%;">得分</th>
+                </tr>
+            </thead>
+            <tbody id="history-tbody">
+                </tbody>
+        </table>
     </div>
 
-    <div class="container">
-        <p><a href="society.html" style="text-decoration: none; font-weight: bold; color: var(--accent-primary);">⬅ 返回目錄</a></p>
-        <h1>🏛️ 社會科單元四：日治時期的建設與社會變遷</h1>
-        <p class="quiz-subtitle">單元範圍：4-1 經濟交通、4-2 教育制度、4-3 社會文化變遷 | 素養導向學習測驗</p>
+    <form id="quiz-form" onsubmit="event.preventDefault(); gradeQuiz();">
 
-        <form id="quizForm">
-            <!-- 一、是 subject -->
-            <div class="section-title">一、是非題（每題 4 分，共 28 分）</div>
+        <div class="section-title">一、是非題（每題 4 分，共 28 分）</div>
 
-            <div class="question" id="q-tf1">
-                <p><strong>1. 日治時期，總督府為了避免社會動亂並照顧基層生活，對於台灣的農業發展完全採取消極、放任發展的寬鬆態度。</strong></p>
-                <div class="true-false-group">
-                    <label><input type="radio" name="tf1" value="O"> <span>⭕ 正確</span></label>
-                    <label><input type="radio" name="tf1" value="X"> <span>❌ 錯誤</span></label>
-                </div>
+        <div class="question-block" id="block-tf1">
+            <div class="question-title">1. 日治時期，總督府為了避免社會動亂並照顧基層生活，對於台灣的農業發展完全採取消極、放任發展的寬鬆態度。</div>
+            <div class="options-inline">
+                <label><input type="radio" name="tf1" value="O"> ⭕ 正確</label>
+                <label><input type="radio" name="tf1" value="X"> ❌ 錯誤</label>
             </div>
-
-            <div class="question" id="q-tf2">
-                <p><strong>2. 日治時期實施新式教育，為了促進台日融和，總督府讓台灣漢人兒童就讀資源豐富的「小學校」，而日本人的子弟則就讀「公學校」。</strong></p>
-                <div class="true-false-group">
-                    <label><input type="radio" name="tf2" value="O"> <span>⭕ 正確</span></label>
-                    <label><input type="radio" name="tf2" value="X"> <span>❌ 錯誤</span></label>
-                </div>
-            </div>
-
-            <div class="question" id="q-tf3">
-                <p><strong>3. 蔡阿信是台灣歷史上第一位醫學博士，畢業後獨自前往日本京都帝國大學深造，並在蛇毒與戒除鴉片的研究上有傑出貢獻。</strong></p>
-                <div class="true-false-group">
-                    <label><input type="radio" name="tf3" value="O"> <span>⭕ 正確</span></label>
-                    <label><input type="radio" name="tf3" value="X"> <span>❌ 錯誤</span></label>
-                </div>
-            </div>
-
-            <div class="question" id="q-tf4">
-                <p><strong>4. 總督府在火車站等公共場所設立時鐘，並引進西方的「標準時間」與「星期制」，規定星期日為休假日，這些措施逐步改變了台灣人的時間觀念。</strong></p>
-                <div class="true-false-group">
-                    <label><input type="radio" name="tf4" value="O"> <span>⭕ 正確</span></label>
-                    <label><input type="radio" name="tf4" value="X"> <span>❌ 錯誤</span></label>
-                </div>
-            </div>
-
-            <div class="question" id="q-tf5">
-                <p><strong>5. 嘉義出身的畫家陳澄波，於 1926 年以油畫作品《嘉義街外（一）》入選日本第七屆帝國美術展覽會，成為台灣歷史上首位入選帝展的西洋畫家。</strong></p>
-                <div class="true-false-group">
-                    <label><input type="radio" name="tf5" value="O"> <span>⭕ 正確</span></label>
-                    <label><input type="radio" name="tf5" value="X"> <span>❌ 錯誤</span></label>
-                </div>
-            </div>
-
-            <div class="question" id="q-tf6">
-                <p><strong>6. 日治時期在台灣各地興建的「公會堂」（如台北公會堂），在當時是專門提供日本軍隊駐紮與存放軍火的封閉管制空間，不對一般居民開放。</strong></p>
-                <div class="true-false-group">
-                    <label><input type="radio" name="tf6" value="O"> <span>⭕ 正確</span></label>
-                    <label><input type="radio" name="tf6" value="X"> <span>❌ 錯誤</span></label>
-                </div>
-            </div>
-
-            <div class="question" id="q-tf7">
-                <p><strong>7. 台灣在日治時期積極開採自然資源，當時所產生的重要礦產如煤礦和金礦，在地理位置上主要集中在台灣的南部地區。</strong></p>
-                <div class="true-false-group">
-                    <label><input type="radio" name="tf7" value="O"> <span>⭕ 正確</span></label>
-                    <label><input type="radio" name="tf7" value="X"> <span>❌ 錯誤</span></label>
-                </div>
-            </div>
-
-            <!-- 二、選擇題 -->
-            <div class="section-title">二、選擇題（每題 4 分，共 28 分）</div>
-
-            <div class="question" id="q-mc1">
-                <p><strong>1. 被譽為「嘉南大圳之父」的日本技師八田與一，在完成大圳與烏山頭水庫工程後，為了解決水源分配不均並改善土地土質，在嘉南平原推行了哪一種農業給水制度？</strong></p>
-                <ul class="options">
-                    <li><label><input type="radio" name="mc1" value="1"> <span>(1) 全年無限制供水法</span></label></li>
-                    <li><label><input type="radio" name="mc1" value="2"> <span>(2) 三年輪作給水法</span></label></li>
-                    <li><label><input type="radio" name="mc1" value="3"> <span>(3) 溫室精準滴灌法</span></label></li>
-                    <li><label><input type="radio" name="mc1" value="4"> <span>(4) 漢人傳統埤塘蓄水法</span></label></li>
-                </ul>
-            </div>
-
-            <div class="question" id="q-mc2">
-                <p><strong>2. 在日治時期以前的清帝國時期，台灣民間最常見的基礎學習場所是私塾和書院（如鳳儀書院）。當時學生在這些場所主要學習的教材內容是什麼？</strong></p>
-                <ul class="options">
-                    <li><label><input type="radio" name="mc2" value="1"> <span>(1) 國語（日語）、算術與博物</span></label></li>
-                    <li><label><input type="radio" name="mc2" value="2"> <span>(2) 西洋地理、歷史與英文數字</span></label></li>
-                    <li><label><input type="radio" name="mc2" value="3"> <span>(3) 機械操作、農業改良與醫學解剖</span></label></li>
-                    <li><label><input type="radio" name="mc2" value="4"> <span>(4) 三字經、千字文以及四書五經</span></label></li>
-                </ul>
-            </div>
-
-            <div class="question" id="q-mc3">
-                <p><strong>3. 面對殖民政府「台日有別」的不平等升學體制，林獻堂等人於 1915 年奔走爭取，透過民間全面捐獻的方式成立了哪一所學校，成為第一所專門招收台灣人子弟的中學（今台中一中前身）？</strong></p>
-                <ul class="options">
-                    <li><label><input type="radio" name="mc3" value="1"> <span>(1) 台灣總督府醫學校</span></label></li>
-                    <li><label><input type="radio" name="mc3" value="2"> <span>(2) 台中中學校</span></label></li>
-                    <li><label><input type="radio" name="mc3" value="3"> <span>(3) 台南州立嘉義農林學校</span></label></li>
-                    <li><label><input type="radio" name="mc3" value="4"> <span>(4) 台北末廣高等小學校</span></label></li>
-                </ul>
-            </div>
-
-            <div class="question" id="q-mc4">
-                <p><strong>4. 關於日治時期「阿里山林場」的資源開發，下列哪一項敘述是錯誤的？</strong></p>
-                <ul class="options">
-                    <li><label><input type="radio" name="mc4" value="1"> <span>(1) 總督府興建了阿里山森林鐵路，主要功能是方便運送珍貴的林木下山</span></label></li>
-                    <li><label><input type="radio" name="mc4" value="2"> <span>(2) 阿里山大量林木遭到砍伐，獲取的經濟利益多由殖民政府掌控</span></label></li>
-                    <li><label><input type="radio" name="mc4" value="3"> <span>(3) 林場的開發導致山下的嘉義市街喪失了交通地位而逐漸沒落</span></label></li>
-                    <li><label><input type="radio" name="mc4" value="4"> <span>(4) 現今阿里山林場已不再砍伐木材，轉型規畫為國家森林遊樂區</span></label></li>
-                </ul>
-            </div>
-
-            <div class="question" id="q-mc5">
-                <p><strong>5. 台灣第一位接受現代醫學訓練的女醫師是誰？她打破了早期社會對女性就學的偏見，並在台中創辦「清信產婆學校」提升助產士的醫護知識，造福無數家庭。</strong></p>
-                <ul class="options">
-                    <li><label><input type="radio" name="mc5" value="1"> <span>(1) 蔡阿信</span></label></li>
-                    <li><label><input type="radio" name="mc5" value="2"> <span>(2) 陳進</span></label></li>
-                    <li><label><input type="radio" name="mc5" value="3"> <span>(3) 蔡瑞月</span></label></li>
-                    <li><label><input type="radio" name="mc5" value="4"> <span>(4) 高一生</span></label></li>
-                </ul>
-            </div>
-
-            <div class="question" id="q-mc6">
-                <p><strong>6. 日治時期總督府极力整建基隆港與高雄港，並配合全島火車「西部縱貫鐵路」的通車。這些交通建設最核心的經濟目的是什麼？</strong></p>
-                <ul class="options">
-                    <li><label><input type="radio" name="mc6" value="1"> <span>(1) 鼓勵台灣本地居民多開車、搭車出門遊山玩水，帶動觀光</span></label></li>
-                    <li><label><input type="radio" name="mc6" value="2"> <span>(2) 方便將日本國內過剩的稻米和砂糖大量進口運來台灣銷售</span></label></li>
-                    <li><label><input type="radio" name="mc6" value="3"> <span>(3) 建立健全的貨物海陸聯運網，加速將台灣的物產和自然資源輸出到日本</span></label></li>
-                    <li><label><input type="radio" name="mc6" value="4"> <span>(4) 彰顯大國實力，免費協助鄰近亞洲國家進行物流發展</span></label></li>
-                </ul>
-            </div>
-
-            <div class="question" id="q-mc7">
-                <p><strong>7. 受日本和西方文化交互影響，日治時期的台灣社會出現了許多新興的日常與休閒生活，至今仍影響現代台灣。下列哪一組完全屬於當時傳入的新式生活型態？</strong></p>
-                <ul class="options">
-                    <li><label><input type="radio" name="mc7" value="1"> <span>(1) 依據農曆作息、在私塾背誦四書五經、綁小腳</span></label></li>
-                    <li><label><input type="radio" name="mc7" value="2"> <span>(2) 改穿西裝洋裝、實行一星期七天制度、至溫泉浴場或戲院休閒</span></label></li>
-                    <li><label><input type="radio" name="mc7" value="3"> <span>(3) 憑空冥想氣候、完全廢棄林場、引進外國地下捷運網絡</span></label></li>
-                    <li><label><input type="radio" name="mc7" value="4"> <span>(4) 興築西式重裝砲台、開鑿八通關古道、設立糖業文化協會</span></label></li>
-                </ul>
-            </div>
-
-            <!-- 三、配合題 -->
-            <div class="section-title">三、整合配合題（每空格 4 分，共 24 分）</div>
-
-            <div class="matching-box">
-                <p class="matching-header">請由下拉選單選出最適當的代號配對：</p>
-                <div class="matching-grid">
-                    <div class="matching-item"><strong>甲</strong>、橋仔頭糖廠</div>
-                    <div class="matching-item"><strong>乙</strong>、嘉南大圳</div>
-                    <div class="matching-item"><strong>丙</strong>、公會堂</div>
-                    <div class="matching-item"><strong>丁</strong>、陳澄波</div>
-                    <div class="matching-item"><strong>戊</strong>、高一生</div>
-                    <div class="matching-item"><strong>己</strong>、蕃童教育所</div>
-                </div>
-
-                <div class="matching-row">
-                    <strong>(1)</strong>
-                    <select id="match1" class="match-select">
-                        <option value="">請選擇</option>
-                        <option value="甲">甲</option><option value="乙">乙</option><option value="丙">丙</option>
-                        <option value="丁">丁</option><option value="戊">戊</option><option value="己">己</option>
-                    </select>
-                    <span>日治時期在高雄興建，引進現代化機械設備，成為台灣第一座新式糖廠。</span>
-                </div>
-
-                <div class="matching-row">
-                    <strong>(2)</strong>
-                    <select id="match2" class="match-select">
-                        <option value="">請選擇</option>
-                        <option value="甲">甲</option><option value="乙">乙</option><option value="丙">丙</option>
-                        <option value="丁">丁</option><option value="戊">戊</option><option value="己">己</option>
-                    </select>
-                    <span>位於台灣南部、連接濁水溪與曾文溪等水源的重大水利工程，使嘉南平原變為台灣糧倉。</span>
-                </div>
-
-                <div class="matching-row">
-                    <strong>(3)</strong>
-                    <select id="match3" class="match-select">
-                        <option value="">請選擇</option>
-                        <option value="甲">甲</option><option value="乙">乙</option><option value="丙">丙</option>
-                        <option value="丁">丁</option><option value="戊">戊</option><option value="己">己</option>
-                    </select>
-                    <span>日治時期由總督府針對初等教育所設立，專門提供給台灣原住民族兒童就讀的學習場所。</span>
-                </div>
-
-                <div class="matching-row">
-                    <strong>(4)</strong>
-                    <select id="match4" class="match-select">
-                        <option value="">請選擇</option>
-                        <option value="甲">甲</option><option value="乙">乙</option><option value="丙">丙</option>
-                        <option value="丁">丁</option><option value="戊">戊</option><option value="己">己</option>
-                    </select>
-                    <span>早期接受新式教育的鄒族精英，畢業於台南師範學校，是著名的教育家、音樂家與政治家。</span>
-                </div>
-
-                <div class="matching-row">
-                    <strong>(5)</strong>
-                    <select id="match5" class="match-select">
-                        <option value="">請選擇</option>
-                        <option value="甲">甲</option><option value="乙">乙</option><option value="丙">丙</option>
-                        <option value="丁">丁</option><option value="戊">戊</option><option value="己">己</option>
-                    </select>
-                    <span>嘉義出身、考取東京美術學校，作品多以台灣與故鄉街景為主題，並參與成立台陽美術協會。</span>
-                </div>
-
-                <div class="matching-row">
-                    <strong>(6)</strong>
-                    <select id="match6" class="match-select">
-                        <option value="">請選擇</option>
-                        <option value="甲">甲</option><option value="乙">乙</option><option value="丙">丙</option>
-                        <option value="丁">丁</option><option value="戊">戊</option><option value="己">己</option>
-                    </select>
-                    <span>具備弧形拱門與長窗等氣派西式外觀，同時作為地方政令宣導、集會以及藝文展演的多功能建築。</span>
-                </div>
-            </div>
-
-            <!-- 四、情境應用勾選題 -->
-            <div class="section-title">四、情境應用與素養勾選題（每個選項 4 分，共 20 分）</div>
-
-            <div class="context-box">
-                <strong>情境說明：</strong> 小明參觀了現為國定古蹟的台北中山堂（日治時期的台北公會堂），看見牆上展示的雕塑大師黃土水作品《水牛群像》，並回想起歷史課堂上學到關於日治時期建設與變遷的雙重影響。
-                <br><br>
-                <strong>任務：</strong> 請協助小明判斷下列五個關於「日治時期建設與變遷」的敘述，<strong style="color: var(--accent-success);">符合歷史事實且正確的項目請打勾 ✓</strong>（本大題包含複選，每個選項皆獨立計分）。
-            </div>
-
-            <div class="checkbox-question" id="q-chk1">
-                <label>
-                    <input type="checkbox" id="chk1">
-                    <span>① 總督府在台灣興建宏偉氣派的「公會堂」，主因之一是為了彰顯殖民政府的權威，但客觀上也提供台灣人接觸西方與日本藝文展演活動的舞台。</span>
-                </label>
-            </div>
-
-            <div class="checkbox-question" id="q-chk2">
-                <label>
-                    <input type="checkbox" id="chk2">
-                    <span>② 日治時期引進了國語（日語）、算術、博物（自然）、圖畫、唱歌和體操等多元近代科目，雖然其目的有利於政令宣導，但也確實提升了台灣人學習現代知識的能力。</span>
-                </label>
-            </div>
-
-            <div class="checkbox-question" id="q-chk3">
-                <label>
-                    <input type="checkbox" id="chk3">
-                    <span>③ 總督府的新式教育體制非常公平，不論台灣人還是日本人、不論男性還是女性，在升學中學校或高等教育時，享有的名額機會、教育經費與資源完全平等。</span>
-                </label>
-            </div>
-
-            <div class="checkbox-question" id="q-chk4">
-                <label>
-                    <input type="checkbox" id="chk4">
-                    <span>④ 總督府積極開發阿里山等地的山林資源、熬製樟腦與開採煤礦，這雖然增加了台灣的產值與現代化工廠建設，但往往也嚴重侵犯到了原住民族原本的生活空間。</span>
-                </label>
-            </div>
-
-            <div class="checkbox-question" id="q-chk5">
-                <label>
-                    <input type="checkbox" id="chk5">
-                    <span>⑤ 日治時期因為推動了農業改良與新式糖廠，蔗農種植甘蔗的收益與生活大為改善，且甘蔗的銷售價格完全可以由台灣蔗農根據市場機制自行決定。</span>
-                </label>
-            </div>
-        </form>
-
-        <button id="submitBtn" type="button" onclick="submitQuiz()">提交答案查看結果</button>
-
-        <div id="result" style="display: none;">
-            <h2>測試結果</h2>
-            <div class="score-display-result" id="scoreDisplay"></div>
-            <p id="feedbackText" style="text-align: center; font-size: 1.2rem; margin-bottom: 20px;"></p>
         </div>
 
-        <div class="history-section">
-            <h3>📊 測驗紀錄回顧</h3>
-            <div id="historyList">尚無測驗紀錄</div>
-            <button onclick="clearHistory()" style="margin-top: 20px; background: var(--accent-danger); color: white; border: none; padding: 12px; border-radius: 12px; cursor: pointer; font-weight: 600;">清除所有紀錄</button>
+        <div class="question-block" id="block-tf2">
+            <div class="question-title">2. 日治時期實施新式教育，為了促進台日融和，總督府讓台灣漢人兒童就讀資源豐富的「小學校」，而日本人的子弟則就讀「公學校」。</div>
+            <div class="options-inline">
+                <label><input type="radio" name="tf2" value="O"> ⭕ 正確</label>
+                <label><input type="radio" name="tf2" value="X"> ❌ 錯誤</label>
+            </div>
+        </div>
+
+        <div class="question-block" id="block-tf3">
+            <div class="question-title">3. 蔡阿信是台灣歷史上第一位醫學博士，畢業後獨自前往日本京都帝國大學深造，並在蛇毒與戒除鴉片的研究上有傑出貢獻。</div>
+            <div class="options-inline">
+                <label><input type="radio" name="tf3" value="O"> ⭕ 正確</label>
+                <label><input type="radio" name="tf3" value="X"> ❌ 錯誤</label>
+            </div>
+        </div>
+
+        <div class="question-block" id="block-tf4">
+            <div class="question-title">4. 總督府在火車站等公共場所設立時鐘，並引進西方的「標準時間」與「星期制」，規定星期日為休假日，這些措施逐步改變了台灣人的時間觀念。</div>
+            <div class="options-inline">
+                <label><input type="radio" name="tf4" value="O"> ⭕ 正確</label>
+                <label><input type="radio" name="tf4" value="X"> ❌ 錯誤</label>
+            </div>
+        </div>
+
+        <div class="question-block" id="block-tf5">
+            <div class="question-title">5. 嘉義出身的畫家陳澄波，於 1926 年以油畫作品《嘉義街外（一）》入選日本第七屆帝國美術展覽會，成為台灣歷史上首位入選帝展的西洋畫家。</div>
+            <div class="options-inline">
+                <label><input type="radio" name="tf5" value="O"> ⭕ 正確</label>
+                <label><input type="radio" name="tf5" value="X"> ❌ 錯誤</label>
+            </div>
+        </div>
+
+        <div class="question-block" id="block-tf6">
+            <div class="question-title">6. 日治時期在台灣各地興建的「公會堂」（如台北公會堂），在當時是專門提供日本軍隊駐紮與存放軍火的封閉管制空間，不對一般居民開放。</div>
+            <div class="options-inline">
+                <label><input type="radio" name="tf6" value="O"> ⭕ 正確</label>
+                <label><input type="radio" name="tf6" value="X"> ❌ 錯誤</label>
+            </div>
+        </div>
+
+        <div class="question-block" id="block-tf7">
+            <div class="question-title">7. 台灣在日治時期積極開採自然資源，當時所產生的重要礦產如煤礦 and 金礦，在地理位置上主要集中在台灣的南部地區。</div>
+            <div class="options-inline">
+                <label><input type="radio" name="tf7" value="O"> ⭕ 正確</label>
+                <label><input type="radio" name="tf7" value="X"> ❌ 錯誤</label>
+            </div>
+        </div>
+
+
+        <div class="section-title">二、選擇題（每題 4 分，共 28 分）</div>
+
+        <div class="question-block" id="block-mc1">
+            <div class="question-title">1. 被譽為「嘉南大圳之父」的日本技師八田與一，在完成大圳與烏山頭水庫工程後，為了解決水源分配不均並改善土地土質，在嘉南平原推行了哪一種農業給水制度？</div>
+            <div class="options-group">
+                <label><input type="radio" name="mc1" value="1"> (1) 全年無限制供水法</label>
+                <label><input type="radio" name="mc1" value="2"> (2) 三年輪作給水法</label>
+                <label><input type="radio" name="mc1" value="3"> (3) 溫室精準滴灌法</label>
+                <label><input type="radio" name="mc1" value="4"> (4) 漢人傳統埤塘蓄水法</label>
+            </div>
+        </div>
+
+        <div class="question-block" id="block-mc2">
+            <div class="question-title">2. 在日治時期以前的清帝國時期，台灣民間最常見的基礎學習場所是私塾和書院（如鳳儀書院）。當時學生在這些場所主要學習的教材內容是什麼？</div>
+            <div class="options-group">
+                <label><input type="radio" name="mc2" value="1"> (1) 國語（日語）、算術與博物</label>
+                <label><input type="radio" name="mc2" value="2"> (2) 西洋地理、歷史與英文數字</label>
+                <label><input type="radio" name="mc2" value="3"> (3) 機械操作、農業改良與醫學解剖</label>
+                <label><input type="radio" name="mc2" value="4"> (4) 三字經、千字文以及四書五經</label>
+            </div>
+        </div>
+
+        <div class="question-block" id="block-mc3">
+            <div class="question-title">3. 面對殖民政府「台日有別」的不平等升學體制，林獻堂等人於 1915 年奔走爭取，透過民間全面捐獻的方式成立了哪一所學校，成為第一所專門招收台灣人子弟的中學（今台中一中前身）？</div>
+            <div class="options-group">
+                <label><input type="radio" name="mc3" value="1"> (1) 台灣總督府醫學校</label>
+                <label><input type="radio" name="mc3" value="2"> (2) 台中中學校</label>
+                <label><input type="radio" name="mc3" value="3"> (3) 台南州立嘉義農林學校</label>
+                <label><input type="radio" name="mc3" value="4"> (4) 台北末廣高等小學校</label>
+            </div>
+        </div>
+
+        <div class="question-block" id="block-mc4">
+            <div class="question-title">4. 關於日治時期「阿里山林場」的資源開發，下列哪一項敘述是**錯誤**的？</div>
+            <div class="options-group">
+                <label><input type="radio" name="mc4" value="1"> (1) 總督府興建了阿里山森林鐵路，主要功能是方便運送珍貴的林木下山</label>
+                <label><input type="radio" name="mc4" value="2"> (2) 阿里山大量林木遭到砍伐，獲取的經濟利益多由殖民政府掌控</label>
+                <label><input type="radio" name="mc4" value="3"> (3) 林場的開發導致山下的嘉義市街喪失了交通地位而逐漸沒落</label>
+                <label><input type="radio" name="mc4" value="4"> (4) 現今阿里山林場已不再砍伐木材，轉型規畫為國家森林遊盛區</label>
+            </div>
+        </div>
+
+        <div class="question-block" id="block-mc5">
+            <div class="question-title">5. 台灣第一位接受現代醫學訓練的女醫師是誰？她打破了早期社會對女性就學的偏見，並在台中創辦「清信產婆學校」提升助產士的醫護知識，造福無數家庭。</div>
+            <div class="options-group">
+                <label><input type="radio" name="mc5" value="1"> (1) 蔡阿信</label>
+                <label><input type="radio" name="mc5" value="2"> (2) 陳進</label>
+                <label><input type="radio" name="mc5" value="3"> (3) 蔡瑞月</label>
+                <label><input type="radio" name="mc5" value="4"> (4) 高一生</label>
+            </div>
+        </div>
+
+        <div class="question-block" id="block-mc6">
+            <div class="question-title">6. 日治時期總督府极力整建基隆港與高雄港，並配合全島火車「西部縱貫鐵路」的通車。這些交通建設最核心的經濟目的是什麼？</div>
+            <div class="options-group">
+                <label><input type="radio" name="mc6" value="1"> (1) 鼓勵台灣本地居民多開車、搭車出門遊山玩水，帶動觀光</label>
+                <label><input type="radio" name="mc6" value="2"> (2) 方便將日本國內過剩的稻米和砂糖大量進口運來台灣銷售</label>
+                <label><input type="radio" name="mc6" value="3"> (3) 建立健全的貨物海陸聯運網，加速將台灣的物產和自然資源輸出到日本</label>
+                <label><input type="radio" name="mc6" value="4"> (4) 彰顯大國實力，免費協助鄰近亞洲國家進行物流發展</label>
+            </div>
+        </div>
+
+        <div class="question-block" id="block-mc7">
+            <div class="question-title">7. 受日本和西方文化交互影響，日治時期的台灣社會出現了許多新興的日常與休閒生活，至今仍影響現代台灣。下列哪一組完全屬於當時傳入的新式生活型態？</div>
+            <div class="options-group">
+                <label><input type="radio" name="mc7" value="1"> (1) 依據農曆作息、在私塾背誦四書五經、綁小腳</label>
+                <label><input type="radio" name="mc7" value="2"> (2) 改穿西裝洋裝、實行一星期七天制度、至溫泉浴場或戲院休閒</label>
+                <label><input type="radio" name="mc7" value="3"> (3) 憑空冥想氣候、完全廢棄林場、引進外國地下捷運網絡</label>
+                <label><input type="radio" name="mc7" value="4"> (4) 興築西式重裝砲台、開鑿八通關古道、設立糖業文化協會</label>
+            </div>
+        </div>
+
+
+        <div class="section-title">三、整合配合題（每空格 4 分，共 24 分）</div>
+        <div class="matching-box">
+            <p style="font-weight: bold; margin-top:0;">請根據各題的歷史建設或重要人物敘述，由下拉選單選出最適當的代號配對：</p>
+            <div class="matching-grid">
+                <div class="matching-item"><strong>甲</strong>、橋仔頭糖廠</div>
+                <div class="matching-item"><strong>乙</strong>、嘉南大圳</div>
+                <div class="matching-item"><strong>丙</strong>、公會堂</div>
+                <div class="matching-item"><strong>丁</strong>、陳澄波</div>
+                <div class="matching-item"><strong>戊</strong>、高一生</div>
+                <div class="matching-item"><strong>己</strong>、蕃童教育所</div>
+            </div>
+
+            <div class="question-block" id="block-match1">
+                <span class="question-title">(1) </span>
+                <select id="match1" class="match-select">
+                    <option value="">請選擇代號</option>
+                    <option value="甲">甲</option><option value="乙">乙</option><option value="丙">丙</option>
+                    <option value="丁">丁</option><option value="戊">戊</option><option value="己">己</option>
+                </select>
+                <label for="match1">日治時期在高雄興建，引進現代化機械設備，成為台灣第一座新式糖廠。</label>
+            </div>
+
+            <div class="question-block" id="block-match2">
+                <span class="question-title">(2) </span>
+                <select id="match2" class="match-select">
+                    <option value="">請選擇代號</option>
+                    <option value="甲">甲</option><option value="乙">乙</option><option value="丙">丙</option>
+                    <option value="丁">丁</option><option value="戊">戊</option><option value="己">己</option>
+                </select>
+                <label for="match2">位於台灣南部、連接濁水溪與曾文溪等水源的重大水利工程，使嘉南平原變為台灣糧倉。</label>
+            </div>
+
+            <div class="question-block" id="block-match3">
+                <span class="question-title">(3) </span>
+                <select id="match3" class="match-select">
+                    <option value="">請選擇代號</option>
+                    <option value="甲">甲</option><option value="乙">乙</option><option value="丙">丙</option>
+                    <option value="丁">丁</option><option value="戊">戊</option><option value="己">己</option>
+                </select>
+                <label for="match3">日治時期由總督府針對初等教育所設立，專門提供給台灣原住民族兒童就讀的學習場所。</label>
+            </div>
+
+            <div class="question-block" id="block-match4">
+                <span class="question-title">(4) </span>
+                <select id="match4" class="match-select">
+                    <option value="">請選擇代號</option>
+                    <option value="甲">甲</option><option value="乙">乙</option><option value="丙">丙</option>
+                    <option value="丁">丁</option><option value="戊">戊</option><option value="己">己</option>
+                </select>
+                <label for="match4">早期接受新式教育的鄒族精英，畢業於台南師範學校，是著名的教育家、音樂家與政治家。</label>
+            </div>
+
+            <div class="question-block" id="block-match5">
+                <span class="question-title">(5) </span>
+                <select id="match5" class="match-select">
+                    <option value="">請選擇代號</option>
+                    <option value="甲">甲</option><option value="乙">乙</option><option value="丙">丙</option>
+                    <option value="丁">丁</option><option value="戊">戊</option><option value="己">己</option>
+                </select>
+                <label for="match5">嘉義出身、考取東京美術學校，作品多以台灣與故鄉街景為主題，並參與成立台陽美術協會。</label>
+            </div>
+
+            <div class="question-block" id="block-match6">
+                <span class="question-title">(6) </span>
+                <select id="match6" class="match-select">
+                    <option value="">請選擇代號</option>
+                    <option value="甲">甲</option><option value="乙">乙</option><option value="丙">丙</option>
+                    <option value="丁">丁</option><option value="戊">戊</option><option value="己">己</option>
+                </select>
+                <label for="match6">具備弧形拱門與長窗等氣派西式外觀，同時作為地方政令宣導、集會以及藝文展演的多功能建築。</label>
+            </div>
+        </div>
+
+
+        <div class="section-title">四、情境應用與素養勾選題（每個選項 4 分，共 20 分）</div>
+        <div style="background-color: #f0fdfa; border: 1px solid #5eead4; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+            <strong>情境說明：</strong> 小明參觀了現為國定古蹟的台北中山堂（日治時期的台北公會堂），看見牆上展示的雕塑大師黃土水作品《水牛群像》，並回想起歷史課堂上學到關於日治時期建設與變遷的雙重影響。
+            <br><br>
+            <strong>任務：</strong> 請協助小明判斷下列五個關於「日治時期建設與變遷」的敘述，<strong>符合歷史事實且正確的項目請打勾 (✔)</strong>（本大題包含複選，每個選項皆獨立計分）。
+        </div>
+
+        <div class="question-block" id="block-chk1">
+            <label>
+                <input type="checkbox" id="chk1">
+                <span class="chk-label">① 總督府在台灣興建宏偉氣派的「公會堂」，主因之一是為了彰顯殖民政府的權威，但客觀上也提供台灣人接觸西方與日本藝文展演活動的舞臺。</span>
+            </label>
+        </div>
+
+        <div class="question-block" id="block-chk2">
+            <label>
+                <input type="checkbox" id="chk2">
+                <span class="chk-label">② 日治時期引進了國語（日語）、算術、博物（自然）、圖畫、唱歌和體操等多元近代科目，雖然其目的有利於政令宣導，但也確實提升了台灣人學習現代知識的能力。</span>
+            </label>
+        </div>
+
+        <div class="question-block" id="block-chk3">
+            <label>
+                <input type="checkbox" id="chk3">
+                <span class="chk-label">③ 總督府的新式教育體制非常公平，不論台灣人還是日本人、不論男性還是女性，在升學中學校或高等教育時，享有的名額機會、教育經費與資源完全平等。</span>
+            </label>
+        </div>
+
+        <div class="question-block" id="block-chk4">
+            <label>
+                <input type="checkbox" id="chk4">
+                <span class="chk-label">④ 總督府積極開發阿里山等地的山林資源、熬製樟腦與開採煤礦，這雖然增加了台灣的產值與現代化工廠建設，但往往也嚴重侵犯到了原住民族原本的生活空間。</span>
+            </label>
+        </div>
+
+        <div class="question-block" id="block-chk5">
+            <label>
+                <input type="checkbox" id="chk5">
+                <span class="chk-label">⑤ 日治時期因為推動了農業改良與新式糖廠，蔗農種植甘蔗的收益與生活大為改善，且甘蔗的銷售價格完全可以由台灣蔗農根據市場機制自行決定。</span>
+            </label>
+        </div>
+
+        <div class="submit-area">
+            <button type="submit" class="btn-submit">提交測驗與自動批改</button>
+        </div>
+    </form>
+
+    <div id="result-panel">
+        <h2 id="result-title" style="color: #1e3a8a;">測驗批改完成！</h2>
+        <div id="score-box" style="display:inline-block; padding: 15px 30px; border-radius: 10px; background-color: #e0f2fe;">
+            <div style="font-size:16px; color:#0369a1; font-weight:bold;">您的總得分</div>
+            <div class="score-display" id="score-val">0</div>
+            <div style="font-size:14px; color:#0284c7;">滿分 100 分（錯題已自動標紅並提供正確答案）</div>
         </div>
     </div>
 
-    <script>
-        const STORAGE_KEY = 'society_unit4_quiz1_results';
-        const tfAnswers = { tf1: 'X', tf2: 'X', tf3: 'X', tf4: 'O', tf5: 'O', tf6: 'X', tf7: 'X' };
-        const mcAnswers = { mc1: '2', mc2: '4', mc3: '2', mc4: '3', mc5: '1', mc6: '3', mc7: '2' };
-        const matchAnswers = { match1: '甲', match2: '乙', match3: '己', match4: '戊', match5: '丁', match6: '丙' };
-        const chkAnswers = { chk1: true, chk2: true, chk3: false, chk4: true, chk5: false };
+    <div class="analysis-box" id="analysis-box">
+        <h2>💡 108 課綱核心素養深度解析（探究與理解）</h2>
 
-        function toggleTheme() {
-            const html = document.documentElement;
-            const btn = document.getElementById('themeBtn');
-            const currentTheme = html.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            html.setAttribute('data-theme', newTheme);
-            btn.innerHTML = newTheme === 'dark' ? '<span>☀️</span> 亮色模式' : '<span>🌙</span> 暗色模式';
-            localStorage.setItem('theme', newTheme);
+        <div class="analysis-section">
+            <h4>1. 經濟與交通建設的「殖民本質」</h4>
+            <p>日治時期的各項基礎建設具有雙重性。總督府在台灣興建「西部縱貫鐵路」、整建「基隆港」與「高雄港」，其最核心的目的是為了利於將台灣生產的砂糖、稻米以及豐富的林木、礦產等自然資源「大量輸出到日本本土」，以獲取最大經濟利益，而非消極放任。雖然這些建設為台灣現代化奠定基礎，但如甘蔗的收購價格是由新式糖廠一手掌控，蔗農並無決定權，甚至有「第一憨，替人種甘蔗」的俗諺，充分顯現殖民經濟的掠奪與不平等性。</p>
+        </div>
+
+        <div class="analysis-section">
+            <h4>2. 新式教育體制的「台日有別」與人才崛起</h4>
+            <p>日治時期是台灣新式基礎教育普及的起點，課程包含算術、博物、日語等，並逐漸將女性納入就學對象，使就學比率提升。然而，教育體制充滿了不平等（台日有別）：台灣人主要讀公學校，日本人讀小學校，且中學以上的升學名額受到殖民政府的嚴格限制。面對這種不公，民間知識分子如林獻堂奔走成立「台中中學校」以爭取受教權；同時，許多優秀精英在限制下展現堅毅不拔的精神，如台灣首位女醫師「蔡阿信」赴日學醫並回台開創產婆學校、第一位醫學博士「杜聰明」致力於鴉片與蛇毒研究、原住民精英「高一生」投入鄒族文化維護，以及「陳澄波」入選帝展，皆展現台灣人在現代化轉折中的主體性與堅毅精神。</p>
+        </div>
+
+        <div class="analysis-section">
+            <h4>3. 現代生活型態的建立與文化的多元融合</h4>
+            <p>總督府引進西方的「標準時間」、「陽曆」與「一星期七天制度（星期日休假）」，並在公共場所普設時鐘、印製火車時刻表，強制培養台灣人養成「守時」的習慣，這才打破了傳統依循農曆生活作息的步調，形奏了現代社會的日常生活規律。此外，隨著固定休假制度的建立，北投溫泉浴場、台南公園等公共活動空間、宮古座等戲院、咖啡廳相繼設立，棒球與登山等戶外運動風氣也逐漸興起，結合了日式與西式風格的服飾、建築（如大溪老街、公會堂），共同交織出豐富多元的台灣現代生活型態。</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    const UNIT_NAME = "國小社會五下Ｕ4：日治時期的建設與社會變遷";
+
+    // 頁面加載時載入LocalStorage歷程
+    window.onload = function() {
+        loadHistory();
+    };
+
+    function loadHistory() {
+        const historyList = JSON.parse(localStorage.getItem('social_quiz_history')) || [];
+        const tbody = document.getElementById('history-tbody');
+        tbody.innerHTML = '';
+
+        if (historyList.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;color:#64748b;">目前尚無練習紀錄，開始挑戰你的第一次測驗吧！</td></tr>';
+            return;
         }
 
-        function submitQuiz() {
-            let score = 0;
-            const total = 25;
-
-            for (const [q, answer] of Object.entries(tfAnswers)) {
-                const selected = document.querySelector(`input[name="${q}"]:checked`);
-                const el = document.getElementById(`q-${q}`);
-                el.classList.remove('correct-feedback', 'incorrect-feedback');
-                const oldFeedback = el.querySelector('.feedback-msg');
-                if (oldFeedback) oldFeedback.remove();
-                if (selected && selected.value === answer) {
-                    score += 4;
-                    el.classList.add('correct-feedback');
-                } else {
-                    el.classList.add('incorrect-feedback');
-                    const msg = document.createElement('div');
-                    msg.className = 'feedback-msg feedback-incorrect';
-                    msg.textContent = `❌ 正確答案：${answer === 'O' ? '⭕ 正確' : '❌ 錯誤'}`;
-                    el.appendChild(msg);
-                }
-            }
-
-            for (const [q, answer] of Object.entries(mcAnswers)) {
-                const selected = document.querySelector(`input[name="${q}"]:checked`);
-                const el = document.getElementById(`q-${q}`);
-                el.classList.remove('correct-feedback', 'incorrect-feedback');
-                const oldFeedback = el.querySelector('.feedback-msg');
-                if (oldFeedback) oldFeedback.remove();
-                if (selected && selected.value === answer) {
-                    score += 4;
-                    el.classList.add('correct-feedback');
-                } else {
-                    el.classList.add('incorrect-feedback');
-                    const msg = document.createElement('div');
-                    msg.className = 'feedback-msg feedback-incorrect';
-                    msg.textContent = `❌ 正確答案：(${answer})`;
-                    el.appendChild(msg);
-                }
-            }
-
-            for (const [q, answer] of Object.entries(matchAnswers)) {
-                const selected = document.getElementById(q).value;
-                const el = document.getElementById(`q-${q}`);
-                el.classList.remove('correct-feedback', 'incorrect-feedback');
-                const oldFeedback = el.querySelector('.feedback-msg');
-                if (oldFeedback) oldFeedback.remove();
-                if (selected === answer) {
-                    score += 4;
-                    el.classList.add('correct-feedback');
-                } else {
-                    el.classList.add('incorrect-feedback');
-                    const msg = document.createElement('div');
-                    msg.className = 'feedback-msg feedback-incorrect';
-                    msg.textContent = `❌ 正確答案：${answer}`;
-                    el.appendChild(msg);
-                }
-            }
-
-            for (const [q, isChecked] of Object.entries(chkAnswers)) {
-                const checked = document.getElementById(q).checked;
-                const el = document.getElementById(`q-${q}`);
-                el.classList.remove('correct-feedback', 'incorrect-feedback');
-                const oldFeedback = el.querySelector('.feedback-msg');
-                if (oldFeedback) oldFeedback.remove();
-                if (checked === isChecked) {
-                    score += 4;
-                    el.classList.add('correct-feedback');
-                } else {
-                    el.classList.add('incorrect-feedback');
-                    const msg = document.createElement('div');
-                    msg.className = 'feedback-msg feedback-incorrect';
-                    msg.textContent = isChecked ? '❌ 此項符合歷史事實，應該勾選！' : '❌ 此項敘述錯誤，不應勾選！';
-                    el.appendChild(msg);
-                }
-            }
-
-            const history = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-            history.push({ date: new Date().toLocaleString(), score: score, total: total * 4 });
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
-
-            const resultDiv = document.getElementById('result');
-            resultDiv.style.display = 'block';
-            document.getElementById('scoreDisplay').innerText = `${score} / ${total * 4}`;
-            document.getElementById('feedbackText').innerText =
-                score === total * 4 ? '🌟 完美！您對日治時期的建設與社會變遷理解非常深刻！' :
-                score >= total * 4 * 0.7 ? '👍 做得不錯！再複習一下錯題部分的解析。' :
-                '📚 建議重新複習單元四：日治時期的建設與社會變遷';
-
-            displayHistory();
-            resultDiv.scrollIntoView({ behavior: 'smooth' });
-        }
-
-        function displayHistory() {
-            const history = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-            const listContainer = document.getElementById('historyList');
-            if (history.length === 0) { listContainer.innerHTML = "尚無測驗紀錄"; return; }
-            listContainer.innerHTML = history.slice().reverse().map((item, idx) => `
-                <div class="history-item">
-                    <strong>第 ${history.length - idx} 次測驗 - ${item.date}</strong><br>
-                    得分：<span style="color: ${item.score >= item.total * 0.7 ? 'var(--accent-success)' : 'var(--accent-danger)'}; font-weight: bold;">${item.score} / ${item.total}</span>
-                </div>`).join('');
-        }
-
-        function clearHistory() {
-            if (confirm("確定要清除本測驗的所有歷史紀錄嗎？")) {
-                localStorage.removeItem(STORAGE_KEY);
-                displayHistory();
-            }
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            document.documentElement.setAttribute('data-theme', savedTheme);
-            const btn = document.getElementById('themeBtn');
-            if (savedTheme === 'dark') btn.innerHTML = '<span>☀️</span> 亮色模式';
-            displayHistory();
+        const recent = historyList.slice(-5).reverse();
+        recent.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${item.date}</td>
+                <td>${item.unit}</td>
+                <td style="font-weight:bold; color:${item.score >= 60 ? '#16a34a' : '#dc2626'}">${item.score} 分</td>
+            `;
+            tbody.appendChild(row);
         });
-    </script>
+    }
+
+    function saveHistory(score) {
+        const historyList = JSON.parse(localStorage.getItem('social_quiz_history')) || [];
+        const now = new Date();
+        const dateStr = `${now.getFullYear()}/${String(now.getMonth()+1).padStart(2,'0')}/${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+
+        historyList.push({
+            date: dateStr,
+            unit: UNIT_NAME,
+            score: score
+        });
+
+        localStorage.setItem('social_quiz_history', JSON.stringify(historyList));
+        loadHistory();
+    }
+
+    function clearHistory() {
+        if(confirm("確定要清除瀏覽器中的歷史練習紀錄嗎？")) {
+            localStorage.removeItem('social_quiz_history');
+            loadHistory();
+        }
+    }
+
+    function gradeQuiz() {
+        let totalScore = 0;
+
+        // 修正點：每次重新批改時，徹底清除舊的 class 與回饋字卡
+        document.querySelectorAll('.question-block').forEach(el => {
+            el.classList.remove('correct-block', 'incorrect-block');
+            const oldMsg = el.querySelector('.feedback-msg');
+            if(oldMsg) oldMsg.remove();
+        });
+
+        // 1. 一、是非題自動批改
+        const tfAnswers = { tf1: 'X', tf2: 'X', tf3: 'X', tf4: 'O', tf5: 'O', tf6: 'X', tf7: 'X' };
+        for(let i = 1; i <= 7; i++) {
+            const qKey = 'tf' + i;
+            const selected = document.querySelector(`input[name="${qKey}"]:checked`);
+            const block = document.getElementById(`block-${qKey}`);
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'feedback-msg';
+
+            const ansText = tfAnswers[qKey] === 'O' ? '⭕ 正確' : '❌ 錯誤';
+
+            if(selected && selected.value === tfAnswers[qKey]) {
+                totalScore += 4;
+                block.classList.add('correct-block');
+                msgDiv.innerHTML = `🎯 答對了！標準答案是：${ansText}`;
+                msgDiv.classList.add('feedback-correct');
+            } else {
+                block.classList.add('incorrect-block');
+                msgDiv.innerHTML = `❌ 答錯了！標準答案是：${ansText}`;
+                msgDiv.classList.add('feedback-incorrect');
+            }
+            block.appendChild(msgDiv);
+        }
+
+        // 2. 二、選擇題自動批改
+        const mcAnswers = { mc1: '2', mc2: '4', mc3: '2', mc4: '3', mc5: '1', mc6: '3', mc7: '2' };
+        const mcTexts = {
+            mc1: '(2) 三年輪作給水法',
+            mc2: '(4) 三字經、千字文以及四書五經',
+            mc3: '(2) 台中中學校',
+            mc4: '(3) 林場的開發導致山下的嘉義市街喪失了交通地位而逐漸沒落',
+            mc5: '(1) 蔡阿信',
+            mc6: '(3) 建立健全的貨物海陸聯運網，加速將台灣的物產和自然資源輸出到日本',
+            mc7: '(2) 改穿西裝洋裝、實行一星期七天制度、至溫泉浴場或戲院休閒'
+        };
+        for(let i = 1; i <= 7; i++) {
+            const qKey = 'mc' + i;
+            const selected = document.querySelector(`input[name="${qKey}"]:checked`);
+            const block = document.getElementById(`block-${qKey}`);
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'feedback-msg';
+
+            if(selected && selected.value === mcAnswers[qKey]) {
+                totalScore += 4;
+                block.classList.add('correct-block');
+                msgDiv.innerHTML = `🎯 答對了！標準答案是：${mcTexts[qKey]}`;
+                msgDiv.classList.add('feedback-correct');
+            } else {
+                block.classList.add('incorrect-block');
+                msgDiv.innerHTML = `❌ 答錯了！標準答案是：${mcTexts[qKey]}`;
+                msgDiv.classList.add('feedback-incorrect');
+            }
+            block.appendChild(msgDiv);
+        }
+
+        // 3. 三、整合配合題自動批改（全面修正為獨立字卡回饋）
+        const matchAnswers = { match1: '甲', match2: '乙', match3: '己', match4: '戊', match5: '丁', match6: '丙' };
+        const matchNames = {
+            '甲': '甲、橋仔頭糖廠', '乙': '乙、嘉南大圳', '丙': '丙、公會堂',
+            '丁': '丁、陳澄波', '戊': '戊、高一生', '己': '己、蕃童教育所'
+        };
+        for(let i = 1; i <= 6; i++) {
+            const qKey = 'match' + i;
+            const selected = document.getElementById(qKey).value;
+            const block = document.getElementById(`block-${qKey}`);
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'feedback-msg';
+
+            const correctAns = matchAnswers[qKey];
+            const correctText = matchNames[correctAns];
+
+            if(selected === correctAns) {
+                totalScore += 4;
+                block.classList.add('correct-block');
+                msgDiv.innerHTML = `🎯 答對了！正確配對是：【${correctText}】`;
+                msgDiv.classList.add('feedback-correct');
+            } else {
+                block.classList.add('incorrect-block');
+                msgDiv.innerHTML = `❌ 答錯了！正確配對是：【${correctText}】`;
+                msgDiv.classList.add('feedback-incorrect');
+            }
+            block.appendChild(msgDiv);
+        }
+
+        // 4. 四、情境應用與素養勾選題自動批改（修正為下方獨立區塊，明確指出應不應該勾選）
+        const chkAnswers = { chk1: true, chk2: true, chk3: false, chk4: true, chk5: false };
+        for(let i = 1; i <= 5; i++) {
+            const qKey = 'chk' + i;
+            const isChecked = document.getElementById(qKey).checked;
+            const block = document.getElementById(`block-${qKey}`);
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'feedback-msg';
+
+            if(isChecked === chkAnswers[qKey]) {
+                totalScore += 4;
+                block.classList.add('correct-block');
+                msgDiv.innerHTML = chkAnswers[qKey] ? `🎯 答對了！此選項【符合歷史事實】，本來就「應該勾選」✔` : `🎯 答對了！此選項【敘述錯誤】，本來就「不應勾選」❌`;
+                msgDiv.classList.add('feedback-correct');
+            } else {
+                block.classList.add('incorrect-block');
+                msgDiv.innerHTML = chkAnswers[qKey] ? `❌ 答錯了！此選項【符合歷史事實】，您遺漏了，答案「應該勾選」✔` : `❌ 答錯了！此選項【敘述錯誤】，您選錯了，答案「不應勾選」❌`;
+                msgDiv.classList.add('feedback-incorrect');
+            }
+            block.appendChild(msgDiv);
+        }
+
+        // 顯示總分面板與核心素養解析
+        document.getElementById('score-val').innerText = totalScore;
+        document.getElementById('result-panel').style.display = 'block';
+        document.getElementById('analysis-box').style.display = 'block';
+
+        // 儲存至歷程
+        saveHistory(totalScore);
+
+        // 平滑滾動至分數顯示面板
+        document.getElementById('result-panel').scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
 </body>
 </html>
