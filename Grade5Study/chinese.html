@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>國語測驗索引</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        function toggleTheme() {
+            const html = document.documentElement;
+            const btn = document.getElementById('themeBtn');
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            btn.innerHTML = newTheme === 'dark' ? '<span>☀️</span> 亮色模式' : '<span>🌙</span> 暗色模式';
+            localStorage.setItem('theme', newTheme);
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            const btn = document.getElementById('themeBtn');
+            if (savedTheme === 'dark') btn.innerHTML = '<span>☀️</span> 亮色模式';
+        });
+    </script>
+</head>
+<body>
+
+<div class="theme-toggle">
+    <button id="themeBtn" onclick="toggleTheme()"><span>🌙</span> 暗色模式</button>
+</div>
+
+<div class="container">
+    <h1>📖 國語測驗目錄</h1>
+
+    <div class="unit-section">
+        <h2>五年級下學期</h2>
+        <ul>
+            <li><p>📝 國語測驗持續更新中，敬請期待！</p></li>
+        </ul>
+    </div>
+
+    <div class="unit-section">
+        <h2>五年級上學期</h2>
+        <ul>
+            <li><p>✅ 所有國語測驗已完成並歸檔。</p></li>
+        </ul>
+    </div>
+
+    <p><a href="index.html" style="text-decoration: none; font-weight: bold; color: var(--accent-primary);">⬅ 回到首頁</a></p>
+</div>
+</body>
+</html>

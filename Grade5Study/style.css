@@ -157,6 +157,7 @@ h1 {
 .english-card { background: linear-gradient(135deg, #f59e0b, #b45309); }
 .math-card { background: linear-gradient(135deg, #10b981, #047857); }
 .society-card { background: linear-gradient(135deg, #6366f1, #4338ca); }
+.chinese-card { background: linear-gradient(135deg, #ec4899, #db2777); }
 
 .subject-card h2 {
     color: white;
