@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 5 Vocabulary Study Tool | 五年級雙語單字學習工具</title>
+    <style>
+        /* Modern CSS Custom Properties for Theme Switching */
+        :root {
+            --bg-color: #f4f7f6;
+            --text-color: #2d3436;
+            --accent-color: #0984e3;
+            --accent-hover: #076bba;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --hover-bg: #f8fafc;
+            --header-bg: #0984e3;
+            --header-text: #ffffff;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+            --badge-bg: #e1f5fe;
+            --badge-text: #0288d1;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1e272e;
+            --text-color: #dcdde1;
+            --accent-color: #00d2d3;
+            --accent-hover: #01b8b9;
+            --card-bg: #2d3436;
+            --border-color: #485460;
+            --hover-bg: #3d4852;
+            --header-bg: #252d3a;
+            --header-text: #00d2d3;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+            --badge-bg: #1a3a4a;
+            --badge-text: #00d2d3;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans TC", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        /* Centered Responsive Container */
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            padding: 30px;
+            position: relative;
+        }
+
+        /* Top Bar & Header Styling */
+        .header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .title-area h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 5px;
+        }
+
+        .title-area p {
+            font-size: 0.95rem;
+            opacity: 0.8;
+        }
+
+        /* Elegant Mode Toggle Button */
+        .theme-toggle {
+            background: none;
+            border: 2px solid var(--border-color);
+            padding: 8px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            color: var(--text-color);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent-color);
+            background-color: var(--hover-bg);
+        }
+
+        /* Search Filter Utility */
+        .search-box {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-size: 1rem;
+            margin-bottom: 25px;
+            outline: none;
+        }
+
+        .search-box:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(9, 132, 227, 0.15);
+        }
+
+        /* Vocabulary Table Setup */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            max-height: 600px; /* Sticky scrollability */
+            overflow-y: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            position: sticky;
+            top: 0;
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            font-weight: 600;
+            padding: 14px 18px;
+            font-size: 1rem;
+            z-index: 5;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        td {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: middle;
+            font-size: 1rem;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background-color: var(--hover-bg);
+        }
+
+        /* Vocabulary Word Column layout */
+        .word-cell {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        /* Pronunciation Button UI */
+        .btn-pronounce {
+            background-color: var(--badge-bg);
+            border: none;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--badge-text);
+            flex-shrink: 0;
+        }
+
+        .btn-pronounce:hover {
+            transform: scale(1.08);
+            background-color: var(--accent-color);
+            color: #ffffff;
+        }
+
+        .btn-pronounce svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        .chinese-cell {
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .example-cell {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        /* Counter Footer */
+        .footer-stats {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            opacity: 0.7;
+            text-align: right;
+        }
+
+        /* Responsive Mobile Design Transformations */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                margin: 10px auto;
+                padding: 15px;
+            }
+            .header-actions {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            .theme-toggle {
+                align-self: flex-end;
+            }
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            thead {
+                display: none; /* Hide standard headers on card layout */
+            }
+            tr {
+                margin-bottom: 15px;
+                border: 1px solid var(--border-color);
+                border-radius: 8px;
+                padding: 10px;
+                background-color: var(--card-bg);
+                box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            }
+            td {
+                border-bottom: 1px dashed var(--border-color);
+                padding: 8px 4px;
+                display: flex;
+                flex-direction: column;
+            }
+            td:last-child {
+                border-bottom: none;
+            }
+            td::before {
+                content: attr(data-label);
+                font-size: 0.75rem;
+                text-transform: uppercase;
+                font-weight: bold;
+                color: var(--accent-color);
+                margin-bottom: 4px;
+            }
+            .word-cell {
+                justify-content: Barbaric;
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Top Configuration Header -->
+    <div class="header-actions">
+        <div class="title-area">
+            <h1>Grade 5 Bilingual Vocabulary List</h1>
+            <p>臺灣 108 課綱五年級雙語延伸字彙學習工具</p>
+        </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle Dark/Light Mode">
+            <span id="themeIcon">☀️</span> <span id="themeText">Light Mode</span>
+        </button>
+    </div>
+
+    <!-- Live Search Utility -->
+    <input type="text" id="searchBox" class="search-box" placeholder="🔍 Search words or translation... /搜尋單字或中文解釋...">
+
+    <!-- Responsive Fluid Table Container -->
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 25%;">Word (單字)</th>
+                    <th style="width: 25%;">Chinese (中文翻譯)</th>
+                    <th style="width: 50%;">Example Usage (例句情境)</th>
+                </tr>
+            </thead>
+            <tbody id="vocabTableBody">
+                <!-- Programmatically generated content populated here for peak architecture -->
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer-stats" id="footerStats">Showing all terms</div>
+</div>
+
+<script>
+    // Comprehensive Curriculum Data Set Array
+    const vocabularyData = [
+        { word: "safari", ch: "野生動物園之旅 / 狩獵旅行", eg: "We saw majestic lions during our safari adventure in Africa." },
+        { word: "rhino", ch: "犀牛", eg: "The rhino cooled itself down by rolling around in the thick mud." },
+        { word: "probably", ch: "很可能 / 大概", eg: "If the clouds stay grey, it will probably rain later this afternoon." },
+        { word: "grass", ch: "草 / 草地", eg: "The children sat cross-legged on the soft green grass for a picnic." },
+        { word: "permission", ch: "允許 / 許可", eg: "You must ask your parents for permission before joining the field trip." },
+        { word: "example", ch: "例子 / 範例", eg: "Our teacher wrote a clear example on the board to help us understand." },
+        { word: "comfortably", ch: "舒服地 / 安逸地", eg: "The kitten slept comfortably tucked inside my old fuzzy sweater." },
+        { word: "dream", ch: "夢 / 夢想", eg: "Her ultimate dream is to become an astronaut and travel to Mars." },
+        { word: "happen", ch: "發生", eg: "What will happen if we do not hand in our science project on time?" },
+        { word: "finish", ch: "完成 / 結束", eg: "Please finish eating your breakfast before you prepare for school." },
+        { word: "wake up", ch: "醒來 / 喚醒", eg: "I always wake up early in the morning to hear the birds singing." },
+        { word: "doorbell", ch: "門鈴", eg: "Our dog barked loudly the exact moment the mailman rang the doorbell." },
+        { word: "rule", ch: "規則 / 規定", eg: "Following the classroom rules ensures everyone has a safe place to learn." },
+        { word: "bite", ch: "咬", eg: "Be careful around that stray dog because it might get scared and bite." },
+        { word: "chase", ch: "追趕 / 追逐", eg: "The playful puppy loves to chase squirrels all around the backyard." },
+        { word: "dark", ch: "黑暗的 / 暗色的", eg: "The room became completely dark after we blew out the birthday candles." },
+        { word: "litter", ch: "亂丟垃圾", eg: "We should never litter because keeping our environment clean is important." },
+        { word: "lost", ch: "迷路的 / 遺失的", eg: "The little boy felt scared when he got lost in the crowded mall." },
+        { word: "kick", ch: "踢", eg: "He practiced hard to learn how to kick the soccer ball directly into the goal." },
+        { word: "smash", ch: "打碎 / 粉碎", eg: "Be careful with that glass vase, or it might fall and smash on the floor." },
+        { word: "awake", ch: "醒著的", eg: "The sound of thunder kept me completely awake for most of the night." },
+        { word: "flashlight", ch: "手電筒", eg: "We turned on our flashlight when the electricity suddenly went out." },
+        { word: "should", ch: "應該", eg: "You should eat more fresh fruit and vegetables to stay healthy." },
+        { word: "might", ch: "可能", eg: "Don't leave your umbrella at home because it might snow or rain up north." },
+        { word: "follow", ch: "跟隨 / 遵守", eg: "Please follow the guide closely so you don't lose your way in the museum." },
+        { word: "advice", ch: "建議 / 忠告", eg: "My smart grandfather gave me excellent advice about dealing with mistakes." },
+        { word: "female", ch: "女性的 / 雌性的", eg: "A lioness is a female lion that does most of the hunting for the pride." },
+        { word: "marathon", ch: "馬拉松", eg: "She ran a full marathon and crossed the finish line with a smile." },
+        { word: "silver", ch: "銀 / 銀色的", eg: "The runner who came in second place proudly received a silver medal." },
+        { word: "gold", ch: "金 / 金色的", eg: "Winning a gold medal at the Olympic Games is a historic achievement." },
+        { word: "medal", ch: "獎牌", eg: "He hung his swimming tournament medal neatly on his bedroom wall." },
+        { word: "championship", ch: "冠軍賽 / 錦標賽", eg: "Our school's basketball team won the final championship match." },
+        { word: "reportedly", ch: "據報導", eg: "The legendary pop star is reportedly visiting Taiwan next month." },
+        { word: "hobby", ch: "嗜好 / 興趣", eg: "Collecting unique stamps has been my favorite hobby for three years." },
+        { word: "rating", ch: "評分 / 評價", eg: "This newly released video game received a perfect five-star rating." },
+        { word: "athlete", ch: "運動員", eg: "An elite athlete trains for several hours every single day to stay fit." },
+        { word: "blanket", ch: "毛毯 / 毯子", eg: "My mother spread a warm wool blanket over my bed during the cold wave." },
+        { word: "pay", ch: "付錢", eg: "We need to go to the cashier counter to pay for these storybooks." },
+        { word: "dollar", ch: "元 (幣值)", eg: "The ice cream cone costs exactly one dollar at the local shop." },
+        { word: "price", ch: "價格", eg: "Please check the price tag attached to the sleeve of this winter coat." },
+        { word: "try on", ch: "試穿", eg: "You can try on those running shoes in the dressing room over there." },
+        { word: "cotton", ch: "棉 / 棉花的", eg: "This casual summer T-shirt is made entirely out of pure cotton." },
+        { word: "cheap", ch: "便宜的", eg: "The plastic notebook is very cheap, costing only a few coins." },
+        { word: "size", ch: "尺寸", eg: "What shoe size do you take? These boots look a bit tight." },
+        { word: "medium", ch: "中等的 / M號", eg: "I am not tall enough for a large shirt, so I will take a medium." },
+        { word: "large", ch: "大的 / L號", eg: "We ordered a large pizza so there would be enough slices for everyone." },
+        { word: "material", ch: "材料 / 布料", eg: "Wood is the primary material used to build these rustic cabins." },
+        { word: "would", ch: "將會 / 願意", eg: "Would you like to come to my house this Saturday to play games?" },
+        { word: "ticket", ch: "票", eg: "You must show your admission ticket before entering the movie theater." },
+        { word: "reply", ch: "回覆 / 回答", eg: "Please write a polite reply to your friend's party invitation." },
+        { word: "office", ch: "辦公室", eg: "My father works diligently inside a high-rise office building in the city." },
+        { word: "ice rink", ch: "溜冰場", eg: "We put on thick socks and rented sharp skates at the ice rink." },
+        { word: "wedding", ch: "婚禮", eg: "The beautiful bride wore a stunning white dress during her wedding." },
+        { word: "daughter", ch: "女兒", eg: "Mr. and Mrs. Smith love their young daughter very much." },
+        { word: "invitation", ch: "邀請函", eg: "I received a colorful birthday party invitation from my classmate." },
+        { word: "greeting", ch: "問候 / 打招呼", eg: "A warm smile is a wonderful greeting anywhere you travel in the world." },
+        { word: "healthy", ch: "健康的", eg: "Eating balanced meals and sleeping early will keep your body healthy." },
+        { word: "hide", ch: "躲藏", eg: "Our clever cat likes to hide behind the living room curtains." },
+        { word: "smile", ch: "微笑", eg: "She couldn't help but smile when she saw the adorable little puppy." },
+        { word: "tickle", ch: "搔癢", eg: "My older brother loves to tickle my feet until I laugh uncontrollably." },
+        { word: "joke", ch: "開玩笑 / 笑話", eg: "Our teacher told a funny joke that made the whole class laugh out loud." },
+        { word: "laugh", ch: "大笑", eg: "Hearing her joyful laugh always cheers me up when I am feeling down." },
+        { word: "feet", ch: "腳 (複數)", eg: "Please take off your dirty shoes and wash your feet before coming inside." },
+        { word: "could", ch: "能夠 (can的過去式)", eg: "When I was only four years old, I could already ride a bicycle smoothly." },
+        { word: "offer", ch: "提供 / 主動幫忙", eg: "The kind gentleman stood up to offer his seat to the elderly woman." },
+        { word: "cart", ch: "手推車", eg: "We filled our grocery shopping cart with fresh milk, bread, and apples." },
+        { word: "account", ch: "帳戶", eg: "My parents helped me open a savings account at the local bank." },
+        { word: "take place", ch: "發生 / 舉行", eg: "The annual school sports day will take place on the sports field next Friday." },
+        { word: "prince", ch: "王子", eg: "The brave prince rode a handsome white horse back to the royal castle." },
+        { word: "click", ch: "點擊", eg: "Simply click on the blue link to start downloading your digital study worksheet." },
+        { word: "voice", ch: "聲音 (人的)", eg: "Our English teacher has a very clear and soothing speaking voice." },
+        { word: "request", ch: "要求 / 請求", eg: "The librarian granted our request for extra time to finish our research." },
+        { word: "dictionary", ch: "字典", eg: "You should look up unfamiliar words in a dictionary to learn their meanings." },
+        { word: "word", ch: "字 / 單字", eg: "Try to memorize at least one new English word every single day." },
+        { word: "explain", ch: "解釋", eg: "Could you please explain this difficult math problem to me one more time?" },
+        { word: "illustration", ch: "插圖", eg: "The picture book features a beautiful illustration of a magical forest on every page." },
+        { word: "pronunciation", ch: "發音", eg: "Listening to native speakers will help improve your English pronunciation." },
+        { word: "free", ch: "免費的 / 自由的", eg: "Museum entry is entirely free for all elementary school students on weekends." },
+        { word: "mean", ch: "意思是 / 意指", eg: "What does this specific red warning sign mean? Can you explain it?" },
+        { word: "inside", ch: "在...裡面", eg: "It started pouring with rain, so we quickly ran inside the classroom." },
+        { word: "someone", ch: "某人", eg: "I am certain someone left their yellow pencil case on my desk." },
+        { word: "something", ch: "某事 / 某物", eg: "My stomach is rumbling because I really want to eat something sweet." },
+        { word: "anyone", ch: "任何人", eg: "Is anyone available to help me carry these heavy textbooks to the office?" },
+        { word: "anything", ch: "任何事物", eg: "I am not afraid of anything, not even dark rooms or creepy crawly spiders." },
+        { word: "waitress", ch: "女服務生", eg: "The polite waitress brought us a big pitcher of ice-cold water." },
+        { word: "positive", ch: "正面的 / 積極的", eg: "Keeping a positive mindset helps you overcome difficult problems easily." },
+        { word: "negative", ch: "負面的 / 消極的", eg: "Try not to let negative thoughts ruin what is otherwise a beautiful day." },
+        { word: "pronounce", ch: "發音 (動詞)", eg: "How do you pronounce this long medical word correctly? Is it difficult?" },
+        { word: "incorrectly", ch: "錯誤地", eg: "He accidentally spelled the word 'separate' incorrectly on his spelling quiz." },
+        { word: "alphabet", ch: "字母表", eg: "There are twenty-six letters total in the standard English alphabet." },
+        { word: "definition", ch: "定義", eg: "The teacher read aloud the textbook definition of the word 'energy'." },
+        { word: "piece", ch: "一片 / 一塊", eg: "May I have another small piece of chocolate cake for dessert?" },
+        { word: "bacon", ch: "培根", eg: "The savory smell of crispy frying bacon woke me up early this morning." },
+        { word: "Internet", ch: "網際網路", eg: "We can connect to the global Internet to research interesting facts." },
+        { word: "engine", ch: "引擎", eg: "The sports car's powerful engine roared loudly when the driver started it." },
+        { word: "button", ch: "按鈕", eg: "Press the large red button to immediately start the countdown timer." },
+        { word: "result", ch: "結果", eg: "The happy student smiled broadly when she received her high test result." },
+        { word: "downstairs", ch: "在樓下", eg: "My grandparents are relaxing comfortably downstairs in the living room." },
+        { word: "upstairs", ch: "在樓上", eg: "I walked directly upstairs to my bedroom to finish my homework." },
+        { word: "above", ch: "在...上方", eg: "A colorful flock of wild birds flew high above the tallest city buildings." },
+        { word: "across from", ch: "在...對面", eg: "The local bakery is located directly across from our primary school." },
+        { word: "below", ch: "在...下方", eg: "The temperature dropped drastically below zero during the winter storm." },
+        { word: "outside", ch: "在外面", eg: "The weather is lovely, so let's go outside and play a game of tag." },
+        { word: "jewelry", ch: "珠寶 / 首飾", eg: "The queen wore priceless diamond jewelry during the grand royal ceremony." },
+        { word: "triangular", ch: "三角形的", eg: "The camping tent has a simple triangular shape that resists strong winds." },
+        { word: "brochure", ch: "小冊子", eg: "We picked up an informative travel brochure about scenic spots in Hualien." },
+        { word: "miserable", ch: "痛苦的 / 可憐的", eg: "Getting soaked through by the freezing rain made me feel absolutely miserable." },
+        { word: "frightened", ch: "害怕的", eg: "The sudden loud crack of thunder made the little puppy feel deeply frightened." }
+    ];
+
+    const vocabTableBody = document.getElementById('vocabTableBody');
+    const searchBox = document.getElementById('searchBox');
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeText = document.getElementById('themeText');
+    const footerStats = document.getElementById('footerStats');
+
+    // 1. Theme Toggle Logic using localStorage persistence
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    if (currentTheme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        themeIcon.textContent = '🌙';
+        themeText.textContent = 'Dark Mode';
+    }
+
+    themeToggle.addEventListener('click', () => {
+        let theme = document.documentElement.getAttribute('data-theme');
+        if (theme === 'dark') {
+            document.documentElement.removeAttribute('data-theme');
+            localStorage.setItem('theme', 'light');
+            themeIcon.textContent = '☀️';
+            themeText.textContent = 'Light Mode';
+        } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+            themeIcon.textContent = '🌙';
+            themeText.textContent = 'Dark Mode';
+        }
+    });
+
+    // 2. High-Performance Text-To-Speech (TTS) Engine
+    function speak(text) {
+        if ('speechSynthesis' in window) {
+            // Cancel active utterances to clear queue for instant response
+            window.speechSynthesis.cancel();
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.rate = 0.85; // Adjusted slightly slower for student comprehension
+            utterance.pitch = 1.0;
+            window.speechSynthesis.speak(utterance);
+        } else {
+            alert('Your browser does not support Speech Synthesis. Please use a modern browser.');
+        }
+    }
+
+    // 3. Dynamic Rendering Layer
+    function renderTable(data) {
+        vocabTableBody.innerHTML = '';
+        if(data.length === 0) {
+            vocabTableBody.innerHTML = `<tr><td colspan="3" style="text-align: center; opacity: 0.6; padding: 30px;">No matching words found. / 找不到相符的單字。</td></tr>`;
+            footerStats.textContent = `Showing 0 terms`;
+            return;
+        }
+
+        data.forEach(item => {
+            const tr = document.createElement('tr');
+
+            // Structured data attribute payloads for mobile layout responsiveness
+            tr.innerHTML = `
+                <td data-label="Word (單字)">
+                    <div class="word-cell">
+                        <span>${item.word}</span>
+                        <button class="btn-pronounce" data-word="${item.word}" title="Listen to pronunciation">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </td>
+                <td data-label="Chinese (中文)" class="chinese-cell">${item.ch}</td>
+                <td data-label="Example (例句)" class="example-cell">${item.eg}</td>
+            `;
+            vocabTableBody.appendChild(tr);
+        });
+
+        footerStats.textContent = `Total: ${data.length} vocabulary terms`;
+    }
+
+    // 4. Multi-language Real-time Filtering Engine
+    searchBox.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        const filteredData = vocabularyData.filter(item => {
+            return item.word.toLowerCase().includes(query) || item.ch.toLowerCase().includes(query);
+        });
+        renderTable(filteredData);
+    });
+
+    // 5. Global Event Delegation for TTS triggers
+    vocabTableBody.addEventListener('click', (e) => {
+        const targetBtn = e.target.closest('.btn-pronounce');
+        if (targetBtn) {
+            const targetWord = targetBtn.getAttribute('data-word');
+            speak(targetWord);
+        }
+    });
+
+    // Initial Execution Context initialization
+    renderTable(vocabularyData);
+</script>
+
+</body>
+</html>
