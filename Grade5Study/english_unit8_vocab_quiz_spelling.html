@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 5 English Vocabulary Spelling Quiz</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --success: #16a34a;
+            --success-light: #f0fdf4;
+            --danger: #dc2626;
+            --danger-light: #fef2f2;
+            --background: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+
+        .quiz-item {
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background-color: #fafafa;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-item:hover {
+            border-color: #cbd5e1;
+            background-color: #ffffff;
+        }
+
+        .question-text {
+            font-size: 17px;
+            font-weight: 500;
+            margin-bottom: 12px;
+            word-wrap: break-word;
+        }
+
+        .hint-badge {
+            display: inline-block;
+            background-color: #e0f2fe;
+            color: #0369a1;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: monospace;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .input-container {
+            margin-top: 5px;
+        }
+
+        .quiz-input {
+            width: 100%;
+            max-width: 300px;
+            padding: 10px 14px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .quiz-input:focus {
+            border-color: var(--primary);
+        }
+
+        /* Results Layout */
+        #results-view {
+            display: none;
+        }
+
+        .score-banner {
+            text-align: center;
+            padding: 24px;
+            background-color: #f5f3ff;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            border: 1px solid #ddd6fe;
+        }
+
+        .score-text {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .result-card {
+            padding: 20px;
+            margin-bottom: 16px;
+            border-radius: 12px;
+            border-left: 6px solid;
+        }
+
+        .result-card.correct {
+            background-color: var(--success-light);
+            border-color: var(--success);
+        }
+
+        .result-card.incorrect {
+            background-color: var(--danger-light);
+            border-color: var(--danger);
+        }
+
+        .result-meta {
+            margin-top: 8px;
+            font-size: 15px;
+        }
+
+        .explanation-box {
+            margin-top: 10px;
+            padding: 12px;
+            background: #ffffff;
+            border-radius: 6px;
+            border: 1px dashed #cbd5e1;
+            font-size: 14px;
+            color: #475569;
+        }
+
+        /* Buttons */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-secondary {
+            background-color: #64748b;
+            margin-top: 15px;
+        }
+
+        .btn-secondary:hover {
+            background-color: #475569;
+        }
+
+        /* Dashboard Styles */
+        .dashboard {
+            margin-top: 40px;
+            border-top: 2px dashed var(--border);
+            padding-top: 30px;
+        }
+
+        .dashboard-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .history-table th, .history-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .history-table th {
+            background-color: #f1f5f9;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .history-empty {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 15px;
+            font-style: italic;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .container { padding: 15px; }
+            h1 { font-size: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Grade 5 English Spelling Quiz</h1>
+        <p class="subtitle">請根據句子與字首尾提示，拼寫出正確的單字或片語。</p>
+    </header>
+
+    <!-- Quiz View -->
+    <div id="quiz-view">
+        <div id="quiz-questions"></div>
+        <button class="btn" onclick="checkResults()">檢查結果 (Check Results)</button>
+    </div>
+
+    <!-- Results View -->
+    <div id="results-view">
+        <div class="score-banner">
+            <h2>測驗結果</h2>
+            <div class="score-text" id="score-display">0 / 0</div>
+        </div>
+
+        <div id="results-summary"></div>
+
+        <button class="btn" onclick="restartQuiz()">再試一次 (Try Again)</button>
+    </div>
+
+    <!-- History Dashboard -->
+    <div class="dashboard">
+        <div class="dashboard-title">📊 歷史學習儀表板 (History Dashboard)</div>
+        <div id="history-container"></div>
+    </div>
+</div>
+
+<script>
+    // 36 words with tailored Grade 5 contexts and Chinese usage explanations
+    const quizData = [
+        { word: "safari", sentence: "We went on a thrilling _______ to see wild animals in Africa.", grammar: "名詞，指「（尤指在非洲的）觀察野生動物之行」。" },
+        { word: "rhino", sentence: "The _______ has a large, sharp horn on its nose.", grammar: "名詞，為 rhinoceros 的簡稱，注意字首為 rh。" },
+        { word: "probably", sentence: "It will _______ rain tomorrow, so you should bring an umbrella.", grammar: "副詞「很可能」，用來修飾動詞 rain 表推測。" },
+        { word: "grass", sentence: "The sheep are happily eating green _______ in the field.", grammar: "不可數名詞「草」，常見搭配為 green grass。" },
+        { word: "permission", sentence: "You must ask for _______ before leaving the classroom.", grammar: "名詞「允許、許可」，ask for permission 為固定搭配用法。" },
+        { word: "example", sentence: "Can you give me an _______ of a healthy snack?", grammar: "名詞「例子」，前面搭配單數冠詞 an，give an example 意為舉例。" },
+        { word: "comfortably", sentence: "The cat slept _______ on the soft cushion all afternoon.", grammar: "副詞「舒服地」，由形容詞 comfortable 變化而來，修飾過去式動詞 slept。" },
+        { word: "dream", sentence: "I had a strange _______ about flying in outer space last night.", grammar: "名詞「夢」，搭配動詞 have，had a dream about... 意為夢見。" },
+        { word: "happen", sentence: "What will _______ if you press this mysterious red button?", grammar: "動詞「發生」，接在助動詞 will 後面使用原形。" },
+        { word: "finish", sentence: "Please _______ your homework before you go out to play.", grammar: "動詞「完成」，此處用於祈使句，後面常接動名詞（V-ing）。" },
+        { word: "wake up", sentence: "I usually _______ at seven o'clock in the morning.", grammar: "片語動詞「醒來」，由動詞 wake 與副詞 up 組成。" },
+        { word: "doorbell", sentence: "Someone is ringing the _______, please open the door.", grammar: "名詞「門鈴」，由 door 與 bell 組成的複合字。" },
+        { word: "rule", sentence: "Following the school _______ keeps everyone safe and happy.", grammar: "名詞「規則」，following... 在此做為動名詞主詞。" },
+        { word: "bite", sentence: "Be careful! That mosquito might _______ you.", grammar: "動詞「咬」，情態助動詞 might 後面需接原形動詞。" },
+        { word: "chase", sentence: "Our playful dog loves to _______ birds in the garden.", grammar: "動詞「追趕」，接在不定詞 to 後面使用原形。" },
+        { word: "dark", sentence: "The room became very _______ after we turned off the lights.", grammar: "形容詞「黑暗的」，接在連綴動詞 became 後面擔任形容詞補語。" },
+        { word: "litter", sentence: "Do not _______; throw your trash into the garbage can.", grammar: "動詞「亂丟垃圾」，助動詞 Do not 後接原形動詞做為否定祈使句。" },
+        { word: "lost", sentence: "We got _______ in the big museum because we didn't have a map.", grammar: "形容詞「迷路的」，get lost 為固定片語，表示迷失方向。" },
+        { word: "kick", sentence: "You should not _______ the soccer ball inside the house.", grammar: "動詞「踢」，助動詞 should not 後接原形動詞。" },
+        { word: "smash", sentence: "Be careful not to _______ the fragile glass vase.", grammar: "動詞「打碎、粉碎」，not to 後面接原形動詞。" },
+        { word: "awake", sentence: "I was still _______ at midnight because the noise outside was too loud.", grammar: "形容詞「清醒的」，在此作 be 動詞的形容詞補語。" },
+        { word: "flashlight", sentence: "We used a _______ to find our way through the dark cave.", grammar: "名詞「手電筒」，單數可數名詞前面加上不定冠詞 a。" },
+        { word: "should", sentence: "You _______ wash your hands thoroughly before eating meals.", grammar: "情態助動詞「應該」，用來給予道德或實用上的建議，後接原形動詞。" },
+        { word: "might", sentence: "It is cloudy, so it _______ rain later this afternoon.", grammar: "情態助動詞「可能」，表可能性較低的推測，後接原形動詞。" },
+        { word: "follow", sentence: "Please _______ the safety signs when you swim in the pool.", grammar: "動詞「遵守、跟隨」，祈使句開頭使用原形動詞。" },
+        { word: "advice", sentence: "My teacher gave me helpful _______ on how to improve my reading.", grammar: "不可數名詞「建議」，不可加上 s，亦不能在前方加 an。" },
+        { word: "female", sentence: "A lioness is a _______ lion, while a king lion is male.", grammar: "形容詞「雌性的」，在此修飾後方的名詞 lion。" },
+        { word: "marathon", sentence: "Running a full _______ requires incredible energy and endurance.", grammar: "名詞「馬拉松賽跑」，開頭為子音 a，故前方使用不定冠詞 a。" },
+        { word: "silver", sentence: "The runner-up won a _______ medal, while the winner got gold.", grammar: "名詞/形容詞「銀色、銀牌」，此處修飾後方的 medal。" },
+        { word: "gold", sentence: "She stood proudly on the podium with her _______ medal.", grammar: "名詞/形容詞「黃金、金牌」，此處用作形容詞修飾 medal。" },
+        { word: "medal", sentence: "He received a shiny swimming _______ for breaking the record.", grammar: "名詞「獎牌」，可數名詞。" },
+        { word: "championship", sentence: "Our school football team won the annual _______ tournament.", grammar: "名詞「冠軍寶座、錦標賽」，代表最高榮譽。" },
+        { word: "reportedly", sentence: "The famous singer is _______ staying at this hotel tonight.", grammar: "副詞「據報導、據說」，修飾整個動詞狀態或句子結構。" },
+        { word: "hobby", sentence: "Collecting rare stamps is my grandfather's favorite _______.", grammar: "名詞「嗜好、興趣」，單數形式。" },
+        { word: "rating", sentence: "This popular video game received a five-star _______ online.", grammar: "名詞「評價、評級」，單數可數名詞。" },
+        { word: "athlete", sentence: "An Olympic _______ trains hard every single day to compete.", grammar: "名詞「運動員」，字首為母音 a，故單數冠詞須使用 An。" }
+    ];
+
+    // Helper to dynamically auto-generate hints matching requirements
+    function generateHint(str) {
+        return str.split(' ').map(word => {
+            if (word.length <= 1) return word;
+            if (word.length === 2) return word[0] + word[1];
+            return word[0] + '_'.repeat(word.length - 2) + word[word.length - 1];
+        }).join(' ');
+    }
+
+    // Render Quiz Setup
+    function initQuiz() {
+        const container = document.getElementById('quiz-questions');
+        container.innerHTML = '';
+
+        quizData.forEach((item, index) => {
+            const hint = generateHint(item.word);
+            const itemHTML = `
+                <div class="quiz-item">
+                    <div class="question-text">${index + 1}. ${item.sentence}</div>
+                    <div><span class="hint-badge">提示: ${hint}</span></div>
+                    <div class="input-container">
+                        <input type="text" class="quiz-input" id="input-${index}" placeholder="請在此輸入單字..." autocomplete="off">
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', itemHTML);
+        });
+        renderHistory();
+    }
+
+    // Score evaluation and UI processing
+    function checkResults() {
+        let score = 0;
+        const total = quizData.length;
+        const summaryContainer = document.getElementById('results-summary');
+        summaryContainer.innerHTML = '';
+
+        quizData.forEach((item, index) => {
+            const userInput = document.getElementById(`input-${index}`).value.trim();
+            const isCorrect = userInput.toLowerCase() === item.word.toLowerCase();
+            const hint = generateHint(item.word);
+
+            if (isCorrect) score++;
+
+            const statusClass = isCorrect ? 'correct' : 'incorrect';
+            const statusLabel = isCorrect ? '✅ 正確 (Correct)' : '❌ 錯誤 (Incorrect)';
+
+            const resultHTML = `
+                <div class="result-card ${statusClass}">
+                    <strong>第 ${index + 1} 題：${statusLabel}</strong>
+                    <div style="margin-top: 8px;"><strong>原句：</strong>${item.sentence.replace('_______', '<u>' + item.word + '</u>')}</div>
+                    <div class="result-meta">
+                        <div><strong>產生的提示：</strong><code>${hint}</code></div>
+                        <div><strong>你的回答：</strong><span style="font-family: monospace; font-weight: bold;">${userInput || '(未填寫)'}</span></div>
+                        <div><strong>正確答案：</strong><span style="font-family: monospace; font-weight: bold; color: var(--success);">${item.word}</span></div>
+                    </div>
+                    <div class="explanation-box">
+                        <strong>文法解析：</strong>${item.grammar}
+                    </div>
+                </div>
+            `;
+            summaryContainer.insertAdjacentHTML('beforeend', resultHTML);
+        });
+
+        // Update score banner
+        document.getElementById('score-display').innerText = `${score} / ${total}`;
+
+        // View toggle
+        document.getElementById('quiz-view').style.display = 'none';
+        document.getElementById('results-view').style.display = 'block';
+
+        // Persist score to localStorage dashboard
+        saveHistoryRecord(score, total);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Storage Management
+    function saveHistoryRecord(score, total) {
+        const history = JSON.parse(localStorage.getItem('grade5_spelling_history') || '[]');
+        const now = new Date();
+        const formattedDate = `${now.getFullYear()}/${String(now.getMonth() + 1).padStart(2, '0')}/${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+        history.push({ timestamp: formattedDate, score: score, total: total });
+        localStorage.setItem('grade5_spelling_history', JSON.stringify(history));
+        renderHistory();
+    }
+
+    function renderHistory() {
+        const history = JSON.parse(localStorage.getItem('grade5_spelling_history') || '[]');
+        const container = document.getElementById('history-container');
+
+        if (history.length === 0) {
+            container.innerHTML = '<div class="history-empty">目前尚無測驗紀錄。</div>';
+            return;
+        }
+
+        let tableHTML = `
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>測驗時間</th>
+                        <th>答對題數</th>
+                        <th>得分率</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        // Display history elements in descending temporal order
+        history.slice().reverse().forEach(record => {
+            const percentage = Math.round((record.score / record.total) * 100);
+            tableHTML += `
+                <tr>
+                    <td>${record.timestamp}</td>
+                    <td>${record.score} / ${record.total}</td>
+                    <td style="font-weight: bold; color: ${percentage >= 60 ? 'var(--success)' : 'var(--danger)'}">${percentage}%</td>
+                </tr>
+            `;
+        });
+
+        tableHTML += '</tbody></table>';
+        container.innerHTML = tableHTML;
+    }
+
+    // Reset workflow
+    function restartQuiz() {
+        document.getElementById('results-view').style.display = 'none';
+        document.getElementById('quiz-view').style.display = 'block';
+        initQuiz();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Run Initialization on lifecycle load
+    window.onload = initQuiz;
+</script>
+
+</body>
+</html>
