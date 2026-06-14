@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>五年級自然小測驗：變因辨析特訓班</title>
+    <style>
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #f5a623;
+            --success-color: #2ec4b6;
+            --danger-color: #e71d36;
+            --bg-color: #f7f9fc;
+            --card-bg: #ffffff;
+            --text-color: #2b2d42;
+        }
+
+        body {
+            font-family: "Microsoft JhengHei", "Heiti TC", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px 0;
+            background: linear-gradient(135deg, var(--primary-color), #357abd);
+            color: white;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+        }
+
+        .concept-box {
+            background-color: #eef1f6;
+            border-left: 5px solid var(--primary-color);
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 25px;
+        }
+
+        .concept-box h3 {
+            margin-top: 0;
+            color: #2c5282;
+        }
+
+        .quiz-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid #e1e8ed;
+        }
+
+        .scenario {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .question-item {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+
+        .question-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .question-title {
+            font-size: 17px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #1a202c;
+        }
+
+        .options-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-left: 10px;
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        label:hover {
+            background-color: #f0f7ff;
+            border-color: var(--primary-color);
+        }
+
+        input[type="radio"], input[type="checkbox"] {
+            margin-right: 12px;
+            transform: scale(1.2);
+        }
+
+        textarea {
+            width: 100%;
+            height: 80px;
+            padding: 10px;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            font-family: inherit;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+
+        /* 結果與回饋樣式 */
+        .explanation {
+            display: none;
+            background-color: #ebf8ff;
+            border: 1px solid #bee3f8;
+            color: #2b6cb0;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 12px;
+            font-size: 15px;
+        }
+
+        .correct-label {
+            background-color: #e6fffa !important;
+            border-color: var(--success-color) !important;
+            color: #234e52;
+            font-weight: bold;
+        }
+
+        .wrong-label {
+            background-color: #fff5f5 !important;
+            border-color: var(--danger-color) !important;
+            color: #742a2a;
+        }
+
+        .score-display {
+            display: none;
+            text-align: center;
+            background: linear-gradient(135deg, var(--success-color), #25a196);
+            color: white;
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .score-num {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .btn-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #357abd;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        /* 歷史紀錄板 */
+        .history-card {
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+            border: 1px solid #e1e8ed;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .history-table th, .history-table td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .history-table th {
+            background-color: #f7f9fc;
+            color: #4a5568;
+        }
+
+        .clear-btn {
+            background-color: #cbd5e0;
+            color: #4a5568;
+            border: none;
+            padding: 5px 10px;
+            font-size: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .clear-btn:hover {
+            background-color: #a0aec0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>五年級自然與生活科技：變因特訓班</h1>
+        <p>親愛的小朋友，準備好挑戰「操作變因」與「控制變因」了嗎？加油！</p>
+    </header>
+
+    <div class="concept-box">
+        <h3>💡 破關小秘笈</h3>
+        <ul>
+            <li><strong>操作變因（只能有1個）</strong>：實驗中<b>故意改變</b>的條件（你想測試的主角）。</li>
+            <li><strong>控制變因（必須有很多個）</strong>：除了主角以外，其他所有必須<b>保持相同</b>的條件（為了公平）。</li>
+        </ul>
+    </div>
+
+    <div id="scoreDisplay" class="score-display">
+        <h2>🎉 挑戰完成！你的得分是：</h2>
+        <div id="scoreNum" class="score-num">0 / 100</div>
+        <p id="scoreFeedback">繼續加油！仔細看底下的原因解析，你一定能完全弄懂！</p>
+    </div>
+
+    <form id="quizForm">
+        <div class="quiz-card" id="card_q1">
+            <div class="scenario">
+                主題一：水分對鐵製品生鏽的影響<br>
+                <span style="font-weight: normal; font-size: 15px; color:#4a5568;">
+                    情境：小華想探究「水分」是不是造成鐵製品生鏽的因素。他準備了兩個相同的夾鏈袋，並在裡面各放入一團大小、重量完全相同的鋼棉：<br>
+                    • 甲組：在鋼棉上滴入 10 滴清水，將夾鏈袋密封（留有空氣），放在陽台上。<br>
+                    • 乙組：鋼棉保持乾燥不加水，將夾鏈袋密封（留有空氣），同樣放在陽台上。
+                </span>
+            </div>
+
+            <div class="question-item">
+                <div class="question-title">1. 在這個實驗中，小華故意讓甲、乙兩組不同的條件（操作變因）是什麼？</div>
+                <div class="options-group">
+                    <label><input type="radio" name="q1_1" value="A">① 鋼棉的大小</label>
+                    <label data-correct="true"><input type="radio" name="q1_1" value="B">② 有沒有加入水分</label>
+                    <label><input type="radio" name="q1_1" value="C">③ 夾鏈袋的密封程度</label>
+                    <label><input type="radio" name="q1_1" value="D">④ 放置的地點</label>
+                </div>
+                <div class="explanation" id="exp_q1_1">
+                    解析：<b>正確答案是 ② 有沒有加入水分</b>。<br>
+                    因為小華想知道「水分」的影響，所以兩組唯一的不同之處就是一組有加水（甲組）、一組沒加水（乙組）。這就是操作變因。
+                </div>
+            </div>
+
+            <div class="question-item">
+                <div class="question-title">2. 為了確保實驗的公平性，下列哪一個「不是」這個實驗應該保持相同的控制變因？</div>
+                <div class="options-group">
+                    <label><input type="radio" name="q1_2" value="A">① 兩組鋼棉的重量與大小</label>
+                    <label><input type="radio" name="q1_2" value="B">② 夾鏈袋的大小與袋內空氣量</label>
+                    <label data-correct="true"><input type="radio" name="q1_2" value="C">③ 滴入水分的多寡</label>
+                    <label><input type="radio" name="q1_2" value="D">④ 放置的環境與觀察時間</label>
+                </div>
+                <div class="explanation" id="exp_q1_2">
+                    解析：<b>正確答案是 ③ 滴入水分的多寡</b>。<br>
+                    因為這個實驗的目的是比較「有水」和「沒水」的差別，水分多寡本身就是被操作的項目，因此它不能被當作一模一樣的控制變因。其他像是鋼棉大小、袋子、放置地點，都必須完全相同。
+                </div>
+            </div>
+
+            <div class="question-item">
+                <div class="question-title">3. 進行操作變因處理的組別稱為「實驗組」，作為對比參考的原始組別稱為「對照組」。請問哪一組是「對照組」？</div>
+                <div class="options-group">
+                    <label><input type="radio" name="q1_3" value="A">① 甲組</label>
+                    <label data-correct="true"><input type="radio" name="q1_3" value="B">② 乙組</label>
+                    <label><input type="radio" name="q1_3" value="C">③ 兩組都是對照組</label>
+                </div>
+                <div class="explanation" id="exp_q1_3">
+                    解析：<b>正確答案是 ② 乙組</b>。<br>
+                    乙組是「保持乾燥、不做任何特殊加水處理」的組別，用來作為原本狀態的對比，這就叫做對照組；而有加水的甲組則是實驗組。
+                </div>
+            </div>
+        </div>
+
+        <div class="quiz-card" id="card_q2">
+            <div class="scenario">
+                主題二：溫度對食物長黴的影響<br>
+                <span style="font-weight: normal; font-size: 15px; color:#4a5568;">
+                    情境：小真想驗證「溫度」會影響吐司長黴的速度。她設計了一個實驗，把同一條吐司切成兩片一樣大的麵包，各加入 5 滴水後放入相同的透明密封袋中：<br>
+                    • A組：放入「冰箱冷凍庫」中（大約零下 18°C）。<br>
+                    • B組：放在「客廳的桌子上」（大約 25°C）。
+                </span>
+            </div>
+
+            <div class="question-item">
+                <div class="question-title">1. 請問這個實驗中，小真設定的「操作變因」是什麼？</div>
+                <div class="options-group">
+                    <label><input type="radio" name="q2_1" value="A">① 吐司的大小與種類</label>
+                    <label><input type="radio" name="q2_1" value="B">② 滴入密封袋的水分多寡</label>
+                    <label><input type="radio" name="q2_1" value="C">③ 密封袋的材質與大小</label>
+                    <label data-correct="true"><input type="radio" name="q2_1" value="D">④ 放置環境的溫度</label>
+                </div>
+                <div class="explanation" id="exp_q2_1">
+                    解析：<b>正確答案是 ④ 放置環境的溫度</b>。<br>
+                    小真故意把一組放冷凍庫、一組放客廳，唯一改變的條件就是「溫度」，所以操作變因就是溫度。
+                </div>
+            </div>
+
+            <div class="question-item">
+                <div class="question-title">2. 請問下列哪些項目屬於本實驗的「控制變因」？（複選：請勾選所有必須保持相同的條件）</div>
+                <div class="options-group">
+                    <label data-checkbox-correct="true"><input type="checkbox" name="q2_2" value="A">甲、吐司的種類與大小</label>
+                    <label><input type="checkbox" name="q2_2" value="B">乙、放置地點的溫度</label>
+                    <label data-checkbox-correct="true"><input type="checkbox" name="q2_2" value="C">丙、吐司上滴入的水分量</label>
+                    <label data-checkbox-correct="true"><input type="checkbox" name="q2_2" value="D">丁、實驗進行與觀察的總時間</label>
+                </div>
+                <div class="explanation" id="exp_q2_2">
+                    解析：<b>正確答案應該勾選：甲、丙、丁</b>。<br>
+                    除了「溫度」是故意改變的（操作變因）之外，麵包種類大小（甲）、加的水滴數（丙）、觀察時間（丁）都必須一模一樣，這樣實驗才公平！
+                </div>
+            </div>
+
+            <div class="question-item">
+                <div class="question-title">3. 【思考題】如果小真在 B 組（室溫）中加入 5 滴水，但在 A 組（冰箱）中不小心滴了 20 滴水。請問這個實驗還能成功找出「溫度對長黴的影響」嗎？為什麼？</div>
+                <textarea name="q2_3" placeholder="請寫下你的想法..."></textarea>
+                <div class="explanation" id="exp_q2_3">
+                    解析：<b>參考答案：不能。</b><br>
+                    因為這樣一來，實驗同時改變了「溫度」與「水分多寡」兩個條件。如果最後某一組長黴比較多，我們就無法確定是因為「客廳比較溫暖」造成的，還是因為「水滴得比較多」造成的。<b>科學實驗一次只能有一個操作變因（改變一個條件）</b>！
+                </div>
+            </div>
+        </div>
+
+        <div class="quiz-card" id="card_q3">
+            <div class="scenario">
+                主題三：酸性水溶液對生鏽的影響<br>
+                <span style="font-weight: normal; font-size: 15px; color:#4a5568;">
+                    情境：阿明想知道酸性水溶液會不會加速鐵製品生鏽。他準備了兩個相同的玻璃杯，裡面各放入一根一模一樣的全新鐵釘。
+                </span>
+            </div>
+
+            <div class="question-item">
+                <div class="question-title">1. 阿明正在寫實驗紀錄表，請問「操作變因」的格子最適合填入哪一項？</div>
+                <div class="options-group">
+                    <label><input type="radio" name="q3_1" value="A">① 鐵釘的材質</label>
+                    <label><input type="radio" name="q3_1" value="B">② 浸泡的時間長短</label>
+                    <label data-correct="true"><input type="radio" name="q3_1" value="C">③ 浸泡液體是否為酸性</label>
+                    <label><input type="radio" name="q3_1" value="D">④ 玻璃杯的容量大小</label>
+                </div>
+                <div class="explanation" id="exp_q3_1">
+                    解析：<b>正確答案是 ③ 浸泡液體是否為酸性</b>。<br>
+                    既然實驗目的是探討「酸性水溶液」對生鏽的影響，那要改變的、最核心的主角就是液體有沒有酸性。
+                </div>
+            </div>
+
+            <div class="question-item">
+                <div class="question-title">2. 實驗組的鐵釘是浸泡在 50mL 的「食醋」中，為了跟它做正確的比對，請問「對照組」的做法應該讓鐵釘浸泡在什麼液體中最適當？</div>
+                <div class="options-group">
+                    <label><input type="radio" name="q3_2" value="A">① 50mL 的濃鹽水</label>
+                    <label data-correct="true"><input type="radio" name="q3_2" value="B">② 50mL 的自來水（清水）</label>
+                    <label><input type="radio" name="q3_2" value="C">③ 50mL 的檸檬汁</label>
+                    <label><input type="radio" name="q3_2" value="D">④ 50mL 的可樂</label>
+                </div>
+                <div class="explanation" id="exp_q3_2">
+                    解析：<b>正確答案是 ② 50mL 的自來水（清水）</b>。<br>
+                    對照組是要用來對比的「中性/一般正常情況」。食醋是酸性，我們應該用中性的自來水（清水）來比對。檸檬汁和可樂也是酸性的，不能當對照組；而鹽水會帶來鹽分變因，不符合公平實驗原則。
+                </div>
+            </div>
+
+            <div class="question-item">
+                <div class="question-title">3. 【思考題】實驗結果發現：浸泡食醋的鐵釘在 1 小時後就生鏽了，而自來水組沒有變化。請問阿明可以得出什麼「結論」？</div>
+                <textarea name="q3_3" placeholder="請寫下你的結論..."></textarea>
+                <div class="explanation" id="exp_q3_3">
+                    解析：<b>參考答案：酸性水溶液會加速鐵製品生鏽（或：鐵在酸性環境下生鏽速度較快）。</b><br>
+                    結論就是要回應實驗的目的。看到酸性的食醋讓鐵釘這麼快生鏽，就可以證明酸性液體對生鏽有加速的效果。
+                </div>
+            </div>
+        </div>
+
+        <div class="quiz-card" id="card_q4">
+            <div class="scenario">
+                主題四：空氣對食物腐敗長黴的影響<br>
+                <span style="font-weight: normal; font-size: 15px; color:#4a5568;">
+                    情境：志凱盛了兩碗一樣多的米飯，想親自探究「接觸空氣多寡」是否會影響米飯長黴：<br>
+                    • 第一組：將米飯裝入夾鏈袋，並「盡可能將裡面的空氣擠出來」後密封。<br>
+                    • 第二組：將米飯裝入相同的夾鏈袋，但「不擠出空氣直接密封」（留有大量空氣）。<br>
+                    兩組都放在同一個溫暖潮溼的廚房角落，五天後觀察狀況。
+                </span>
+            </div>
+
+            <div class="question-item">
+                <div class="question-title">1. 請問這個實驗中的「操作變因」是什麼？</div>
+                <div class="options-group">
+                    <label><input type="radio" name="q4_1" value="A">① 米飯的份量多寡</label>
+                    <label><input type="radio" name="q4_1" value="B">② 放置地點的溼度</label>
+                    <label data-correct="true"><input type="radio" name="q4_1" value="C">③ 夾鏈袋中空氣的多寡</label>
+                    <label><input type="radio" name="q4_1" value="D">④ 實驗觀察的天數</label>
+                </div>
+                <div class="explanation" id="exp_q4_1">
+                    解析：<b>正確答案是 ③ 夾鏈袋中空氣的多寡</b>。<br>
+                    一組擠出空氣、一組不擠出空氣，這兩組人馬唯一不同、被改變的條件就是「空氣量的多少」，這就是操作變因！
+                </div>
+            </div>
+
+            <div class="question-item">
+                <div class="question-title">2. 請問下列哪些項目是這個實驗中，必須保持相同不變的「控制變因」？（複選：請勾選所有必須保持相同的條件）</div>
+                <div class="options-group">
+                    <label data-checkbox-correct="true"><input type="checkbox" name="q4_2" value="A">甲、米飯的種類與煮熟程度</label>
+                    <label><input type="checkbox" name="q4_2" value="B">乙、夾鏈袋內含有的空氣量</label>
+                    <label data-checkbox-correct="true"><input type="checkbox" name="q4_2" value="C">丙、兩組夾鏈袋放置的環境與溫度</label>
+                    <label data-checkbox-correct="true"><input type="checkbox" name="q4_2" value="D">丁、兩碗米飯裝入夾鏈袋時的新鮮程度</label>
+                </div>
+                <div class="explanation" id="exp_q4_2">
+                    解析：<b>正確答案應該勾選：甲、丙、丁</b>。<br>
+                    乙（空氣量）是我們的操作變因，故意要一多一少，所以它絕對不能保持相同。其餘像米飯種類（甲）、環境溫度（丙）、新鮮度（丁）都必須控制到完全一樣才行喔！
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-container">
+            <button type="button" class="btn" onclick="checkAnswers()">提交測驗並查看結果</button>
+        </div>
+    </form>
+
+    <div class="history-card">
+        <h3>📊 學生練習歷史紀錄</h3>
+        <table class="history-table">
+            <thead>
+                <tr>
+                    <th>測驗次數</th>
+                    <th>測驗時間</th>
+                    <th>得分</th>
+                </tr>
+            </thead>
+            <tbody id="historyDisplay">
+                <tr>
+                    <td colspan="3" style="color: #a0aec0;">目前尚無練習紀錄</td>
+                </tr>
+            </tbody>
+        </table>
+        <button class="clear-btn" onclick="clearHistory()">清除所有紀錄</button>
+    </div>
+</div>
+
+<script>
+    // 頁面載入時載入歷史紀錄
+    window.onload = function() {
+        displayHistory();
+    };
+
+    function checkAnswers() {
+        let totalScore = 0;
+        let maxScore = 100;
+
+        // 計分權重：選擇題/複選題共 8 題，每題 10 分共 80 分。思考簡答題 2 題只要有寫各得 10 分。
+
+        // --- Q1-1 ---
+        let q1_1 = document.querySelector('input[name="q1_1"]:checked');
+        let exp1_1 = document.getElementById('exp_q1_1');
+        exp1_1.style.display = 'block';
+        clearLabelStyles('q1_1');
+        if (q1_1) {
+            if (q1_1.parentElement.hasAttribute('data-correct')) {
+                totalScore += 10;
+                q1_1.parentElement.classList.add('correct-label');
+            } else {
+                q1_1.parentElement.classList.add('wrong-label');
+                highlightCorrect('q1_1');
+            }
+        } else { highlightCorrect('q1_1'); }
+
+        // --- Q1-2 ---
+        let q1_2 = document.querySelector('input[name="q1_2"]:checked');
+        let exp1_2 = document.getElementById('exp_q1_2');
+        exp1_2.style.display = 'block';
+        clearLabelStyles('q1_2');
+        if (q1_2) {
+            if (q1_2.parentElement.hasAttribute('data-correct')) {
+                totalScore += 10;
+                q1_2.parentElement.classList.add('correct-label');
+            } else {
+                q1_2.parentElement.classList.add('wrong-label');
+                highlightCorrect('q1_2');
+            }
+        } else { highlightCorrect('q1_2'); }
+
+        // --- Q1-3 ---
+        let q1_3 = document.querySelector('input[name="q1_3"]:checked');
+        let exp1_3 = document.getElementById('exp_q1_3');
+        exp1_3.style.display = 'block';
+        clearLabelStyles('q1_3');
+        if (q1_3) {
+            if (q1_3.parentElement.hasAttribute('data-correct')) {
+                totalScore += 10;
+                q1_3.parentElement.classList.add('correct-label');
+            } else {
+                q1_3.parentElement.classList.add('wrong-label');
+                highlightCorrect('q1_3');
+            }
+        } else { highlightCorrect('q1_3'); }
+
+        // --- Q2-1 ---
+        let q2_1 = document.querySelector('input[name="q2_1"]:checked');
+        let exp2_1 = document.getElementById('exp_q2_1');
+        exp2_1.style.display = 'block';
+        clearLabelStyles('q2_1');
+        if (q2_1) {
+            if (q2_1.parentElement.hasAttribute('data-correct')) {
+                totalScore += 10;
+                q2_1.parentElement.classList.add('correct-label');
+            } else {
+                q2_1.parentElement.classList.add('wrong-label');
+                highlightCorrect('q2_1');
+            }
+        } else { highlightCorrect('q2_1'); }
+
+        // --- Q2-2 (複選題) ---
+        let q2_2_boxes = document.querySelectorAll('input[name="q2_2"]');
+        let exp2_2 = document.getElementById('exp_q2_2');
+        exp2_2.style.display = 'block';
+        let q2_2_correct = true;
+        q2_2_boxes.forEach(box => {
+            let isCorrectOption = box.parentElement.hasAttribute('data-checkbox-correct');
+            box.parentElement.classList.remove('correct-label', 'wrong-label');
+            if (box.checked && isCorrectOption) {
+                box.parentElement.classList.add('correct-label');
+            } else if (box.checked && !isCorrectOption) {
+                box.parentElement.classList.add('wrong-label');
+                q2_2_correct = false;
+            } else if (!box.checked && isCorrectOption) {
+                q2_2_correct = false;
+            }
+        });
+        if (q2_2_correct) totalScore += 10;
+        // 強制把對的框出來提示
+        q2_2_boxes.forEach(box => {
+            if(box.parentElement.hasAttribute('data-checkbox-correct')) box.parentElement.classList.add('correct-label');
+        });
+
+        // --- Q2-3 (簡答思考題) ---
+        let q2_3 = document.querySelector('textarea[name="q2_3"]').value.trim();
+        document.getElementById('exp_q2_3').style.display = 'block';
+        if (q2_3.length > 0) totalScore += 10; // 有填寫內容即給引導分
+
+        // --- Q3-1 ---
+        let q3_1 = document.querySelector('input[name="q3_1"]:checked');
+        let exp3_1 = document.getElementById('exp_q3_1');
+        exp3_1.style.display = 'block';
+        clearLabelStyles('q3_1');
+        if (q3_1) {
+            if (q3_1.parentElement.hasAttribute('data-correct')) {
+                totalScore += 10;
+                q3_1.parentElement.classList.add('correct-label');
+            } else {
+                q3_1.parentElement.classList.add('wrong-label');
+                highlightCorrect('q3_1');
+            }
+        } else { highlightCorrect('q3_1'); }
+
+        // --- Q3-2 ---
+        let q3_2 = document.querySelector('input[name="q3_2"]:checked');
+        let exp3_2 = document.getElementById('exp_q3_2');
+        exp3_2.style.display = 'block';
+        clearLabelStyles('q3_2');
+        if (q3_2) {
+            if (q3_2.parentElement.hasAttribute('data-correct')) {
+                totalScore += 10;
+                q3_2.parentElement.classList.add('correct-label');
+            } else {
+                q3_2.parentElement.classList.add('wrong-label');
+                highlightCorrect('q3_2');
+            }
+        } else { highlightCorrect('q3_2'); }
+
+        // --- Q3-3 (簡答思考題) ---
+        let q3_3 = document.querySelector('textarea[name="q3_3"]').value.trim();
+        document.getElementById('exp_q3_3').style.display = 'block';
+        if (q3_3.length > 0) totalScore += 10;
+
+        // --- Q4-1 ---
+        let q4_1 = document.querySelector('input[name="q4_1"]:checked');
+        let exp4_1 = document.getElementById('exp_q4_1');
+        exp4_1.style.display = 'block';
+        clearLabelStyles('q4_1');
+        if (q4_1) {
+            if (q4_1.parentElement.hasAttribute('data-correct')) {
+                totalScore += 10;
+                q4_1.parentElement.classList.add('correct-label');
+            } else {
+                q4_1.parentElement.classList.add('wrong-label');
+                highlightCorrect('q4_1');
+            }
+        } else { highlightCorrect('q4_1'); }
+
+        // --- Q4-2 (複選題) ---
+        let q4_2_boxes = document.querySelectorAll('input[name="q4_2"]');
+        let exp4_2 = document.getElementById('exp_q4_2');
+        exp4_2.style.display = 'block';
+        let q4_2_correct = true;
+        q4_2_boxes.forEach(box => {
+            let isCorrectOption = box.parentElement.hasAttribute('data-checkbox-correct');
+            box.parentElement.classList.remove('correct-label', 'wrong-label');
+            if (box.checked && isCorrectOption) {
+                box.parentElement.classList.add('correct-label');
+            } else if (box.checked && !isCorrectOption) {
+                box.parentElement.classList.add('wrong-label');
+                q4_2_correct = false;
+            } else if (!box.checked && isCorrectOption) {
+                q4_2_correct = false;
+            }
+        });
+        if (q4_2_correct) totalScore += 10;
+        q4_2_boxes.forEach(box => {
+            if(box.parentElement.hasAttribute('data-checkbox-correct')) box.parentElement.classList.add('correct-label');
+        });
+
+        // 顯示總分
+        let scoreDisplay = document.getElementById('scoreDisplay');
+        let scoreNum = document.getElementById('scoreNum');
+        let scoreFeedback = document.getElementById('scoreFeedback');
+
+        scoreNum.innerText = totalScore + " / 100";
+        scoreDisplay.style.display = 'block';
+
+        if(totalScore === 100) {
+            scoreFeedback.innerText = "太厲害了！你完全掌握了操作變因和控制變因的精髓！100分！";
+        } else if(totalScore >= 70) {
+            scoreFeedback.innerText = "做得很好！已經掌握大部分的概念了，看一下錯誤題目的解析會更棒喔！";
+        } else {
+            scoreFeedback.innerText = "沒關係，別灰心！自然科學需要多練習，認真看底下的藍色解析，下次一定能全對！";
+        }
+
+        // 儲存紀錄至本地端
+        saveHistory(totalScore);
+
+        // 畫面捲動到頂部結果區
+        window.scrollTo({ top: scoreDisplay.offsetTop - 20, behavior: 'smooth' });
+    }
+
+    function clearLabelStyles(name) {
+        let labels = document.querySelectorAll(`input[name="${name}"]`);
+        labels.forEach(l => {
+            l.parentElement.classList.remove('correct-label', 'wrong-label');
+        });
+    }
+
+    function highlightCorrect(name) {
+        let labels = document.querySelectorAll(`input[name="${name}"]`);
+        labels.forEach(l => {
+            if (l.parentElement.hasAttribute('data-correct')) {
+                l.parentElement.classList.add('correct-label');
+            }
+        });
+    }
+
+    function saveHistory(score) {
+        let history = localStorage.getItem('quiz_history');
+        if (!history) {
+            history = [];
+        } else {
+            history = JSON.parse(history);
+        }
+
+        let now = new Date();
+        let timeStr = now.getFullYear() + '/' + (now.getMonth()+1) + '/' + now.getDate() + ' ' +
+                      String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+
+        history.push({ time: timeStr, score: score });
+        localStorage.setItem('quiz_history', JSON.stringify(history));
+        displayHistory();
+    }
+
+    function displayHistory() {
+        let history = localStorage.getItem('quiz_history');
+        let tbody = document.getElementById('historyDisplay');
+        if (!history || JSON.parse(history).length === 0) {
+            tbody.innerHTML = `<tr><td colspan="3" style="color: #a0aec0;">目前尚無練習紀錄</td></tr>`;
+            return;
+        }
+
+        let historyArr = JSON.parse(history);
+        let html = '';
+        historyArr.forEach((item, index) => {
+            html += `<tr>
+                <td>第 ${index + 1} 次</td>
+                <td>${item.time}</td>
+                <td style="font-weight:bold; color: ${item.score >= 80 ? '#2ec4b6' : item.score >= 60 ? '#f5a623' : '#e71d36'}">${item.score} 分</td>
+            </tr>`;
+        });
+        tbody.innerHTML = html;
+    }
+
+    function clearHistory() {
+        if(confirm("確定要清除所有練習分數紀錄嗎？")) {
+            localStorage.removeItem('quiz_history');
+            displayHistory();
+        }
+    }
+</script>
+
+</body>
+</html>
