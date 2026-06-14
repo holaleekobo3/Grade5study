@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>臺灣 108 課綱五年級下學期自然科學數位練習卷</title>
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-light: #eff6ff;
+            --correct: #2563eb;
+            --correct-bg: #f0f5ff;
+            --incorrect: #dc2626;
+            --incorrect-bg: #fef2f2;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #cbd5e1;
+            --bg-main: #f8fafc;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft JhengHei", sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .dashboard {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .dashboard h2 {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+
+        .history-table th, .history-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .history-table th {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .quiz-section {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .quiz-section h3 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+
+        .question-block {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+
+        .question-block:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+        }
+
+        .inline-blank {
+            border: none;
+            border-bottom: 2px solid var(--border);
+            width: 130px;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: bold;
+            color: var(--primary);
+            padding: 2px 5px;
+            background-color: transparent;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .inline-blank:focus {
+            border-color: var(--primary);
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+
+        .radio-option:hover {
+            background-color: var(--primary-light);
+        }
+
+        .radio-option input {
+            cursor: pointer;
+        }
+
+        .quiz-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        .quiz-table th, .quiz-table td {
+            border: 1px solid var(--border);
+            padding: 12px;
+            text-align: center;
+        }
+
+        .quiz-table th {
+            background-color: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .explanation {
+            margin-top: 12px;
+            padding: 12px 15px;
+            border-left: 4px solid var(--primary);
+            background-color: #f8fafc;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.92rem;
+            color: #475569;
+            display: none;
+        }
+
+        /* Result Styles */
+        .status-correct {
+            border-color: var(--correct) !important;
+            background-color: var(--correct-bg) !important;
+            color: var(--correct) !important;
+        }
+
+        .status-incorrect {
+            border-color: var(--incorrect) !important;
+            background-color: var(--incorrect-bg) !important;
+            color: var(--incorrect) !important;
+        }
+
+        .text-correct {
+            color: var(--correct) !important;
+            font-weight: bold;
+        }
+
+        .text-incorrect {
+            color: var(--incorrect) !important;
+            font-weight: bold;
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        .submit-btn:hover {
+            background-color: #1d4ed8;
+        }
+
+        .submit-btn:active {
+            transform: scale(0.99);
+        }
+
+        .result-summary {
+            background-color: var(--primary-light);
+            border: 2px solid var(--primary);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 25px;
+            display: none;
+        }
+
+        .result-summary h3 {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .score-display {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--correct);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .radio-group { gap: 6px; }
+            .quiz-table th, .quiz-table td { padding: 8px; font-size: 0.85rem; }
+            .inline-blank { width: 100px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>臺灣 108 課綱國小自然科學五年級下學期平時評量卷</h1>
+        <p>單元範圍：第一單元 探索星空的奧祕（基於課本教材出題）</p>
+    </header>
+
+    <div class="dashboard">
+        <h2>📊 歷史練習成績單 (最近5次進度紀錄)</h2>
+        <div id="history-container">
+        </div>
+    </div>
+
+    <div id="result-summary" class="result-summary">
+        <h3>測驗提交完成！</h3>
+        <p>您的本次練習得分為：</p>
+        <div id="score-display" class="score-display">0 分</div>
+        <p style="margin-top: 10px; color: var(--text-muted);">錯題已標紅、對題已標藍，下方提供詳細教材原文字句解析。</p>
+    </div>
+
+    <form id="quiz-form" onsubmit="event.preventDefault(); evaluateQuiz();">
+
+        <div class="quiz-section">
+            <h3>一、星座盤結構與四季星空填空題 (每空 4 分，共 32 分)</h3>
+
+            <div class="question-block" id="block-q1">
+                <div class="question-text">
+                    1. 春季大三角是由角宿一（室女座）、五帝座一（獅子座）和 <input type="text" id="q1" class="inline-blank"> （牧夫座）所形成。
+                </div>
+                <div class="explanation" id="exp-q1"></div>
+            </div>
+
+            <div class="question-block" id="block-q2">
+                <div class="question-text">
+                    2. 在春季天空中，若想找尋春季大三角，可先找到 <input type="text" id="q2" class="inline-blank">，從其杓柄的尾端延伸即可找到。
+                </div>
+                <div class="explanation" id="exp-q2"></div>
+            </div>
+
+            <div class="question-block" id="block-q3">
+                <div class="question-text">
+                    3. 夏季大三角是由牛郎星（天鷹座）、織女星（天琴座）和 <input type="text" id="q3" class="inline-blank"> （天鵝座）所形成。
+                </div>
+                <div class="explanation" id="exp-q3"></div>
+            </div>
+
+            <div class="question-block" id="block-q4">
+                <div class="question-text">
+                    4. 冬季大三角是由天狼星（大犬座）、參宿四（獵戶座）和 <input type="text" id="q4" class="inline-blank"> （小犬座）所形成。
+                </div>
+                <div class="explanation" id="exp-q4"></div>
+            </div>
+
+            <div class="question-block" id="block-q5">
+                <div class="question-text">
+                    5. 星座盤所附的透明片上有一圈圈封閉橢圓曲線代表高度角，其中橢圓曲線中央的點是高度角 90°，為觀測者頭頂正上方，稱為 <input type="text" id="q5" class="inline-blank">。
+                </div>
+                <div class="explanation" id="exp-q5"></div>
+            </div>
+
+            <div class="question-block" id="block-q6">
+                <div class="question-text">
+                    6. 星座盤的最外圈是高度角 0° 的 <input type="text" id="q6" class="inline-blank">，四周則標示著正東、西、南、北方。
+                </div>
+                <div class="explanation" id="exp-q6"></div>
+            </div>
+
+            <div class="question-block" id="block-q7">
+                <div class="question-text">
+                    7. 中西方對星座的組合與命名不一，直至西元1928年由國際天文學聯合會確認各邊界，並於西元1930年正式公告目前國際通用的 <input type="text" id="q7" class="inline-blank" style="width: 80px;"> 個星座。
+                </div>
+                <div class="explanation" id="exp-q7"></div>
+            </div>
+
+            <div class="question-block" id="block-q8">
+                <div class="question-text">
+                    8. 在戶外觀測北方星空時，面向北方將星座盤盤面朝向自己並高舉過頭，此時盤面上的「 <input type="text" id="q8" class="inline-blank" style="width: 60px;"> 」字便會朝向北方，與實際方位一致。
+                </div>
+                <div class="explanation" id="exp-q8"></div>
+            </div>
+        </div>
+
+        <div class="quiz-section">
+            <h3>二、是非題 (每題 4 分，共 28 分)</h3>
+
+            <div class="question-block" id="block-q9">
+                <div class="question-text">9. ( ) 在夜裡，我們肉眼可以看到的星星，大部分和太陽一樣，是會發光、發熱的恆星。</div>
+                <div class="radio-group">
+                    <label class="radio-option"><input type="radio" name="q9" value="O"> ◯ 正確</label>
+                    <label class="radio-option"><input type="radio" name="q9" value="X"> ✕ 錯誤</label>
+                </div>
+                <div class="explanation" id="exp-q9"></div>
+            </div>
+
+            <div class="question-block" id="block-q10">
+                <div class="question-text">10. ( ) 根據希臘神話，獵人奧利安死後變成獵戶座，而毒蠍子變成天蠍座，這兩個星座在天空一沉一現，永不相見。</div>
+                <div class="radio-group">
+                    <label class="radio-option"><input type="radio" name="q10" value="O"> ◯ 正確</label>
+                    <label class="radio-option"><input type="radio" name="q10" value="X"> ✕ 錯誤</label>
+                </div>
+                <div class="explanation" id="exp-q10"></div>
+            </div>
+
+            <div class="question-block" id="block-q11">
+                <div class="question-text">11. ( ) 中國神話中的「參與商」故事裡，高辛氏的哥哥負責管理參宿（位於獵戶座），弟弟則管理大火星（位於天蠍座）。</div>
+                <div class="radio-group">
+                    <label class="radio-option"><input type="radio" name="q11" value="O"> ◯ 正確</label>
+                    <label class="radio-option"><input type="radio" name="q11" value="X"> ✕ 錯誤</label>
+                </div>
+                <div class="explanation" id="exp-q11"></div>
+            </div>
+
+            <div class="question-block" id="block-q12">
+                <div class="question-text">12. ( ) 我們可以觀察到天上的星星在一天中有東升西落的現象，這是因為地球以自轉軸為中心，由東向西自轉所導致的。</div>
+                <div class="radio-group">
+                    <label class="radio-option"><input type="radio" name="q12" value="O"> ◯ 正確</label>
+                    <label class="radio-option"><input type="radio" name="q12" value="X"> ✕ 錯誤</label>
+                </div>
+                <div class="explanation" id="exp-q12"></div>
+            </div>
+
+            <div class="question-block" id="block-q13">
+                <div class="question-text">13. ( ) 使用星座盤尋找星星時，操作的第一步是先轉動星座盤，讓觀測時的日期對準觀測時刻。</div>
+                <div class="radio-group">
+                    <label class="radio-option"><input type="radio" name="q13" value="O"> ◯ 正確</label>
+                    <label class="radio-option"><input type="radio" name="q13" value="X"> ✕ 錯誤</label>
+                </div>
+                <div class="explanation" id="exp-q13"></div>
+            </div>
+
+            <div class="question-block" id="block-q14">
+                <div class="question-text">14. ( ) 在數位資訊時代，我們可以利用上網搜尋或下載如 Stellarium、Star Walk 系列、Starlight 等數位天文軟體來輔助觀測星空。</div>
+                <div class="radio-group">
+                    <label class="radio-option"><input type="radio" name="q14" value="O"> ◯ 正確</label>
+                    <label class="radio-option"><input type="radio" name="q14" value="X"> ✕ 錯誤</label>
+                </div>
+                <div class="explanation" id="exp-q14"></div>
+            </div>
+
+            <div class="question-block" id="block-q15">
+                <div class="question-text">15. ( ) 古時候的人們注意到季節發生變化時，天上的每顆星星看起來的位置也會隨之改變，為了方便記憶，便運用幻想把星星串聯起來，這就是星座最初的由來。</div>
+                <div class="radio-group">
+                    <label class="radio-option"><input type="radio" name="q15" value="O"> ◯ 正確</label>
+                    <label class="radio-option"><input type="radio" name="q15" value="X"> ✕ 錯誤</label>
+                </div>
+                <div class="explanation" id="exp-q15"></div>
+            </div>
+        </div>
+
+        <div class="quiz-section">
+            <h3>三、選擇題 (每題 4 分，共 20 分)</h3>
+
+            <div class="question-block" id="block-q16">
+                <div class="question-text">16. ( ) 關於「秋季四邊形」的敘述，下列哪一項是錯誤的？</div>
+                <div class="radio-group">
+                    <label class="radio-option"><input type="radio" name="q16" value="1"> (1) 由室宿一、室宿二、壁宿一與壁宿二所形成</label>
+                    <label class="radio-option"><input type="radio" name="q16" value="2"> (2) 在秋季天空中是清晰可辨的飛馬座四邊形</label>
+                    <label class="radio-option"><input type="radio" name="q16" value="3"> (3) 可以透過找尋獵戶座的腰帶位置來對照找到它</label>
+                    <label class="radio-option"><input type="radio" name="q16" value="4"> (4) 著名的相關希臘神話星座是仙后座與仙女座</label>
+                </div>
+                <div class="explanation" id="exp-q16"></div>
+            </div>
+
+            <div class="question-block" id="block-q17">
+                <div class="question-text">17. ( ) 在西方神話中，宇宙之神被獵人身邊兩個角色的忠心所感動，便將牠們分別變成天上的什麼星座來伴隨著獵戶座？</div>
+                <div class="radio-group">
+                    <label class="radio-option"><input type="radio" name="q17" value="1"> (1) 大熊座和小熊座</label>
+                    <label class="radio-option"><input type="radio" name="q17" value="2"> (2) 大犬座和小犬座</label>
+                    <label class="radio-option"><input type="radio" name="q17" value="3"> (3) 金牛座與飛馬座</label>
+                    <label class="radio-option"><input type="radio" name="q17" value="4"> (4) 天鷹座與天琴座</label>
+                </div>
+                <div class="explanation" id="exp-q17"></div>
+            </div>
+
+            <div class="question-block" id="block-q18">
+                <div class="question-text">18. ( ) 唐朝詩人杜甫曾說：「人生不相見，動如參與商。」其中的「參」與「商」兩宿，在西方星座劃分中分別主要對應哪兩個星座？</div>
+                <div class="radio-group">
+                    <label class="radio-option"><input type="radio" name="q18" value="1"> (1) 獵戶座、天蠍座</label>
+                    <label class="radio-option"><input type="radio" name="q18" value="2"> (2) 室女座、獅子座</label>
+                    <label class="radio-option"><input type="radio" name="q18" value="3"> (3) 飛馬座、仙女座</label>
+                    <label class="radio-option"><input type="radio" name="q18" value="4"> (4) 大犬座、小犬座</label>
+                </div>
+                <div class="explanation" id="exp-q18"></div>
+            </div>
+
+            <div class="question-block" id="block-q19">
+                <div class="question-text">19. ( ) 從地球上觀看星空，關於星星的顏色與亮暗表現，下列敘述何者完全符合教材內容？</div>
+                <div class="radio-group">
+                    <label class="radio-option"><input type="radio" name="q19" value="1"> (1) 所有的星星亮暗與顏色都是一模一樣的</label>
+                    <label class="radio-option"><input type="radio" name="q19" value="2"> (2) 會發現星星有的亮、有的暗，顏色也不大相同</label>
+                    <label class="radio-option"><input type="radio" name="q19" value="3"> (3) 只有滿月無雨的時候，天空中所有的星星才會完全顯示相同顏色</label>
+                    <label class="radio-option"><input type="radio" name="q19" value="4"> (4) 白天看不見星星是因為星星在白天會全部熄滅不發光</label>
+                </div>
+                <div class="explanation" id="exp-q19"></div>
+            </div>
+
+            <div class="question-block" id="block-q20">
+                <div class="question-text">20. ( ) 地球以通過南北極的自轉軸為中心自轉一圈，所需要的時間是多久？</div>
+                <div class="radio-group">
+                    <label class="radio-option"><input type="radio" name="q20" value="1"> (1) 一個小時</label>
+                    <label class="radio-option"><input type="radio" name="q20" value="2"> (2) 一天的時間</label>
+                    <label class="radio-option"><input type="radio" name="q20" value="3"> (3) 一個月的時間</label>
+                    <label class="radio-option"><input type="radio" name="q20" value="4"> (4) 一年的時間</label>
+                </div>
+                <div class="explanation" id="exp-q20"></div>
+            </div>
+        </div>
+
+        <div class="quiz-section">
+            <h3>四、科學探究與情境實驗題 (每空 4 分，共 20 分)</h3>
+            <p style="margin-bottom: 10px; font-weight: bold;">情境說明：五孝第一組在教室進行「模擬夜間觀察星星」的探究實驗，利用螢幕或投影機投放星空的圖像來模擬星空。請參考以下實驗數據紀錄表，回答相關問題。</p>
+
+            <table class="quiz-table">
+                <thead>
+                    <tr>
+                        <th style="width: 40%;">教室環境明暗（控制變因）</th>
+                        <th style="width: 60%;">觀察結果（應變變因）</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>環境開燈</strong></td>
+                        <td>
+                            星空圖像看起來呈現
+                            <select id="q21" style="padding: 4px; font-size: 0.95rem;">
+                                <option value="">--請選擇--</option>
+                                <option value="較清楚">較清楚</option>
+                                <option value="較不清楚">較不清楚</option>
+                            </select>
+                            的現象。
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>環境較暗：關燈</strong></td>
+                        <td>
+                            星空圖像看起來呈現
+                            <select id="q22" style="padding: 4px; font-size: 0.95rem;">
+                                <option value="">--請選擇--</option>
+                                <option value="較清楚">較清楚</option>
+                                <option value="較不清楚">較不清楚</option>
+                            </select>
+                            的現象。
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="question-block" id="block-q21-q22">
+                <div class="explanation" id="exp-q21-q22"></div>
+            </div>
+
+            <div class="question-block" id="block-q23">
+                <div class="question-text">
+                    23. 根據上述實驗與假設驗證，可歸納出結論：「觀察星星會受到周圍的 <input type="text" id="q23" class="inline-blank" style="width: 90px;"> 影響，明亮的環境不容易觀察到星星。」
+                </div>
+                <div class="explanation" id="exp-q23"></div>
+            </div>
+
+            <div class="question-block" id="block-q24">
+                <div class="question-text">
+                    24. 在真實生活中，街上的路燈、車燈、招牌燈光等，都可能影響我們觀察星星。而這些造成影響的亮光（包含陽光在內），在科學充電站中都被統稱為「 <input type="text" id="q24" class="inline-blank" style="width: 90px;"> 」。
+                </div>
+                <div class="explanation" id="exp-q24"></div>
+            </div>
+
+            <div class="question-block" id="block-q25">
+                <div class="question-text">
+                    25. 依據教材推論，在戶外觀察星空時，除了周圍光線要暗之外，還必須在天空較無 <input type="text" id="q25" class="inline-blank" style="width: 90px;"> 且無空氣汙染的情況下，才較能清楚地觀察到滿天的星星。
+                </div>
+                <div class="explanation" id="exp-q25"></div>
+            </div>
+        </div>
+
+        <button type="submit" class="submit-btn">Score My Test / 提交並自動批改</button>
+    </form>
+</div>
+
+<script>
+    const UNIT_NAME = "第一單元：探索星空的奧祕";
+
+    const answers = {
+        q1: "大角星",
+        q2: "北斗七星",
+        q3: "天津四",
+        q4: "天狼星",
+        q5: "天頂",
+        q6: "地平線",
+        q7: "88",
+        q8: "北",
+        q9: "O",
+        q10: "O",
+        q11: "X",
+        q12: "X",
+        q13: "O",
+        q14: "O",
+        q15: "O",
+        q16: "3",
+        q17: "2",
+        q18: "1",
+        q19: "2",
+        q20: "2",
+        q21: "較不清楚",
+        q22: "較清楚",
+        q23: "光線",
+        q24: "光害",
+        q25: "雲霧"
+    };
+
+    const explanations = {
+        q1: "【教材出處】引自課本第8/9頁：『春季大三角是由角宿一(室女座)、五帝座一(獅子座)和大角星(牧夫座)所形成。』",
+        q2: "【教材出處】引自課本第8/9頁：『在春季天空中，先找到北斗七星，從杓柄的尾端延伸，就能夠找到春季大三角。』",
+        q3: "【教材出處】引自課本第8/9頁：『夏季大三角是由牛郎星(天鷹座)、織女星(天琴座)和天津四(天鵝座)所形成。』",
+        q4: "【教材出處】引自課本第8/9頁：『冬季大三角是由天狼星(大犬座)、參宿四(獵戶座)和南河三(小犬座)所形成。』",
+        q5: "【教材出處】引自課本第5頁：『橢圓曲線中央的點是高度角90°，為觀測者頭頂正上方，稱為天頂。』",
+        q6: "【教材出處】引自課本第5頁：『最外圈是高度角0°的地平線，四周則為正東、西、南、北方。』",
+        q7: "【教材出處】引自課本第4頁：『直至西元1928年，在國際天文學聯合會中確認了每一個星座的邊界，並於西元1930年正式對外公告，也就是目前國際通用的88個星座。』",
+        q8: "【教材出處】引自課本第6頁：『在戶外觀測北方星空時……面向北方，將星座盤的盤面朝向自己並高舉過頭，此時盤面上的北字便會朝向北方，與實際的方位一致。』",
+        q9: "【教材出處】引自課本第3頁（◯）：『在夜裡，我們肉眼可以看到的星星，大部分和太陽一樣，是會發光、發熱的恆星。』",
+        q10: "【教材出處】引自課本第4頁（◯）：『宇宙之神為了獎勵蠍子，便將牠變成天上的天蠍座，獵人奧利安則變成獵戶座，兩個星座在天空一沉一現，永不相見。』",
+        q11: "【教材出處】引自課本第4頁（✕）：教材指出『哥哥派去商丘，負責管理大火星(心宿二星，位於天蠍座)，弟弟則調去大夏管理參宿(位於獵戶座)』。題目敘述將兩者管理位置顛倒，故錯誤。』",
+        q12: "【教材出處】引自課本第7頁（✕）：教材指出『地球以通過南北極的自轉軸為中心，由西向東自轉……所以在地球上的我們，可以觀察到星星在一天中有東升西落的現象』。題目寫由東向西自轉，故錯誤。』",
+        q13: "【教材出處】引自課本第6頁（◯）：動手做使用星座盤尋找星星的第一步即為：『首先轉動星座盤，讓觀測時的日期對準觀測時刻。』",
+        q14: "【教材出處】引自課本第6頁（◯）：充電站指出：『數位資訊時代，有許多的星空軟體和APP程式，可自行上網搜尋，例如：Stellarium、Star Walk系列、Starlight等，都可以幫助我們觀測星空。』",
+        q15: "【教材出處】引自課本第4頁（◯）：『聰明的人們便注意到季節發生變化，天上的每顆星星看起來的位置也會隨之改變，為了方便記憶，於是人們就運用幻想把天上的星星串聯起來，這就是星座最初的由來。』",
+        q16: "【教材出處】引自課本第8/9頁（選項3錯誤）：教材指出『從獵戶座可以找到冬季大三角』，而秋季四邊形是透過『在飛馬座與仙女座附近容易找到』，選項(3)將其混淆，故選3。』",
+        q17: "【教材出處】引自課本第4頁（選2）：『宇宙之神被牠們的忠心感動，於是將這兩隻獵犬分別變成天上的大犬座和小犬座伴隨著獵戶座。』",
+        q18: "【教材出處】引自課本第4頁（選1）：相傳高辛氏二子各居一方，哥哥管理大火星（位於天蠍座），弟弟管理參宿（位於獵戶座），中西方對應下即為獵戶座與天蠍座。",
+        q19: "【教材出處】引自課本第3頁（選2）：課本明確提及：『從地球上觀看星空，會發現星星有的亮，有的暗，顏色也不大相同。』",
+        q20: "【教材出處】引自課本第7頁（選2）：課本明確定義：『地球以通過南北極的自轉軸為中心，由西向東自轉，自轉一圈就是一天的時間。』",
+        q21_q22: "【教材出處】引自課本第3頁數據推論：明亮的環境（開燈）不容易觀察到星星圖像，故為「較不清楚」；夜晚環境光線較暗（關燈）且天空較無雲霧情況下，較能「清楚」觀察到星星，故為「較清楚」。",
+        q23: "【教材出處】引自課本第3頁實驗結論：『觀察星星會受到周圍的光線影響，明亮的環境不容易觀察到星星。』",
+        q24: "【教材出處】引自課本第3頁充電站：『但街上路燈、車燈、招牌燈光，都可能影響我們觀察星星，而這些造成影響的亮光包含陽光在內，都稱為「光害」。』",
+        q25: "【教材出處】引自課本第3頁：『夜晚時，在環境光線較暗且天空較無雲霧的情況下，較能清楚的觀察到星星。』"
+    };
+
+    window.onload = function() {
+        loadHistory();
+    };
+
+    function loadHistory() {
+        const history = JSON.parse(localStorage.getItem('nature_unit1_quiz_history') || '[]');
+        const container = document.getElementById('history-container');
+
+        if (history.length === 0) {
+            container.innerHTML = '<p style="color: var(--text-muted); text-align: center; font-size: 0.95rem;">目前尚未有練習紀錄，趕快開始挑戰吧！</p>';
+            return;
+        }
+
+        let html = '<table class="history-table"><thead><tr><th>練習日期時刻</th><th>單元名稱</th><th>實得分數</th></tr></thead><tbody>';
+        history.slice(-5).reverse().forEach(item => {
+            html += `<tr>
+                <td>${item.date}</td>
+                <td>${item.unit}</td>
+                <td style="font-weight: bold; color: ${item.score >= 60 ? 'var(--correct)' : 'var(--incorrect)'}">${item.score} 分</td>
+            </tr>`;
+        });
+        html += '</tbody></table>';
+        container.innerHTML = html;
+    }
+
+    function evaluateQuiz() {
+        let score = 0;
+        const pointsPerQuestion = 4;
+
+        // 大題一 填空 (q1-q8)
+        for(let i = 1; i <= 8; i++) {
+            const input = document.getElementById('q' + i);
+            const userAns = input ? input.value.trim() : '';
+            const expBlock = document.getElementById('exp-q' + i);
+
+            expBlock.innerHTML = explanations['q' + i];
+            expBlock.style.display = 'block';
+
+            if (userAns === answers['q' + i]) {
+                score += pointsPerQuestion;
+                input.className = "inline-blank status-correct";
+            } else {
+                input.className = "inline-blank status-incorrect";
+                expBlock.innerHTML = `<span class="text-incorrect">您的回答不正確（正確答案：${answers['q' + i]}）</span><br>` + explanations['q' + i];
+            }
+        }
+
+        // 大題二 是非題 (q9-q15)
+        for(let i = 9; i <= 15; i++) {
+            const checkedRadio = document.querySelector(`input[name="q${i}"]:checked`);
+            const block = document.getElementById('block-q' + i);
+            const expBlock = document.getElementById('exp-q' + i);
+
+            expBlock.innerHTML = explanations['q' + i];
+            expBlock.style.display = 'block';
+
+            if (checkedRadio && checkedRadio.value === answers['q' + i]) {
+                score += pointsPerQuestion;
+                block.style.color = 'var(--correct)';
+                expBlock.style.borderLeftColor = 'var(--correct)';
+            } else {
+                block.style.color = 'var(--incorrect)';
+                expBlock.style.borderLeftColor = 'var(--incorrect)';
+                expBlock.innerHTML = `<span class="text-incorrect">您的回答不正確（正確答案：${answers['q' + i] === 'O' ? '◯ 正確' : '✕ 錯誤'}）</span><br>` + explanations['q' + i];
+            }
+        }
+
+        // 大題三 選擇題 (q16-q20)
+        for(let i = 16; i <= 20; i++) {
+            const checkedRadio = document.querySelector(`input[name="q${i}"]:checked`);
+            const block = document.getElementById('block-q' + i);
+            const expBlock = document.getElementById('exp-q' + i);
+
+            expBlock.innerHTML = explanations['q' + i];
+            expBlock.style.display = 'block';
+
+            if (checkedRadio && checkedRadio.value === answers['q' + i]) {
+                score += pointsPerQuestion;
+                block.style.color = 'var(--correct)';
+                expBlock.style.borderLeftColor = 'var(--correct)';
+            } else {
+                block.style.color = 'var(--incorrect)';
+                expBlock.style.borderLeftColor = 'var(--incorrect)';
+                expBlock.innerHTML = `<span class="text-incorrect">您的回答不正確（正確答案為選項 (${answers['q' + i]})）</span><br>` + explanations['q' + i];
+            }
+        }
+
+        // 大題四 探究實驗題 (q21-q25)
+        const sel21 = document.getElementById('q21');
+        const sel22 = document.getElementById('q22');
+        const exp2122 = document.getElementById('exp-q21-q22');
+        exp2122.innerHTML = explanations['q21_q22'];
+        exp2122.style.display = 'block';
+
+        if(sel21.value === answers['q21']) {
+            score += pointsPerQuestion;
+            sel21.className = "status-correct";
+        } else {
+            sel21.className = "status-incorrect";
+        }
+
+        if(sel22.value === answers['q22']) {
+            score += pointsPerQuestion;
+            sel22.className = "status-correct";
+        } else {
+            sel22.className = "status-incorrect";
+        }
+
+        for(let i = 23; i <= 25; i++) {
+            const input = document.getElementById('q' + i);
+            const userAns = input.value.trim();
+            const expBlock = document.getElementById('exp-q' + i);
+
+            expBlock.innerHTML = explanations['q' + i];
+            expBlock.style.display = 'block';
+
+            if (userAns === answers['q' + i]) {
+                score += pointsPerQuestion;
+                input.className = "inline-blank status-correct";
+            } else {
+                input.className = "inline-blank status-incorrect";
+                expBlock.innerHTML = `<span class="text-incorrect">您的回答不正確（正確答案：${answers['q' + i]}）</span><br>` + explanations['q' + i];
+            }
+        }
+
+        document.getElementById('score-display').innerText = score + " 分";
+        document.getElementById('score-display').className = score >= 60 ? "score-display text-correct" : "score-display text-incorrect";
+        document.getElementById('result-summary').style.display = 'block';
+        window.scrollTo({ top: document.getElementById('result-summary').offsetTop - 20, behavior: 'smooth' });
+
+        const history = JSON.parse(localStorage.getItem('nature_unit1_quiz_history') || '[]');
+        const now = new Date();
+        const dateStr = `${now.getFullYear()}/${now.getMonth()+1}/${now.getDate()} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
+
+        history.push({
+            date: dateStr,
+            unit: UNIT_NAME,
+            score: score
+        });
+
+        localStorage.setItem('nature_unit1_quiz_history', JSON.stringify(history));
+        loadHistory();
+    }
+</script>
+
+</body>
+</html>
