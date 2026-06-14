@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade 5 English Spelling Quiz - 五年級單字拼寫測驗</title>
+    <style>
+        :root {
+            --primary-color: #4A6572;
+            --primary-light: #F9AA33;
+            --background-color: #F4F6F8;
+            --card-background: #FFFFFF;
+            --text-color: #333333;
+            --success-color: #2ECC71;
+            --success-bg: #E8F8F5;
+            --error-color: #E74C3C;
+            --error-bg: #FCE4D6;
+            --border-radius: 12px;
+            --shadow: 0 4px 6px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, "Microsoft JhengHei";
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, var(--primary-color), #344955);
+            color: white;
+            padding: 30px 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .card {
+            background: var(--card-background);
+            padding: 24px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            transition: transform 0.2s;
+        }
+
+        .quiz-item {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .question-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2C3E50;
+        }
+
+        .sentence-box {
+            font-size: 1.2rem;
+            letter-spacing: 0.5px;
+            background-color: #F8F9FA;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px dashed #CED4DA;
+        }
+
+        .input-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .quiz-input {
+            padding: 10px 15px;
+            font-size: 1.1rem;
+            border: 2px solid #BDC3C7;
+            border-radius: 6px;
+            width: 250px;
+            max-width: 100%;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .quiz-input:focus {
+            border-color: var(--primary-light);
+            background-color: #FFFDF9;
+        }
+
+        .hint-badge {
+            background-color: #EAECEE;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            color: #5D6D7E;
+            font-weight: bold;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 14px 28px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.2s, transform 0.1s;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .btn:hover {
+            background-color: #344955;
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn-restart {
+            background-color: #7F8C8D;
+            margin-top: 15px;
+        }
+
+        .btn-restart:hover {
+            background-color: #616A6B;
+        }
+
+        /* Results & Review Layout */
+        #result-view {
+            display: none;
+        }
+
+        .score-banner {
+            text-align: center;
+            padding: 30px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+        }
+
+        .score-num {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 10px 0;
+        }
+
+        .summary-item {
+            padding: 18px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 6px solid #CBD5E1;
+            background-color: #F8FAFC;
+        }
+
+        .summary-item.correct-row {
+            border-left-color: var(--success-color);
+            background-color: var(--success-bg);
+        }
+
+        .summary-item.incorrect-row {
+            border-left-color: var(--error-color);
+            background-color: var(--error-bg);
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 5px;
+            margin-top: 8px;
+            font-size: 0.95rem;
+        }
+
+        .highlight-word {
+            font-weight: bold;
+            text-decoration: underline;
+            color: #2C3E50;
+        }
+
+        .user-ans {
+            font-weight: bold;
+        }
+        .correct-row .user-ans { color: var(--success-color); }
+        .incorrect-row .user-ans { color: var(--error-color); text-decoration: line-through; }
+
+        .correct-ans-good {
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        /* Review Section */
+        .review-section-title {
+            margin: 35px 0 15px 0;
+            color: #2C3E50;
+            border-bottom: 2px solid #BDC3C7;
+            padding-bottom: 8px;
+        }
+
+        .review-card {
+            background: #FFF;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 15px;
+            border-top: 4px solid var(--error-color);
+        }
+
+        .review-header {
+            font-weight: bold;
+            color: var(--error-color);
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .explanation-box {
+            background-color: #F4F6F7;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-size: 0.95rem;
+            color: #566573;
+            border-left: 3px solid #BDC3C7;
+        }
+
+        /* History Dashboard */
+        .dashboard-card {
+            background: #EAEDED;
+            border: 1px solid #D5DBDB;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-top: 30px;
+        }
+
+        .dashboard-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #424949;
+            margin-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .clear-btn {
+            background: none;
+            border: none;
+            color: #95A5A6;
+            cursor: pointer;
+            font-size: 0.85rem;
+            text-decoration: underline;
+        }
+
+        .clear-btn:hover {
+            color: var(--error-color);
+        }
+
+        .history-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 6px;
+            overflow: hidden;
+            font-size: 0.9rem;
+        }
+
+        .history-table th, .history-table td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid #E5E7E9;
+        }
+
+        .history-table th {
+            background-color: #BDC3C7;
+            color: #2C3E50;
+            font-weight: bold;
+        }
+
+        .history-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .no-history {
+            text-align: center;
+            color: #7F8C8D;
+            padding: 15px;
+            background: white;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .quiz-input { width: 100%; }
+            header { padding: 20px 10px; }
+            header h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Grade 5 English Spelling Quiz</h1>
+        <p>小學五年級英文單字拼寫測驗 (共 36 題)</p>
+    </header>
+
+    <!-- Quiz Core View -->
+    <div id="quiz-view">
+        <div id="questions-container"></div>
+        <button class="btn" onclick="checkQuizResults()">檢查答案 / Check Results</button>
+    </div>
+
+    <!-- Results & Feedback View -->
+    <div id="result-view">
+        <div class="score-banner">
+            <h2>測驗結果 / Results</h2>
+            <div class="score-num" id="score-display">0 / 36</div>
+            <p id="score-percentage">正確率: 0%</p>
+        </div>
+
+        <h3>詳細作答紀錄 / Detailed Summary</h3>
+        <div id="summary-container"></div>
+
+        <div id="review-section">
+            <!-- Dynamic Incorrect Review Questions -->
+        </div>
+
+        <!-- History Dashboard -->
+        <div class="dashboard-card">
+            <div class="dashboard-title">
+                <span>📊 歷史測驗紀錄 Dashboard</span>
+                <button class="clear-btn" onclick="clearQuizHistory()">清除紀錄</button>
+            </div>
+            <div id="history-container"></div>
+        </div>
+
+        <button class="btn btn-restart" onclick="restartQuiz()">再試一次 / Restart Quiz</button>
+    </div>
+</div>
+
+<script>
+    // Complete 36 words dataset tailored for Grade 5 with sentences and grammar context
+    const quizData = [
+        { word: "blanket", sentence: "It is cold tonight, so I need a warm _______ to sleep.", exp: "blanket (毯子)：名詞，意為毛毯。句意為今晚很冷，需要一件保暖的毯子睡覺。" },
+        { word: "pay", sentence: "You need to _______ money before you take the toys home.", exp: "pay (付錢)：動詞。在助動詞片語 need to 後方必須搭配原形動詞。" },
+        { word: "dollar", sentence: "This beautiful notebook costs only one _______.", exp: "dollar (元)：貨幣名詞。前方有單數 one 修飾，故使用單數型態單字。" },
+        { word: "price", sentence: "What is the _______ of this cute toy car?", exp: "price (價格)：名詞。固定句型 'What is the price of + 物品?' 用來詢問某物的價錢。" },
+        { word: "try on", sentence: "You should _______ the shoes to see if they fit.", exp: "try on (試穿)：動詞片語。應接在情態助動詞 should 後方作為原形動詞片語。" },
+        { word: "cotton", sentence: "This T-shirt is made of soft _______.", exp: "cotton (棉花/棉質)：物質名詞。'be made of...' 表示由某材料製成，且物理性質未變。" },
+        { word: "cheap", sentence: "The ice cream is very _______, it only costs ten dollars.", exp: "cheap (便宜的)：形容詞。放於 be 動詞 is 後方作為形容詞補語，對應後面僅花十元的語意。" },
+        { word: "size", sentence: "What _______ of jacket do you wear, Medium or Large?", exp: "size (尺寸)：名詞。'What size of...' 是固定用來詢問衣服、鞋子尺寸的常用問法。" },
+        { word: "medium", sentence: "I want a _______ pizza, not a big one.", exp: "medium (中等的)：形容詞。修飾名詞 pizza，與後文的 big (大的) 形成大小對比。" },
+        { word: "large", sentence: "Elephants are very _______ animals.", exp: "large (巨大的)：形容詞。用以修飾複數名詞 animals，描述大象是體型非常巨大的動物。" },
+        { word: "material", sentence: "Wood is a useful _______ for making tables and chairs.", exp: "material (材料)：可數名詞。在此處受單數不定冠詞 a 與形容詞 useful 修飾，指木頭是一種實用的原料。" },
+        { word: "would", sentence: "_______ you like to have some chocolate cake?", exp: "would (將會/願意)：助動詞。'Would you like + to V?' 是社交上極為客氣、禮貌的邀請與提議句型。" },
+        { word: "ticket", sentence: "We bought a movie _______ to watch the new film.", exp: "ticket (票)：名詞。movie ticket 代表電影票，前方有單數不定冠詞 a 修飾。" },
+        { word: "reply", sentence: "Please _______ to my text message when you see it.", exp: "reply (回覆)：動詞。在祈使句 Please 引導下使用原形動詞，常與介系詞 to 連用表示回覆某訊息。" },
+        { word: "office", sentence: "My father works in a big _______ in Taipei.", exp: "office (辦公室)：可數名詞。in an office 表示在辦公室內工作，前方加上形容詞 big 故冠詞使用 a。" },
+        { word: "ice rink", sentence: "We can go ice skating at the new _______.", exp: "ice rink (溜冰場)：名詞片語。專指滑冰、冰上曲棍球使用的封閉冰面場地。" },
+        { word: "wedding", sentence: "My aunt looked beautiful in her white dress at her _______.", exp: "wedding (婚禮)：名詞。指結婚典禮儀式，位於所有格 her 後方作為介系詞 at 的受詞。" },
+        { word: "daughter", sentence: "Mr. Smith has a son and a lovely _______.", exp: "daughter (女兒)：名詞。與前半句的 a son (一個兒子) 形成對稱，皆為直系家庭成員名詞。" },
+        { word: "invitation", sentence: "I received an _______ card to his birthday party.", exp: "invitation (邀請)：此處構成複合名詞 invitation card (邀請函)。因為單字字首為母音元素，前方使用 an。" },
+        { word: "greeting", sentence: " \"Hello\" is a common _______ when you meet someone.", exp: "greeting (問候語)：名詞。指見面時打招呼的行為或話語，a common greeting 意為常見的問候。" },
+        { word: "healthy", sentence: "Eating apples and running every day can keep you _______.", exp: "healthy (健康的)：形容詞。'keep + 受詞 + 形容詞' 為標準不完全及物動詞句型，表示保持某種狀態。" },
+        { word: "hide", sentence: "The little cat likes to _______ under the bed.", exp: "hide (躲藏)：動詞。'likes to + 原形動詞' 代表喜歡進行某動作，under the bed 提示了躲藏的位置。" },
+        { word: "smile", sentence: "A happy _______ appeared on the boy's face.", exp: "smile (微笑)：名詞。在此處充當整個句子的主詞，接受單數冠詞 A 與形容詞 happy 的修飾。" },
+        { word: "tickle", sentence: "Don't _______ my feet, it makes me laugh out loud!", exp: "tickle (搔癢)：動詞。在否定祈使句助動詞 Don't 之後，必須緊接原形動詞。" },
+        { word: "joke", sentence: "My friend told a funny _______ that made everyone laugh.", exp: "joke (笑話)：名詞。固定搭配動詞 tell (過去式為 told)，'tell a joke' 意思即為講笑話。" },
+        { word: "laugh", sentence: "The funny clown made all the children _______.", exp: "laugh (大笑)：動詞。本句使用了使役動詞 make，標準結構為 'make + 受詞 + 原形動詞'。" },
+        { word: "feet", sentence: "Please wash your _______ before you get into bed.", exp: "feet (腳)：名詞。為單數 foot 的不規則複數形。一般洗腳皆是指雙腳，故實務上採用複數型態 feet。" },
+        { word: "could", sentence: "When I was five, I _______ ride a small bicycle.", exp: "could (能夠)：助動詞。為 can 的過去式。因前半句時態為過去式 (was)，後方表達過去能力時亦須隨之轉為 could。" },
+        { word: "offer", sentence: "The kind girl decided to _______ her seat to the old man.", exp: "offer (主動提供)：動詞。'decide to + 原形動詞' 代表決定做某事，'offer something to someone' 表將物品或座位让與他人。" },
+        { word: "cart", sentence: "We put many snacks into the shopping _______ at the supermarket.", exp: "cart (推車)：名詞。'shopping cart' 組合成複合名詞，意指超市內使用的手推購物車。" },
+        { word: "account", sentence: "You need to log in to your game _______ to play.", exp: "account (帳號)：名詞。'game account' 代表遊玩網路遊戲時註冊的個人識別登入帳號。" },
+        { word: "take place", sentence: "The school sports day will _______ next Friday.", exp: "take place (舉行)：動詞片語。等同於 be held，在情態助動詞 will 之後應接原形動詞片語。" },
+        { word: "prince", sentence: "The handsome _______ lives in a beautiful castle.", exp: "prince (王子)：名詞。擔任單數主詞，因此後方主要動詞 live 配合第三人稱單數主詞加上了 s 成為 lives。" },
+        { word: "click", sentence: "You just need to _______ this red button to start the game.", exp: "click (點擊)：動詞。指使用滑鼠或手指點按按鈕的動作，need to 後接原形動詞。" },
+        { word: "voice", sentence: "The singer has a sweet and beautiful _______.", exp: "voice (歌聲/嗓音)：名詞。特指人類說話或唱歌發出的聲音，與一般指噪音、器物聲的 sound 不同。" },
+        { word: "request", sentence: "The teacher accepted our _______ to play a game today.", exp: "request (請求)：名詞。在此處充當及物動詞 accepted 的直接受詞，代表老師接受了學生的提議。" }
+    ];
+
+    // Robust customized hint logic for single words and phrases with spaces
+    function generateVisualHint(wordPhrase) {
+        return wordPhrase.split(' ').map(word => {
+            if (word.length <= 1) {
+                return word;
+            } else if (word.length === 2) {
+                return word[0] + '_';
+            } else {
+                return word[0] + '_'.repeat(word.length - 2) + word[word.length - 1];
+            }
+        }).join(' ');
+    }
+
+    // Render the interactive quiz markup dynamically
+    function renderQuiz() {
+        const container = document.getElementById('questions-container');
+        container.innerHTML = '';
+
+        quizData.forEach((item, index) => {
+            const hintStr = generateVisualHint(item.word);
+            const card = document.createElement('div');
+            card.className = 'card quiz-item';
+
+            // Convert raw template underscores to live styled input field
+            const processedSentence = item.sentence.replace('_______',
+                `<input type="text" id="input-${index}" class="quiz-input" autocomplete="off" placeholder="在此輸入拼寫...">`
+            );
+
+            card.innerHTML = `
+                <div class="question-title">第 ${index + 1} 題</div>
+                <div class="sentence-box">${processedSentence}</div>
+                <div class="input-container">
+                    <span>字首尾提示:</span>
+                    <span class="hint-badge">${hintStr}</span>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+        loadHistoryDashboard();
+    }
+
+    // Processing submission inputs, scoring, and outputting feedback
+    function checkQuizResults() {
+        let score = 0;
+        let summaryHtml = '';
+        let reviewHtml = '';
+        let incorrectCount = 0;
+
+        quizData.forEach((item, index) => {
+            const inputEl = document.getElementById(`input-${index}`);
+            const userInputValue = inputEl ? inputEl.value.trim() : '';
+            const visualHint = generateVisualHint(item.word);
+
+            // Case-insensitive assessment
+            const isCorrect = userInputValue.toLowerCase() === item.word.toLowerCase();
+
+            if (isCorrect) {
+                score++;
+            } else {
+                incorrectCount++;
+            }
+
+            const rowClass = isCorrect ? 'correct-row' : 'incorrect-row';
+            const rowLabel = isCorrect ? '✅ 正確 (Correct)' : '❌ 錯誤 (Incorrect)';
+            const formattedSentence = item.sentence.replace('_______', `<span class="highlight-word">${item.word}</span>`);
+
+            // Build overall dynamic scannable listing
+            summaryHtml += `
+                <div class="summary-item ${rowClass}">
+                    <strong>第 ${index + 1} 題：${rowLabel}</strong>
+                    <div class="summary-grid">
+                        <div><strong>完整句子：</strong>${formattedSentence}</div>
+                        <div><strong>單字提示：</strong><code>${visualHint}</code></div>
+                        <div><strong>您的回答：</strong><span class="user-ans">${userInputValue || '(未填寫 / Blank)'}</span></div>
+                        <div><strong>正確答案：</strong><span class="correct-ans-good">${item.word}</span></div>
+                    </div>
+                </div>
+            `;
+
+            // Build dedicated targeted review block for incorrect/omitted inputs
+            if (!isCorrect) {
+                reviewHtml += `
+                    <div class="review-card">
+                        <div class="review-header">第 ${index + 1} 題 錯題檢討：【${item.word}】</div>
+                        <p><strong>題目句子：</strong>${item.sentence.replace('_______', ' ______ ')}</p>
+                        <p><strong>拼寫提示：</strong><span class="hint-badge">${visualHint}</span></p>
+                        <p><strong>您的回答：</strong><span class="user-ans" style="color:var(--error-color);">${userInputValue || '(未填寫)'}</span></p>
+                        <p><strong>正確拼寫：</strong><span class="correct-ans-good">${item.word}</span></p>
+                        <div class="explanation-box">
+                            <strong>💡 文法與語意解析：</strong><br>${item.exp}
+                        </div>
+                    </div>
+                `;
+            }
+        });
+
+        // Compute metrics
+        const percentage = Math.round((score / quizData.length) * 100);
+
+        // Update UI displays
+        document.getElementById('score-display').innerText = `${score} / ${quizData.length}`;
+        document.getElementById('score-percentage').innerText = `正確率 (Accuracy Rate): ${percentage}%`;
+        document.getElementById('summary-container').innerHTML = summaryHtml;
+
+        // Populate review block
+        const reviewContainer = document.getElementById('review-section');
+        if (incorrectCount > 0) {
+            reviewContainer.innerHTML = `<h3 class="review-section-title">🔍 弱點強化：錯題與語法解析 Review</h3>` + reviewHtml;
+        } else {
+            reviewContainer.innerHTML = `
+                <h3 class="review-section-title" style="color: var(--success-color);">🎉 完美表現！</h3>
+                <div class="card" style="border-left: 5px solid var(--success-color); background-color: var(--success-bg); text-align: center; font-weight: bold;">
+                    太棒了！所有單字全部拼寫正確！繼續保持！
+                </div>
+            `;
+        }
+
+        // Persistent storage update
+        saveToLocalStorage(score, quizData.length);
+
+        // Switch views smoothly
+        document.getElementById('quiz-view').style.display = 'none';
+        document.getElementById('result-view').style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Local Storage logic for History Dashboard tracking
+    function saveToLocalStorage(score, total) {
+        const now = new Date();
+        const timestamp = now.getFullYear() + '/' +
+                          String(now.getMonth() + 1).padStart(2, '0') + '/' +
+                          String(now.getDate()).padStart(2, '0') + ' ' +
+                          String(now.getHours()).padStart(2, '0') + ':' +
+                          String(now.getMinutes()).padStart(2, '0');
+
+        const newRecord = {
+            date: timestamp,
+            score: score,
+            total: total,
+            pct: Math.round((score / total) * 100)
+        };
+
+        let history = JSON.parse(localStorage.getItem('grade5_u9_spelling_history')) || [];
+        history.unshift(newRecord);
+        localStorage.setItem('grade5_u9_spelling_history', JSON.stringify(history));
+        loadHistoryDashboard();
+    }
+
+    function loadHistoryDashboard() {
+        const historyContainer = document.getElementById('history-container');
+        const history = JSON.parse(localStorage.getItem('grade5_u9_spelling_history')) || [];
+
+        if (history.length === 0) {
+            historyContainer.innerHTML = `<div class="no-history">目前尚無測驗紀錄，完成上方測驗後將自動存檔。</div>`;
+            return;
+        }
+
+        let tableHtml = `
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>測驗時間</th>
+                        <th>答對題數</th>
+                        <th>得分率</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        const limit = Math.min(history.length, 5);
+        for (let i = 0; i < limit; i++) {
+            tableHtml += `
+                <tr>
+                    <td>${history[i].date}</td>
+                    <td>${history[i].score} / ${history[i].total} 題</td>
+                    <td style="font-weight:bold; color: var(--primary-color);">${history[i].pct}%</td>
+                </tr>
+            `;
+        }
+
+        tableHtml += `</tbody></table>`;
+        historyContainer.innerHTML = tableHtml;
+    }
+
+    function clearQuizHistory() {
+        if(confirm('確定要清除所有瀏覽器內的歷史作答紀錄嗎？')) {
+            localStorage.removeItem('grade5_u9_spelling_history');
+            loadHistoryDashboard();
+        }
+    }
+
+    // Reset workflow to reattempt questions
+    function restartQuiz() {
+        document.getElementById('result-view').style.display = 'none';
+        document.getElementById('quiz-view').style.display = 'block';
+        renderQuiz();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Initialize layout when window finishes parsing DOM assets
+    window.onload = function() {
+        renderQuiz();
+    };
+</script>
+
+</body>
+</html>
