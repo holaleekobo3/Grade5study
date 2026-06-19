@@ -1,0 +1,1062 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>NM G5 Unit 8 New Quiz</title>
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --card: #ffffff;
+      --ink: #1f2937;
+      --muted: #667085;
+      --brand: #2563eb;
+      --brand-dark: #1d4ed8;
+      --ok: #067647;
+      --bad: #b42318;
+      --warn: #b54708;
+      --line: #d0d5dd;
+      --soft: #eef4ff;
+      --missing: #fff3cd;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans TC", sans-serif;
+      color: var(--ink);
+      background: linear-gradient(180deg, #eef4ff 0, var(--bg) 360px);
+      line-height: 1.55;
+    }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 24px; }
+    header {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 28px;
+      box-shadow: 0 12px 30px rgba(16, 24, 40, .08);
+      margin-bottom: 20px;
+    }
+    h1 { margin: 0 0 6px; font-size: clamp(1.8rem, 4vw, 3rem); letter-spacing: -0.02em; }
+    .subtitle { color: var(--muted); margin: 0; font-size: 1.05rem; }
+    .meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 18px; }
+    .pill { background: var(--soft); border-radius: 14px; padding: 10px 12px; font-weight: 700; color: #1e3a8a; }
+    nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; }
+    nav a { color: var(--brand); text-decoration: none; font-weight: 700; padding: 6px 10px; border-radius: 999px; background: #eff6ff; }
+    section {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 22px;
+      margin: 18px 0;
+      box-shadow: 0 8px 18px rgba(16, 24, 40, .05);
+    }
+    .section-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; flex-wrap: wrap; }
+    h2 { margin: 0; font-size: clamp(1.25rem, 3vw, 1.65rem); }
+    .points { color: var(--brand-dark); font-weight: 800; }
+    .instructions { color: var(--muted); margin: 6px 0 16px; }
+    .question-card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 15px;
+      margin: 12px 0;
+      background: #fff;
+      transition: border-color .2s, background .2s, box-shadow .2s;
+    }
+    .question-card.missing {
+      border-color: #f79009;
+      background: var(--missing);
+      box-shadow: 0 0 0 3px rgba(247,144,9,.16);
+    }
+    .q-label { font-weight: 800; margin-right: 6px; color: #344054; }
+    input[type="text"] {
+      width: min(320px, 100%);
+      padding: 11px 12px;
+      border: 1px solid #98a2b3;
+      border-radius: 10px;
+      font-size: 1rem;
+      margin-top: 8px;
+    }
+    input[type="text"]:focus { outline: 3px solid rgba(37, 99, 235, .2); border-color: var(--brand); }
+    .options { display: grid; gap: 8px; margin-top: 10px; }
+    .option {
+      display: flex; align-items: flex-start; gap: 8px;
+      padding: 9px 10px; border: 1px solid #eaecf0; border-radius: 12px; cursor: pointer;
+    }
+    .option:hover { background: #f9fafb; }
+    .option input { margin-top: 4px; }
+    .blank-line { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .blank-line input { width: 150px; margin: 0; }
+    .passage {
+      border-left: 5px solid var(--brand);
+      padding: 14px 16px;
+      background: #f8fbff;
+      border-radius: 14px;
+      margin: 14px 0 16px;
+    }
+    .passage h3 { margin: 0 0 8px; }
+    .controls {
+      position: sticky; bottom: 0; z-index: 10;
+      background: rgba(246, 248, 251, .92);
+      backdrop-filter: blur(10px);
+      padding: 14px 0 4px;
+      border-top: 1px solid var(--line);
+      display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
+    }
+    button {
+      border: 0; border-radius: 12px; padding: 12px 16px;
+      font-weight: 800; font-size: 1rem; cursor: pointer;
+    }
+    .primary { background: var(--brand); color: white; }
+    .primary:hover { background: var(--brand-dark); }
+    .secondary { background: #e4e7ec; color: #344054; }
+    .danger { background: #fee4e2; color: var(--bad); }
+    #status {
+      margin: 14px 0;
+      border-radius: 14px;
+      padding: 12px 14px;
+      display: none;
+      font-weight: 700;
+    }
+    #status.show { display: block; }
+    #status.ok { background: #dcfae6; color: var(--ok); }
+    #status.warn { background: #fff4e5; color: var(--warn); }
+    #status.bad { background: #fee4e2; color: var(--bad); }
+    #results, #review, #history {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 22px;
+      margin: 18px 0;
+    }
+    #results[hidden], #review[hidden] { display: none; }
+    .score-big { font-size: clamp(2rem, 6vw, 4rem); font-weight: 900; margin: 0; color: var(--brand-dark); }
+    .breakdown { width: 100%; border-collapse: collapse; margin-top: 12px; }
+    .breakdown th, .breakdown td { border-bottom: 1px solid var(--line); padding: 10px; text-align: left; }
+    .review-item { border-top: 1px solid var(--line); padding: 14px 0; }
+    .review-item:first-child { border-top: 0; }
+    .tag { display: inline-block; border-radius: 999px; padding: 3px 9px; font-size: .85rem; font-weight: 800; }
+    .tag.bad { background: #fee4e2; color: var(--bad); }
+    .tag.ok { background: #dcfae6; color: var(--ok); }
+    .small { color: var(--muted); font-size: .95rem; }
+    .history-list { padding-left: 18px; }
+    footer { color: var(--muted); text-align: center; padding: 20px 0; }
+    @media (max-width: 720px) {
+      .wrap { padding: 14px; }
+      header, section, #results, #review, #history { padding: 16px; border-radius: 16px; }
+      .meta { grid-template-columns: 1fr 1fr; }
+      .controls { align-items: stretch; }
+      button { width: 100%; }
+      .blank-line { display: block; }
+      .blank-line input { width: 100%; margin: 8px 0; }
+      input[type="text"] { width: 100%; }
+      .breakdown th, .breakdown td { padding: 8px 4px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>NM G5 Unit 8 New Quiz</h1>
+      <p class="subtitle">Kenya · Rules · Adverbs · should / shouldn’t · have to / can’t</p>
+      <div class="meta" aria-label="Quiz summary">
+        <div class="pill">總分：100</div>
+        <div class="pill">作答欄位：42</div>
+        <div class="pill">模式：自動批改</div>
+        <div class="pill">紀錄：本機儲存</div>
+      </div>
+      <nav aria-label="Section navigation">
+        <a href="#section-A">Part A</a><a href="#section-B">Part B</a><a href="#section-C">Part C</a><a href="#section-D">Part D</a><a href="#section-E">Part E</a><a href="#history">成績紀錄</a>
+      </nav>
+    </header>
+
+    <main id="quiz" aria-live="polite"></main>
+
+    <div id="status" role="alert"></div>
+
+    <div class="controls" aria-label="Quiz controls">
+      <button class="primary" id="submitBtn" type="button">提交答案</button>
+      <button class="secondary" id="retryBtn" type="button">重新作答</button>
+      <button class="danger" id="clearHistoryBtn" type="button">清除成績紀錄</button>
+    </div>
+
+    <section id="results" hidden aria-label="Score results"></section>
+    <section id="review" hidden aria-label="Incorrect answer review"></section>
+    <section id="history" aria-label="Local score history">
+      <h2>成績紀錄</h2>
+      <p class="small">只會儲存在這台裝置的瀏覽器 localStorage。</p>
+      <div id="historyList"></div>
+    </section>
+    <footer>Self-contained HTML quiz · No external scripts or stylesheets</footer>
+  </div>
+
+  <script>
+    const QUIZ = {
+  "title": "NM G5 Unit 8 New Quiz",
+  "subtitle": "Kenya · Rules · Adverbs · should / shouldn’t · have to / can’t",
+  "storageKey": "nm_g5_unit8_new_quiz_v1_20260619",
+  "maxScore": 100,
+  "sections": [
+    {
+      "id": "A",
+      "title": "Part A. Write the Complete Word",
+      "pointsLabel": "3% × 10 = 30%",
+      "total": 30,
+      "instructions": "Use the first letter as a hint. Write the complete word.",
+      "items": [
+        {
+          "id": "A1",
+          "type": "text",
+          "points": 3,
+          "prompt": "Please speak <strong>c _ _ _ _ _ y</strong> so everyone can understand the rule.",
+          "answer": "clearly",
+          "accepted": [
+            "clearly"
+          ],
+          "explanation": "Clearly is an adverb. It tells how someone speaks or writes."
+        },
+        {
+          "id": "A2",
+          "type": "text",
+          "points": 3,
+          "prompt": "Mia wrote <strong>n _ _ _ _ y</strong> in her notebook before the concert.",
+          "answer": "neatly",
+          "accepted": [
+            "neatly"
+          ],
+          "explanation": "Neatly is an adverb. It means in a tidy way."
+        },
+        {
+          "id": "A3",
+          "type": "text",
+          "points": 3,
+          "prompt": "Don’t rush. Wait <strong>p _ _ _ _ _ _ _ y</strong> for your turn.",
+          "answer": "patiently",
+          "accepted": [
+            "patiently"
+          ],
+          "explanation": "Patiently means waiting calmly and not getting angry."
+        },
+        {
+          "id": "A4",
+          "type": "text",
+          "points": 3,
+          "prompt": "The class walked <strong>q _ _ _ _ _ y</strong> past the sleeping baby.",
+          "answer": "quietly",
+          "accepted": [
+            "quietly"
+          ],
+          "explanation": "Quietly means without making much noise."
+        },
+        {
+          "id": "A5",
+          "type": "text",
+          "points": 3,
+          "prompt": "Paul sat <strong>c _ _ _ _ _ _ _ _ _ y</strong> in the big chair after the race.",
+          "answer": "comfortably",
+          "accepted": [
+            "comfortably"
+          ],
+          "explanation": "Comfortably means in a relaxed and comfortable way."
+        },
+        {
+          "id": "A6",
+          "type": "text",
+          "points": 3,
+          "prompt": "Ride your bike <strong>c _ _ _ _ _ _ _ y</strong> on busy streets.",
+          "answer": "carefully",
+          "accepted": [
+            "carefully"
+          ],
+          "explanation": "Carefully means with care, so you do not make a mistake or get hurt."
+        },
+        {
+          "id": "A7",
+          "type": "text",
+          "points": 3,
+          "prompt": "You must follow the <strong>r _ _ _ s</strong> in the safari park.",
+          "answer": "rules",
+          "accepted": [
+            "rules"
+          ],
+          "explanation": "Rules are things people have to follow."
+        },
+        {
+          "id": "A8",
+          "type": "text",
+          "points": 3,
+          "prompt": "Some animals might <strong>b _ _ e</strong> if you touch them.",
+          "answer": "bite",
+          "accepted": [
+            "bite"
+          ],
+          "explanation": "Bite is a verb. Animals bite with their teeth."
+        },
+        {
+          "id": "A9",
+          "type": "text",
+          "points": 3,
+          "prompt": "The cheetah can <strong>c _ _ _ e</strong> smaller animals very fast.",
+          "answer": "chase",
+          "accepted": [
+            "chase"
+          ],
+          "explanation": "Chase means to run after a person or an animal."
+        },
+        {
+          "id": "A10",
+          "type": "text",
+          "points": 3,
+          "prompt": "Don’t throw <strong>l _ _ _ _ r</strong> on the ground.",
+          "answer": "litter",
+          "accepted": [
+            "litter"
+          ],
+          "explanation": "Litter is trash in the wrong place."
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "title": "Part B. Choose the Best Answer",
+      "pointsLabel": "3% × 10 = 30%",
+      "total": 30,
+      "instructions": "Choose one answer for each question.",
+      "items": [
+        {
+          "id": "B1",
+          "type": "mcq",
+          "points": 3,
+          "prompt": "Every visitor ______ stay in the jeep during the safari.",
+          "options": [
+            "has to",
+            "have to",
+            "can to",
+            "shouldn’t"
+          ],
+          "answer": "has to",
+          "explanation": "Every visitor is singular, so use has to. Example: Every student has to listen."
+        },
+        {
+          "id": "B2",
+          "type": "mcq",
+          "points": 3,
+          "prompt": "The children ______ bring food to the animals. It is a park rule.",
+          "options": [
+            "can’t",
+            "doesn’t",
+            "isn’t",
+            "don’t"
+          ],
+          "answer": "can’t",
+          "explanation": "Can’t means it is not allowed. We do not use to after can’t."
+        },
+        {
+          "id": "B3",
+          "type": "mcq",
+          "points": 3,
+          "prompt": "You ______ cross the road quickly without looking.",
+          "options": [
+            "shouldn’t",
+            "has to",
+            "should",
+            "can to"
+          ],
+          "answer": "shouldn’t",
+          "explanation": "Shouldn’t gives advice not to do something dangerous."
+        },
+        {
+          "id": "B4",
+          "type": "mcq",
+          "points": 3,
+          "prompt": "We ______ listen carefully when the teacher gives instructions.",
+          "options": [
+            "should",
+            "shouldn’t",
+            "can’t",
+            "has"
+          ],
+          "answer": "should",
+          "explanation": "Should gives good advice. Listening carefully is a good idea."
+        },
+        {
+          "id": "B5",
+          "type": "mcq",
+          "points": 3,
+          "prompt": "Please sing ______ so people can hear all the words.",
+          "options": [
+            "loudly",
+            "loud",
+            "quiet",
+            "slow"
+          ],
+          "answer": "loudly",
+          "explanation": "Use an adverb after the verb sing: sing loudly."
+        },
+        {
+          "id": "B6",
+          "type": "mcq",
+          "points": 3,
+          "prompt": "My backpack is ______. I can’t find it anywhere.",
+          "options": [
+            "lost",
+            "litter",
+            "dark",
+            "bite"
+          ],
+          "answer": "lost",
+          "explanation": "Lost means you do not know where something is."
+        },
+        {
+          "id": "B7",
+          "type": "mcq",
+          "points": 3,
+          "prompt": "Leave the room ______ while the baby is sleeping.",
+          "options": [
+            "quietly",
+            "noisy",
+            "noise",
+            "louder"
+          ],
+          "answer": "quietly",
+          "explanation": "Quietly is the adverb that tells how to leave the room."
+        },
+        {
+          "id": "B8",
+          "type": "mcq",
+          "points": 3,
+          "prompt": "Lina ______ wear her clean uniform for the concert tomorrow.",
+          "options": [
+            "has to",
+            "have to",
+            "shouldn’t",
+            "can’t"
+          ],
+          "answer": "has to",
+          "explanation": "Lina is one person, so use has to."
+        },
+        {
+          "id": "B9",
+          "type": "mcq",
+          "points": 3,
+          "prompt": "You ______ use this flashlight. It is very dark outside.",
+          "options": [
+            "should",
+            "shouldn’t",
+            "can’t",
+            "has to"
+          ],
+          "answer": "should",
+          "explanation": "Should gives advice. A flashlight helps you see in the dark."
+        },
+        {
+          "id": "B10",
+          "type": "mcq",
+          "points": 3,
+          "prompt": "The children walked ______ because the floor was wet.",
+          "options": [
+            "carefully",
+            "careful",
+            "careless",
+            "loudly"
+          ],
+          "answer": "carefully",
+          "explanation": "Carefully is an adverb. It tells how the children walked."
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "title": "Part C. Fill in the Blanks Using should or shouldn’t",
+      "pointsLabel": "10% total",
+      "total": 10,
+      "instructions": "Read the short story. Type should or shouldn’t in each blank.",
+      "items": [
+        {
+          "id": "C1",
+          "type": "text",
+          "points": 1.4285714285714286,
+          "before": "Ryan is going camping with his class tonight. He",
+          "after": "pack a flashlight.",
+          "answer": "should",
+          "accepted": [
+            "should"
+          ],
+          "explanation": "Ryan should pack a flashlight because it helps him see in the dark."
+        },
+        {
+          "id": "C2",
+          "type": "text",
+          "points": 1.4285714285714286,
+          "before": "He",
+          "after": "forget his backpack.",
+          "answer": "shouldn’t",
+          "accepted": [
+            "shouldn’t",
+            "shouldnt",
+            "should not"
+          ],
+          "explanation": "He should not forget his backpack."
+        },
+        {
+          "id": "C3",
+          "type": "text",
+          "points": 1.4285714285714286,
+          "before": "At night, he",
+          "after": "talk quietly near the tents.",
+          "answer": "should",
+          "accepted": [
+            "should"
+          ],
+          "explanation": "Talking quietly is good advice at night."
+        },
+        {
+          "id": "C4",
+          "type": "text",
+          "points": 1.4285714285714286,
+          "before": "He",
+          "after": "make a loud noise because animals might get scared.",
+          "answer": "shouldn’t",
+          "accepted": [
+            "shouldn’t",
+            "shouldnt",
+            "should not"
+          ],
+          "explanation": "He should not make a loud noise near animals."
+        },
+        {
+          "id": "C5",
+          "type": "text",
+          "points": 1.4285714285714286,
+          "before": "He",
+          "after": "listen carefully to the guide.",
+          "answer": "should",
+          "accepted": [
+            "should"
+          ],
+          "explanation": "He should listen carefully to understand the rules."
+        },
+        {
+          "id": "C6",
+          "type": "text",
+          "points": 1.4285714285714286,
+          "before": "He",
+          "after": "touch any wild animals.",
+          "answer": "shouldn’t",
+          "accepted": [
+            "shouldn’t",
+            "shouldnt",
+            "should not"
+          ],
+          "explanation": "He should not touch wild animals. It is dangerous."
+        },
+        {
+          "id": "C7",
+          "type": "text",
+          "points": 1.4285714285714286,
+          "before": "Before the trip, he",
+          "after": "go to bed early.",
+          "answer": "should",
+          "accepted": [
+            "should"
+          ],
+          "explanation": "He should go to bed early so he is ready for the trip."
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "title": "Part D. Answer in Complete Sentences",
+      "pointsLabel": "2% × 5 = 10%",
+      "total": 10,
+      "instructions": "For Questions 1–2, use Part C. For Questions 3–5, follow the word cues.",
+      "items": [
+        {
+          "id": "D1",
+          "type": "text",
+          "points": 2,
+          "prompt": "What should Ryan pack for camping?",
+          "answer": "He should pack a flashlight.",
+          "accepted": [
+            "he should pack a flashlight",
+            "ryan should pack a flashlight"
+          ],
+          "explanation": "Use a complete sentence: subject + should + verb."
+        },
+        {
+          "id": "D2",
+          "type": "text",
+          "points": 2,
+          "prompt": "What shouldn’t Ryan touch?",
+          "answer": "He shouldn’t touch any wild animals.",
+          "accepted": [
+            "he shouldnt touch any wild animals",
+            "ryan shouldnt touch any wild animals",
+            "he should not touch any wild animals",
+            "ryan should not touch any wild animals",
+            "he shouldnt touch wild animals",
+            "ryan shouldnt touch wild animals",
+            "he should not touch wild animals",
+            "ryan should not touch wild animals"
+          ],
+          "explanation": "Use shouldn’t before the base verb touch."
+        },
+        {
+          "id": "D3",
+          "type": "text",
+          "points": 2,
+          "prompt": "Use the words to write a sentence: You / can’t / feed / the animals.",
+          "answer": "You can’t feed the animals.",
+          "accepted": [
+            "you cant feed the animals",
+            "you cannot feed the animals"
+          ],
+          "explanation": "After can’t, use the base verb: can’t feed."
+        },
+        {
+          "id": "D4",
+          "type": "text",
+          "points": 2,
+          "prompt": "Use the words to write a sentence: I / have to / listen carefully / in class.",
+          "answer": "I have to listen carefully in class.",
+          "accepted": [
+            "i have to listen carefully in class"
+          ],
+          "explanation": "Have to is followed by a base verb: have to listen."
+        },
+        {
+          "id": "D5",
+          "type": "text",
+          "points": 2,
+          "prompt": "Use the words to write a rule: You / shouldn’t / run / in the hallway.",
+          "answer": "You shouldn’t run in the hallway.",
+          "accepted": [
+            "you shouldnt run in the hallway",
+            "you should not run in the hallway",
+            "you shouldnt run in hallways",
+            "you should not run in hallways",
+            "you shouldnt run in the hallways",
+            "you should not run in the hallways"
+          ],
+          "explanation": "A complete rule needs a subject and verb: You shouldn’t run."
+        }
+      ]
+    },
+    {
+      "id": "E",
+      "title": "Part E. Read and Choose",
+      "pointsLabel": "2% × 10 = 20%",
+      "total": 20,
+      "instructions": "Read the passages. Choose the best answer.",
+      "passages": [
+        {
+          "title": "School Talent Show Rules",
+          "text": "Grade 5 will have a talent show on Friday at 2 p.m. Students should arrive at the hall ten minutes early. First, sit quietly in your team’s seats. Do not push or run. During the show, you shouldn’t talk loudly or play games on a phone. Put phones on silent. After each performance, clap politely. If you need help, raise your hand and wait patiently for a teacher. When the show ends, leave slowly with your class.",
+          "items": [
+            {
+              "id": "E1",
+              "type": "mcq",
+              "points": 2,
+              "prompt": "What should students do first after they enter the hall?",
+              "options": [
+                "Sit quietly in their team’s seats.",
+                "Run to the stage.",
+                "Play games on a phone.",
+                "Leave with their class."
+              ],
+              "answer": "Sit quietly in their team’s seats.",
+              "explanation": "The passage says, “First, sit quietly in your team’s seats.”"
+            },
+            {
+              "id": "E2",
+              "type": "mcq",
+              "points": 2,
+              "prompt": "What should students do with their phones?",
+              "options": [
+                "Put them on silent.",
+                "Take many videos loudly.",
+                "Throw them away.",
+                "Give them to performers."
+              ],
+              "answer": "Put them on silent.",
+              "explanation": "The passage tells students to put phones on silent."
+            },
+            {
+              "id": "E3",
+              "type": "mcq",
+              "points": 2,
+              "prompt": "How should students show respect after each performance?",
+              "options": [
+                "Clap politely.",
+                "Talk loudly.",
+                "Push to the front.",
+                "Run around the hall."
+              ],
+              "answer": "Clap politely.",
+              "explanation": "After each performance, students should clap politely."
+            },
+            {
+              "id": "E4",
+              "type": "mcq",
+              "points": 2,
+              "prompt": "What should students do if they need help?",
+              "options": [
+                "Raise their hand and wait patiently.",
+                "Shout loudly at the teacher.",
+                "Leave the hall alone.",
+                "Play games until the teacher comes."
+              ],
+              "answer": "Raise their hand and wait patiently.",
+              "explanation": "The passage says to raise your hand and wait patiently for a teacher."
+            },
+            {
+              "id": "E5",
+              "type": "mcq",
+              "points": 2,
+              "prompt": "What is the main idea of the passage?",
+              "options": [
+                "Rules help everyone enjoy the talent show.",
+                "Students should sing louder than everyone.",
+                "Phones are the most important part of a show.",
+                "Students should arrive late."
+              ],
+              "answer": "Rules help everyone enjoy the talent show.",
+              "explanation": "All the details are rules for safe and respectful behavior at the talent show."
+            }
+          ]
+        },
+        {
+          "title": "Safari Helpers and Green Schools",
+          "text": "Kenya has many safari parks. On a safari, visitors travel in a jeep and watch animals from a safe distance. A guide tells visitors to stay on the road, carry water, and keep the park clean. Visitors can’t chase, touch, or feed animals because the animals may bite or get sick. Some trips are in the morning because photos at night can hurt animals’ eyes. Near one park, a group of students started a Green School Club. They plant trees and pick up litter every month. Their teacher says the club helps people and animals because trees give shade and homes for birds.",
+          "items": [
+            {
+              "id": "E6",
+              "type": "mcq",
+              "points": 2,
+              "prompt": "How do visitors usually travel on safari?",
+              "options": [
+                "In a jeep.",
+                "On a bicycle.",
+                "By swimming across a river.",
+                "By running after animals."
+              ],
+              "answer": "In a jeep.",
+              "explanation": "The passage says visitors travel in a jeep."
+            },
+            {
+              "id": "E7",
+              "type": "mcq",
+              "points": 2,
+              "prompt": "Why can’t visitors feed the animals?",
+              "options": [
+                "The animals may bite or get sick.",
+                "The animals are all sleeping.",
+                "The visitors have no water.",
+                "The guide wants to go home."
+              ],
+              "answer": "The animals may bite or get sick.",
+              "explanation": "The passage gives the reason: animals may bite or get sick."
+            },
+            {
+              "id": "E8",
+              "type": "mcq",
+              "points": 2,
+              "prompt": "What can visitors do to keep the park clean?",
+              "options": [
+                "Pick up litter.",
+                "Chase the animals.",
+                "Take photos at night.",
+                "Leave food on the road."
+              ],
+              "answer": "Pick up litter.",
+              "explanation": "Picking up litter keeps the park clean."
+            },
+            {
+              "id": "E9",
+              "type": "mcq",
+              "points": 2,
+              "prompt": "Why does the Green School Club plant trees?",
+              "options": [
+                "Trees give shade and homes for birds.",
+                "Trees help visitors drive faster.",
+                "Trees make animals run away.",
+                "Trees help phones get louder."
+              ],
+              "answer": "Trees give shade and homes for birds.",
+              "explanation": "The passage says trees give shade and homes for birds."
+            },
+            {
+              "id": "E10",
+              "type": "mcq",
+              "points": 2,
+              "prompt": "What is the best title for this passage?",
+              "options": [
+                "Following Rules and Caring for Nature",
+                "How to Catch Wild Animals",
+                "The Fastest Jeep in Kenya",
+                "A Night Photo Contest"
+              ],
+              "answer": "Following Rules and Caring for Nature",
+              "explanation": "The passage is about safari rules and students helping nature."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+};
+
+    const byId = (id) => document.getElementById(id);
+    const quizRoot = byId('quiz');
+    const statusBox = byId('status');
+    const resultsBox = byId('results');
+    const reviewBox = byId('review');
+
+    function allItems() {
+      const items = [];
+      QUIZ.sections.forEach(section => {
+        if (section.items) section.items.forEach(item => items.push({...item, sectionId: section.id, sectionTitle: section.title}));
+        if (section.passages) section.passages.forEach(p => p.items.forEach(item => items.push({...item, sectionId: section.id, sectionTitle: section.title})));
+      });
+      return items;
+    }
+
+    let MEMORY_HISTORY = [];
+
+    function readHistorySafe() {
+      try {
+        return JSON.parse(localStorage.getItem(QUIZ.storageKey) || '[]');
+      } catch (error) {
+        return MEMORY_HISTORY;
+      }
+    }
+
+    function writeHistorySafe(history) {
+      MEMORY_HISTORY = history;
+      try {
+        localStorage.setItem(QUIZ.storageKey, JSON.stringify(history));
+      } catch (error) {
+        // localStorage can be unavailable in some preview or test contexts.
+      }
+    }
+
+    function clearHistorySafe() {
+      MEMORY_HISTORY = [];
+      try {
+        localStorage.removeItem(QUIZ.storageKey);
+      } catch (error) {
+        // localStorage can be unavailable in some preview or test contexts.
+      }
+    }
+
+    function formatScore(n) {
+      const rounded = Math.round((n + Number.EPSILON) * 10) / 10;
+      return Math.abs(rounded - Math.round(rounded)) < 0.0001 ? String(Math.round(rounded)) : rounded.toFixed(1);
+    }
+
+    function normalizeText(value) {
+      return String(value || '')
+        .toLowerCase()
+        .replace(/[’‘`]/g, "'")
+        .replace(/can\s*not/g, 'cant')
+        .replace(/can['’]?t/g, 'cant')
+        .replace(/should\s*not/g, 'shouldnt')
+        .replace(/should['’]?t/g, 'shouldnt')
+        .replace(/[.?!,;:'\u3002\uff1f\uff01\uff0c]/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+
+    function escapeHtml(str) {
+      return String(str ?? '').replace(/[&<>'"]/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));
+    }
+
+    function renderTextItem(item, index) {
+      return `<div class="question-card" data-qid="${item.id}">
+        <label for="${item.id}"><span class="q-label">${index}.</span>${item.prompt}</label><br>
+        <input id="${item.id}" name="${item.id}" type="text" autocomplete="off" aria-label="Answer for ${item.id}">
+      </div>`;
+    }
+
+    function renderBlankItem(item, index) {
+      return `<div class="question-card" data-qid="${item.id}">
+        <label class="blank-line" for="${item.id}"><span class="q-label">${index}.</span><span>${escapeHtml(item.before)}</span>
+        <input id="${item.id}" name="${item.id}" type="text" autocomplete="off" aria-label="Blank ${index}">
+        <span>${escapeHtml(item.after)}</span></label>
+      </div>`;
+    }
+
+    function renderMcqItem(item, index) {
+      const options = item.options.map((opt, optIndex) => `
+        <label class="option">
+          <input type="radio" name="${item.id}" value="${escapeHtml(opt)}" aria-label="${item.id} option ${String.fromCharCode(65 + optIndex)}">
+          <span><strong>(${String.fromCharCode(65 + optIndex)})</strong> ${escapeHtml(opt)}</span>
+        </label>`).join('');
+      return `<div class="question-card" data-qid="${item.id}">
+        <p><span class="q-label">${index}.</span>${item.prompt}</p>
+        <div class="options" role="radiogroup" aria-label="Question ${item.id}">${options}</div>
+      </div>`;
+    }
+
+    function renderQuiz() {
+      let html = '';
+      QUIZ.sections.forEach(section => {
+        html += `<section id="section-${section.id}"><div class="section-head"><h2>${section.title}</h2><span class="points">${section.pointsLabel}</span></div><p class="instructions">${section.instructions}</p>`;
+        if (section.items) {
+          section.items.forEach((item, idx) => {
+            if (section.id === 'C') html += renderBlankItem(item, idx + 1);
+            else if (item.type === 'text') html += renderTextItem(item, idx + 1);
+            else html += renderMcqItem(item, idx + 1);
+          });
+        }
+        if (section.passages) {
+          let globalIndex = 1;
+          section.passages.forEach(passage => {
+            html += `<article class="passage"><h3>${escapeHtml(passage.title)}</h3><p>${escapeHtml(passage.text)}</p></article>`;
+            passage.items.forEach(item => { html += renderMcqItem(item, globalIndex++); });
+          });
+        }
+        html += '</section>';
+      });
+      quizRoot.innerHTML = html;
+    }
+
+    function getAnswer(item) {
+      if (item.type === 'mcq') {
+        const chosen = document.querySelector(`input[name="${item.id}"]:checked`);
+        return chosen ? chosen.value : '';
+      }
+      const input = byId(item.id);
+      return input ? input.value : '';
+    }
+
+    function isCorrect(item, answer) {
+      if (item.type === 'mcq') return answer === item.answer;
+      const normalized = normalizeText(answer);
+      return item.accepted.map(normalizeText).includes(normalized);
+    }
+
+    function setStatus(message, kind) {
+      statusBox.className = `show ${kind}`;
+      statusBox.textContent = message;
+    }
+
+    function clearStatus() {
+      statusBox.className = '';
+      statusBox.textContent = '';
+    }
+
+    function gradeQuiz() {
+      const items = allItems();
+      document.querySelectorAll('.question-card').forEach(card => card.classList.remove('missing'));
+      const missing = items.filter(item => String(getAnswer(item)).trim() === '');
+      if (missing.length) {
+        missing.forEach(item => {
+          const card = document.querySelector(`[data-qid="${item.id}"]`);
+          if (card) card.classList.add('missing');
+        });
+        setStatus(`還有 ${missing.length} 個作答欄位未完成。請完成黃色標示的題目後再提交。`, 'warn');
+        const first = document.querySelector('.question-card.missing');
+        if (first) first.scrollIntoView({behavior:'smooth', block:'center'});
+        return null;
+      }
+
+      let total = 0;
+      const sectionScores = Object.fromEntries(QUIZ.sections.map(s => [s.id, {score: 0, max: s.total, title: s.title}]));
+      const review = [];
+      items.forEach(item => {
+        const userAnswer = getAnswer(item);
+        const correct = isCorrect(item, userAnswer);
+        if (correct) {
+          total += item.points;
+          sectionScores[item.sectionId].score += item.points;
+        } else {
+          review.push({...item, userAnswer});
+        }
+      });
+      // Force exact total when all answers are correct to avoid tiny floating point errors.
+      if (review.length === 0) total = QUIZ.maxScore;
+      return { total, sectionScores, review };
+    }
+
+    function renderResults(result) {
+      const percent = Math.round((result.total / QUIZ.maxScore) * 100);
+      const rows = QUIZ.sections.map(s => `<tr><td>${s.id}</td><td>${s.title}</td><td>${formatScore(result.sectionScores[s.id].score)} / ${s.total}</td></tr>`).join('');
+      resultsBox.hidden = false;
+      resultsBox.innerHTML = `<h2>成績結果</h2><p class="score-big">${formatScore(result.total)} / ${QUIZ.maxScore}</p><p>得分率：${percent}%</p><table class="breakdown"><thead><tr><th>部分</th><th>題型</th><th>分數</th></tr></thead><tbody>${rows}</tbody></table>`;
+    }
+
+    function renderReview(result) {
+      reviewBox.hidden = false;
+      if (result.review.length === 0) {
+        reviewBox.innerHTML = `<h2>錯題檢討</h2><p><span class="tag ok">全部答對</span> 很好，所有答案都正確。</p>`;
+        return;
+      }
+      const items = result.review.map(item => `
+        <div class="review-item">
+          <p><span class="tag bad">${item.id}</span> <strong>${item.sectionTitle}</strong></p>
+          <p><strong>你的答案：</strong>${escapeHtml(item.userAnswer || '未作答')}</p>
+          <p><strong>正確答案：</strong>${escapeHtml(item.answer)}</p>
+          <p><strong>提示：</strong>${escapeHtml(item.explanation)}</p>
+        </div>`).join('');
+      reviewBox.innerHTML = `<h2>錯題檢討</h2><p>以下是需要修正的題目。</p>${items}`;
+    }
+
+    function saveHistory(result) {
+      const history = readHistorySafe();
+      history.unshift({
+        date: new Date().toLocaleString('zh-Hant-TW'),
+        score: formatScore(result.total),
+        max: QUIZ.maxScore,
+        sections: Object.fromEntries(Object.entries(result.sectionScores).map(([k, v]) => [k, formatScore(v.score)]))
+      });
+      writeHistorySafe(history.slice(0, 10));
+      renderHistory();
+    }
+
+    function renderHistory() {
+      const history = readHistorySafe();
+      const target = byId('historyList');
+      if (!history.length) {
+        target.innerHTML = '<p class="small">目前沒有成績紀錄。</p>';
+        return;
+      }
+      target.innerHTML = `<ol class="history-list">${history.map(h => `<li><strong>${h.score} / ${h.max}</strong>｜${escapeHtml(h.date)}｜A:${h.sections.A} B:${h.sections.B} C:${h.sections.C} D:${h.sections.D} E:${h.sections.E}</li>`).join('')}</ol>`;
+    }
+
+    function resetQuiz() {
+      allItems().forEach(item => {
+        if (item.type === 'mcq') document.querySelectorAll(`input[name="${item.id}"]`).forEach(input => input.checked = false);
+        else { const input = byId(item.id); if (input) input.value = ''; }
+      });
+      document.querySelectorAll('.question-card').forEach(card => card.classList.remove('missing'));
+      clearStatus();
+      resultsBox.hidden = true;
+      reviewBox.hidden = true;
+      resultsBox.innerHTML = '';
+      reviewBox.innerHTML = '';
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    function clearHistory() {
+      clearHistorySafe();
+      renderHistory();
+      setStatus('已清除這份測驗的本機成績紀錄。', 'ok');
+    }
+
+    byId('submitBtn').addEventListener('click', () => {
+      const result = gradeQuiz();
+      if (!result) return;
+      renderResults(result);
+      renderReview(result);
+      saveHistory(result);
+      setStatus(`已完成批改：${formatScore(result.total)} / ${QUIZ.maxScore}。`, result.total === QUIZ.maxScore ? 'ok' : 'bad');
+      resultsBox.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+    byId('retryBtn').addEventListener('click', resetQuiz);
+    byId('clearHistoryBtn').addEventListener('click', clearHistory);
+
+    renderQuiz();
+    renderHistory();
+  </script>
+</body>
+</html>
