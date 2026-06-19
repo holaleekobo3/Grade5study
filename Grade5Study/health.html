@@ -201,7 +201,7 @@ function submitQuiz(){
   renderHistory();
   result.scrollIntoView({behavior:'smooth'});
 }
-function escapeHtml(str){ return String(str).replace(/[&<>'"]/g, c=>({'&':'&','<':'<','>':'>',"'":''','"':'"'}[c])); }
+function escapeHtml(str){ return String(str).replace(/[&<>'"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c])); }
 function saveHistory(total, sections, date){
   const hist=JSON.parse(localStorage.getItem(historyKey)||'[]');
   hist.unshift({total, date:date.toISOString(), name:document.getElementById('studentName').value.trim(), breakdown:Object.fromEntries(Object.entries(sections).map(([k,v])=>[k,v.score]))});
