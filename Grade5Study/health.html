@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>五年級下學期健康測驗</title>
+  <style>
+    :root { --bg:#f7f7fb; --card:#fff; --ink:#1f2937; --muted:#6b7280; --line:#e5e7eb; --accent:#2563eb; --bad:#b91c1c; --good:#047857; --warn:#f59e0b; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans TC", "Microsoft JhengHei", sans-serif; background:var(--bg); color:var(--ink); line-height:1.65; }
+    header { background:linear-gradient(135deg,#1d4ed8,#0f766e); color:white; padding:32px 18px; }
+    header .wrap, main { max-width:980px; margin:0 auto; }
+    h1 { margin:0 0 8px; font-size:clamp(1.6rem,4vw,2.4rem); }
+    h2 { margin:28px 0 12px; padding-bottom:8px; border-bottom:2px solid var(--line); }
+    .subtitle { margin:0; opacity:.92; }
+    main { padding:20px 14px 48px; }
+    .card { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:18px; margin:14px 0; box-shadow:0 1px 8px rgba(0,0,0,.04); }
+    .meta-grid { display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:12px; }
+    label.meta { display:block; font-weight:700; }
+    input[type="text"] { width:100%; padding:10px 12px; border:1px solid #cbd5e1; border-radius:10px; font-size:1rem; }
+    .section-note { color:var(--muted); margin:0 0 12px; }
+    .question { border:1px solid var(--line); border-radius:14px; padding:14px; margin:12px 0; background:#fff; }
+    .question.missing { border-color:var(--warn); background:#fffbeb; }
+    .q-title { font-weight:800; margin-bottom:8px; }
+    .options { display:grid; gap:8px; }
+    .option { display:flex; align-items:flex-start; gap:8px; padding:8px 10px; border:1px solid var(--line); border-radius:10px; cursor:pointer; }
+    .option:hover { background:#f8fafc; }
+    input[type="radio"], input[type="checkbox"] { margin-top:.38em; transform:scale(1.08); }
+    .toolbar { position:sticky; bottom:0; display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between; padding:12px; background:rgba(255,255,255,.94); border:1px solid var(--line); border-radius:16px; box-shadow:0 -4px 18px rgba(0,0,0,.08); backdrop-filter: blur(8px); }
+    button { border:0; border-radius:12px; padding:10px 14px; font-weight:800; cursor:pointer; font-size:1rem; }
+    .primary { background:var(--accent); color:white; }
+    .secondary { background:#e5e7eb; color:#111827; }
+    .danger { background:#fee2e2; color:#991b1b; }
+    #result { display:none; border-left:6px solid var(--accent); }
+    .score { font-size:1.45rem; font-weight:900; }
+    .breakdown { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin-top:12px; }
+    .pill { border:1px solid var(--line); border-radius:12px; padding:10px; background:#f8fafc; }
+    .review-item { border-top:1px solid var(--line); padding:12px 0; }
+    .correct { color:var(--good); font-weight:800; }
+    .wrong { color:var(--bad); font-weight:800; }
+    .small { color:var(--muted); font-size:.92rem; }
+    .history-entry { padding:8px 0; border-top:1px dashed var(--line); }
+    @media (max-width:720px) { .meta-grid,.breakdown { grid-template-columns:1fr; } .toolbar { position:static; } }
+    @media print { .toolbar, #historyCard { display:none !important; } body { background:white; } .card,.question { box-shadow:none; break-inside:avoid; } header { color:#111; background:white; border-bottom:2px solid #111; } }
+  </style>
+</head>
+<body>
+<header><div class="wrap">
+  <h1>五年級下學期健康測驗</h1>
+  <p class="subtitle">互動 HTML 版｜參考舊卷格式重新命題｜總分 98 分</p>
+</div></header>
+<main>
+  <section class="card">
+    <div class="meta-grid">
+      <label class="meta">班級<input id="className" type="text" placeholder="例如：五年甲班"></label>
+      <label class="meta">座號<input id="seatNo" type="text" placeholder="例如：12"></label>
+      <label class="meta">姓名<input id="studentName" type="text" placeholder="請輸入姓名"></label>
+    </div>
+    <p class="small">作答完成後按「交卷」，系統會計分並顯示錯題解析。未作答題目會被標示。</p>
+  </section>
+
+  <form id="quizForm" novalidate>
+    <section id="tfSection" class="card">
+      <h2>一、是非題（每題 3 分，共 48 分）</h2>
+      <p class="section-note">正確請選「O」，錯誤請選「X」。</p>
+      <div id="tfQuestions"></div>
+    </section>
+
+    <section id="mcSection" class="card">
+      <h2>二、選擇題（每題 3 分，共 36 分）</h2>
+      <p class="section-note">請選出最適合的答案。</p>
+      <div id="mcQuestions"></div>
+    </section>
+
+    <section id="multiSection" class="card">
+      <h2>三、勾選題（共 14 分）</h2>
+      <p class="section-note">請勾選所有正確選項。每個選項判斷 1 分，選錯或漏選該選項不得分。</p>
+      <div id="multiQuestions"></div>
+    </section>
+  </form>
+
+  <section id="result" class="card" aria-live="polite"></section>
+
+  <section id="historyCard" class="card">
+    <h2>作答紀錄</h2>
+    <div id="history"></div>
+  </section>
+
+  <div class="toolbar">
+    <div class="small">完成全部題目後再交卷。可列印成紙本使用。</div>
+    <div>
+      <button class="secondary" type="button" onclick="window.print()">列印</button>
+      <button class="danger" type="button" id="resetBtn">清除作答</button>
+      <button class="primary" type="button" id="submitBtn">交卷</button>
+    </div>
+  </div>
+</main>
+<script>
+const storageKey = 'tw-grade5-health-sem2-quiz-v1';
+const historyKey = 'tw-grade5-health-sem2-quiz-history-v1';
+const quiz = [
+  {id:'q1', section:'tf', points:3, text:'身高和體重可以用來觀察生長發育，但不能只靠一次數字就判斷一個人的健康狀況。', answer:'O', exp:'身高、體重與 BMI 都只是健康評估的參考，還要看飲食、活動、睡眠和醫師建議。'},
+  {id:'q2', section:'tf', points:3, text:'視力檢查時，如果任一眼視力不佳，應請家長帶去眼科或視力保健單位檢查。', answer:'O', exp:'視力異常要及早檢查與矯正，不能只靠自己猜原因。'},
+  {id:'q3', section:'tf', points:3, text:'刷牙時只要用力左右橫刷，就一定能把牙齒和牙縫清乾淨。', answer:'X', exp:'太用力橫刷可能傷害牙齒與牙齦，牙縫也需要牙線輔助清潔。'},
+  {id:'q4', section:'tf', points:3, text:'使用牙線時，應讓牙線貼著牙齒側面輕輕上下移動，避免用力壓傷牙齦。', answer:'O', exp:'正確使用牙線可以清除牙縫牙菌斑，動作要輕柔。'},
+  {id:'q5', section:'tf', points:3, text:'藥品過期後，只要顏色和味道看起來沒有改變，就可以繼續服用。', answer:'X', exp:'過期藥品可能失效或變質，不應繼續服用。'},
+  {id:'q6', section:'tf', points:3, text:'中華民國身分證字號第一碼英文字母與戶籍地區代號有關。', answer:'O', exp:'身分證字號的第一碼英文字母代表戶籍地區代號。'},
+  {id:'q7', section:'tf', points:3, text:'接到可疑投資、分期付款錯誤或冒充客服的來電時，可以撥打 165 反詐騙專線查證。', answer:'O', exp:'165 是反詐騙諮詢專線，遇到可疑訊息要先查證。'},
+  {id:'q8', section:'tf', points:3, text:'網路購物時，只要價格最便宜，就不必確認賣家資料、評價和退換貨規定。', answer:'X', exp:'消費前要確認商家資訊、付款方式、退換貨與商品標示。'},
+  {id:'q9', section:'tf', points:3, text:'家庭成員彼此照顧、分工合作與情感支持，都是家庭的重要功能。', answer:'O', exp:'家庭功能包含照顧、教育、經濟、休閒與情感支持等。'},
+  {id:'q10', section:'tf', points:3, text:'只有和爸爸、媽媽、孩子住在一起，才算是正常的家庭型態。', answer:'X', exp:'家庭型態很多元，例如單親、隔代、核心、大家庭等，都應被尊重。'},
+  {id:'q11', section:'tf', points:3, text:'生氣或緊張時，先深呼吸、暫停一下再說話，是管理情緒的方法之一。', answer:'O', exp:'深呼吸、暫停、轉移注意力與說出感受，都能幫助情緒穩定。'},
+  {id:'q12', section:'tf', points:3, text:'遇到家庭暴力時，最好忍耐並保守秘密，不要告訴任何人。', answer:'X', exp:'遇到暴力要保護安全，並向可信任的大人、老師或 113 尋求協助。'},
+  {id:'q13', section:'tf', points:3, text:'吃完酸性食物或飲料後，立刻用力刷牙永遠是最好的護牙方法。', answer:'X', exp:'酸性食物後可先漱口，稍等再刷牙，避免牙齒表面受損。'},
+  {id:'q14', section:'tf', points:3, text:'家中藥品應放在兒童不易拿到、乾燥陰涼的地方，並保留清楚標示。', answer:'O', exp:'正確保存藥品可以避免誤食、受潮或用錯藥。'},
+  {id:'q15', section:'tf', points:3, text:'113 保護專線可協助家庭暴力、兒少保護等問題。', answer:'O', exp:'113 是重要的保護專線，遇到危險或需要保護時可以求助。'},
+  {id:'q16', section:'tf', points:3, text:'BMI 是評估體位的參考，但不能代表一個人的全部健康狀況。', answer:'O', exp:'BMI 可作為體位參考，但健康還包括體能、飲食、生活習慣與心理狀態。'},
+
+  {id:'q17', section:'mc', points:3, text:'計算 BMI 時，正確的公式是哪一個？', options:['身高（m）÷體重（kg）','體重（kg）÷身高（m）','體重（kg）÷身高（m）÷身高（m）','身高（cm）×體重（kg）'], answer:2, exp:'BMI＝體重（公斤）÷身高（公尺）÷身高（公尺）。'},
+  {id:'q18', section:'mc', points:3, text:'小祐最近看黑板常瞇眼，抄聯絡簿也常看錯字。他最適合怎麼做？', options:['自己買眼藥水點一點','請家長帶他做視力檢查','把座位搬很近就不用管','每天少喝水保護眼睛'], answer:1, exp:'視力異常應由專業人員檢查，不要自行亂用藥。'},
+  {id:'q19', section:'mc', points:3, text:'長時間近距離看 3C、閱讀姿勢不良，最容易增加哪一種視力問題的風險？', options:['近視','骨折','蛀牙','中耳炎'], answer:0, exp:'長時間近距離用眼與不良姿勢，可能增加近視風險。'},
+  {id:'q20', section:'mc', points:3, text:'使用牙線時，通常可先取約多長的牙線，方便纏繞手指並清潔牙縫？', options:['約 5 公分','約 15 公分','約 45 公分','約 100 公分'], answer:2, exp:'一般可取約 45 公分牙線，方便纏繞與更換清潔區段。'},
+  {id:'q21', section:'mc', points:3, text:'買到疑似標示不清或有消費爭議的商品時，可以撥打哪一支消費者服務專線？', options:['113','165','1950','119'], answer:2, exp:'1950 是消費者服務專線，可協助消費爭議諮詢。'},
+  {id:'q22', section:'mc', points:3, text:'家人突然跌倒後無法起身，且疑似受傷，需要緊急救護時應撥打哪一支電話？', options:['110','119','165','1950'], answer:1, exp:'119 可通報火災、救護等緊急狀況。'},
+  {id:'q23', section:'mc', points:3, text:'有人打電話說你的家人帳戶出問題，要你立刻匯款處理。你應該先怎麼做？', options:['照對方指示匯款','把提款卡密碼告訴對方','掛電話並撥 165 或向家人查證','把個人資料全部傳給對方'], answer:2, exp:'遇到可疑來電要停止操作並查證，避免受騙。'},
+  {id:'q24', section:'mc', points:3, text:'若藥袋寫「每日三次，飯後服用」，但忘記其中一次，最適合的做法是什麼？', options:['下一次自行吃兩倍補回來','依藥袋或醫師、藥師指示處理，不自行加倍','把藥全部停掉','改成睡前一次吃完'], answer:1, exp:'漏服藥品不要自行加倍，應依專業指示處理。'},
+  {id:'q25', section:'mc', points:3, text:'「過期食品」是指下列哪一種商品？', options:['正在特價的商品','包裝漂亮的商品','已超過有效日期的商品','廣告很多的商品'], answer:2, exp:'過期食品是已超過有效日期或保存期限的商品。'},
+  {id:'q26', section:'mc', points:3, text:'下列哪一項最符合綠色消費的做法？', options:['每次都拿很多塑膠袋','選擇過度包裝的商品','自備購物袋並選擇標示清楚、較少包裝的商品','只買進口商品'], answer:2, exp:'綠色消費重視減少浪費、環境友善與理性購買。'},
+  {id:'q27', section:'mc', points:3, text:'下列哪一項不是「用藥五問」應關心的內容？', options:['問藥品名稱','問服用方法','問注意事項','問藥師喜歡的顏色'], answer:3, exp:'用藥五問重點是藥名、作用、用法、時間與注意事項等。'},
+  {id:'q28', section:'mc', points:3, text:'和同學發生誤會時，下列哪一種溝通方式最不適合？', options:['先冷靜再說明感受','聽對方說完再回應','大聲指責並嘲笑對方','說出自己希望怎麼解決'], answer:2, exp:'攻擊、嘲笑和指責會讓衝突變嚴重，應使用尊重的溝通。'},
+
+  {id:'q29', section:'multi', points:6, text:'下列哪些是「用藥五問」可以詢問的內容？', options:['問藥品名稱','問藥品效果或作用','問藥品使用方式','問服藥時間或服用多久','問注意事項或副作用','問藥師今天穿什麼顏色衣服'], answer:[true,true,true,true,true,false], exp:'用藥五問與安全用藥有關，應詢問藥名、作用、用法、時間與注意事項。'},
+  {id:'q30', section:'multi', points:3, text:'哥哥常對妹妹大聲辱罵，又推打她。這可能包含哪些暴力型態？', options:['經濟暴力','精神暴力','身體暴力'], answer:[false,true,true], exp:'辱罵、恐嚇屬於精神暴力；推打屬於身體暴力。'},
+  {id:'q31', section:'multi', points:5, text:'如果發現自己或身邊的人遇到家庭暴力，哪些做法比較適當？', options:['先離開危險地點，保護自己安全','撥打 113 或請可信任的大人協助','向老師、輔導室或社工尋求協助','受傷時就醫，必要時保留相關證據','獨自衝上前和施暴者打架'], answer:[true,true,true,true,false], exp:'遇到暴力應以安全和求助為優先，不要讓自己陷入更大的危險。'}
+];
+function el(tag, attrs={}, children=[]) { const node=document.createElement(tag); Object.entries(attrs).forEach(([k,v])=>{ if(k==='class') node.className=v; else if(k==='for') node.htmlFor=v; else node.setAttribute(k,v); }); children.forEach(c=>node.append(c)); return node; }
+function renderQuestions(){
+  const tfBox=document.getElementById('tfQuestions'), mcBox=document.getElementById('mcQuestions'), multiBox=document.getElementById('multiQuestions');
+  quiz.forEach((q,idx)=>{
+    const wrap=el('div',{class:'question', id:q.id});
+    wrap.append(el('div',{class:'q-title'},[document.createTextNode(`${idx+1}. ${q.text}`)]));
+    const opts=el('div',{class:'options'});
+    if(q.section==='tf'){
+      ['O','X'].forEach(v=>{ const id=`${q.id}_${v}`; opts.append(el('label',{class:'option', for:id},[el('input',{type:'radio', name:q.id, id, value:v}), document.createTextNode(v)])); });
+      wrap.append(opts); tfBox.append(wrap);
+    } else if(q.section==='mc'){
+      q.options.forEach((opt,i)=>{ const id=`${q.id}_${i}`; opts.append(el('label',{class:'option', for:id},[el('input',{type:'radio', name:q.id, id, value:String(i)}), document.createTextNode(`${'①②③④⑤⑥'[i]} ${opt}`)])); });
+      wrap.append(opts); mcBox.append(wrap);
+    } else {
+      q.options.forEach((opt,i)=>{ const id=`${q.id}_${i}`; opts.append(el('label',{class:'option', for:id},[el('input',{type:'checkbox', name:q.id, id, value:String(i)}), document.createTextNode(`(${i+1}) ${opt}`)])); });
+      wrap.append(opts); multiBox.append(wrap);
+    }
+  });
+}
+function getAnswer(q){
+  if(q.section==='multi') return Array.from(document.querySelectorAll(`input[name="${q.id}"]`)).map(i=>i.checked);
+  const checked=document.querySelector(`input[name="${q.id}"]:checked`); return checked ? checked.value : null;
+}
+function isAnswered(q){
+  if(q.section==='multi') return Array.from(document.querySelectorAll(`input[name="${q.id}"]`)).some(i=>i.checked);
+  return getAnswer(q)!==null;
+}
+function scoreQuestion(q, ans){
+  if(q.section==='tf') return ans===q.answer ? q.points : 0;
+  if(q.section==='mc') return Number(ans)===q.answer ? q.points : 0;
+  return q.answer.reduce((sum,correct,i)=> sum + (Boolean(ans[i])===correct ? 1 : 0), 0);
+}
+function correctText(q){
+  if(q.section==='tf') return q.answer;
+  if(q.section==='mc') return `${'①②③④⑤⑥'[q.answer]} ${q.options[q.answer]}`;
+  return q.options.filter((_,i)=>q.answer[i]).map((x,i)=>`${i+1}. ${x}`).join('；');
+}
+function userText(q, ans){
+  if(ans===null) return '未作答';
+  if(q.section==='tf') return ans;
+  if(q.section==='mc') return q.options[Number(ans)] || '未作答';
+  const chosen=q.options.filter((_,i)=>ans[i]); return chosen.length ? chosen.join('；') : '未勾選';
+}
+function submitQuiz(){
+  document.querySelectorAll('.question').forEach(n=>n.classList.remove('missing'));
+  const missing=quiz.filter(q=>!isAnswered(q));
+  if(missing.length){
+    missing.forEach(q=>document.getElementById(q.id).classList.add('missing'));
+    alert(`還有 ${missing.length} 題未作答，已用黃色標示。`);
+    document.getElementById(missing[0].id).scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  const sections={tf:{name:'是非題',score:0,total:48}, mc:{name:'選擇題',score:0,total:36}, multi:{name:'勾選題',score:0,total:14}};
+  let total=0;
+  const reviews=[];
+  quiz.forEach((q,idx)=>{
+    const ans=getAnswer(q); const s=scoreQuestion(q,ans); total+=s; sections[q.section].score+=s;
+    const full=s===q.points;
+    reviews.push(`<div class="review-item"><div><strong>${idx+1}. ${q.text}</strong> <span class="${full?'correct':'wrong'}">${s}/${q.points} 分</span></div><div>你的答案：${escapeHtml(userText(q,ans))}</div><div>正確答案：${escapeHtml(correctText(q))}</div><div class="small">解析：${escapeHtml(q.exp)}</div></div>`);
+  });
+  const now=new Date();
+  const result=document.getElementById('result');
+  result.style.display='block';
+  result.innerHTML=`<h2>成績結果</h2><div class="score">${total} / 98 分</div><div class="small">交卷時間：${now.toLocaleString('zh-TW')}</div><div class="breakdown">${Object.values(sections).map(s=>`<div class="pill"><strong>${s.name}</strong><br>${s.score} / ${s.total} 分</div>`).join('')}</div><h2>錯題與解析</h2>${reviews.join('')}`;
+  saveHistory(total, sections, now);
+  renderHistory();
+  result.scrollIntoView({behavior:'smooth'});
+}
+function escapeHtml(str){ return String(str).replace(/[&<>'"]/g, c=>({'&':'&','<':'<','>':'>',"'":''','"':'"'}[c])); }
+function saveHistory(total, sections, date){
+  const hist=JSON.parse(localStorage.getItem(historyKey)||'[]');
+  hist.unshift({total, date:date.toISOString(), name:document.getElementById('studentName').value.trim(), breakdown:Object.fromEntries(Object.entries(sections).map(([k,v])=>[k,v.score]))});
+  localStorage.setItem(historyKey, JSON.stringify(hist.slice(0,10)));
+}
+function renderHistory(){
+  const hist=JSON.parse(localStorage.getItem(historyKey)||'[]'); const box=document.getElementById('history');
+  if(!hist.length){ box.innerHTML='<p class="small">尚無作答紀錄。</p>'; return; }
+  box.innerHTML=hist.map(h=>`<div class="history-entry"><strong>${escapeHtml(h.name||'未填姓名')}</strong>：${h.total}/98 分<br><span class="small">${new Date(h.date).toLocaleString('zh-TW')}｜是非 ${h.breakdown.tf}/48，選擇 ${h.breakdown.mc}/36，勾選 ${h.breakdown.multi}/14</span></div>`).join('');
+}
+function resetQuiz(){
+  if(!confirm('確定要清除本次作答嗎？')) return;
+  document.getElementById('quizForm').reset(); document.querySelectorAll('.question').forEach(n=>n.classList.remove('missing'));
+  document.getElementById('result').style.display='none';
+}
+renderQuestions(); renderHistory();
+document.getElementById('submitBtn').addEventListener('click', submitQuiz);
+document.getElementById('resetBtn').addEventListener('click', resetQuiz);
+</script>
+</body>
+</html>
