@@ -1,0 +1,2135 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <title>English G5 Unit 10 互動加強練習測驗</title>
+  <style>
+    :root {
+      --ink: #243047;
+      --muted: #667085;
+      --paper: #fffdf8;
+      --purple: #7254b3;
+      --purple-dark: #533890;
+      --purple-soft: #f1ebff;
+      --teal: #168a87;
+      --teal-soft: #e8f8f6;
+      --gold: #f2ad3d;
+      --gold-soft: #fff5dc;
+      --red: #c6414a;
+      --red-soft: #fff0f1;
+      --green: #25855a;
+      --green-soft: #eaf8f0;
+      --line: #d9d7e3;
+      --shadow: 0 10px 30px rgba(46, 36, 75, 0.10);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(114, 84, 179, .14), transparent 26rem),
+        radial-gradient(circle at 90% 12%, rgba(22, 138, 135, .13), transparent 24rem),
+        #f6f3fb;
+      font-family: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", Arial, sans-serif;
+      line-height: 1.65;
+    }
+
+    button, input, select { font: inherit; }
+
+    button { touch-action: manipulation; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 10px max(16px, calc((100vw - 1120px) / 2));
+      background: rgba(255, 255, 255, .92);
+      border-bottom: 1px solid rgba(114, 84, 179, .16);
+      backdrop-filter: blur(12px);
+    }
+
+    .progress-track {
+      flex: 1;
+      height: 10px;
+      overflow: hidden;
+      background: #ebe8f1;
+      border-radius: 999px;
+    }
+
+    #progressBar {
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--purple), var(--teal));
+      transition: width .25s ease;
+    }
+
+    #progressText {
+      min-width: 95px;
+      color: var(--muted);
+      font-size: .9rem;
+      font-weight: 800;
+      text-align: right;
+    }
+
+    .page-shell {
+      width: min(1120px, calc(100% - 28px));
+      margin: 26px auto 70px;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-bottom: 16px;
+      padding: 9px 14px;
+      color: var(--purple-dark);
+      background: rgba(255, 255, 255, .94);
+      border: 1px solid rgba(114, 84, 179, .22);
+      border-radius: 11px;
+      box-shadow: var(--shadow);
+      font-weight: 900;
+      text-decoration: none;
+    }
+
+    .back-link:hover {
+      color: white;
+      background: var(--purple);
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(26px, 5vw, 54px);
+      color: white;
+      background: linear-gradient(135deg, #5a3a98 0%, #7659b6 52%, #168a87 100%);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -90px;
+      bottom: -120px;
+      width: 360px;
+      height: 360px;
+      background:
+        linear-gradient(145deg, transparent 44%, rgba(255,255,255,.16) 45% 55%, transparent 56%),
+        linear-gradient(35deg, transparent 44%, rgba(255,255,255,.09) 45% 55%, transparent 56%);
+      transform: rotate(8deg);
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: #e8defe;
+      font-size: .85rem;
+      font-weight: 900;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      position: relative;
+      z-index: 1;
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 4.4rem);
+      line-height: 1.06;
+      letter-spacing: -.035em;
+    }
+
+    .hero p {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+      margin: 18px 0 0;
+      color: #f6f1ff;
+      font-size: 1.04rem;
+    }
+
+    .hero-meta {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .meta-chip {
+      padding: 7px 12px;
+      background: rgba(255,255,255,.14);
+      border: 1px solid rgba(255,255,255,.28);
+      border-radius: 999px;
+      font-size: .9rem;
+      font-weight: 800;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 300px;
+      gap: 24px;
+      align-items: start;
+      margin-top: 24px;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 62px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .panel, .quiz-section {
+      background: rgba(255,255,255,.94);
+      border: 1px solid rgba(100, 84, 135, .14);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .panel { padding: 19px; }
+
+    .panel h2, .panel h3 { margin: 0 0 12px; }
+
+    .section-nav {
+      display: grid;
+      gap: 8px;
+    }
+
+    .section-nav a {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 9px 10px;
+      color: var(--ink);
+      text-decoration: none;
+      border-radius: 10px;
+      transition: background .15s ease, color .15s ease;
+    }
+
+    .section-nav a:hover {
+      color: var(--purple-dark);
+      background: var(--purple-soft);
+    }
+
+    .section-nav small { color: var(--muted); }
+
+    .history-empty {
+      margin: 0;
+      color: var(--muted);
+      font-size: .92rem;
+    }
+
+    .history-list {
+      display: grid;
+      gap: 9px;
+      max-height: 310px;
+      overflow: auto;
+    }
+
+    .history-item {
+      padding: 10px;
+      background: #faf9fd;
+      border: 1px solid #e8e4f0;
+      border-radius: 10px;
+    }
+
+    .history-item strong {
+      color: var(--purple-dark);
+      font-size: 1.05rem;
+    }
+
+    .history-item time {
+      display: block;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: .78rem;
+    }
+
+    .quiz-sections {
+      display: grid;
+      gap: 22px;
+    }
+
+    .quiz-section {
+      scroll-margin-top: 70px;
+      overflow: hidden;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 20px 22px;
+      background: linear-gradient(90deg, var(--purple-soft), #fff);
+      border-bottom: 1px solid #e5e0ee;
+    }
+
+    .section-letter {
+      display: grid;
+      flex: 0 0 auto;
+      width: 44px;
+      height: 44px;
+      place-items: center;
+      color: white;
+      background: var(--purple);
+      border-radius: 14px;
+      font-size: 1.25rem;
+      font-weight: 900;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(1.16rem, 2.2vw, 1.45rem);
+      line-height: 1.25;
+    }
+
+    .section-head p {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .section-content { padding: 6px 22px 22px; }
+
+    .section-instruction {
+      margin: 15px 0;
+      padding: 11px 14px;
+      color: #644a1d;
+      background: var(--gold-soft);
+      border-left: 5px solid var(--gold);
+      border-radius: 9px;
+      font-size: .93rem;
+    }
+
+    .question {
+      position: relative;
+      margin-top: 14px;
+      padding: 18px;
+      background: var(--paper);
+      border: 1px solid #e4e0da;
+      border-radius: 14px;
+      transition: border-color .2s ease, background .2s ease, transform .2s ease;
+    }
+
+    .question.unanswered {
+      background: #fff8f8;
+      border: 2px solid var(--red);
+      animation: nudge .25s ease 2;
+    }
+
+    .question.correct {
+      border-color: #9bd1b4;
+      background: #fbfffc;
+    }
+
+    .question.incorrect {
+      border-color: #e4a5aa;
+      background: #fffafa;
+    }
+
+    @keyframes nudge {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(4px); }
+    }
+
+    .q-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .q-number {
+      display: grid;
+      flex: 0 0 auto;
+      width: 31px;
+      height: 31px;
+      place-items: center;
+      color: white;
+      background: var(--teal);
+      border-radius: 9px;
+      font-size: .88rem;
+      font-weight: 900;
+    }
+
+    .q-prompt {
+      flex: 1;
+      margin: 1px 0 0;
+      font-family: Arial, sans-serif;
+      font-size: 1.02rem;
+      line-height: 1.55;
+    }
+
+    .points {
+      color: var(--muted);
+      font-size: .78rem;
+      white-space: nowrap;
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+      margin: 14px 0 0 41px;
+    }
+
+    .option {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      padding: 10px 12px;
+      background: white;
+      border: 1px solid #ded9e8;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color .15s ease, background .15s ease, transform .15s ease;
+    }
+
+    .option:hover {
+      background: var(--purple-soft);
+      border-color: #b7a4dc;
+      transform: translateY(-1px);
+    }
+
+    .option input {
+      margin-top: 4px;
+      accent-color: var(--purple);
+    }
+
+    .option span { font-family: Arial, sans-serif; }
+
+    .text-answer {
+      width: calc(100% - 41px);
+      margin: 14px 0 0 41px;
+      padding: 11px 13px;
+      color: var(--ink);
+      background: white;
+      border: 2px solid #d8d3e2;
+      border-radius: 10px;
+      outline: none;
+    }
+
+    .text-answer:focus {
+      border-color: var(--purple);
+      box-shadow: 0 0 0 4px rgba(114, 84, 179, .12);
+    }
+
+    .listen-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin: 13px 0 0 41px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      min-height: 42px;
+      padding: 9px 15px;
+      color: white;
+      background: var(--purple);
+      border: 0;
+      border-radius: 11px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: transform .15s ease, filter .15s ease;
+    }
+
+    .btn:hover { filter: brightness(1.07); transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+    .btn:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+    .btn.secondary { color: var(--purple-dark); background: var(--purple-soft); }
+    .btn.teal { background: var(--teal); }
+    .btn.danger { color: var(--red); background: var(--red-soft); }
+    .btn.large { min-height: 52px; padding: 13px 23px; font-size: 1.05rem; }
+
+    .listen-status {
+      color: var(--muted);
+      font-size: .84rem;
+    }
+
+    .visual-wrap {
+      margin: 15px 0;
+      overflow-x: auto;
+    }
+
+    .visual-card {
+      min-width: 600px;
+      padding: 12px;
+      background: #f8fbfb;
+      border: 1px solid #cfe4e2;
+      border-radius: 14px;
+    }
+
+    .visual-card svg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .process-card {
+      padding: 10px;
+      text-align: center;
+      background: #fff;
+      border: 1px solid #d9e6e4;
+      border-radius: 13px;
+    }
+
+    .process-card svg {
+      width: 100%;
+      max-height: 150px;
+    }
+
+    .process-card label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 8px;
+      font-weight: 900;
+    }
+
+    .process-card select {
+      min-width: 72px;
+      padding: 7px;
+      background: white;
+      border: 2px solid #cfc8dc;
+      border-radius: 8px;
+    }
+
+    .steps {
+      margin: 14px 0 0;
+      padding: 13px 13px 13px 36px;
+      background: var(--teal-soft);
+      border-radius: 12px;
+      font-family: Arial, sans-serif;
+    }
+
+    .reading {
+      margin: 15px 0;
+      padding: 20px;
+      background: #fffdf5;
+      border: 1px solid #ebdfbb;
+      border-radius: 14px;
+      font-family: Arial, sans-serif;
+    }
+
+    .reading h3 {
+      margin: 0 0 10px;
+      text-align: center;
+    }
+
+    .reading p { margin: 10px 0; }
+
+    .submit-area {
+      margin-top: 26px;
+      padding: 23px;
+      text-align: center;
+      background: white;
+      border: 1px solid rgba(100, 84, 135, .14);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .submit-area p {
+      margin: 0 0 14px;
+      color: var(--muted);
+    }
+
+    .alert {
+      display: none;
+      margin: 18px 0 0;
+      padding: 13px 16px;
+      border-radius: 11px;
+      font-weight: 800;
+    }
+
+    .alert.show { display: block; }
+    .alert.error { color: #7c222a; background: var(--red-soft); border: 1px solid #edbbc0; }
+    .alert.success { color: #195e40; background: var(--green-soft); border: 1px solid #b5ddc7; }
+
+    #resultPanel {
+      display: none;
+      margin-top: 24px;
+      overflow: hidden;
+    }
+
+    #resultPanel.show { display: block; }
+
+    .score-hero {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 24px;
+      align-items: center;
+      padding: 25px;
+      color: white;
+      background: linear-gradient(135deg, var(--purple-dark), var(--teal));
+    }
+
+    .score-ring {
+      display: grid;
+      width: 155px;
+      height: 155px;
+      place-items: center;
+      margin: auto;
+      background: rgba(255,255,255,.12);
+      border: 9px solid rgba(255,255,255,.82);
+      border-radius: 50%;
+    }
+
+    .score-ring strong {
+      display: block;
+      font-size: 2.5rem;
+      line-height: 1;
+    }
+
+    .score-ring small { display: block; text-align: center; }
+    .score-copy h2 { margin: 0 0 7px; }
+    .score-copy p { margin: 0; color: #eefdfb; }
+
+    .breakdown {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      padding: 20px;
+    }
+
+    .breakdown-item {
+      padding: 12px;
+      text-align: center;
+      background: #f8f6fc;
+      border-radius: 11px;
+    }
+
+    .breakdown-item strong {
+      display: block;
+      color: var(--purple-dark);
+      font-size: 1.12rem;
+    }
+
+    .result-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      padding: 0 20px 22px;
+    }
+
+    #reviewPanel {
+      display: none;
+      padding: 0 20px 22px;
+    }
+
+    #reviewPanel.show { display: block; }
+
+    .review-item {
+      margin-top: 12px;
+      padding: 16px;
+      background: #fff9f9;
+      border: 1px solid #edc3c6;
+      border-radius: 12px;
+    }
+
+    .review-item h4 {
+      margin: 0 0 8px;
+      color: #8d2b34;
+    }
+
+    .review-item p { margin: 6px 0; }
+    .review-label { font-weight: 900; }
+
+    .explanation {
+      margin-top: 10px !important;
+      padding: 10px 12px;
+      color: #443367;
+      background: var(--purple-soft);
+      border-radius: 9px;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .sidebar { position: static; grid-template-columns: 1fr 1fr; order: -1; }
+      .section-nav { grid-template-columns: repeat(2, 1fr); }
+      .breakdown { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 650px) {
+      .page-shell { width: min(100% - 16px, 1120px); margin-top: 12px; }
+      .hero { padding: 28px 20px; border-radius: 20px; }
+      .layout { gap: 14px; }
+      .sidebar { grid-template-columns: 1fr; }
+      .section-nav { grid-template-columns: 1fr 1fr; font-size: .9rem; }
+      .section-head { padding: 16px; }
+      .section-content { padding: 4px 12px 15px; }
+      .question { padding: 14px 12px; }
+      .options { grid-template-columns: 1fr; margin-left: 0; }
+      .text-answer, .listen-row { width: 100%; margin-left: 0; }
+      .process-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .score-hero { grid-template-columns: 1fr; text-align: center; }
+      .score-ring { width: 130px; height: 130px; }
+    }
+
+    @media (max-width: 410px) {
+      .process-grid, .section-nav, .breakdown { grid-template-columns: 1fr; }
+      .topbar { gap: 8px; }
+      #progressText { min-width: 78px; font-size: .78rem; }
+    }
+
+    @media print {
+      .topbar, .sidebar, .listen-row, .submit-area, #resultPanel { display: none !important; }
+      body { background: white; }
+      .page-shell { width: 100%; margin: 0; }
+      .hero { color: black; background: white; box-shadow: none; border: 2px solid #333; }
+      .hero p, .eyebrow { color: #333; }
+      .layout { display: block; }
+      .quiz-section { break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar" aria-label="作答進度">
+    <div class="progress-track" aria-hidden="true"><div id="progressBar"></div></div>
+    <div id="progressText">已完成 0 / 72</div>
+  </div>
+
+  <main class="page-shell">
+    <a class="back-link" href="english.html">⬅ 回到英文測驗目錄</a>
+    <header class="hero">
+      <p class="eyebrow">New Mastery · Grade 5 · Unit 10</p>
+      <h1>English G5 Unit 10<br>互動加強練習測驗</h1>
+      <p>請仔細閱讀或聆聽每一題。本加強版完整練習 Unit 10 字彙，並重新測驗 some-/any- 文法、位置描述、程序理解與閱讀推論。</p>
+      <div class="hero-meta">
+        <span class="meta-chip">7 大題</span>
+        <span class="meta-chip">72 小題</span>
+        <span class="meta-chip">總分 100 分</span>
+        <span class="meta-chip">建議時間 60–75 分鐘</span>
+      </div>
+    </header>
+
+    <div class="layout">
+      <section class="quiz-sections" id="quizForm" aria-label="Unit 10 quiz"></section>
+
+      <aside class="sidebar">
+        <section class="panel">
+          <h2>測驗導覽</h2>
+          <nav class="section-nav" id="sectionNav"></nav>
+        </section>
+        <section class="panel">
+          <h3>歷史成績</h3>
+          <div id="historyList"></div>
+          <button type="button" class="btn danger" id="clearHistoryBtn" style="width:100%; margin-top:12px;">清除歷史紀錄</button>
+        </section>
+      </aside>
+    </div>
+
+    <section class="submit-area">
+      <p>完成全部 72 題後再送出。送出後可查看分項成績與錯題解析。</p>
+      <button type="button" class="btn teal large" id="submitBtn">送出答案並計分</button>
+      <div class="alert" id="formAlert" role="alert" aria-live="polite"></div>
+    </section>
+
+    <section class="panel" id="resultPanel" aria-live="polite">
+      <div class="score-hero">
+        <div class="score-ring">
+          <div><strong id="scoreValue">0</strong><small>/ 100</small></div>
+        </div>
+        <div class="score-copy">
+          <h2 id="scoreTitle">測驗完成</h2>
+          <p id="scoreMessage"></p>
+        </div>
+      </div>
+      <div class="breakdown" id="breakdown"></div>
+      <div class="result-actions">
+        <button type="button" class="btn secondary" id="toggleReviewBtn">查看錯題解析</button>
+        <button type="button" class="btn" id="retryBtn">重新作答</button>
+      </div>
+      <div id="reviewPanel"></div>
+    </section>
+  </main>
+
+  <script>
+    "use strict";
+
+    const HISTORY_KEY = "nmG5Unit10NewPracticeQuizHistory";
+
+    const sections = [
+        {
+                "id": "A",
+                "title": "Listen and Choose",
+                "subtitle": "Listen carefully and choose the best answer.",
+                "instruction": "按下「播放題目」聆聽英文，每題可重播。畫面只顯示選項，不顯示朗讀稿。",
+                "points": 10,
+                "questions": [
+                        {
+                                "type": "listening",
+                                "points": 2,
+                                "prompt": "Choose the best response.",
+                                "speech": "I can't pronounce this word. What should I check?",
+                                "options": [
+                                        "Check the pronunciation in a dictionary.",
+                                        "Put it below the desk.",
+                                        "Buy some bacon.",
+                                        "Go outside now."
+                                ],
+                                "answer": 0,
+                                "explanation": "對方說不會唸這個字，最合理的是查 pronunciation（發音）。dictionary 可以查字義、拼字和發音。"
+                        },
+                        {
+                                "type": "listening",
+                                "points": 2,
+                                "prompt": "Choose the sentence that matches what you hear.",
+                                "speech": "Mark is explaining how to make a paper airplane.",
+                                "options": [
+                                        "Mark is giving instructions.",
+                                        "Mark is eating at a restaurant.",
+                                        "Mark is looking for jewelry.",
+                                        "Mark is going downstairs."
+                                ],
+                                "answer": 0,
+                                "explanation": "explaining how to... 表示正在說明步驟，也就是 giving instructions。"
+                        },
+                        {
+                                "type": "listening",
+                                "points": 2,
+                                "prompt": "Choose the best answer.",
+                                "speech": "Did anyone call you after class?",
+                                "options": [
+                                        "Yes, someone called me at five o'clock.",
+                                        "Yes, something is under the chair.",
+                                        "No, I didn't go anywhere.",
+                                        "No, it is across from the school."
+                                ],
+                                "answer": 0,
+                                "explanation": "問題問 anyone（任何人），肯定回答可用 someone（某人）。"
+                        },
+                        {
+                                "type": "listening",
+                                "points": 2,
+                                "prompt": "Choose the best answer.",
+                                "speech": "Where did Lisa put the zoo brochure?",
+                                "options": [
+                                        "She put it inside her bag.",
+                                        "She felt miserable yesterday.",
+                                        "She pronounced it incorrectly.",
+                                        "She clicked the button."
+                                ],
+                                "answer": 0,
+                                "explanation": "Where 問地點，所以要回答位置。inside her bag 表示「在她的包包裡」。"
+                        },
+                        {
+                                "type": "listening",
+                                "points": 2,
+                                "prompt": "Choose the sentence that has the same meaning.",
+                                "speech": "There wasn't anything on the table.",
+                                "options": [
+                                        "The table had a lot of things on it.",
+                                        "The table was empty.",
+                                        "Someone was sitting at the table.",
+                                        "The table was upstairs."
+                                ],
+                                "answer": 1,
+                                "explanation": "There wasn't anything... 表示「什麼東西都沒有」，等同 The table was empty."
+                        }
+                ]
+        },
+        {
+                "id": "B",
+                "title": "Read and Write",
+                "subtitle": "Complete each word or phrase. Write the whole answer.",
+                "instruction": "請根據句意寫出完整英文單字或片語。每題已提供第一個與最後一個字母作提示；注意拼字、空格與單複數。",
+                "points": 36,
+                "questions": [
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "I use a <strong>d________y</strong> to check the meaning of a new word.",
+                                "answers": [
+                                        "dictionary"
+                                ],
+                                "displayAnswer": "dictionary",
+                                "explanation": "dictionary 是「字典」，可以用來查意思、拼字或發音。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "Please write one English <strong>w__d</strong> on each card.",
+                                "answers": [
+                                        "word"
+                                ],
+                                "displayAnswer": "word",
+                                "explanation": "word 是「單字」。one 後面接單數名詞 word。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "Can you <strong>e_____n</strong> this math problem to me?",
+                                "answers": [
+                                        "explain"
+                                ],
+                                "displayAnswer": "explain",
+                                "explanation": "explain 是動詞「解釋」。can 後面接原形動詞。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "The funny <strong>i__________n</strong> helped me understand the story.",
+                                "answers": [
+                                        "illustration"
+                                ],
+                                "displayAnswer": "illustration",
+                                "explanation": "illustration 是「插圖」。這裡前面有 The funny，所以用單數 illustration。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "The teacher asked us to listen to the <strong>p___________n</strong> of the new word.",
+                                "answers": [
+                                        "pronunciation"
+                                ],
+                                "displayAnswer": "pronunciation",
+                                "explanation": "pronunciation 是名詞「發音」。注意拼字不是 pronounciation。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "Are you <strong>f__e</strong> after school? I need your help.",
+                                "answers": [
+                                        "free"
+                                ],
+                                "displayAnswer": "free",
+                                "explanation": "free 可以表示「有空的」。Are you free? 意思是「你有空嗎？」"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "What does this sign <strong>m__n</strong>?",
+                                "answers": [
+                                        "mean"
+                                ],
+                                "displayAnswer": "mean",
+                                "explanation": "mean 是動詞「意思是」。What does ... mean? 是常用問法。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "Please put your homework <strong>i____e</strong> the folder.",
+                                "answers": [
+                                        "inside"
+                                ],
+                                "displayAnswer": "inside",
+                                "explanation": "inside 表示「在……裡面」。inside the folder = 在資料夾裡。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "I heard <strong>s_____e</strong> singing in the hallway.",
+                                "answers": [
+                                        "someone"
+                                ],
+                                "displayAnswer": "someone",
+                                "explanation": "someone 表示「某人」，常用在肯定句。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "I want <strong>s_______g</strong> cold to drink.",
+                                "answers": [
+                                        "something"
+                                ],
+                                "displayAnswer": "something",
+                                "explanation": "something 表示「某物／某事」，常用在肯定句。形容詞 cold 放在 something 後面。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "Did <strong>a____e</strong> leave a pencil on my desk?",
+                                "answers": [
+                                        "anyone"
+                                ],
+                                "displayAnswer": "anyone",
+                                "explanation": "anyone 表示「任何人」，常用在疑問句或否定句。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "I did not see <strong>a______g</strong> strange in the box.",
+                                "answers": [
+                                        "anything"
+                                ],
+                                "displayAnswer": "anything",
+                                "explanation": "anything 表示「任何東西／事情」，常用在否定句或疑問句。形容詞 strange 放在 anything 後面。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "The <strong>w______s</strong> brought us water and menus at the restaurant.",
+                                "answers": [
+                                        "waitress"
+                                ],
+                                "displayAnswer": "waitress",
+                                "explanation": "waitress 是「女服務生」。restaurant 是判斷線索。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "“I have some apples” is a <strong>p______e</strong> sentence.",
+                                "answers": [
+                                        "positive"
+                                ],
+                                "displayAnswer": "positive",
+                                "explanation": "positive sentence 是「肯定句」。句子中沒有 not。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "“I don't have any pencils” is a <strong>n______e</strong> sentence.",
+                                "answers": [
+                                        "negative"
+                                ],
+                                "displayAnswer": "negative",
+                                "explanation": "negative sentence 是「否定句」。don't / doesn't / isn't 等都是否定線索。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "How do you <strong>p_______e</strong> this long word?",
+                                "answers": [
+                                        "pronounce"
+                                ],
+                                "displayAnswer": "pronounce",
+                                "explanation": "pronounce 是動詞「發音／唸出」。How do you pronounce...? = 這個字怎麼唸？"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "Tom spelled the word <strong>i_________y</strong>, so he lost one point.",
+                                "answers": [
+                                        "incorrectly"
+                                ],
+                                "displayAnswer": "incorrectly",
+                                "explanation": "incorrectly 是副詞「不正確地」。它修飾動詞 spelled。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "There are twenty-six letters in the English <strong>a______t</strong>.",
+                                "answers": [
+                                        "alphabet"
+                                ],
+                                "displayAnswer": "alphabet",
+                                "explanation": "alphabet 是「字母表」。English alphabet 有 26 個字母。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "A <strong>d________n</strong> tells us what a word means.",
+                                "answers": [
+                                        "definition"
+                                ],
+                                "displayAnswer": "definition",
+                                "explanation": "definition 是「定義」，用來說明單字意思。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "May I have one <strong>p___e</strong> of paper?",
+                                "answers": [
+                                        "piece"
+                                ],
+                                "displayAnswer": "piece",
+                                "explanation": "piece 是「一片／一塊／一張」。one piece of paper = 一張紙。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "I had eggs and <strong>b___n</strong> for breakfast.",
+                                "answers": [
+                                        "bacon"
+                                ],
+                                "displayAnswer": "bacon",
+                                "explanation": "bacon 是「培根」，常和 eggs 一起出現在早餐語境。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "We can find a lot of information on the <strong>I______t</strong>.",
+                                "answers": [
+                                        "internet"
+                                ],
+                                "displayAnswer": "Internet",
+                                "explanation": "Internet 是「網路」。正式寫法常大寫 I，但本測驗輸入小寫也算對。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "I used a search <strong>e____e</strong> to find pictures of whales.",
+                                "answers": [
+                                        "engine"
+                                ],
+                                "displayAnswer": "engine",
+                                "explanation": "search engine 是「搜尋引擎」。engine 也可指機器的引擎。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "Click the blue <strong>b____n</strong> to start the game.",
+                                "answers": [
+                                        "button"
+                                ],
+                                "displayAnswer": "button",
+                                "explanation": "button 是「按鈕」。click the button = 點按鈕。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "The first search <strong>r____t</strong> was a useful website.",
+                                "answers": [
+                                        "result"
+                                ],
+                                "displayAnswer": "result",
+                                "explanation": "result 是「結果」。search result = 搜尋結果。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "The kitchen is on the first floor. It is <strong>d________s</strong>.",
+                                "answers": [
+                                        "downstairs"
+                                ],
+                                "displayAnswer": "downstairs",
+                                "explanation": "downstairs 表示「樓下」。first floor 是線索。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "My bedroom is on the second floor. It is <strong>u______s</strong>.",
+                                "answers": [
+                                        "upstairs"
+                                ],
+                                "displayAnswer": "upstairs",
+                                "explanation": "upstairs 表示「樓上」。second floor 是線索。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "The clock is <strong>a___e</strong> the door.",
+                                "answers": [
+                                        "above"
+                                ],
+                                "displayAnswer": "above",
+                                "explanation": "above 表示「在……上方」，通常沒有接觸。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "The library is <strong>a____s f__m</strong> the park.",
+                                "answers": [
+                                        "across from"
+                                ],
+                                "displayAnswer": "across from",
+                                "explanation": "across from 表示「在……對面」。注意中間有空格。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "The shoes are <strong>b___w</strong> the bed.",
+                                "answers": [
+                                        "below"
+                                ],
+                                "displayAnswer": "below",
+                                "explanation": "below 表示「在……下方」。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "It is raining, so we cannot play <strong>o_____e</strong>.",
+                                "answers": [
+                                        "outside"
+                                ],
+                                "displayAnswer": "outside",
+                                "explanation": "outside 表示「在外面／到外面」。play outside = 在外面玩。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "The queen wore beautiful <strong>j_____y</strong> around her neck.",
+                                "answers": [
+                                        "jewelry"
+                                ],
+                                "displayAnswer": "jewelry",
+                                "explanation": "jewelry 是「珠寶／飾品」，通常作不可數名詞。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "A pizza slice is often <strong>t________r</strong> in shape.",
+                                "answers": [
+                                        "triangular"
+                                ],
+                                "displayAnswer": "triangular",
+                                "explanation": "triangular 是形容詞「三角形的」。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "The museum gave us a <strong>b______e</strong> with a map and opening hours.",
+                                "answers": [
+                                        "brochure"
+                                ],
+                                "displayAnswer": "brochure",
+                                "explanation": "brochure 是「小冊子」，常用來介紹景點、活動或服務。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "I felt <strong>m_______e</strong> when I missed the school trip.",
+                                "answers": [
+                                        "miserable"
+                                ],
+                                "displayAnswer": "miserable",
+                                "explanation": "miserable 表示「很痛苦的／很不開心的」。missed the school trip 是情緒線索。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "The little dog was <strong>f________d</strong> during the thunderstorm.",
+                                "answers": [
+                                        "frightened"
+                                ],
+                                "displayAnswer": "frightened",
+                                "explanation": "frightened 表示「害怕的」。thunderstorm 是判斷線索。"
+                        }
+                ]
+        },
+        {
+                "id": "C",
+                "title": "Read and Choose",
+                "subtitle": "Choose the best word or sentence.",
+                "instruction": "前 4 題測字彙語境；後 6 題重點測 Lesson 2 與 Lesson 6 的 some-/any- 用法。",
+                "points": 20,
+                "questions": [
+                        {
+                                "type": "choice",
+                                "points": 2,
+                                "prompt": "The zoo ________ shows the feeding times and a map of the park.",
+                                "options": [
+                                        "brochure",
+                                        "bacon",
+                                        "button",
+                                        "alphabet"
+                                ],
+                                "answer": 0,
+                                "explanation": "brochure 是介紹景點或活動的小冊子，通常會有地圖與時間資訊。"
+                        },
+                        {
+                                "type": "choice",
+                                "points": 2,
+                                "prompt": "The ________ in the storybook helped the children picture the dragon.",
+                                "options": [
+                                        "engines",
+                                        "illustrations",
+                                        "results",
+                                        "pieces"
+                                ],
+                                "answer": 1,
+                                "explanation": "storybook 裡幫助想像畫面的圖片是 illustrations。"
+                        },
+                        {
+                                "type": "choice",
+                                "points": 2,
+                                "prompt": "Please ________ why the answer is negative, not positive.",
+                                "options": [
+                                        "pronounce",
+                                        "explain",
+                                        "click",
+                                        "mean"
+                                ],
+                                "answer": 1,
+                                "explanation": "explain why... 表示「解釋為什麼……」。"
+                        },
+                        {
+                                "type": "choice",
+                                "points": 2,
+                                "prompt": "My umbrella is wet, so I left it ________ the classroom door.",
+                                "options": [
+                                        "outside",
+                                        "definition",
+                                        "jewelry",
+                                        "triangular"
+                                ],
+                                "answer": 0,
+                                "explanation": "wet umbrella 通常放在教室門外，outside the classroom door 最合句意。"
+                        },
+                        {
+                                "type": "choice",
+                                "points": 2,
+                                "prompt": "Does ________ have a red pencil I can borrow?",
+                                "options": [
+                                        "someone",
+                                        "anything",
+                                        "anyone",
+                                        "somewhere"
+                                ],
+                                "answer": 2,
+                                "explanation": "一般疑問句中問「任何人」常用 anyone。"
+                        },
+                        {
+                                "type": "choice",
+                                "points": 2,
+                                "prompt": "I forgot my lunch. I need ________ to eat.",
+                                "options": [
+                                        "anywhere",
+                                        "something",
+                                        "anyone",
+                                        "someone"
+                                ],
+                                "answer": 1,
+                                "explanation": "肯定句中表示「某樣東西」用 something；to eat 修飾 something。"
+                        },
+                        {
+                                "type": "choice",
+                                "points": 2,
+                                "prompt": "We didn't find ________ below the sofa.",
+                                "options": [
+                                        "something",
+                                        "someone",
+                                        "anything",
+                                        "somewhere"
+                                ],
+                                "answer": 2,
+                                "explanation": "否定句 didn't find 中，表示「任何東西」用 anything。"
+                        },
+                        {
+                                "type": "choice",
+                                "points": 2,
+                                "prompt": "I think ________ is waiting for you downstairs.",
+                                "options": [
+                                        "someone",
+                                        "anyone",
+                                        "anything",
+                                        "anywhere"
+                                ],
+                                "answer": 0,
+                                "explanation": "肯定句中表示不確定的「某人」用 someone。"
+                        },
+                        {
+                                "type": "choice",
+                                "points": 2,
+                                "prompt": "Mia was tired, so she didn't go ________ after dinner.",
+                                "options": [
+                                        "somewhere",
+                                        "anywhere",
+                                        "someone",
+                                        "anything"
+                                ],
+                                "answer": 1,
+                                "explanation": "否定句 didn't go 後用 anywhere，表示「哪裡都沒有去」。"
+                        },
+                        {
+                                "type": "choice",
+                                "points": 2,
+                                "prompt": "“Did Dad buy anything online?” “Yes, he bought ________ for the kitchen.”",
+                                "options": [
+                                        "anyone",
+                                        "somewhere",
+                                        "something",
+                                        "anything"
+                                ],
+                                "answer": 2,
+                                "explanation": "問句可用 anything；肯定回答中表示「某物」用 something。"
+                        }
+                ]
+        },
+        {
+                "id": "D",
+                "title": "Match the Numbers with the Correct Pictures",
+                "subtitle": "How to Make a Fruit Yogurt Cup",
+                "instruction": "閱讀 1–6 的步驟，再為每張圖片選擇正確的步驟編號。每個編號只使用一次。",
+                "points": 12,
+                "process": true,
+                "steps": [
+                        "Put some yogurt into a bowl.",
+                        "Wash the strawberries carefully.",
+                        "Cut the fruit into small pieces.",
+                        "Add the fruit on top of the yogurt.",
+                        "Put some cereal in the bowl.",
+                        "Eat it with a spoon."
+                ],
+                "questions": [
+                        {
+                                "type": "process",
+                                "points": 2,
+                                "picture": "addFruit",
+                                "answer": "4",
+                                "explanation": "先有 yogurt，再把水果放在上面，所以是步驟 4。"
+                        },
+                        {
+                                "type": "process",
+                                "points": 2,
+                                "picture": "yogurt",
+                                "answer": "1",
+                                "explanation": "第一步是把 yogurt 放進碗裡。"
+                        },
+                        {
+                                "type": "process",
+                                "points": 2,
+                                "picture": "cereal",
+                                "answer": "5",
+                                "explanation": "水果加入後，再放 cereal，是步驟 5。"
+                        },
+                        {
+                                "type": "process",
+                                "points": 2,
+                                "picture": "cut",
+                                "answer": "3",
+                                "explanation": "洗完草莓後，把水果切成小塊，是步驟 3。"
+                        },
+                        {
+                                "type": "process",
+                                "points": 2,
+                                "picture": "eat",
+                                "answer": "6",
+                                "explanation": "最後用 spoon 吃，所以是步驟 6。"
+                        },
+                        {
+                                "type": "process",
+                                "points": 2,
+                                "picture": "wash",
+                                "answer": "2",
+                                "explanation": "放好 yogurt 後，要先洗草莓，是步驟 2。"
+                        }
+                ]
+        },
+        {
+                "id": "E",
+                "title": "Look and Write",
+                "subtitle": "Answer the questions about the house.",
+                "instruction": "請觀察房屋位置圖。用完整的 Yes/No 或 Where 句子作答。",
+                "points": 12,
+                "house": true,
+                "questions": [
+                        {
+                                "type": "text",
+                                "points": 2,
+                                "prompt": "Is the bedroom across from the bathroom?",
+                                "answers": [
+                                        "yes it is",
+                                        "yes the bedroom is across from the bathroom",
+                                        "yes it is across from the bathroom"
+                                ],
+                                "displayAnswer": "Yes, it is.",
+                                "explanation": "bedroom 和 bathroom 在同一層左右相對，所以可以說 across from。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 2,
+                                "prompt": "Is the kitchen upstairs?",
+                                "answers": [
+                                        "no it isnt",
+                                        "no it is not",
+                                        "no the kitchen isnt upstairs",
+                                        "no the kitchen is not upstairs",
+                                        "no it is downstairs",
+                                        "no the kitchen is downstairs"
+                                ],
+                                "displayAnswer": "No, it isn't. It is downstairs.",
+                                "explanation": "kitchen 位於一樓，所以是 downstairs。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 2,
+                                "prompt": "Where is the living room?",
+                                "answers": [
+                                        "it is downstairs next to the kitchen",
+                                        "its downstairs next to the kitchen",
+                                        "it is next to the kitchen downstairs",
+                                        "the living room is downstairs next to the kitchen"
+                                ],
+                                "displayAnswer": "It is downstairs, next to the kitchen.",
+                                "explanation": "living room 在樓下，且在 kitchen 旁邊。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 2,
+                                "prompt": "Where is the skateboard?",
+                                "answers": [
+                                        "it is outside the house",
+                                        "its outside the house",
+                                        "the skateboard is outside the house",
+                                        "it is outside"
+                                ],
+                                "displayAnswer": "It is outside the house.",
+                                "explanation": "skateboard 在房子外面，所以用 outside the house。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 2,
+                                "prompt": "Where is the picture?",
+                                "answers": [
+                                        "it is above the sofa",
+                                        "its above the sofa",
+                                        "the picture is above the sofa"
+                                ],
+                                "displayAnswer": "It is above the sofa.",
+                                "explanation": "picture 在 sofa 上方，使用 above。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 2,
+                                "prompt": "Where is the lamp?",
+                                "answers": [
+                                        "it is between the sofa and the bookshelf",
+                                        "its between the sofa and the bookshelf",
+                                        "the lamp is between the sofa and the bookshelf"
+                                ],
+                                "displayAnswer": "It is between the sofa and the bookshelf.",
+                                "explanation": "between A and B 表示在 A 和 B 之間。"
+                        }
+                ]
+        },
+        {
+                "id": "F",
+                "title": "Read and Answer in Complete Sentences",
+                "subtitle": "Use a complete sentence.",
+                "instruction": "依照括號中的資訊，用完整句回答。注意現在式、過去式及 some-/any- 的轉換。",
+                "points": 5,
+                "questions": [
+                        {
+                                "type": "text",
+                                "points": 2,
+                                "prompt": "Do you know anyone who can explain the homework? <em>(Yes / Ms. Chen)</em>",
+                                "answers": [
+                                        "yes i know someone who can explain the homework ms chen",
+                                        "yes i do ms chen can explain the homework",
+                                        "yes ms chen can explain the homework",
+                                        "yes i know someone ms chen can explain the homework"
+                                ],
+                                "displayAnswer": "Yes, I do. Ms. Chen can explain the homework.",
+                                "explanation": "疑問句用 anyone；肯定回答可指出某人。can 後接原形 explain。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "Did Anna go anywhere after school? <em>(Yes / bookstore)</em>",
+                                "answers": [
+                                        "yes she did she went to the bookstore",
+                                        "yes she went to the bookstore after school",
+                                        "yes anna went to the bookstore",
+                                        "yes she went somewhere after school she went to the bookstore"
+                                ],
+                                "displayAnswer": "Yes, she did. She went to the bookstore.",
+                                "explanation": "Did 問句用 did 簡答；肯定敘述要用 went。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "Did the children find anything outside? <em>(No)</em>",
+                                "answers": [
+                                        "no they didnt find anything outside",
+                                        "no they did not find anything outside",
+                                        "no they didnt",
+                                        "no they did not"
+                                ],
+                                "displayAnswer": "No, they didn't find anything outside.",
+                                "explanation": "否定句用 didn't + 原形 find；anything 用於否定句中。"
+                        },
+                        {
+                                "type": "text",
+                                "points": 1,
+                                "prompt": "Does Max want anything to eat? <em>(Yes / bacon sandwich)</em>",
+                                "answers": [
+                                        "yes he does he wants a bacon sandwich",
+                                        "yes max wants a bacon sandwich",
+                                        "yes he wants a bacon sandwich",
+                                        "yes he wants something to eat he wants a bacon sandwich"
+                                ],
+                                "displayAnswer": "Yes, he does. He wants a bacon sandwich.",
+                                "explanation": "Does 問句用 does 簡答；he 的現在式動詞用 wants。"
+                        }
+                ]
+        },
+        {
+                "id": "G",
+                "title": "Read the Article and Choose the Correct Answer",
+                "subtitle": "Read for meaning and inference.",
+                "instruction": "請根據文章線索作答。題目測主旨、字義、指涉與推論，不需要背誦課本知識。",
+                "points": 5,
+                "reading": `
+      <h3>A Better Zoo Brochure</h3>
+      <p>Kelly's group made a brochure for the school zoo trip. Their first brochure had many words, but it did not have clear illustrations. Some students felt confused because they could not find the bus time, the lunch place, or the animal show schedule.</p>
+      <p>Mr. Wu asked the group to make the brochure easier to use. Kelly added a simple map and short instructions. Ben put each activity inside a small box. Amy added a definition for the word <em>habitat</em> because some younger students did not know what it meant.</p>
+      <p>The second brochure was not just prettier. It was more useful. Students could find the result of each search quickly and did not need to ask anyone for help.</p>
+    `,
+                "questions": [
+                        {
+                                "type": "choice",
+                                "points": 1,
+                                "prompt": "What is the main idea of the article?",
+                                "options": [
+                                        "A good brochure should be clear and useful.",
+                                        "Zoo trips are always miserable.",
+                                        "Students should not use maps.",
+                                        "Every brochure must have bacon in it."
+                                ],
+                                "answer": 0,
+                                "explanation": "文章重點是 brochure 要清楚、有用，幫助讀者找到資訊。"
+                        },
+                        {
+                                "type": "choice",
+                                "points": 1,
+                                "prompt": "Why were some students confused by the first brochure?",
+                                "options": [
+                                        "It had no clear illustrations or easy information.",
+                                        "It was written in the alphabet.",
+                                        "It was below the table.",
+                                        "It had too many buttons."
+                                ],
+                                "answer": 0,
+                                "explanation": "第一段說第一版沒有清楚插圖，學生找不到重要資訊。"
+                        },
+                        {
+                                "type": "choice",
+                                "points": 1,
+                                "prompt": "What does <em>habitat</em> need in the article?",
+                                "options": [
+                                        "A definition",
+                                        "A waitress",
+                                        "A piece of bacon",
+                                        "A negative sentence"
+                                ],
+                                "answer": 0,
+                                "explanation": "Amy 為 habitat 加了 definition，因為有些年紀較小的學生不懂意思。"
+                        },
+                        {
+                                "type": "choice",
+                                "points": 1,
+                                "prompt": "What does <em>each activity</em> refer to in the second paragraph?",
+                                "options": [
+                                        "Things students could do or see on the trip",
+                                        "Every dictionary in the classroom",
+                                        "Every frightened animal",
+                                        "Every word in the alphabet"
+                                ],
+                                "answer": 0,
+                                "explanation": "each activity 指動物園行程中的活動，例如動物表演或其他參觀內容。"
+                        },
+                        {
+                                "type": "choice",
+                                "points": 1,
+                                "prompt": "What can we infer about the second brochure?",
+                                "options": [
+                                        "It helped students work independently.",
+                                        "It made students more confused.",
+                                        "It did not include anything useful.",
+                                        "It was only about jewelry."
+                                ],
+                                "answer": 0,
+                                "explanation": "學生不需要問任何人就能找到資訊，可推論第二版 brochure 讓學生能獨立使用。"
+                        }
+                ]
+        }
+];
+
+    const svgIcons = {
+      yogurt: `<svg viewBox="0 0 220 150" role="img" aria-label="Put yogurt into a bowl"><rect width="220" height="150" rx="14" fill="#f1ebff"/><ellipse cx="112" cy="103" rx="60" ry="23" fill="#fff" stroke="#334155" stroke-width="4"/><path d="M58 93c9 34 99 34 108 0" fill="#fff" stroke="#334155" stroke-width="4"/><path d="M76 89c22 12 50 12 72 0" fill="none" stroke="#d8c6ff" stroke-width="12" stroke-linecap="round"/><g transform="rotate(-20 72 45)"><rect x="43" y="22" width="58" height="66" rx="8" fill="#fff" stroke="#334155" stroke-width="4"/><text x="72" y="58" text-anchor="middle" font-size="17" font-weight="bold" fill="#7254b3">YOG</text></g><path d="M96 65c13 7 20 15 25 29" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round"/></svg>`,
+      wash: `<svg viewBox="0 0 220 150" role="img" aria-label="Wash strawberries"><rect width="220" height="150" rx="14" fill="#e8f8f6"/><rect x="48" y="82" width="124" height="40" rx="18" fill="#b9e3f8" stroke="#334155" stroke-width="4"/><path d="M72 68h73" stroke="#168a87" stroke-width="7" stroke-linecap="round"/><path d="M82 24v48M105 24v48M128 24v48" stroke="#6bbfc0" stroke-width="7" stroke-linecap="round"/><g fill="#e35b69" stroke="#334155" stroke-width="3"><path d="M83 92c-18 18 18 36 28 10 7-20-14-24-28-10z"/><path d="M122 91c-18 18 18 36 28 10 7-20-14-24-28-10z"/></g><path d="M91 87l6-10M132 86l6-10" stroke="#25855a" stroke-width="4"/></svg>`,
+      cut: `<svg viewBox="0 0 220 150" role="img" aria-label="Cut fruit into pieces"><rect width="220" height="150" rx="14" fill="#fff5dc"/><rect x="45" y="86" width="130" height="34" rx="10" fill="#e7c389" stroke="#334155" stroke-width="4"/><path d="M72 72l82 36" stroke="#8a8f98" stroke-width="8" stroke-linecap="round"/><path d="M142 101l28 13" stroke="#334155" stroke-width="4"/><g fill="#e35b69" stroke="#334155" stroke-width="3"><path d="M78 89c-12 15 14 26 23 6 5-14-12-17-23-6z"/><path d="M116 91c-12 15 14 26 23 6 5-14-12-17-23-6z"/></g><path d="M91 86l5-8M129 88l5-8" stroke="#25855a" stroke-width="4"/></svg>`,
+      addFruit: `<svg viewBox="0 0 220 150" role="img" aria-label="Add fruit on top of yogurt"><rect width="220" height="150" rx="14" fill="#eaf8f0"/><ellipse cx="112" cy="102" rx="61" ry="24" fill="#fff" stroke="#334155" stroke-width="4"/><path d="M57 93c9 36 101 36 110 0" fill="#fff" stroke="#334155" stroke-width="4"/><path d="M79 92c20 11 47 11 67 0" stroke="#d8c6ff" stroke-width="11" stroke-linecap="round"/><circle cx="90" cy="77" r="11" fill="#e35b69" stroke="#334155" stroke-width="3"/><circle cx="118" cy="74" r="11" fill="#f2ad3d" stroke="#334155" stroke-width="3"/><circle cx="143" cy="82" r="11" fill="#e35b69" stroke="#334155" stroke-width="3"/><path d="M73 41l71 27" stroke="#8a8f98" stroke-width="7" stroke-linecap="round"/><path d="M128 62l19 8" stroke="#334155" stroke-width="4"/></svg>`,
+      cereal: `<svg viewBox="0 0 220 150" role="img" aria-label="Put cereal in the bowl"><rect width="220" height="150" rx="14" fill="#fff4dd"/><ellipse cx="118" cy="103" rx="60" ry="23" fill="#fff" stroke="#334155" stroke-width="4"/><path d="M63 94c9 35 101 35 110 0" fill="#fff" stroke="#334155" stroke-width="4"/><path d="M86 93c21 11 44 11 65 0" stroke="#d8c6ff" stroke-width="10" stroke-linecap="round"/><g fill="#c98a3b" stroke="#8b5e3c" stroke-width="2"><circle cx="91" cy="74" r="7"/><circle cx="111" cy="70" r="7"/><circle cx="133" cy="76" r="7"/><circle cx="152" cy="84" r="7"/></g><rect x="41" y="25" width="54" height="63" rx="7" fill="#fff" stroke="#334155" stroke-width="4"/><text x="68" y="60" text-anchor="middle" font-size="15" font-weight="bold" fill="#c98a3b">CER</text></svg>`,
+      eat: `<svg viewBox="0 0 220 150" role="img" aria-label="Eat it with a spoon"><rect width="220" height="150" rx="14" fill="#e9f0ff"/><ellipse cx="105" cy="102" rx="60" ry="23" fill="#fff" stroke="#334155" stroke-width="4"/><path d="M50 93c9 35 101 35 110 0" fill="#fff" stroke="#334155" stroke-width="4"/><path d="M78 94c20 10 43 10 64 0" stroke="#d8c6ff" stroke-width="10" stroke-linecap="round"/><path d="M148 30l-37 62" stroke="#8a8f98" stroke-width="7" stroke-linecap="round"/><ellipse cx="154" cy="24" rx="13" ry="18" fill="#c4cad3" stroke="#334155" stroke-width="3"/><path d="M58 45c13-11 31-11 44 0" fill="none" stroke="#334155" stroke-width="4" stroke-linecap="round"/><circle cx="75" cy="61" r="4" fill="#334155"/><circle cx="94" cy="61" r="4" fill="#334155"/><path d="M76 75c8 7 17 7 25 0" fill="none" stroke="#334155" stroke-width="4" stroke-linecap="round"/></svg>`
+    };
+
+    function houseSvg() {
+      return `
+        <div class="visual-wrap">
+          <div class="visual-card">
+            <svg viewBox="0 0 760 440" role="img" aria-label="A two-floor house with labeled rooms and objects">
+              <defs>
+                <pattern id="roofPattern" width="18" height="18" patternUnits="userSpaceOnUse">
+                  <path d="M0 18L18 0M-4 4L4-4M14 22L22 14" stroke="#9f86cf" stroke-width="3"/>
+                </pattern>
+              </defs>
+              <path d="M90 95L370 20l280 75v300H90z" fill="#fff" stroke="#344054" stroke-width="5"/>
+              <path d="M60 105L370 10l310 95" fill="none" stroke="#533890" stroke-width="17" stroke-linecap="round"/>
+              <path d="M72 106L370 19l298 87" fill="none" stroke="url(#roofPattern)" stroke-width="8"/>
+              <line x1="90" y1="245" x2="650" y2="245" stroke="#344054" stroke-width="5"/>
+              <line x1="370" y1="95" x2="370" y2="395" stroke="#344054" stroke-width="5"/>
+              <text x="230" y="122" text-anchor="middle" font-size="22" font-weight="bold" fill="#533890">BATHROOM</text>
+              <text x="510" y="122" text-anchor="middle" font-size="22" font-weight="bold" fill="#533890">BEDROOM</text>
+              <text x="230" y="273" text-anchor="middle" font-size="22" font-weight="bold" fill="#168a87">KITCHEN</text>
+              <text x="510" y="273" text-anchor="middle" font-size="22" font-weight="bold" fill="#168a87">LIVING ROOM</text>
+              <rect x="151" y="158" width="158" height="56" rx="18" fill="#d9eef9" stroke="#344054" stroke-width="4"/>
+              <path d="M152 169h157M178 158v56" stroke="#344054" stroke-width="4"/>
+              <circle cx="242" cy="186" r="19" fill="#fff" stroke="#344054" stroke-width="4"/>
+              <rect x="444" y="160" width="132" height="54" rx="8" fill="#f1c6ce" stroke="#344054" stroke-width="4"/>
+              <rect x="451" y="151" width="50" height="17" rx="8" fill="#fff"/>
+              <rect x="519" y="151" width="50" height="17" rx="8" fill="#fff"/>
+              <rect x="122" y="310" width="76" height="52" fill="#d3d9e4" stroke="#344054" stroke-width="4"/>
+              <rect x="214" y="314" width="78" height="45" rx="9" fill="#e7c389" stroke="#344054" stroke-width="4"/>
+              <circle cx="235" cy="337" r="12" fill="#f2ad3d"/>
+              <circle cx="267" cy="337" r="12" fill="#f2ad3d"/>
+              <rect x="438" y="326" width="122" height="43" rx="14" fill="#9f86cf" stroke="#344054" stroke-width="4"/>
+              <rect x="454" y="307" width="42" height="31" rx="8" fill="#c8b9e7"/>
+              <rect x="508" y="307" width="42" height="31" rx="8" fill="#c8b9e7"/>
+              <rect x="588" y="307" width="42" height="74" rx="5" fill="#b8d9d2" stroke="#344054" stroke-width="4"/>
+              <path d="M593 327h32M593 347h32M593 367h32" stroke="#344054" stroke-width="3"/>
+              <circle cx="572" cy="318" r="16" fill="#f2ad3d" stroke="#344054" stroke-width="4"/>
+              <path d="M572 334v38" stroke="#344054" stroke-width="4"/>
+              <path d="M556 372h32" stroke="#344054" stroke-width="4" stroke-linecap="round"/>
+              <rect x="471" y="286" width="75" height="31" rx="4" fill="#fff5dc" stroke="#344054" stroke-width="4"/>
+              <path d="M481 307l19-13 15 10 12-8 10 11" fill="none" stroke="#168a87" stroke-width="4" stroke-linejoin="round"/>
+              <g transform="translate(674 322)">
+                <circle cx="25" cy="49" r="22" fill="none" stroke="#344054" stroke-width="5"/>
+                <circle cx="90" cy="49" r="22" fill="none" stroke="#344054" stroke-width="5"/>
+                <path d="M25 49l31-39 34 39H25l25-22h29" fill="none" stroke="#c6414a" stroke-width="5" stroke-linejoin="round"/>
+                <path d="M54 10l-8-19" stroke="#c6414a" stroke-width="5" stroke-linecap="round"/>
+              </g>
+              <text x="680" y="413" font-size="19" font-weight="bold" fill="#c6414a">OUTSIDE</text>
+              <text x="70" y="240" transform="rotate(-90 70 240)" font-size="18" font-weight="bold" fill="#667085">UPSTAIRS</text>
+              <text x="70" y="375" transform="rotate(-90 70 375)" font-size="18" font-weight="bold" fill="#667085">DOWNSTAIRS</text>
+            </svg>
+          </div>
+        </div>`;
+    }
+
+    function normalize(value) {
+      return String(value || "")
+        .toLowerCase()
+        .replace(/[’']/g, "")
+        .replace(/[^a-z0-9\s]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function renderQuiz() {
+      const form = document.getElementById("quizForm");
+      const nav = document.getElementById("sectionNav");
+      form.innerHTML = "";
+      nav.innerHTML = "";
+
+      sections.forEach(section => {
+        const navLink = document.createElement("a");
+        navLink.href = `#section-${section.id}`;
+        navLink.innerHTML = `<span>${section.id}. ${section.title}</span><small>${section.points} 分</small>`;
+        nav.appendChild(navLink);
+
+        const article = document.createElement("article");
+        article.className = "quiz-section";
+        article.id = `section-${section.id}`;
+        article.innerHTML = `
+          <div class="section-head">
+            <div class="section-letter">${section.id}</div>
+            <div>
+              <h2>${section.title}</h2>
+              <p>${section.subtitle}（${section.points} 分）</p>
+            </div>
+          </div>
+          <div class="section-content">
+            <div class="section-instruction">${section.instruction}</div>
+            ${section.process ? `<ol class="steps">${section.steps.map(s => `<li>${s}</li>`).join("")}</ol>` : ""}
+            ${section.house ? houseSvg() : ""}
+            ${section.reading ? `<div class="reading">${section.reading}</div>` : ""}
+            <div class="questions-holder"></div>
+          </div>`;
+
+        const holder = article.querySelector(".questions-holder");
+        if (section.process) {
+          holder.className = "questions-holder process-grid";
+        }
+        section.questions.forEach((question, index) => {
+          holder.appendChild(renderQuestion(section, question, index));
+        });
+        form.appendChild(article);
+      });
+    }
+
+    function renderQuestion(section, question, index) {
+      const key = `${section.id}${index + 1}`;
+      const wrapper = document.createElement("div");
+      wrapper.className = question.type === "process" ? "process-card question" : "question";
+      wrapper.dataset.key = key;
+      wrapper.dataset.section = section.id;
+
+      if (question.type === "process") {
+        wrapper.innerHTML = `
+          ${svgIcons[question.picture]}
+          <label for="${key}">圖片 ${index + 1}
+            <select id="${key}" name="${key}" aria-label="圖片 ${index + 1} 的步驟編號">
+              <option value="">--</option>
+              ${[1,2,3,4,5,6].map(n => `<option value="${n}">${n}</option>`).join("")}
+            </select>
+          </label>`;
+        return wrapper;
+      }
+
+      wrapper.innerHTML = `
+        <div class="q-top">
+          <span class="q-number">${index + 1}</span>
+          <p class="q-prompt">${question.prompt}</p>
+          <span class="points">${question.points} 分</span>
+        </div>`;
+
+      if (question.type === "choice" || question.type === "listening") {
+        if (question.type === "listening") {
+          const listen = document.createElement("div");
+          listen.className = "listen-row";
+          listen.innerHTML = `
+            <button type="button" class="btn listen-btn" data-speech="${escapeAttribute(question.speech)}">🔊 播放題目</button>
+            <span class="listen-status" aria-live="polite">尚未播放</span>`;
+          wrapper.appendChild(listen);
+        }
+        const options = document.createElement("div");
+        options.className = "options";
+        question.options.forEach((option, optionIndex) => {
+          const label = document.createElement("label");
+          label.className = "option";
+          label.innerHTML = `
+            <input type="radio" name="${key}" value="${optionIndex}">
+            <span>${String.fromCharCode(65 + optionIndex)}. ${option}</span>`;
+          options.appendChild(label);
+        });
+        wrapper.appendChild(options);
+      } else if (question.type === "text") {
+        const input = document.createElement("input");
+        input.type = "text";
+        input.className = "text-answer";
+        input.name = key;
+        input.id = key;
+        input.autocomplete = "off";
+        input.spellcheck = false;
+        input.placeholder = section.id === "B" ? "Type the whole word or phrase." : "Write a complete sentence.";
+        input.setAttribute("aria-label", `第 ${index + 1} 題答案`);
+        wrapper.appendChild(input);
+      }
+      return wrapper;
+    }
+
+    function escapeAttribute(text) {
+      return text.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
+    }
+
+    function getAnswer(section, question, index) {
+      const key = `${section.id}${index + 1}`;
+      if (question.type === "choice" || question.type === "listening") {
+        const selected = document.querySelector(`input[name="${key}"]:checked`);
+        return selected ? selected.value : "";
+      }
+      const field = document.querySelector(`[name="${key}"]`);
+      return field ? field.value.trim() : "";
+    }
+
+    function isCorrect(question, value) {
+      if (question.type === "choice" || question.type === "listening") {
+        return Number(value) === question.answer;
+      }
+      if (question.type === "process") {
+        return String(value) === String(question.answer);
+      }
+      const normalized = normalize(value);
+      return question.answers.some(answer => normalize(answer) === normalized);
+    }
+
+    function getDisplayAnswer(question) {
+      if (question.type === "choice" || question.type === "listening") {
+        return `${String.fromCharCode(65 + question.answer)}. ${question.options[question.answer]}`;
+      }
+      if (question.type === "process") return `Step ${question.answer}`;
+      return question.displayAnswer;
+    }
+
+    function getDisplayUserAnswer(question, value) {
+      if (!value) return "未作答";
+      if (question.type === "choice" || question.type === "listening") {
+        const i = Number(value);
+        return `${String.fromCharCode(65 + i)}. ${question.options[i]}`;
+      }
+      if (question.type === "process") return `Step ${value}`;
+      return value;
+    }
+
+    function allQuestionEntries() {
+      return sections.flatMap(section =>
+        section.questions.map((question, index) => ({ section, question, index }))
+      );
+    }
+
+    function updateProgress() {
+      const entries = allQuestionEntries();
+      const complete = entries.filter(({section, question, index}) =>
+        getAnswer(section, question, index) !== ""
+      ).length;
+      document.getElementById("progressBar").style.width = `${(complete / entries.length) * 100}%`;
+      document.getElementById("progressText").textContent = `已完成 ${complete} / ${entries.length}`;
+    }
+
+    function showAlert(message, type) {
+      const alert = document.getElementById("formAlert");
+      alert.textContent = message;
+      alert.className = `alert show ${type}`;
+    }
+
+    function clearAlert() {
+      const alert = document.getElementById("formAlert");
+      alert.textContent = "";
+      alert.className = "alert";
+    }
+
+    function submitQuiz() {
+      clearAlert();
+      document.querySelectorAll(".question").forEach(el => el.classList.remove("unanswered"));
+
+      const entries = allQuestionEntries();
+      const unanswered = entries.filter(({section, question, index}) =>
+        getAnswer(section, question, index) === ""
+      );
+
+      if (unanswered.length) {
+        unanswered.forEach(({section, index}) => {
+          document.querySelector(`[data-key="${section.id}${index + 1}"]`).classList.add("unanswered");
+        });
+        showAlert(`還有 ${unanswered.length} 題尚未完成。紅色框線已標出未作答題目。`, "error");
+        const first = document.querySelector(".question.unanswered");
+        if (first) first.scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      }
+
+      let total = 0;
+      const breakdown = {};
+      const incorrect = [];
+
+      sections.forEach(section => {
+        breakdown[section.id] = { earned: 0, possible: section.points, title: section.title };
+        section.questions.forEach((question, index) => {
+          const value = getAnswer(section, question, index);
+          const correct = isCorrect(question, value);
+          const element = document.querySelector(`[data-key="${section.id}${index + 1}"]`);
+          element.classList.remove("correct", "incorrect");
+          element.classList.add(correct ? "correct" : "incorrect");
+          if (correct) {
+            total += question.points;
+            breakdown[section.id].earned += question.points;
+          } else {
+            incorrect.push({ section, question, index, value });
+          }
+        });
+      });
+
+      showResults(total, breakdown, incorrect);
+      saveHistory(total, breakdown);
+      renderHistory();
+      lockQuiz(true);
+      showAlert("已完成計分！你可以在下方查看分數與錯題解析。", "success");
+      document.getElementById("resultPanel").scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function showResults(total, breakdown, incorrect) {
+      const percentage = total;
+      document.getElementById("scoreValue").textContent = total;
+      document.getElementById("scoreTitle").textContent =
+        percentage >= 90 ? "太棒了，掌握得很穩！" :
+        percentage >= 75 ? "做得不錯，再修正幾個觀念！" :
+        percentage >= 60 ? "已有基礎，錯題值得再練一次。" :
+        "先別急，從解析中把規則一個個撿回來。";
+      document.getElementById("scoreMessage").textContent =
+        `答對得分 ${total} 分，錯誤 ${incorrect.length} 題。錯題解析會說明每題使用的文法或語意線索。`;
+
+      document.getElementById("breakdown").innerHTML = Object.entries(breakdown).map(([id, item]) => `
+        <div class="breakdown-item">
+          <span>${id}. ${item.title}</span>
+          <strong>${item.earned} / ${item.possible}</strong>
+        </div>`).join("");
+
+      const review = document.getElementById("reviewPanel");
+      if (!incorrect.length) {
+        review.innerHTML = `<div class="review-item" style="background:var(--green-soft); border-color:#b5ddc7;"><h4>全部答對！</h4><p>你已正確運用本單元的字彙、位置描述與 some-/any- 文法。</p></div>`;
+      } else {
+        review.innerHTML = incorrect.map(({section, question, index, value}) => `
+          <article class="review-item">
+            <h4>${section.id}-${index + 1}. ${stripHtml(question.prompt || `圖片 ${index + 1}`)}</h4>
+            <p><span class="review-label">你的答案：</span>${escapeHtml(getDisplayUserAnswer(question, value))}</p>
+            <p><span class="review-label">正確答案：</span>${escapeHtml(getDisplayAnswer(question))}</p>
+            <p class="explanation"><span class="review-label">為什麼：</span>${question.explanation}</p>
+          </article>`).join("");
+      }
+      document.getElementById("resultPanel").classList.add("show");
+      review.classList.remove("show");
+      document.getElementById("toggleReviewBtn").textContent = "查看錯題解析";
+    }
+
+    function stripHtml(html) {
+      const div = document.createElement("div");
+      div.innerHTML = html;
+      return div.textContent || div.innerText || "";
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function lockQuiz(locked) {
+      document.querySelectorAll("#quizForm input, #quizForm select").forEach(el => el.disabled = locked);
+      document.querySelectorAll(".listen-btn").forEach(el => el.disabled = locked);
+      document.getElementById("submitBtn").disabled = locked;
+    }
+
+    function retryQuiz() {
+      if ("speechSynthesis" in window) window.speechSynthesis.cancel();
+      document.querySelectorAll("#quizForm input[type='radio']").forEach(el => el.checked = false);
+      document.querySelectorAll("#quizForm input[type='text']").forEach(el => el.value = "");
+      document.querySelectorAll("#quizForm select").forEach(el => el.value = "");
+      document.querySelectorAll(".question").forEach(el => el.classList.remove("correct", "incorrect", "unanswered"));
+      document.querySelectorAll(".listen-status").forEach(el => el.textContent = "尚未播放");
+      lockQuiz(false);
+      document.getElementById("resultPanel").classList.remove("show");
+      document.getElementById("reviewPanel").classList.remove("show");
+      clearAlert();
+      updateProgress();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function saveHistory(total, breakdown) {
+      const history = loadHistory();
+      history.unshift({
+        timestamp: new Date().toISOString(),
+        score: total,
+        percentage: total,
+        sections: Object.fromEntries(Object.entries(breakdown).map(([id, item]) => [id, item.earned]))
+      });
+      localStorage.setItem(HISTORY_KEY, JSON.stringify(history.slice(0, 12)));
+    }
+
+    function loadHistory() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]");
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function renderHistory() {
+      const history = loadHistory();
+      const target = document.getElementById("historyList");
+      if (!history.length) {
+        target.innerHTML = `<p class="history-empty">尚無紀錄。第一次送出後，成績會保存在這台裝置的瀏覽器中。</p>`;
+        return;
+      }
+      target.innerHTML = `<div class="history-list">${history.map(item => {
+        const date = new Date(item.timestamp);
+        const dateText = Number.isNaN(date.getTime()) ? item.timestamp : date.toLocaleString("zh-TW", {
+          year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit"
+        });
+        return `<div class="history-item"><strong>${item.score} / 100</strong><time>${dateText}</time></div>`;
+      }).join("")}</div>`;
+    }
+
+    function clearHistory() {
+      if (!loadHistory().length) {
+        showAlert("目前沒有可清除的歷史紀錄。", "error");
+        return;
+      }
+      if (window.confirm("確定要清除這台瀏覽器中的所有歷史成績嗎？")) {
+        localStorage.removeItem(HISTORY_KEY);
+        renderHistory();
+        showAlert("歷史成績已清除。", "success");
+      }
+    }
+
+    function speak(button) {
+      const status = button.parentElement.querySelector(".listen-status");
+      if (!("speechSynthesis" in window)) {
+        status.textContent = "此瀏覽器不支援語音播放，請改用最新版 Chrome、Edge 或 Safari。";
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(button.dataset.speech);
+      utterance.lang = "en-US";
+      utterance.rate = 0.86;
+      utterance.pitch = 1;
+      utterance.onstart = () => {
+        status.textContent = "播放中…";
+        button.textContent = "🔊 重新播放";
+      };
+      utterance.onend = () => status.textContent = "播放完畢，可再次播放";
+      utterance.onerror = () => status.textContent = "播放失敗，請再按一次或更換瀏覽器。";
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function validateQuizModel() {
+      const entries = allQuestionEntries();
+      const totalPoints = entries.reduce((sum, {question}) => sum + question.points, 0);
+      const sectionPointsMatch = sections.every(section =>
+        section.questions.reduce((sum, question) => sum + question.points, 0) === section.points
+      );
+      if (entries.length !== 72 || totalPoints !== 100 || !sectionPointsMatch) {
+        console.error("Quiz model validation failed", { questions: entries.length, totalPoints, sectionPointsMatch });
+      }
+    }
+
+    renderQuiz();
+    validateQuizModel();
+    renderHistory();
+    updateProgress();
+
+    document.getElementById("quizForm").addEventListener("change", event => {
+      const question = event.target.closest(".question");
+      if (question) question.classList.remove("unanswered");
+      updateProgress();
+    });
+    document.getElementById("quizForm").addEventListener("input", event => {
+      const question = event.target.closest(".question");
+      if (question) question.classList.remove("unanswered");
+      updateProgress();
+    });
+    document.getElementById("quizForm").addEventListener("click", event => {
+      const button = event.target.closest(".listen-btn");
+      if (button) speak(button);
+    });
+    document.getElementById("submitBtn").addEventListener("click", submitQuiz);
+    document.getElementById("retryBtn").addEventListener("click", retryQuiz);
+    document.getElementById("clearHistoryBtn").addEventListener("click", clearHistory);
+    document.getElementById("toggleReviewBtn").addEventListener("click", () => {
+      const review = document.getElementById("reviewPanel");
+      const showing = review.classList.toggle("show");
+      document.getElementById("toggleReviewBtn").textContent = showing ? "隱藏錯題解析" : "查看錯題解析";
+    });
+  </script>
+</body>
+</html>
