@@ -6,145 +6,53 @@
   <title>NM G5 Unit 9 New Quiz</title>
   <style>
     :root {
-      --bg: #f6f8fb;
-      --card: #ffffff;
-      --ink: #1f2937;
-      --muted: #667085;
-      --brand: #7c3aed;
-      --brand-dark: #5b21b6;
-      --ok: #067647;
-      --bad: #b42318;
-      --warn: #b54708;
-      --line: #d0d5dd;
-      --soft: #f5f3ff;
-      --missing: #fff3cd;
+      --bg: #f6f8fb; --card: #ffffff; --ink: #1f2937; --muted: #667085;
+      --brand: #7c3aed; --brand-dark: #5b21b6; --ok: #067647; --bad: #b42318;
+      --warn: #b54708; --line: #d0d5dd; --soft: #f5f3ff; --missing: #fff3cd;
     }
     * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans TC", sans-serif;
-      color: var(--ink);
-      background: linear-gradient(180deg, #f3e8ff 0, var(--bg) 360px);
-      line-height: 1.55;
-    }
+    body { margin: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans TC", sans-serif; color: var(--ink); background: linear-gradient(180deg, #f3e8ff 0, var(--bg) 360px); line-height: 1.55; }
     .wrap { max-width: 1080px; margin: 0 auto; padding: 24px; }
-    header {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      padding: 28px;
-      box-shadow: 0 12px 30px rgba(16, 24, 40, .08);
-      margin-bottom: 20px;
-    }
+    header { background: var(--card); border: 1px solid var(--line); border-radius: 22px; padding: 28px; box-shadow: 0 12px 30px rgba(16, 24, 40, .08); margin-bottom: 20px; }
     h1 { margin: 0 0 6px; font-size: clamp(1.8rem, 4vw, 3rem); letter-spacing: -0.02em; }
     .subtitle { color: var(--muted); margin: 0; font-size: 1.05rem; }
     .meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 18px; }
     .pill { background: var(--soft); border-radius: 14px; padding: 10px 12px; font-weight: 700; color: var(--brand-dark); }
     nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; }
     nav a { color: var(--brand-dark); text-decoration: none; font-weight: 700; padding: 6px 10px; border-radius: 999px; background: #f5f3ff; }
-    section {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      padding: 22px;
-      margin: 18px 0;
-      box-shadow: 0 8px 18px rgba(16, 24, 40, .05);
-    }
+    section { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 22px; margin: 18px 0; box-shadow: 0 8px 18px rgba(16, 24, 40, .05); }
     .section-head { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; flex-wrap: wrap; }
     h2 { margin: 0; font-size: clamp(1.25rem, 3vw, 1.65rem); }
     .points { color: var(--brand-dark); font-weight: 800; }
     .instructions { color: var(--muted); margin: 6px 0 16px; }
-    .question-card {
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 15px;
-      margin: 12px 0;
-      background: #fff;
-      transition: border-color .2s, background .2s, box-shadow .2s;
-    }
-    .question-card.missing {
-      border-color: #f79009;
-      background: var(--missing);
-      box-shadow: 0 0 0 3px rgba(247,144,9,.16);
-    }
+    .question-card { border: 1px solid var(--line); border-radius: 16px; padding: 15px; margin: 12px 0; background: #fff; transition: border-color .2s, background .2s, box-shadow .2s; }
+    .question-card.missing { border-color: #f79009; background: var(--missing); box-shadow: 0 0 0 3px rgba(247,144,9,.16); }
     .q-label { font-weight: 800; margin-right: 6px; color: #344054; }
-    input[type="text"], select {
-      width: min(340px, 100%);
-      padding: 11px 12px;
-      border: 1px solid #98a2b3;
-      border-radius: 10px;
-      font-size: 1rem;
-      margin-top: 8px;
-      background: white;
-    }
+    input[type="text"], select { width: min(340px, 100%); padding: 11px 12px; border: 1px solid #98a2b3; border-radius: 10px; font-size: 1rem; margin-top: 8px; background: white; }
     input[type="text"]:focus, select:focus { outline: 3px solid rgba(124, 58, 237, .2); border-color: var(--brand); }
     .options { display: grid; gap: 8px; margin-top: 10px; }
-    .option {
-      display: flex; align-items: flex-start; gap: 8px;
-      padding: 9px 10px; border: 1px solid #eaecf0; border-radius: 12px; cursor: pointer;
-    }
+    .option { display: flex; align-items: flex-start; gap: 8px; padding: 9px 10px; border: 1px solid #eaecf0; border-radius: 12px; cursor: pointer; }
     .option:hover { background: #f9fafb; }
     .option input { margin-top: 4px; }
     .blank-line { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
     .blank-line select { width: 210px; margin: 0; }
-    .passage, .invitation {
-      border-left: 5px solid var(--brand);
-      padding: 14px 16px;
-      background: #fbfaff;
-      border-radius: 14px;
-      margin: 14px 0 16px;
-    }
+    .passage, .invitation { border-left: 5px solid var(--brand); padding: 14px 16px; background: #fbfaff; border-radius: 14px; margin: 14px 0 16px; }
     .passage h3, .invitation h3 { margin: 0 0 8px; }
     .word-box { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 12px 0; }
     .word-chip { border: 1px solid #d6bbfb; background: #f9f5ff; border-radius: 999px; padding: 8px 10px; font-weight: 700; text-align: center; }
-    .listen-box {
-      border: 1px solid #d6bbfb;
-      background: #f9f5ff;
-      border-radius: 16px;
-      padding: 14px;
-      margin: 12px 0 18px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-    }
+    .listen-box { border: 1px solid #d6bbfb; background: #f9f5ff; border-radius: 16px; padding: 14px; margin: 12px 0 18px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
     .mini-pic { max-width: 520px; margin: 8px 0 10px; }
     .mini-pic svg { width: 100%; height: auto; display: block; }
-    .controls {
-      position: sticky; bottom: 0; z-index: 10;
-      background: rgba(246, 248, 251, .92);
-      backdrop-filter: blur(10px);
-      padding: 14px 0 4px;
-      border-top: 1px solid var(--line);
-      display: flex; gap: 10px; flex-wrap: wrap; align-items: center;
-    }
-    button {
-      border: 0; border-radius: 12px; padding: 12px 16px;
-      font-weight: 800; font-size: 1rem; cursor: pointer;
-    }
+    .controls { position: sticky; bottom: 0; z-index: 10; background: rgba(246, 248, 251, .92); backdrop-filter: blur(10px); padding: 14px 0 4px; border-top: 1px solid var(--line); display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    button { border: 0; border-radius: 12px; padding: 12px 16px; font-weight: 800; font-size: 1rem; cursor: pointer; }
     .primary { background: var(--brand); color: white; }
     .primary:hover { background: var(--brand-dark); }
     .secondary { background: #e4e7ec; color: #344054; }
     .danger { background: #fee4e2; color: var(--bad); }
     .audio { background: var(--brand-dark); color: white; }
-    #status {
-      margin: 14px 0;
-      border-radius: 14px;
-      padding: 12px 14px;
-      display: none;
-      font-weight: 700;
-    }
-    #status.show { display: block; }
-    #status.ok { background: #dcfae6; color: var(--ok); }
-    #status.warn { background: #fff4e5; color: var(--warn); }
-    #status.bad { background: #fee4e2; color: var(--bad); }
-    #results, #review, #history {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      padding: 22px;
-      margin: 18px 0;
-    }
+    #status { margin: 14px 0; border-radius: 14px; padding: 12px 14px; display: none; font-weight: 700; }
+    #status.show { display: block; } #status.ok { background: #dcfae6; color: var(--ok); } #status.warn { background: #fff4e5; color: var(--warn); } #status.bad { background: #fee4e2; color: var(--bad); }
+    #results, #review, #history { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 22px; margin: 18px 0; }
     #results[hidden], #review[hidden] { display: none; }
     .score-big { font-size: clamp(2rem, 6vw, 4rem); font-weight: 900; margin: 0; color: var(--brand-dark); }
     .breakdown { width: 100%; border-collapse: collapse; margin-top: 12px; }
@@ -152,23 +60,9 @@
     .review-item { border-top: 1px solid var(--line); padding: 14px 0; }
     .review-item:first-child { border-top: 0; }
     .tag { display: inline-block; border-radius: 999px; padding: 3px 9px; font-size: .85rem; font-weight: 800; }
-    .tag.bad { background: #fee4e2; color: var(--bad); }
-    .tag.ok { background: #dcfae6; color: var(--ok); }
-    .small { color: var(--muted); font-size: .95rem; }
-    .history-list { padding-left: 18px; }
-    footer { color: var(--muted); text-align: center; padding: 20px 0; }
-    @media (max-width: 720px) {
-      .wrap { padding: 14px; }
-      header, section, #results, #review, #history { padding: 16px; border-radius: 16px; }
-      .meta { grid-template-columns: 1fr 1fr; }
-      .controls { align-items: stretch; }
-      button { width: 100%; }
-      .blank-line { display: block; }
-      .blank-line select { width: 100%; margin: 8px 0; }
-      input[type="text"], select { width: 100%; }
-      .breakdown th, .breakdown td { padding: 8px 4px; }
-      .word-box { grid-template-columns: 1fr; }
-    }
+    .tag.bad { background: #fee4e2; color: var(--bad); } .tag.ok { background: #dcfae6; color: var(--ok); }
+    .small { color: var(--muted); font-size: .95rem; } .history-list { padding-left: 18px; } footer { color: var(--muted); text-align: center; padding: 20px 0; }
+    @media (max-width: 720px) { .wrap { padding: 14px; } header, section, #results, #review, #history { padding: 16px; border-radius: 16px; } .meta { grid-template-columns: 1fr 1fr; } .controls { align-items: stretch; } button { width: 100%; } .blank-line { display: block; } .blank-line select { width: 100%; margin: 8px 0; } input[type="text"], select { width: 100%; } .breakdown th, .breakdown td { padding: 8px 4px; } .word-box { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -178,7 +72,7 @@
       <p class="subtitle">Guatemala · Shopping · Invitations · would like · could requests</p>
       <div class="meta" aria-label="Quiz summary">
         <div class="pill">總分：100</div>
-        <div class="pill">作答欄位：40</div>
+        <div class="pill">作答欄位：66</div>
         <div class="pill">模式：自動批改</div>
         <div class="pill">紀錄：本機儲存</div>
       </div>
@@ -186,17 +80,13 @@
         <a href="#section-A">Part A</a><a href="#section-B">Part B</a><a href="#section-C">Part C</a><a href="#section-D">Part D</a><a href="#section-E">Part E</a><a href="#section-F">Part F</a><a href="#history">成績紀錄</a>
       </nav>
     </header>
-
     <main id="quiz" aria-live="polite"></main>
-
     <div id="status" role="alert"></div>
-
     <div class="controls" aria-label="Quiz controls">
       <button class="primary" id="submitBtn" type="button">提交答案</button>
       <button class="secondary" id="retryBtn" type="button">重新作答</button>
       <button class="danger" id="clearHistoryBtn" type="button">清除成績紀錄</button>
     </div>
-
     <section id="results" hidden aria-label="Score results"></section>
     <section id="review" hidden aria-label="Incorrect answer review"></section>
     <section id="history" aria-label="Local score history">
@@ -206,12 +96,11 @@
     </section>
     <footer>Self-contained HTML quiz · No external scripts or stylesheets</footer>
   </div>
-
   <script>
     const QUIZ = {
   "title": "NM G5 Unit 9 New Quiz",
   "subtitle": "Guatemala · Shopping · Invitations · would like · could requests",
-  "storageKey": "nm_g5_unit9_new_quiz_v1_20260619",
+  "storageKey": "nm_g5_unit9_new_quiz_v2_20260620",
   "maxScore": 100,
   "sections": [
     {
@@ -297,58 +186,14 @@
     {
       "id": "B",
       "title": "Part B. Read and Write",
-      "pointsLabel": "2% × 10 = 20%",
+      "pointsLabel": "20% total",
       "total": 20,
-      "instructions": "Use the first letter as a hint. Write the complete word.",
+      "instructions": "Use the first and last letters as hints. Write the complete word or phrase.",
       "items": [
         {
           "id": "B1",
           "type": "text",
-          "points": 2,
-          "prompt": "I want to save money, so I bought a <strong>c _ _ _ _</strong> notebook.",
-          "answer": "cheap",
-          "accepted": [
-            "cheap"
-          ],
-          "explanation": "Cheap means not expensive."
-        },
-        {
-          "id": "B2",
-          "type": "text",
-          "points": 2,
-          "prompt": "What is the <strong>p _ _ _ e</strong> of this scarf?",
-          "answer": "price",
-          "accepted": [
-            "price"
-          ],
-          "explanation": "Price means how much money something costs."
-        },
-        {
-          "id": "B3",
-          "type": "text",
-          "points": 2,
-          "prompt": "My little sister laughed when I <strong>t _ _ _ _ _ d</strong> her foot.",
-          "answer": "tickled",
-          "accepted": [
-            "tickled"
-          ],
-          "explanation": "Tickled is the past tense of tickle."
-        },
-        {
-          "id": "B4",
-          "type": "text",
-          "points": 2,
-          "prompt": "This T-shirt is made of <strong>c _ _ _ _ n</strong>, so it feels soft.",
-          "answer": "cotton",
-          "accepted": [
-            "cotton"
-          ],
-          "explanation": "Cotton is a soft material used to make clothes."
-        },
-        {
-          "id": "B5",
-          "type": "text",
-          "points": 2,
+          "points": 0.5555555555555556,
           "prompt": "Grandma put a warm <strong>b _ _ _ _ _ t</strong> on the bed.",
           "answer": "blanket",
           "accepted": [
@@ -357,31 +202,273 @@
           "explanation": "A blanket keeps you warm."
         },
         {
+          "id": "B2",
+          "type": "text",
+          "points": 0.5555555555555556,
+          "prompt": "How much did you <strong>p _ y</strong> for this bag?",
+          "answer": "pay",
+          "accepted": [
+            "pay"
+          ],
+          "explanation": "Pay means to give money for something."
+        },
+        {
+          "id": "B3",
+          "type": "text",
+          "points": 0.5555555555555556,
+          "prompt": "One <strong>d _ _ _ _ r</strong> is not enough to buy this toy.",
+          "answer": "dollar",
+          "accepted": [
+            "dollar"
+          ],
+          "explanation": "A dollar is a kind of money."
+        },
+        {
+          "id": "B4",
+          "type": "text",
+          "points": 0.5555555555555556,
+          "prompt": "What is the <strong>p _ _ _ e</strong> of this scarf?",
+          "answer": "price",
+          "accepted": [
+            "price"
+          ],
+          "explanation": "Price means how much money something costs."
+        },
+        {
+          "id": "B5",
+          "type": "text",
+          "points": 0.5555555555555556,
+          "prompt": "May I <strong>t _ y  o n</strong> this jacket before I buy it?",
+          "answer": "try on",
+          "accepted": [
+            "try on"
+          ],
+          "explanation": "Try on means to put on clothes to see if they fit."
+        },
+        {
           "id": "B6",
           "type": "text",
-          "points": 2,
-          "prompt": "The shop sells shoes in many <strong>s _ _ _ s</strong>: small, medium, and large.",
-          "answer": "sizes",
+          "points": 0.5555555555555556,
+          "prompt": "This T-shirt is made of <strong>c _ _ _ _ n</strong>, so it feels soft.",
+          "answer": "cotton",
           "accepted": [
-            "sizes"
+            "cotton"
           ],
-          "explanation": "Sizes tells how big or small things are."
+          "explanation": "Cotton is a soft material used to make clothes."
         },
         {
           "id": "B7",
           "type": "text",
-          "points": 2,
-          "prompt": "The clown told funny <strong>j _ _ _ s</strong> to make the children smile.",
-          "answer": "jokes",
+          "points": 0.5555555555555556,
+          "prompt": "I want to save money, so I bought a <strong>c _ _ _ p</strong> notebook.",
+          "answer": "cheap",
           "accepted": [
-            "jokes"
+            "cheap"
           ],
-          "explanation": "Jokes are funny things people say."
+          "explanation": "Cheap means not expensive."
         },
         {
           "id": "B8",
           "type": "text",
-          "points": 2,
+          "points": 0.5555555555555556,
+          "prompt": "What <strong>s _ _ e</strong> do you need: small, medium, or large?",
+          "answer": "size",
+          "accepted": [
+            "size"
+          ],
+          "explanation": "Size tells how big or small something is."
+        },
+        {
+          "id": "B9",
+          "type": "text",
+          "points": 0.5555555555555556,
+          "prompt": "This shirt is not small or large. It is <strong>m _ _ _ _ m</strong>.",
+          "answer": "medium",
+          "accepted": [
+            "medium"
+          ],
+          "explanation": "Medium means middle-sized."
+        },
+        {
+          "id": "B10",
+          "type": "text",
+          "points": 0.5555555555555556,
+          "prompt": "Dad needs a <strong>l _ _ _ e</strong> T-shirt because the medium one is too small.",
+          "answer": "large",
+          "accepted": [
+            "large"
+          ],
+          "explanation": "Large means big in size."
+        },
+        {
+          "id": "B11",
+          "type": "text",
+          "points": 0.5555555555555556,
+          "prompt": "What <strong>m _ _ _ _ _ _ l</strong> is this blanket made of?",
+          "answer": "material",
+          "accepted": [
+            "material"
+          ],
+          "explanation": "Material is what something is made of."
+        },
+        {
+          "id": "B12",
+          "type": "text",
+          "points": 0.5555555555555556,
+          "prompt": "I <strong>w _ _ _ d</strong> like to buy a cotton bag.",
+          "answer": "would",
+          "accepted": [
+            "would"
+          ],
+          "explanation": "Would is used in polite requests or wishes."
+        },
+        {
+          "id": "B13",
+          "type": "text",
+          "points": 0.5555555555555556,
+          "prompt": "I bought a <strong>t _ _ _ _ t</strong> for the ice show.",
+          "answer": "ticket",
+          "accepted": [
+            "ticket"
+          ],
+          "explanation": "A ticket lets you enter a place or event."
+        },
+        {
+          "id": "B14",
+          "type": "text",
+          "points": 0.5555555555555556,
+          "prompt": "Please <strong>r _ _ _ y</strong> to the invitation by Friday.",
+          "answer": "reply",
+          "accepted": [
+            "reply"
+          ],
+          "explanation": "Reply means to answer."
+        },
+        {
+          "id": "B15",
+          "type": "text",
+          "points": 0.5555555555555556,
+          "prompt": "Please bring this letter to the school <strong>o _ _ _ _ e</strong>.",
+          "answer": "office",
+          "accepted": [
+            "office"
+          ],
+          "explanation": "An office is a room or place where people work."
+        },
+        {
+          "id": "B16",
+          "type": "text",
+          "points": 0.5555555555555556,
+          "prompt": "We skated at the <strong>i _ e  r _ _ k</strong> after school.",
+          "answer": "ice rink",
+          "accepted": [
+            "ice rink"
+          ],
+          "explanation": "An ice rink is a place for ice skating."
+        },
+        {
+          "id": "B17",
+          "type": "text",
+          "points": 0.5555555555555556,
+          "prompt": "My aunt wore a beautiful dress at her <strong>w _ _ _ _ _ g</strong>.",
+          "answer": "wedding",
+          "accepted": [
+            "wedding"
+          ],
+          "explanation": "A wedding is a ceremony where people get married."
+        },
+        {
+          "id": "B18",
+          "type": "text",
+          "points": 0.5555555555555556,
+          "prompt": "Mrs. Lee has one son and one <strong>d _ _ _ _ _ _ r</strong>.",
+          "answer": "daughter",
+          "accepted": [
+            "daughter"
+          ],
+          "explanation": "A daughter is a female child."
+        },
+        {
+          "id": "B19",
+          "type": "text",
+          "points": 0.5555555555555556,
+          "prompt": "Thank you for the party <strong>i _ _ _ _ _ _ _ _ n</strong>.",
+          "answer": "invitation",
+          "accepted": [
+            "invitation"
+          ],
+          "explanation": "An invitation asks someone to come to an event."
+        },
+        {
+          "id": "B20",
+          "type": "text",
+          "points": 0.5555555555555556,
+          "prompt": "Dear Grandma is a common <strong>g _ _ _ _ _ _ g</strong> in a letter.",
+          "answer": "greeting",
+          "accepted": [
+            "greeting"
+          ],
+          "explanation": "A greeting is the words you use to say hello at the start."
+        },
+        {
+          "id": "B21",
+          "type": "text",
+          "points": 0.5555555555555556,
+          "prompt": "Fruit and water are <strong>h _ _ _ _ _ y</strong> choices for a snack.",
+          "answer": "healthy",
+          "accepted": [
+            "healthy"
+          ],
+          "explanation": "Healthy means good for your body."
+        },
+        {
+          "id": "B22",
+          "type": "text",
+          "points": 0.5555555555555556,
+          "prompt": "Let’s <strong>h _ _ e</strong> the gift before Mom comes home.",
+          "answer": "hide",
+          "accepted": [
+            "hide"
+          ],
+          "explanation": "Hide means to put something where people cannot see it."
+        },
+        {
+          "id": "B23",
+          "type": "text",
+          "points": 0.5555555555555556,
+          "prompt": "The funny joke made everyone <strong>s _ _ _ e</strong>.",
+          "answer": "smile",
+          "accepted": [
+            "smile"
+          ],
+          "explanation": "Smile means to make a happy face."
+        },
+        {
+          "id": "B24",
+          "type": "text",
+          "points": 0.5555555555555556,
+          "prompt": "Please don’t <strong>t _ _ _ _ e</strong> my feet. It makes me laugh.",
+          "answer": "tickle",
+          "accepted": [
+            "tickle"
+          ],
+          "explanation": "Tickle means to touch someone lightly and make them laugh."
+        },
+        {
+          "id": "B25",
+          "type": "text",
+          "points": 0.5555555555555556,
+          "prompt": "The clown told a funny <strong>j _ _ e</strong> to make the children laugh.",
+          "answer": "joke",
+          "accepted": [
+            "joke"
+          ],
+          "explanation": "A joke is something funny that people say."
+        },
+        {
+          "id": "B26",
+          "type": "text",
+          "points": 0.5555555555555556,
           "prompt": "The cartoon was so funny that it made everyone <strong>l _ _ _ h</strong>.",
           "answer": "laugh",
           "accepted": [
@@ -390,26 +477,114 @@
           "explanation": "Laugh means to make a happy sound when something is funny."
         },
         {
-          "id": "B9",
+          "id": "B27",
           "type": "text",
-          "points": 2,
-          "prompt": "The toy costs twelve <strong>d _ _ _ _ _ s</strong>.",
-          "answer": "dollars",
+          "points": 0.5555555555555556,
+          "prompt": "My <strong>f _ _ t</strong> are cold, so I need socks.",
+          "answer": "feet",
           "accepted": [
-            "dollars"
+            "feet"
           ],
-          "explanation": "Dollars are a kind of money."
+          "explanation": "Feet is the plural of foot."
         },
         {
-          "id": "B10",
+          "id": "B28",
           "type": "text",
-          "points": 2,
-          "prompt": "Fruit and water are <strong>h _ _ _ _ _ y</strong> choices for a snack.",
-          "answer": "healthy",
+          "points": 0.5555555555555556,
+          "prompt": "<strong>C _ _ _ d</strong> you help me carry these books, please?",
+          "answer": "could",
           "accepted": [
-            "healthy"
+            "could"
           ],
-          "explanation": "Healthy means good for your body."
+          "explanation": "Could is used to make a polite request."
+        },
+        {
+          "id": "B29",
+          "type": "text",
+          "points": 0.5555555555555556,
+          "prompt": "The kind boy made an <strong>o _ _ _ r</strong> to help me carry the box.",
+          "answer": "offer",
+          "accepted": [
+            "offer"
+          ],
+          "explanation": "An offer is when someone says they can help or give something."
+        },
+        {
+          "id": "B30",
+          "type": "text",
+          "points": 0.5555555555555556,
+          "prompt": "Put the food in the shopping <strong>c _ _ t</strong>.",
+          "answer": "cart",
+          "accepted": [
+            "cart"
+          ],
+          "explanation": "A cart is used to carry things in a store."
+        },
+        {
+          "id": "B31",
+          "type": "text",
+          "points": 0.5555555555555556,
+          "prompt": "I need to log in to my school <strong>a _ _ _ _ _ t</strong>.",
+          "answer": "account",
+          "accepted": [
+            "account"
+          ],
+          "explanation": "An account lets you use a website or service."
+        },
+        {
+          "id": "B32",
+          "type": "text",
+          "points": 0.5555555555555556,
+          "prompt": "The concert will <strong>t _ _ e  p _ _ _ e</strong> at the school hall.",
+          "answer": "take place",
+          "accepted": [
+            "take place"
+          ],
+          "explanation": "Take place means to happen."
+        },
+        {
+          "id": "B33",
+          "type": "text",
+          "points": 0.5555555555555556,
+          "prompt": "The <strong>p _ _ _ _ e</strong> lived in a big castle in the story.",
+          "answer": "prince",
+          "accepted": [
+            "prince"
+          ],
+          "explanation": "A prince is the son of a king or queen."
+        },
+        {
+          "id": "B34",
+          "type": "text",
+          "points": 0.5555555555555556,
+          "prompt": "Please <strong>c _ _ _ k</strong> the button to send your reply.",
+          "answer": "click",
+          "accepted": [
+            "click"
+          ],
+          "explanation": "Click means to press a button on a mouse or screen."
+        },
+        {
+          "id": "B35",
+          "type": "text",
+          "points": 0.5555555555555556,
+          "prompt": "She has a beautiful singing <strong>v _ _ _ e</strong>.",
+          "answer": "voice",
+          "accepted": [
+            "voice"
+          ],
+          "explanation": "Voice is the sound you make when you speak or sing."
+        },
+        {
+          "id": "B36",
+          "type": "text",
+          "points": 0.5555555555555556,
+          "prompt": "Could you open the door, please? is a polite <strong>r _ _ _ _ _ t</strong>.",
+          "answer": "request",
+          "accepted": [
+            "request"
+          ],
+          "explanation": "A request is something you ask someone to do."
         }
       ]
     },
@@ -856,11 +1031,6 @@
       return `<div class="listen-box"><button class="audio" type="button" data-listen="${section.id}">播放聽力</button><button class="secondary" type="button" data-stop-listen>停止播放</button><span class="small">使用瀏覽器內建英文語音；若無聲音，請檢查瀏覽器語音支援。</span></div>`;
     }
 
-    function renderInvitation(section) {
-      const chips = section.wordBox.map((w, i) => `<div class="word-chip">${String.fromCharCode(65 + i)}. ${escapeHtml(w)}</div>`).join('');
-      return `<div class="word-box">${chips}</div><article class="invitation"><h3>${escapeHtml(section.invitationTitle)}</h3><p><strong>1.</strong> _____,</p><p>${escapeHtml(section.invitationBody).replace(/\n/g, '<br>')}</p></article>`;
-    }
-
     function renderQuiz() {
       let html = '';
       QUIZ.sections.forEach(section => {
@@ -900,9 +1070,7 @@
       }
       window.speechSynthesis.cancel();
       const utter = new SpeechSynthesisUtterance(section.script);
-      utter.lang = 'en-US';
-      utter.rate = 0.85;
-      utter.pitch = 1;
+      utter.lang = 'en-US'; utter.rate = 0.85; utter.pitch = 1;
       utter.onstart = () => setStatus('正在播放聽力。', 'ok');
       utter.onerror = () => setStatus('語音播放失敗，請檢查瀏覽器語音設定。', 'warn');
       utter.onend = () => setStatus('聽力播放完畢，可以開始作答或重播。', 'ok');
@@ -929,14 +1097,16 @@
       return item.accepted.map(normalizeText).includes(normalized);
     }
 
-    function setStatus(message, kind) {
-      statusBox.className = `show ${kind}`;
-      statusBox.textContent = message;
-    }
+    function setStatus(message, kind) { statusBox.className = `show ${kind}`; statusBox.textContent = message; }
+    function clearStatus() { statusBox.className = ''; statusBox.textContent = ''; }
 
-    function clearStatus() {
-      statusBox.className = '';
-      statusBox.textContent = '';
+    function readHistorySafe() {
+      try { return JSON.parse(localStorage.getItem(QUIZ.storageKey) || '[]'); }
+      catch (error) { return []; }
+    }
+    function writeHistorySafe(history) {
+      try { localStorage.setItem(QUIZ.storageKey, JSON.stringify(history)); }
+      catch (error) { /* localStorage may be unavailable */ }
     }
 
     function gradeQuiz() {
@@ -944,28 +1114,20 @@
       document.querySelectorAll('.question-card').forEach(card => card.classList.remove('missing'));
       const missing = items.filter(item => String(getAnswer(item)).trim() === '');
       if (missing.length) {
-        missing.forEach(item => {
-          const card = document.querySelector(`[data-qid="${item.id}"]`);
-          if (card) card.classList.add('missing');
-        });
+        missing.forEach(item => { const card = document.querySelector(`[data-qid="${item.id}"]`); if (card) card.classList.add('missing'); });
         setStatus(`還有 ${missing.length} 個作答欄位未完成。請完成黃色標示的題目後再提交。`, 'warn');
         const first = document.querySelector('.question-card.missing');
         if (first) first.scrollIntoView({behavior:'smooth', block:'center'});
         return null;
       }
-
       let total = 0;
       const sectionScores = Object.fromEntries(QUIZ.sections.map(s => [s.id, {score: 0, max: s.total, title: s.title}]));
       const review = [];
       items.forEach(item => {
         const userAnswer = getAnswer(item);
         const correct = isCorrect(item, userAnswer);
-        if (correct) {
-          total += item.points;
-          sectionScores[item.sectionId].score += item.points;
-        } else {
-          review.push({...item, userAnswer});
-        }
+        if (correct) { total += item.points; sectionScores[item.sectionId].score += item.points; }
+        else { review.push({...item, userAnswer}); }
       });
       if (review.length === 0) total = QUIZ.maxScore;
       return { total, sectionScores, review };
@@ -995,24 +1157,16 @@
     }
 
     function saveHistory(result) {
-      const history = JSON.parse(localStorage.getItem(QUIZ.storageKey) || '[]');
-      history.unshift({
-        date: new Date().toLocaleString('zh-Hant-TW'),
-        score: formatScore(result.total),
-        max: QUIZ.maxScore,
-        sections: Object.fromEntries(Object.entries(result.sectionScores).map(([k, v]) => [k, formatScore(v.score)]))
-      });
-      localStorage.setItem(QUIZ.storageKey, JSON.stringify(history.slice(0, 10)));
+      const history = readHistorySafe();
+      history.unshift({ date: new Date().toLocaleString('zh-Hant-TW'), score: formatScore(result.total), max: QUIZ.maxScore, sections: Object.fromEntries(Object.entries(result.sectionScores).map(([k, v]) => [k, formatScore(v.score)])) });
+      writeHistorySafe(history.slice(0, 10));
       renderHistory();
     }
 
     function renderHistory() {
-      const history = JSON.parse(localStorage.getItem(QUIZ.storageKey) || '[]');
+      const history = readHistorySafe();
       const target = byId('historyList');
-      if (!history.length) {
-        target.innerHTML = '<p class="small">目前沒有成績紀錄。</p>';
-        return;
-      }
+      if (!history.length) { target.innerHTML = '<p class="small">目前沒有成績紀錄。</p>'; return; }
       target.innerHTML = `<ol class="history-list">${history.map(h => `<li><strong>${h.score} / ${h.max}</strong>｜${escapeHtml(h.date)}｜A:${h.sections.A} B:${h.sections.B} C:${h.sections.C} D:${h.sections.D} E:${h.sections.E} F:${h.sections.F}</li>`).join('')}</ol>`;
     }
 
@@ -1023,34 +1177,24 @@
         else { const input = byId(item.id); if (input) input.value = ''; }
       });
       document.querySelectorAll('.question-card').forEach(card => card.classList.remove('missing'));
-      clearStatus();
-      resultsBox.hidden = true;
-      reviewBox.hidden = true;
-      resultsBox.innerHTML = '';
-      reviewBox.innerHTML = '';
+      clearStatus(); resultsBox.hidden = true; reviewBox.hidden = true; resultsBox.innerHTML = ''; reviewBox.innerHTML = '';
       window.scrollTo({top: 0, behavior: 'smooth'});
     }
 
     function clearHistory() {
-      localStorage.removeItem(QUIZ.storageKey);
-      renderHistory();
-      setStatus('已清除這份測驗的本機成績紀錄。', 'ok');
+      try { localStorage.removeItem(QUIZ.storageKey); } catch (error) {}
+      renderHistory(); setStatus('已清除這份測驗的本機成績紀錄。', 'ok');
     }
 
     byId('submitBtn').addEventListener('click', () => {
-      const result = gradeQuiz();
-      if (!result) return;
-      renderResults(result);
-      renderReview(result);
-      saveHistory(result);
+      const result = gradeQuiz(); if (!result) return;
+      renderResults(result); renderReview(result); saveHistory(result);
       setStatus(`已完成批改：${formatScore(result.total)} / ${QUIZ.maxScore}。`, result.total === QUIZ.maxScore ? 'ok' : 'bad');
       resultsBox.scrollIntoView({behavior:'smooth', block:'start'});
     });
     byId('retryBtn').addEventListener('click', resetQuiz);
     byId('clearHistoryBtn').addEventListener('click', clearHistory);
-
-    renderQuiz();
-    renderHistory();
+    renderQuiz(); renderHistory();
   </script>
 </body>
 </html>
