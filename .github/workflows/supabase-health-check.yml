@@ -1,0 +1,40 @@
+name: Supabase health check
+
+on:
+  schedule:
+    # Three lightweight database reads per day (UTC).
+    - cron: "17 1,9,17 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: supabase-health-check
+  cancel-in-progress: true
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Run a read-only Supabase query
+        env:
+          SUPABASE_URL: https://ikppppussegjwxuwavoy.supabase.co
+          # This is a publishable browser key, not a service-role secret.
+          SUPABASE_PUBLISHABLE_KEY: sb_publishable_pptN5wzGeUKWOlC_MEWnAA_2ZRwarc9
+        run: |
+          status="$(curl --silent --show-error \
+            --output /dev/null \
+            --write-out "%{http_code}" \
+            --get "$SUPABASE_URL/rest/v1/profiles" \
+            --data-urlencode "select=id" \
+            --data-urlencode "limit=1" \
+            --header "apikey: $SUPABASE_PUBLISHABLE_KEY")"
+
+          if [[ "$status" -lt 200 || "$status" -ge 300 ]]; then
+            echo "Supabase health check failed with HTTP $status"
+            exit 1
+          fi
+
+          echo "Supabase health check succeeded (HTTP $status)"
